@@ -1,0 +1,35 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/tow/tow",
+    "pages/three/three"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#eeeeee",
+    "navigationBarBackgroundColor": "#000000",
+    "navigationBarTitleText": "hello",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#3B7D3D",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "111"
+      },
+      {
+        "pagePath": "pages/tow/tow",
+        "text": "222"
+      },
+      {
+        "pagePath": "pages/three/three",
+        "text": "333"
+      }
+    ]
+  }
+}
