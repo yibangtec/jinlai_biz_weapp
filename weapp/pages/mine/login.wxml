@@ -1,0 +1,26 @@
+<!--login.wxml-->
+<text>login.wxml</text>
+<view class="flex-wrp" style="flex-direction:row;">
+  <button class="bnt-left" type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{defaultPlain}}"
+        disabled="{{disabled}}" bindtap="currentTab"> 密码登录 </button>
+  <button class="bnt-right" type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{plain}}"
+        disabled="{{disabled}}" bindtap="getTab"> 短信登录 </button>
+</view>
+<view class="section" style="{{displayB}}">
+  <view class="section__title">提示：{{err}}</view>
+  <input type="tel" placeholder="请输入手机号" bindblur="bindTel" focus="true" />
+  <input type="password" placeholder="请输入密码" bindfocus="bindKeyInput" bindblur="bindPas" />
+  <button class="submit" type="primary" size="{{defaultSize}}" loading="{{loading}}" plain="{{plainde}}"
+        disabled="{{disbtn}}" bindtap="primary"> 确定 </button>
+</view>
+<view class="section clearfix" style="{{displayN}}">
+<view class="section__title">提示：{{err}}</view>
+<view class="section__title">
+ <input type="text" placeholder="请输入手机号" bindblur="bindTelVer" auto-focus/>
+  <input class="verify" type="text" bindblur="verCode" placeholder="请输入验证码" auto-focus/>
+  <button class="verify-code clearfix" class="bnt-left" type="primary" size="{{primarySize}}" loading="{{loading}}" plain="{{defaultPlain}}"
+        disabled="{{disableVer}}" bindtap="getVerify"> {{getVer}} </button>
+</view>
+  <view class="section__title"><button class="submit-verify" type="primary" size="{{defaultSize}}" loading="{{loading}}" plain="{{plainde}}"
+        disabled="{{disVerBtn}}" bindtap="primary"> 确定 </button></view>
+</view>

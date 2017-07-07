@@ -1,0 +1,62 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/biz/index",
+    "pages/biz/detail",
+    "pages/item/index",
+    "pages/item/detail",
+    "pages/order/index",
+    "pages/order/detail",
+    "pages/order/create",
+    "pages/cart/index",
+    "pages/mine/index",
+    "pages/explore/index",
+    "pages/mine/login"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#f7941c",
+    "navigationBarTitleText": "进来",
+    "navigationBarTextStyle": "#fff",
+    "backgroundTextStyle": "light",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#999",
+    "backgroundColor": "#fff",
+    "selectedColor": "#ff6e42",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "image/nav/main/home.png",
+        "selectedIconPath": "image/nav/main/home_active.png"
+      },
+      {
+        "pagePath": "pages/explore/index",
+        "text": "发现",
+        "iconPath": "image/nav/main/explore.png",
+        "selectedIconPath": "image/nav/main/explore_active.png"
+      },
+      {
+        "pagePath": "pages/cart/index",
+        "text": "购物车",
+        "iconPath": "image/nav/main/cart.png",
+        "selectedIconPath": "image/nav/main/cart_active.png"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "text": "我的",
+        "iconPath": "image/nav/main/mine.png",
+        "selectedIconPath": "image/nav/main/mine_active.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 5000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

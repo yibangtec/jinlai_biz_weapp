@@ -1,0 +1,19 @@
+<!--index.wxml-->
+<view class="container">
+  <block wx:for="{{bizs}}">
+    <template is="biz_list" data="{{...item}}" />
+  </block>
+
+</view>
+
+<!--
+  biz_id: int
+  name: string
+  brief_name: string
+  slogan: string
+  description string
+  url_logo: string
+-->
+<template name="biz_list">
+    <navigator url="/pages/biz/detail?id={{biz_id}}" hover-class="navigator-hover">{{brief_name}} {{name}}</navigator>
+</template>

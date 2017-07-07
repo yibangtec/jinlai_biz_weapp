@@ -1,0 +1,12 @@
+<!--pages/biz/detail.wxml-->
+<view class="info-brief">
+  <text>{{biz.brief_name}}</text>
+  <text>{{biz.slogan}}</text>
+  <text>{{biz.tel_public}}</text>
+  <text>{{biz.notification}}</text>
+</view>
+
+<view class="info-detail">
+  <text>{{biz.name}}</text>
+  <text>{{biz.description}}</text>
+</view>

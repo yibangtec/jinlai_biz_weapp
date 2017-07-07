@@ -1,0 +1,51 @@
+/* login.wxss */
+.flex-wrp {
+  height: 100px
+}
+.flex-item{
+  float: left
+}
+.bnt-left,bnt-right{
+  margin-left: 150rpx
+}
+/** 修改button默认的点击态样式类**/
+.button-hover {
+  background-color: red;
+}
+/** 添加自定义button点击态样式类**/
+.other-button-hover {
+  background-color: blue;
+}
+.section input{
+  border: 2rpx solid #ccc;
+  width: 90%;
+  height: 90rpx;
+  border-radius: 10rpx;
+  margin-left: 20rpx;
+  margin-bottom: 50rpx;
+}
+.section .verify{
+  width: 300rpx;
+  float: left;
+}
+.verify-code{
+  float: left;
+}
+.clearfix:after{  
+   content: "020";  
+   display: block;  
+   height: 0;  
+   clear: both;  
+   visibility: hidden;   
+} 
+ .clearfix {  
+   /* 触发 hasLayout */  
+   zoom: 1;  
+}
+.submit {
+  margin: 0 20rpx;
+}
+.submit-verify{
+  width: 90%;
+  margin: 50rpx 20rpx 0 20rpx;
+}
