@@ -1,0 +1,19 @@
+<!--login_sms.wxml-->
+
+<view class="flex-wrp" style="flex-direction:row;">
+  <text>密码登录</text>
+  <button class="bnt-right" type="primary" size="{{btnMin}}" loading="{{loading}}" plain="{{plain}}"
+        disabled="{{disabled}}" bindtap="getTab"> 短信登录 </button>
+</view>
+<view>
+ <input type="tel" placeholder="请输入手机号" bindblur="getTel" focus="{{telFocus}}" auto-focus/>
+ <button class="verify-code clearfix" class="bnt-left" type="primary" size="{{btnMin}}" loading="{{loading}}" plain="{{defaultPlain}}"
+        disabled="{{disableVer}}" bindtap="getVerify"> {{getVer}} </button>
+  <input class="verify verCode" type="text" bindblur="getCode" bindfocus="verifyTel" focus="{{codeFocus}}" placeholder="请输入验证码" auto-focus/>
+  
+</view>
+<view class="body-view">
+    <view class="classname">是否同意用户协议及相关协议</view>
+</view>
+<button class="submit" type="primary" size="{{defaultSize}}" loading="{{loading}}" plain="{{plainde}}"
+        disabled="{{disbtn}}" bindtap="codeLogin"> 确定 </button>

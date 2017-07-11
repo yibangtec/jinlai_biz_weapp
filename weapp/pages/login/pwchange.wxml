@@ -1,0 +1,7 @@
+<!--pwchange.wxml-->
+<text>pwchange.wxml</text>
+ <input type="password" placeholder="请输入原始密码" bindblur="getCurrentPw" focus="{{focusCurrentPw}}" />
+  <input type="password" placeholder="请输入新密码" bindfocus="verCurrentPw" bindblur="getNewPw" focus="{{focusNewPw}}"/>
+   <input type="password" placeholder="请确认新密码" bindfocus="verNewPw" bindblur="getPwConfirm" focus="{{focusConfirmPw}}"/>
+   <button class="submit" type="primary" size="{{defaultSize}}" loading="{{loading}}" plain="{{plainde}}"
+        disabled="{{disbtn}}" bindtap="changePw"> 确定 </button>

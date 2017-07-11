@@ -1,0 +1,15 @@
+<!--login.wxml-->
+
+<view class="flex-wrp" style="flex-direction:row;">
+  <text>密码登录</text>
+  <button class="bnt-right" type="primary" size="{{btnMin}}" loading="{{loading}}" plain="{{plain}}"
+        disabled="{{disabled}}" bindtap="login_sms"> 短信登录 </button>
+</view>
+<view class="section">
+  <input type="tel" placeholder="请输入手机号" bindblur="getTel" focus="{{telFocus}}" />
+  <input type="password" placeholder="请输入密码" bindfocus="verifyTel" bindblur="getPw" focus="{{pwFocus}}" />
+  <button class="submit" type="primary" size="{{defaultSize}}" loading="{{loading}}" plain="{{plainde}}"
+        disabled="{{disbtn}}" bindtap="pwLogin"> 确定 </button>
+  <view class="forgetPw">忘记密码</view>   
+</view>
+<view class="section__title" style="{{dis}}">dsafsaf{{err}}</view>

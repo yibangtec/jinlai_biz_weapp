@@ -1,15 +1,78 @@
 //index.js
 //获取应用实例
 var app = getApp()
+var login;
 Page({
   data: {
-    bizs: []
+    bizs: [],
+    comeInBtn:'display:none'
   },
-
-  get_biz: function(object)
+  onLoad: function ()
   {
+    var that=this;
+    var timestamp = Date.parse(new Date())
+    console.log(timestamp)
+    wx.getStorage({
+      key: 'time_expire_login',
+      success: function (res) {
+        login = res.data
+        console.log(login)
+        if (login == undefined || login < timestamp) {
+          wx.redirectTo({
+            url: '../../pages/login/login'
+          })
+        }
+      },
+      fail: function (err) {
+        console.log(err)
+        if (err){
+          wx.redirectTo({
+            url: '../../pages/login/login'
+          })
+        }
+      }
+    })
+    //清除本地存储
+    wx.clearStorage()
+    wx.getStorage({
+      key: 'user',
+      success: function (res) {
+        console.log(res.data)
+      },
+      fail: function (err) {
+        console.log(err)
+      }
+    })
+
+    wx.getStorage({
+      key: 'user_biz_id',
+      success: function (res) {
+        var userBiz_id = res.data
+        console.log(userBiz_id)
+        var userBiz_id = res.data
+        if (userPw == undefined) {
+          that.setData({
+            comeInBtn: 'display:block',
+          })
+        }
+      },
+      fail: function (err) {
+        console.log(err)
+        if (err) {
+          that.setData({
+            comeInBtn: 'display:block',
+          })
+        }
+      }
+    })
+    console.log("onLoad")
+    var that = this
+
+    that.get_biz(that)
+  },
+  get_biz: function (object) {
     console.log("get_biz initiated")
-    
+
 
     // 通过API获取或处理数据
     var url = 'biz/index'
@@ -39,15 +102,6 @@ Page({
       })
     }
   }, // end get_biz
-
-  onLoad: function ()
-  {
-    console.log("onLoad")
-    var that = this
-
-    that.get_biz(that)
-  },
-
   /**
    * 用户点击右上角分享
    */

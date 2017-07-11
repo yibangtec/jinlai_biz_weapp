@@ -1,0 +1,7 @@
+/* pwreset.wxss */
+input {
+  height: 90rpx;
+  border: 2rpx solid #ccc;
+  border-radius: 10rpx;
+  margin: 50rpx 0;
+}

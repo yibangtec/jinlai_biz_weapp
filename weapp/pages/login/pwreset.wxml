@@ -1,0 +1,11 @@
+<!--pwreset.wxml-->
+<text>pwreset.wxml</text>
+<text>pwchange.wxml</text>
+ <input type="tel" placeholder="请输入手机号" bindblur="getTel" focus="{{telFocus}}" value="{{tell}}"/>
+  <button class="verify-code clearfix" class="bnt-left" type="primary" size="mini" loading="{{loading}}" plain="{{defaultPlain}}"
+        disabled="{{disableVer}}" bindtap="getVerify"> {{getVer}} </button>
+  <input type="password" placeholder="请输入验证码"  bindblur="getCode" focus="{{codeFocus}}" />
+   <input type="password" placeholder="请输入新密码" bindfocus="verCode" bindblur="getNewPw" focus="{{focusNewPw}}" />
+   <input type="password" placeholder="请确认新密码" bindfocus="verNewPw" bindblur="getPwConfirm" focus="{{focusConfirmPw}}" />
+   <button class="submit" type="primary" size="{{defaultSize}}" loading="{{loading}}" plain="{{plainde}}"
+        disabled="{{disbtn}}" bindtap="resetPw"> 确定 </button>

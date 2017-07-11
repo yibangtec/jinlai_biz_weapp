@@ -1,5 +1,6 @@
 // /pages/mine/index.js
 var app = getApp()
+var timeLogin;
 Page({
 
   /**
@@ -7,42 +8,72 @@ Page({
    */
   data: {
     userInfo: {},
-    nn:null
+    nickName:null,
+    headerImg:''
   },
 
-  /**
+ 
+  login_change:function(e){
+    wx.redirectTo({
+      url: '../../pages/login/pwchange'
+    })
+  },
+  login_reset:function(e){
+    wx.redirectTo({
+      url: '../../pages/login/pwreset'
+    })
+  },
+   /**
    * 生命周期函数--监听页面加载
    */
-  
   onLoad: function (options) {
-    wx.setStorage({
-      key: "key",
-      data: "value"
-    })
-    wx.getStorageInfo({
+    //if (app.globalData.int===1){
+      //wx.redirectTo({
+       // url: 'login'
+      //})
+   // }
+    //调用应用实例的方法获取全局数据
+    var that=this
+    wx.getStorage({
+      key: 'user_password',
       success: function (res) {
-        console.log(res.keys)
-        console.log(res.currentSize)
-        console.log(res.limitSize)
+        if (res.data!== "set") {
+          wx.redirectTo({
+            url: '../../pages/login/pwset'
+          })
+        }
+      },
+      fail: function (err) {
+
       }
     })
     wx.getStorage({
-      key: 'time_expire_login',
+      key: 'user',
       success: function (res) {
-        console.log(res.data+"safds")
+        console.log(res.data.content.nickname)
+        if (res.data.content.nickname==null){
+          that.setData({
+            nickName: res.data.content.mobile,
+          })
+        }else{
+          that.setData({
+            nickName: res.data.content.nickname,
+          })
+        }
+        if (res.data.content.avatar == null) {
+          that.setData({
+            headerImg: '',//如果没有头像时的占位符
+          })
+        } else {
+          that.setData({
+            headerImg: res.data.content.avatar,
+          })
+        }
       },
-      fail:function(err){
-        console.log(err)
+      fail: function (err) {
+
       }
     })
-    console.log(app.globalData.int)
-    if (app.globalData.int===1){
-      wx.redirectTo({
-        url: 'login'
-      })
-    }
-    //调用应用实例的方法获取全局数据
-    var that=this
     app.getUserInfo(function (userInfo) {
       console.log(userInfo)
       //更新数据

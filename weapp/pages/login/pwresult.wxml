@@ -1,0 +1,7 @@
+<!--pwresult.wxml-->
+<text>pwresult.wxml</text>
+<text>title</text>
+<button class="verify-code clearfix" class="bnt-left" type="primary" size="mini" loading="{{loading}}" plain="{{defaultPlain}}"
+        disabled="{{disableVer}}" bindtap="getVerify"> 首页 </button>
+        <button class="verify-code clearfix" class="bnt-left" type="primary" size="mini" loading="{{loading}}" plain="{{defaultPlain}}"
+        disabled="{{disableVer}}" bindtap="getVerify"> 我的 </button>

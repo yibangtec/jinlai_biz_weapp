@@ -12,7 +12,14 @@
     "pages/cart/index",
     "pages/mine/index",
     "pages/explore/index",
-    "pages/mine/login"
+    "pages/mine/login",
+    "pages/login/login",
+    "pages/login/login_sms",
+    "pages/login/pwset",
+    "pages/login/pwchange",
+    "pages/login/pwreset",
+    "pages/login/pwresult",
+    "pages/login/pwresult"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f7941c",

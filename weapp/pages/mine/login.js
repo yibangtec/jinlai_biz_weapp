@@ -187,6 +187,40 @@ Page({
         err: "请输入6位数字验证码"
       })
     }
+  },
+  pwLogin:function(e){
+    // 通过API获取或处理数据
+    var url = 'account/login'
+    var params = {}
+    var api_result = api_request(url, params)
+
+    // 网络请求
+    function api_request(url, api_params) {
+      // 生成签名
+      app.sign_generate(api_params)
+
+      // 通过小程序的网络请求API发送请求
+      wx.request({
+        method: "POST",
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        url: app.globalData.url_api + url,
+        data: { mobile: tel, password: pas },
+        success: function (result) {
+          if (result.statusCode === 200) {
+            wx.redirectTo({
+              url: 'login'
+            })
+          }
+          console.log(result)
+        },
+        fail: function (result) {
+          console.log(result)
+          wx.vibrateShort()
+        }
+      })
+    }
   }
   
 })

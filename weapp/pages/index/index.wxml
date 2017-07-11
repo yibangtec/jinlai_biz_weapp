@@ -3,9 +3,18 @@
   <block wx:for="{{bizs}}">
     <template is="biz_list" data="{{...item}}" />
   </block>
-
 </view>
-
+<view class="info">
+  <view>商家简称：{{name}}</view>
+  <view>商家全称：{{brief_name}}</view>
+  <view>服务电话：{{tel_public}}</view>
+  <view>商务联系电话：{{tel_protected_biz}}</view>
+  <view>状态：{{status}}</view>
+</view>
+<view class="comeIn" style="{{comeInBtn}}">
+<button class="submit" type="primary" size="mini" loading="{{loading}}" plain="{{plainde}}"
+        disabled="{{disbtn}}" bindtap="button_biz_create"> 我要进来（申请入住） </button>
+</view>
 <!--
   biz_id: int
   name: string

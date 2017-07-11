@@ -1,8 +1,18 @@
 <!--/pages/mine/index.wxml-->
-<view class="container">
+<!--<view class="container">
   <view bindtap="bindViewTap" class="userinfo">
     <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
     <text class="userinfo-nickname">{{userInfo.nickName}}</text>
   </view>
 
+</view>-->
+<view bindtap="bindViewTap" class="userinfo">
+    <image src="{{headerImg}}"></image>
+    <label>昵称:{{nickName}}</label>
 </view>
+<button class="bnt-right" type="primary" size="mini" loading="{{loading}}" plain="{{plain}}"
+        disabled="{{disabled}}" bindtap="login_change"> 密码修改 </button>
+<button class="bnt-right" type="primary" size="mini" loading="{{loading}}" plain="{{plain}}"
+        disabled="{{disabled}}" bindtap="login_reset"> 密码重置 </button>
+        <button class="bnt-right" type="primary" size="default" loading="{{loading}}" plain="{{plain}}"
+        disabled="{{disabled}}" bindtap="login_sms"> 退出 </button>
