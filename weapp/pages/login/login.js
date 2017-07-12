@@ -38,7 +38,7 @@ Page({
     })
   },
   login_sms:function(){
-    wx.redirectTo({
+    wx.navigateTo({
       url: 'login_sms'
     })
   },
@@ -150,7 +150,9 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+    wx.switchTab({
+      url: '../../pages/index/index'
+    })
   },
 
   /**

@@ -4,7 +4,7 @@
     <template is="biz_list" data="{{...item}}" />
   </block>
 </view>
-<view class="info">
+<view class="info" style="{{infoStyle}}">
   <view>商家简称：{{name}}</view>
   <view>商家全称：{{brief_name}}</view>
   <view>服务电话：{{tel_public}}</view>

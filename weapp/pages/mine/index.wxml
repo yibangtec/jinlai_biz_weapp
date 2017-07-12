@@ -15,4 +15,4 @@
 <button class="bnt-right" type="primary" size="mini" loading="{{loading}}" plain="{{plain}}"
         disabled="{{disabled}}" bindtap="login_reset"> 密码重置 </button>
         <button class="bnt-right" type="primary" size="default" loading="{{loading}}" plain="{{plain}}"
-        disabled="{{disabled}}" bindtap="login_sms"> 退出 </button>
+        disabled="{{disabled}}" bindtap="mineExit"> 退出 </button>

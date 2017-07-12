@@ -12,4 +12,3 @@
         disabled="{{disbtn}}" bindtap="pwLogin"> 确定 </button>
   <view class="forgetPw">忘记密码</view>   
 </view>
-<view class="section__title" style="{{dis}}">dsafsaf{{err}}</view>

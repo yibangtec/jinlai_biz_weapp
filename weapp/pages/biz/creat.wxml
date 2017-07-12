@@ -1,0 +1,55 @@
+<!--creat.wxml-->
+<text>creat.wxml</text>
+<form bindsubmit="formSubmit" bindreset="formReset">
+  <text>“商务联系电话 ”+本地user.mobile值</text>
+  <text>您可在入驻申请通过后申请修改商务联系电话</text>
+  <view class="section">
+    <view class="section__title">商家全称</view>
+    <input name="name" placeholder="须与营业执照一致，7-30个字符" />
+  </view>
+  <view class="section">
+    <view class="section__title">商家简称</view>
+    <input name="brief_name" placeholder="最多10个字符" />
+  </view>
+  <view class="section">
+    <view class="section__title">简介</view>
+    <input name="description" placeholder="最多200个字符" />
+  </view>
+  <view class="section">
+    <view class="section__title">消费者联系电话</view>
+    <input name="tel_public" placeholder="400或800开头的10位数字、11位数字（手机号）、12/13位数字及最多1个-" />
+  </view>
+  <view class="section">
+    <view class="section__title">商务联系手机号</view>
+    <input name="tel_protected_biz" placeholder="请输入手机号" />
+  </view>
+  <view class="section">
+    <view class="section__title">统一社会信用代码/营业执照号</view>
+    <input name="code_license" placeholder="18位，仅允许数字" />
+  </view>
+  <view class="section">
+    <view class="section__title">法人身份证号</view>
+    <input name="code_ssn_owner" placeholder="18位，仅允许数字及大小写x" />
+  </view>
+  <view class="section">
+    <view class="section__title">经办人身份证号</view>
+    <input name="code_ssn_auth" placeholder="18位，仅允许数字及大小写x" />
+  </view>
+  <view class="section">
+    <view class="section__title">授权书</view>
+    <input name="url_image_auth_doc" type="file"/>
+  </view>
+
+  <view class="section">
+    <view class="section__title">开户行名称</view>
+    <input name="bank_name" placeholder="3-20位，仅允许中英文及空格" />
+  </view>
+  <view class="section">
+    <view class="section__title">开户行账号</view>
+    <input name="bank_account" placeholder="最长30位，仅允许数字及-" />
+  </view>
+ 
+  <view class="btn-area">
+    <button formType="submit">Submit</button>
+  </view>
+</form>

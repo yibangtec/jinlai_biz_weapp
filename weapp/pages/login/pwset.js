@@ -17,7 +17,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    
   },
   getPw:function(e){
     pw = e.detail.value
@@ -123,7 +123,9 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+    wx.switchTab({
+      url: '../../pages/mine/index'
+    })
   },
 
   /**

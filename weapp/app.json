@@ -19,7 +19,7 @@
     "pages/login/pwchange",
     "pages/login/pwreset",
     "pages/login/pwresult",
-    "pages/login/pwresult"
+    "pages/biz/creat"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f7941c",

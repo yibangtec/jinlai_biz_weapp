@@ -19,6 +19,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    //获取本地time_expire_login值，若大于当前时间戳则转到“我的”页
     wx.getStorage({
       key: 'time_expire_login',
       success: function (res) {
@@ -36,6 +37,13 @@ Page({
 
       }
     })
+    //获取本地time_end_countdown值，若无或该值小于当前时间戳则结束
+    //获取本地mobile值并设置mobile为该值，设置mobile、button_sms为未激活状态，设置captcha、button_submit为激活状态，焦点移入captcha
+    //计算time_end_countdown值与当前时间戳相差秒数，并倒计时相应秒数
+    //每秒更新button_sms文本为倒计时剩余秒数“xx 秒”
+    //倒计时结束后设置mobile、button_sms为激活状态
+
+   
   },
   getTel:function(e){
     tel = e.detail.value
@@ -204,7 +212,9 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+    wx.switchTab({
+      url: '../../pages/mine/index'
+    })
   },
 
   /**

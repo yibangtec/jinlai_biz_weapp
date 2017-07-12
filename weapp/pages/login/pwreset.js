@@ -29,10 +29,10 @@ Page({
     })
     //获取本地user.password值，若该值为空，则转到短信登录页
     wx.getStorage({
-      key: 'user_password',
+      key: 'user',
       success: function (res) {
-        console.log(res.data)
-        if (res.data==""){
+        console.log(res.data.content.password)
+        if (res.data.content.password.data==""){
           wx.redirectTo({
             url: 'login_sms'
           })
@@ -40,12 +40,24 @@ Page({
       },
       fail: function (err) {
         console.log(err)
-        wx.redirectTo({
-          url: 'login_sms'
-        })
+        
       }
     })
     //获取本地time_end_countdown值，若无或该值小于当前时间戳则结束
+    var timestamp = Date.parse(new Date())
+    wx.getStorage({
+      key: 'time_end_countdown',
+      success: function (res) {
+        if (res.data.content.password == '' || res.data.content.password < timestamp) {
+          wx.redirectTo({
+            url: 'login'
+          })
+        }
+      },
+      fail: function (err) {
+        console.log(err)
+      }
+    })
    
     //获取本地mobile值并设置mobile为该值，设置mobile、button_sms为未激活状态，设置captcha、button_submit为激活状态，焦点移入captcha
     wx.getStorage({
