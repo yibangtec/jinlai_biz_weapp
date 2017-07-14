@@ -1,8 +1,13 @@
 <!--creat.wxml-->
 <text>creat.wxml</text>
 <form bindsubmit="formSubmit" bindreset="formReset">
+<view class="classname">
   <text>“商务联系电话 ”+本地user.mobile值</text>
+</view>
+<view class="classname">
   <text>您可在入驻申请通过后申请修改商务联系电话</text>
+</view>
+  
   <view class="section">
     <view class="section__title">商家全称</view>
     <input name="name" placeholder="须与营业执照一致，7-30个字符" />
@@ -37,7 +42,11 @@
   </view>
   <view class="section">
     <view class="section__title">授权书</view>
-    <input name="url_image_auth_doc" type="file"/>
+    <button name="url_image_auth_doc" type="primary" size="mini" bindtap="chooseImage">选择图片</button>
+    <view wx:for="{{array}}" class="classname" style="{{display}}">
+      <image class="aspectFill" src="{{item}}" mode="aspectFill"><view class="cancel">X</view></image>
+    </view>
+    <button name="" type="primary" size="mini" bindtap="uploadImg">开始上传图片</button>
   </view>
 
   <view class="section">
@@ -47,6 +56,23 @@
   <view class="section">
     <view class="section__title">开户行账号</view>
     <input name="bank_account" placeholder="最长30位，仅允许数字及-" />
+  </view>
+
+  <view class="section">
+    <view class="section__title">产品（最多允许8个图片URL，多个URL间以一个半角逗号分隔）</view>
+    <button name="url_image_auth_doc" type="primary" size="mini" bindtap="product">选择图片</button>
+    <view class="classname">
+      <image src=""></image>
+    </view>
+    <button name="" type="primary" size="mini" bindtap="uploadImg">开始上传图片</button>
+  </view>
+  <view class="section">
+    <view class="section__title">工厂/产地环境（最多允许8个图片URL，多个URL间以一个半角逗号分隔）</view>
+    <button name="url_image_auth_doc" type="primary" size="mini" bindtap="proEnvironment">选择图片</button>
+  </view>
+  <view class="section">
+    <view class="section__title">门店/柜台环境（最多允许8个图片URL，多个URL间以一个半角逗号分隔）</view>
+    <button name="url_image_auth_doc" type="primary" size="mini" bindtap="counterEnvironment">选择图片</button>
   </view>
  
   <view class="btn-area">

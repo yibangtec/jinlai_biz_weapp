@@ -5,3 +5,16 @@ input {
   border-radius: 10rpx;
   margin: 50rpx 0;
 }
+.aspectFill {
+  display: block;
+  width: 200rpx;
+  height: 200rpx;
+  position: relative;
+}
+.cancel{
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: red;
+}
