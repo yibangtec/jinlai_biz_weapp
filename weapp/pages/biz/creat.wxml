@@ -2,77 +2,164 @@
 <text>creat.wxml</text>
 <form bindsubmit="formSubmit" bindreset="formReset">
 <view class="classname">
-  <text>“商务联系电话 ”+本地user.mobile值</text>
+  <text>“商务联系电话 ”+ 本地user.mobile值</text>
 </view>
 <view class="classname">
   <text>您可在入驻申请通过后申请修改商务联系电话</text>
 </view>
-  
   <view class="section">
-    <view class="section__title">商家全称</view>
-    <input name="name" placeholder="须与营业执照一致，7-30个字符" />
+    <view class="section__title">商家全称*</view>
+    <input type="text" maxlength="30" bindblur="getName" name="name" placeholder="须与营业执照一致，7-30个字符" />
   </view>
   <view class="section">
-    <view class="section__title">商家简称</view>
-    <input name="brief_name" placeholder="最多10个字符" />
+    <view class="section__title">商家简称*</view>
+    <input type="text" maxlength="10" bindfocus="verName" bindblur="getBrief_name" name="brief_name" placeholder="最多10个字符" />
   </view>
   <view class="section">
     <view class="section__title">简介</view>
-    <input name="description" placeholder="最多200个字符" />
+    <input type="text" maxlength="200"  bindblur="getDescription" name="description" placeholder="最多200个字符" />
   </view>
   <view class="section">
-    <view class="section__title">消费者联系电话</view>
-    <input name="tel_public" placeholder="400或800开头的10位数字、11位数字（手机号）、12/13位数字及最多1个-" />
+    <view class="section__title">消费者联系电话*</view>
+    <input type="number" name="tel_public"  bindblur="getTel_public" placeholder="400或800开头的10位数字、11位数字（手机号）、12/13位数字及最多1个-" />
   </view>
   <view class="section">
-    <view class="section__title">商务联系手机号</view>
-    <input name="tel_protected_biz" placeholder="请输入手机号" />
+    <view class="section__title">商务联系手机号*</view>
+    <input type="number" bindblur="getTel_protected_biz" name="tel_protected_biz" placeholder="请输入手机号" />
   </view>
   <view class="section">
-    <view class="section__title">统一社会信用代码/营业执照号</view>
-    <input name="code_license" placeholder="18位，仅允许数字" />
+    <view class="section__title">统一社会信用代码/营业执照号*</view>
+    <input type="number" bindblur="getCode_license" name="code_license" placeholder="18位，仅允许数字" />
   </view>
   <view class="section">
-    <view class="section__title">法人身份证号</view>
-    <input name="code_ssn_owner" placeholder="18位，仅允许数字及大小写x" />
+    <view class="section__title">法人身份证号*</view>
+    <input type="idcard" bindblur="getCode_ssn_owner" name="code_ssn_owner" placeholder="18位，仅允许数字及大小写x" />
   </view>
   <view class="section">
     <view class="section__title">经办人身份证号</view>
-    <input name="code_ssn_auth" placeholder="18位，仅允许数字及大小写x" />
+    <input type="idcard" bindblur="getCode_ssn_auth" name="code_ssn_auth" placeholder="18位，仅允许数字及大小写x" />
+  </view>
+  <view class="section">
+    <view class="section__title">营业执照正/副本*</view>
+    <view class="page-body-info">
+        <block wx:for="{{licenseImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgLicense" class="close" src="../../image/close.png"></image></image>
+        </block>
+        <block >
+          <view class="image-plus image-plus-nb" bindtap="chooseImageLicense">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+          <view class="image-plus-text">选择图片</view>
+        </block>
+    </view>
+    <button name="" type="primary" size="mini" bindtap="upImgLicense">开始上传图片</button>
+  </view>
+  <view class="section">
+    <view class="section__title">法人身份证*</view>
+    <view class="page-body-info">
+        <block wx:for="{{ownerImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgOwner" class="close" src="../../image/close.png"></image></image>
+        </block>
+        <block >
+          <view class="image-plus image-plus-nb" bindtap="chooseImageOwner">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+          <view class="image-plus-text">选择图片</view>
+        </block>
+    </view>
+    <button name="" type="primary" size="mini" bindtap="upImgOwner">开始上传图片</button>
+  </view>
+  <view class="section">
+    <view class="section__title">经办人身份证</view>
+    <view class="page-body-info">
+        <block wx:for="{{authImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgAuth" class="close" src="../../image/close.png"></image></image>
+        </block>
+        <block >
+          <view class="image-plus image-plus-nb" bindtap="chooseImageAuth">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+          <view class="image-plus-text">选择图片</view>
+        </block>
+    </view>
+    <button name="" type="primary" size="mini" bindtap="upImgAuth">开始上传图片</button>
   </view>
   <view class="section">
     <view class="section__title">授权书</view>
-    <button name="url_image_auth_doc" type="primary" size="mini" bindtap="chooseImage">选择图片</button>
-    <view wx:for="{{array}}" class="classname" style="{{display}}">
-      <image class="aspectFill" src="{{item}}" mode="aspectFill"><view class="cancel">X</view></image>
+   <view class="page-body-info">
+        <block wx:for="{{authDocImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgAuthDoc" class="close" src="../../image/close.png"></image></image>
+        </block>
+        <block >
+          <view class="image-plus image-plus-nb" bindtap="chooseImageAuthDoc">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+          <view class="image-plus-text">选择图片</view>
+        </block>
     </view>
-    <button name="" type="primary" size="mini" bindtap="uploadImg">开始上传图片</button>
+    <button name="" type="primary" size="mini" bindtap="upImgAuthDoc">开始上传图片</button>
   </view>
 
   <view class="section">
     <view class="section__title">开户行名称</view>
-    <input name="bank_name" placeholder="3-20位，仅允许中英文及空格" />
+    <input type="text" bindblur="getBank_name" name="bank_name" placeholder="3-20位，仅允许中英文及空格" />
   </view>
   <view class="section">
     <view class="section__title">开户行账号</view>
-    <input name="bank_account" placeholder="最长30位，仅允许数字及-" />
+    <input type="number" maxlength="200" bindblur="getBank_account" name="bank_account" placeholder="最长30位，仅允许数字及-" />
   </view>
 
   <view class="section">
     <view class="section__title">产品（最多允许8个图片URL，多个URL间以一个半角逗号分隔）</view>
-    <button name="url_image_auth_doc" type="primary" size="mini" bindtap="product">选择图片</button>
-    <view class="classname">
-      <image src=""></image>
+     <view class="page-body-info">
+        <block wx:for="{{productImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgProduct" class="close" src="../../image/close.png"></image></image>
+        </block>
+        <block >
+          <view class="image-plus image-plus-nb" bindtap="chooseImageProduct">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+          <view class="image-plus-text">选择图片</view>
+        </block>
     </view>
-    <button name="" type="primary" size="mini" bindtap="uploadImg">开始上传图片</button>
+    <button name="" type="primary" size="mini" bindtap="upImgProduct">开始上传图片</button>
   </view>
   <view class="section">
     <view class="section__title">工厂/产地环境（最多允许8个图片URL，多个URL间以一个半角逗号分隔）</view>
-    <button name="url_image_auth_doc" type="primary" size="mini" bindtap="proEnvironment">选择图片</button>
+    <view class="page-body-info">
+        <block wx:for="{{produceImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgProduce" class="close" src="../../image/close.png"></image></image>
+        </block>
+        <block >
+          <view class="image-plus image-plus-nb" bindtap="chooseImageProduce">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+          <view class="image-plus-text">选择图片</view>
+        </block>
+    </view>
+    <button name="" type="primary" size="mini" bindtap="upImgProduce">开始上传图片</button>
   </view>
   <view class="section">
     <view class="section__title">门店/柜台环境（最多允许8个图片URL，多个URL间以一个半角逗号分隔）</view>
-    <button name="url_image_auth_doc" type="primary" size="mini" bindtap="counterEnvironment">选择图片</button>
+    <view class="page-body-info">
+        <block wx:for="{{retailImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgRetail" class="close" src="../../image/close.png"></image></image>
+        </block>
+        <block >
+          <view class="image-plus image-plus-nb" bindtap="chooseImageRetail">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+          <view class="image-plus-text">选择图片</view>
+        </block>
+    </view>
+    <button name="" type="primary" size="mini" bindtap="upImgRetail">开始上传图片</button>
   </view>
  
   <view class="btn-area">

@@ -1,3 +1,7 @@
+
+//var CryptoJS = require('core.js');
+var CryptoJS = require('hmac-sha1.js');
+var base64js = require('enc-base64.js');
 function Upyun(options) {
   this.bucket = options.bucket
   this.operator = options.operator
@@ -14,23 +18,25 @@ Upyun.prototype.upload = function (options) {
     'save-key': options.remotePath,
     bucket: self.bucket,
     expiration: Math.round(new Date().getTime() / 1000) + 3600,
-    date: date
+    date: date,
+    'x-gmkerl-thumb': '/format/jpg',
   }
   var policy = Base64.encode(JSON.stringify(opts))
   var data = ['POST', '/' + self.bucket, date, policy].join('&')
   self.getSignature(data, function (err, signature) {
+    
     if (err) {
       options.fail && options.fail(err)
       options.complete && options.complete(err)
       return
     }
     wx.uploadFile({
-      url: `https://v0.api.upyun.com/${self.bucket}`,
+      url: `https://v0.api.upyun.com/jinlaisandbox-images`,
       filePath: options.localPath,
       name: 'file',
       formData: {
-        authorization: `UPYUN ${self.operator}:${signature}`,
-        policy: policy
+        authorization: `UPYUN jinlaisandbox:${signature}`,
+        policy: policy,
       },
       success: options.success,
       fail: options.fail,
@@ -40,18 +46,11 @@ Upyun.prototype.upload = function (options) {
 }
 
 Upyun.prototype.getSignature = function (data, cb) {
-  wx.request({
-    url: this.getSignatureUrl,
-    data: {
-      data: data
-    },
-    success: function (res) {
-      cb(null, res.data.signature)
-    },
-    fail: function (err) {
-      cb(err)
-    }
-  })
+  var Password = '9b11840f74cb22d7b70689dad952f0e8';
+  var sign = CryptoJS(data, Password);
+  var signature = base64js.stringify(sign);
+  console.log(signature)
+  cb(null,signature)
 }
 
 /* eslint-disable */
