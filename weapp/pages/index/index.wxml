@@ -1,10 +1,6 @@
 <!--index.wxml-->
-<view class="container">
-  <block wx:for="{{bizs}}">
-    <template is="biz_list" data="{{...item}}" />
-  </block>
-</view>
-<view class="info" style="{{infoStyle}}">
+
+<view class="info" style="{{infoStyle}}" bindtap="info_biz">
   <view>商家简称：{{name}}</view>
   <view>商家全称：{{brief_name}}</view>
   <view>服务电话：{{tel_public}}</view>
@@ -13,7 +9,7 @@
 </view>
 <view class="comeIn" style="{{comeInBtn}}">
 <button class="submit" type="primary" size="mini" loading="{{loading}}" plain="{{plainde}}"
-        disabled="{{disbtn}}" bindtap="button_biz_create"> 我要进来（申请入住） </button>
+        disabled="{{disbtn}}" bindtap="button_biz_create"> 我要进来（申请入驻） </button>
 </view>
 <!--
   biz_id: int
@@ -23,6 +19,3 @@
   description string
   url_logo: string
 -->
-<template name="biz_list">
-    <navigator url="/pages/biz/detail?id={{biz_id}}" hover-class="navigator-hover">{{brief_name}} {{name}}</navigator>
-</template>

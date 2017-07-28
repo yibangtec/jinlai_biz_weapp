@@ -254,8 +254,8 @@ Page({
               data: time_expire_login
             })
 
-            wx.redirectTo({
-              url: 'login'
+            wx.reLaunch({
+              url: 'pwresult?title=密码重置成功'
             })
           },
           fail: function (result) {

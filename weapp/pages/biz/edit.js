@@ -1,32 +1,20 @@
-// pwresult.js
+// edit.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  title:''
+  
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      title: options.title
-    })   
-    wx.setNavigationBarTitle({ title: options.title })
+  
   },
-  backIndex:function(e){
-    wx.switchTab({
-      url: '../../pages/index/index'
-    })
-  },
-  backMine:function(e){
-    wx.switchTab({
-      url: '../../pages/mine/index'
-    })
-  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

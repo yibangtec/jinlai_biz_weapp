@@ -27,15 +27,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
-    
-    
+  
     //调用应用实例的方法获取全局数据
     var that=this
     
     wx.getStorage({
       key: 'user',
       success: function (res) {
+        console.log(res)
         //获取本地user.password值，若为空则转到密码设置页
         if (res.data.content.passworde == "") {
           wx.redirectTo({

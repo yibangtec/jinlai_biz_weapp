@@ -2,7 +2,7 @@
 <text>creat.wxml</text>
 <form bindsubmit="formSubmit" bindreset="formReset">
 <view class="classname">
-  <text>“商务联系电话 ”+ 本地user.mobile值</text>
+  <text>“商务联系电话 ”+ {{tel}}</text>
 </view>
 <view class="classname">
   <text>您可在入驻申请通过后申请修改商务联系电话</text>
@@ -163,6 +163,6 @@
   </view>
  
   <view class="btn-area">
-    <button formType="submit">Submit</button>
+    <button type="primary" disabled="{{disable}}" bindtap="submit">Submit</button>
   </view>
 </form>

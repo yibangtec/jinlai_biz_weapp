@@ -2,8 +2,8 @@
 <view style="text-align:center"> {{title}} </view>
 <view> 点击左上角返回回到之前页面 </view>
 <text>pwchange.wxml</text>
- <input type="password" placeholder="请输入原始密码" bindblur="getCurrentPw" focus="{{focusCurrentPw}}" />
-  <input type="password" placeholder="请输入新密码" bindfocus="verCurrentPw" bindblur="getNewPw" focus="{{focusNewPw}}"/>
-   <input type="password" placeholder="请确认新密码" bindfocus="verNewPw" bindblur="getPwConfirm" focus="{{focusConfirmPw}}"/>
+ <input type="text" password="true" placeholder="请输入原始密码" bindblur="getCurrentPw" focus="{{focusCurrentPw}}" />
+  <input type="text" password="true" placeholder="请输入新密码" bindfocus="verCurrentPw" bindblur="getNewPw" focus="{{focusNewPw}}"/>
+   <input type="text" password="true" placeholder="请确认新密码" bindfocus="verNewPw" bindblur="getPwConfirm" focus="{{focusConfirmPw}}"/>
    <button class="submit" type="primary" size="{{defaultSize}}" loading="{{loading}}" plain="{{plainde}}"
         disabled="{{disbtn}}" bindtap="changePw"> 确定 </button>

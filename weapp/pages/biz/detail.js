@@ -1,5 +1,6 @@
 // pages/biz/detail.js
 var app = getApp()
+var bizId;
 Page({
 
   /**
@@ -25,8 +26,9 @@ Page({
 
     // 通过API获取或处理数据
     var url = 'biz/detail'
+    bizId = options.id
     var params = {
-      id : options.id
+      id : options.id3
     }
     var api_result = api_request(url, params)
 
@@ -42,7 +44,7 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         url: app.globalData.url_api + url,
-        data: app.globalData.complete_params,
+        data: { id: bizId },
         success: function (result) {
           console.log(result.data)
           that.setData({ biz: result.data.content });
@@ -53,7 +55,11 @@ Page({
       })
     }
   },
-
+  button_edit:function(e){
+    wx.redirectTo({
+      url: 'edit?id=' + bizId
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

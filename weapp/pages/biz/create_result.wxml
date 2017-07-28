@@ -1,5 +1,4 @@
-<!--pwresult.wxml-->
-<text>pwresult.wxml</text>
+<!--create_result.wxml-->
 <text>{{title}}</text>
 <button class="verify-code clearfix" class="bnt-left" type="primary" size="mini" loading="{{loading}}" plain="{{defaultPlain}}"
         disabled="{{disableVer}}" bindtap="backIndex"> 首页 </button>

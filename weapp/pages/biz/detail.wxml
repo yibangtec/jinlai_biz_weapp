@@ -1,12 +1,52 @@
 <!--pages/biz/detail.wxml-->
+<view class="info-detail">
+  <view>商家全称---{{biz.name}}<text class="right"> > </text></view>
+  <view wx:if="{{biz.brief_name !== undefined||biz.brief_name!== null}}"> 商家简称---<text class="right">未设置 > </text></view>
+  <view wx:else> {{biz.brief_name}} </view>
+  <view wx:if="{{biz.description !== undefined||biz.description !== null}}"> 商家简介--- <text class="right">未设置 > </text></view>
+  <view wx:else> {{biz.description}} > </view>
+ 
+</view>
 <view class="info-brief">
-  <text>{{biz.brief_name}}</text>
-  <text>{{biz.slogan}}</text>
-  <text>{{biz.tel_public}}</text>
-  <text>{{biz.notification}}</text>
+  <view wx:if="{{biz.url_name !== undefined||biz.url_name !== null}}"> 店铺域名---<text class="right">未设置 > </text></view>
+  <view wx:else> {{biz.url_name}} </view>
+  <view>LOGO---{{biz.url_logo}}</view>
+  <view>宣传语---{{biz.slogan}}</view>
+  <view>公告---{{biz.notification}}</view>
+  <view>消费者联系电话---{{biz.tel_public}}</view>
+  <view>商务联系手机号---{{biz.tel_protected_biz}}</view>
+  <view>财务联系手机号---{{biz.tel_protected_fiscal}}</view>
+  <view>订单通知手机号---{{biz.tel_protected_order}}</view>
+  <view wx:if="{{biz.code_license !== undefined||biz.code_license !== null}}">统一社会信用代码 {{biz.code_license}} <text class="right"> > </text></view>
+  <view wx:else>统一社会信用代码---<text class="right">未设置 > </text> </view>
+  <view>统一社会信用代码---{{biz.code_license}}</view>
+  <view>法人身份证号---{{biz.code_ssn_owner}}</view>
+  <view>经办人身份证号---{{biz.code_ssn_auth}}</view>
+  <view>订单最低金额（元）---{{biz.min_order_subtotal}}</view>
+  <view>配送起始时间（时）---{{biz.delivery_time_start}}</view>
+  <view>配送结束时间（时）---{{biz.delivery_time_end}}</view>
+  <view>国家；默认中国--{{biz.country}}</view>
+  <view>省---{{biz.province}}</view>
+  <view>市---{{biz.city}}</view>
+  <view>区/县---{{biz.county}}</view>
+  <view>详细地址；小区名、路名、门牌号等---{{biz.detail}}</view>
+  <view>经度（高德，下同）---{{biz.longitude}}</view>
+  <view>纬度（高德）---{{biz.latitude}}</view>
+  <view>开户行名称；最长20位---{{biz.bank_name}}</view>
+  <view>开户行账号；最长30位---{{biz.bank_account}}</view>
+  <view>营业执照正/副本照片---</view>
+  <view>经办人身份证照片---</view>
+  <view>经办人授权书照片---</view>
+  <view>官方网站---{{biz.url_web}}</view>
+  <view>官方微博---{{biz.url_weibo}}</view>
+  <view>微信二维码---</view>
+  <view>产品照片---</view>
+  <view>工厂/产地照片---</view>
+  <view>门店/柜台照片---</view>
+  <view>状态---{{biz.status}}</view>
+  <button wx:if="{{biz.status !== '受理中'}}" type="primary" size="mini" loading="{{loading}}" plain="{{plainde}}" bindtap="button_edit"> 修改 </button>
+  <button wx:elif="{{biz.status == '受理中'}}" disabled="true" type="primary" size="mini" loading="{{loading}}" plain="{{plainde}}" bindtap="button_edit"> 修改 </button>
+  
 </view>
 
-<view class="info-detail">
-  <text>{{biz.name}}</text>
-  <text>{{biz.description}}</text>
-</view>
+

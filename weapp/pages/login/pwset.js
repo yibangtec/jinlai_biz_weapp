@@ -82,10 +82,9 @@ Page({
                 data: 'set'
               })
               wx.reLaunch({
-                url: '../../pages/mine/index'
+                url: 'pwresult?title=密码设置成功'
               })
             }
-            
           },
           fail: function (result) {
             console.log(result)

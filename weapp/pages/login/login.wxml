@@ -6,8 +6,8 @@
         disabled="{{disabled}}" bindtap="login_sms"> 短信登录 </button>
 </view>
 <view class="section">
-  <input type="tel" placeholder="请输入手机号" bindblur="getTel" focus="{{telFocus}}" />
-  <input type="password" placeholder="请输入密码" bindfocus="verifyTel" bindblur="getPw" focus="{{pwFocus}}" />
+  <input type="number" placeholder="请输入手机号" bindblur="getTel" focus="{{telFocus}}" />
+  <input type="text" password="true" placeholder="请输入密码" bindfocus="verifyTel" bindblur="getPw" focus="{{pwFocus}}" />
   <button class="submit" type="primary" size="{{defaultSize}}" loading="{{loading}}" plain="{{plainde}}"
         disabled="{{disbtn}}" bindtap="pwLogin"> 确定 </button>
   <view class="forgetPw">忘记密码</view>   

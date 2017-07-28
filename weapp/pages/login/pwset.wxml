@@ -1,6 +1,6 @@
 <!--pwset.wxml-->
 <text>pwset.wxml</text>
-<input type="password" placeholder="请输入密码" bindblur="getPw" focus="{{pwFocus}}" />
-<input type="password" placeholder="请确认密码" bindfocus="verifyPw" bindblur="getPwTow" focus="{{pwTowFocus}}" />
+<input type="text" password="true" placeholder="请输入密码" bindblur="getPw" focus="{{pwFocus}}" />
+<input type="text" password="true" placeholder="请确认密码" bindfocus="verifyPw" bindblur="getPwTow" focus="{{pwTowFocus}}" />
 <button class="submit" type="primary" size="{{defaultSize}}" loading="{{loading}}" plain="{{plainde}}"
         disabled="{{disbtn}}" bindtap="pwSet"> 确定 </button>

@@ -37,7 +37,7 @@ Page({
       }
     })
   },
-  login_sms:function(){
+  login_sms:function(e){
     wx.navigateTo({
       url: 'login_sms'
     })
@@ -45,11 +45,8 @@ Page({
   //手机号输入框失去焦点获取tel
   getTel:function(e){
     tel = e.detail.value
-  },
-  //密码框获取焦点时验证tel
-  verifyTel:function(e){
-    var that=this 
-   
+    var that = this
+
     var re = /^1\d{10}$/
     if (re.test(tel)) {
       that.setData({
@@ -58,15 +55,15 @@ Page({
     } else {
       wx.showToast({
         title: '请输入正确的手机号',
-        icon:'loading',
+        icon: 'loading',
         duration: 2000
       })
       that.setData({
         telFocus: true,
       })
     }
-    console.log(tel)
   },
+  
   //失去焦点的时候获取pw
   getPw:function(e){
     pw = e.detail.value
@@ -95,11 +92,19 @@ Page({
           data: { password:pw, mobile: tel },
           success: function (result) {
             console.log(result)
-            var user=result.data
+            var user = result.data
             if (result.data.status==200){
+              wx.showToast({
+                title: '登录成功',
+                icon: 'loading',
+                duration: 2000
+              })
               wx.setStorage({
                 key: "user",
                 data: user
+              })
+              wx.reLaunch({
+                url: '../../pages/mine/index'
               })
             }
            
@@ -110,9 +115,7 @@ Page({
               data: time_expire_login
             })
 
-            wx.reLaunch({
-              url: '../../pages/mine/index'
-            })
+           
           },
           fail: function (result) {
             console.log(result)
@@ -150,9 +153,9 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    wx.switchTab({
-      url: '../../pages/index/index'
-    })
+    //wx.switchTab({
+      //url: '../../pages/index/index'
+    //})
   },
 
   /**

@@ -28,13 +28,13 @@ Page({
         console.log(login)
         console.log(timestamp)
         if (login > timestamp) {
-          wx.reLaunch({
-            url: '../../pages/mine/index'
-          })
+          //wx.reLaunch({
+           // url: '../../pages/mine/index'
+          //})
         }
       },
       fail: function (err) {
-
+        console.log(err)
       }
     })
     //获取本地time_end_countdown值，若无或该值小于当前时间戳则结束
@@ -212,9 +212,9 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    wx.switchTab({
-      url: '../../pages/mine/index'
-    })
+    //wx.switchTab({
+      //url: '../../pages/mine/index'
+    //})
   },
 
   /**

@@ -1,4 +1,4 @@
-// pwresult.js
+// create_result.js
 Page({
 
   /**
@@ -14,15 +14,15 @@ Page({
   onLoad: function (options) {
     this.setData({
       title: options.title
-    })   
+    })
     wx.setNavigationBarTitle({ title: options.title })
   },
-  backIndex:function(e){
+  backIndex: function (e) {
     wx.switchTab({
       url: '../../pages/index/index'
     })
   },
-  backMine:function(e){
+  backMine: function (e) {
     wx.switchTab({
       url: '../../pages/mine/index'
     })
