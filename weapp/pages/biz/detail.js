@@ -27,9 +27,7 @@ Page({
     // 通过API获取或处理数据
     var url = 'biz/detail'
     bizId = options.id
-    var params = {
-      id : options.id3
-    }
+    var params = {}
     var api_result = api_request(url, params)
 
     // 网络请求
@@ -56,8 +54,8 @@ Page({
     }
   },
   button_edit:function(e){
-    wx.redirectTo({
-      url: 'edit?id=' + bizId
+    wx.navigateTo({
+      url: 'edit?id=' + bizId,
     })
   },
   /**

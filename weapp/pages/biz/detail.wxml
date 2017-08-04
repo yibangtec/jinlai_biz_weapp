@@ -1,13 +1,11 @@
 <!--pages/biz/detail.wxml-->
-<view class="info-detail">
+
   <view>商家全称---{{biz.name}}<text class="right"> > </text></view>
   <view wx:if="{{biz.brief_name !== undefined||biz.brief_name!== null}}"> 商家简称---<text class="right">未设置 > </text></view>
   <view wx:else> {{biz.brief_name}} </view>
   <view wx:if="{{biz.description !== undefined||biz.description !== null}}"> 商家简介--- <text class="right">未设置 > </text></view>
   <view wx:else> {{biz.description}} > </view>
- 
-</view>
-<view class="info-brief">
+
   <view wx:if="{{biz.url_name !== undefined||biz.url_name !== null}}"> 店铺域名---<text class="right">未设置 > </text></view>
   <view wx:else> {{biz.url_name}} </view>
   <view>LOGO---{{biz.url_logo}}</view>
@@ -34,7 +32,9 @@
   <view>纬度（高德）---{{biz.latitude}}</view>
   <view>开户行名称；最长20位---{{biz.bank_name}}</view>
   <view>开户行账号；最长30位---{{biz.bank_account}}</view>
-  <view>营业执照正/副本照片---</view>
+  <view>营业执照正/副本照片
+    <image src=""></image>
+  </view>
   <view>经办人身份证照片---</view>
   <view>经办人授权书照片---</view>
   <view>官方网站---{{biz.url_web}}</view>
@@ -46,7 +46,6 @@
   <view>状态---{{biz.status}}</view>
   <button wx:if="{{biz.status !== '受理中'}}" type="primary" size="mini" loading="{{loading}}" plain="{{plainde}}" bindtap="button_edit"> 修改 </button>
   <button wx:elif="{{biz.status == '受理中'}}" disabled="true" type="primary" size="mini" loading="{{loading}}" plain="{{plainde}}" bindtap="button_edit"> 修改 </button>
-  
-</view>
+
 
 

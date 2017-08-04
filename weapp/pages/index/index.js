@@ -157,8 +157,8 @@ Page({
     console.log("onLoad")
   },
   info_biz: function (e) {
-    wx.redirectTo({
-      url: '../../pages/biz/detail?id='+bizId
+    wx.navigateTo({
+      url: '../../pages/biz/detail?id=' + bizId,
     })
   },
 }) // end Page
