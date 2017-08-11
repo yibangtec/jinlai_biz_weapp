@@ -1,0 +1,21 @@
+<!--edit_img.wxml-->
+<text>{{title}}修改</text>
+<input type="text" value="{{value}}" bindblur="getEditVaue" placeholder="请输入修改内容"/>
+
+<view class="section">
+    <view class="section__title">产品（最多允许4个图片URL，多个URL间以一个半角逗号分隔）</view>
+     <view class="page-body-info">
+        <block wx:for="{{productImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgProduct" class="close" src="../../image/close.png"></image></image>
+        </block>
+        <block >
+          <view class="image-plus image-plus-nb" bindtap="chooseImageProduct">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+          <view class="image-plus-text">选择图片</view>
+        </block>
+    </view>
+    <button name="" type="primary" size="mini" bindtap="upImgProduct">开始上传图片</button>
+  </view>
+<button bindtap="edit_img">确定</button>

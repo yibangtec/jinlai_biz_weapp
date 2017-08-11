@@ -164,6 +164,10 @@ Page({
           success: function (result) {
             console.log(result)
             if (result.data.status==200){
+              wx.setStorage({
+                key: "user",
+                data: result.data
+              })
               if (result.data.content.password == 'set') {
                 wx.reLaunch({
                   url: '../../pages/mine/index'

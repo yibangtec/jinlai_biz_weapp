@@ -5,6 +5,8 @@ brief_name,
 description,
 tel_public,
 tel_protected_biz,
+fullname_owner,
+fullname_auth,
 code_license,
 code_ssn_owner,
 code_ssn_auth,
@@ -13,18 +15,25 @@ bank_account,
 time,
 ownerSrc,//进行计算时候的url
 ownerImageUrl = [],//回调给后台的图片又拍云存储地址
+url_image_license,
 licenseSrc,
 licenseImageUrl = [],
+url_image_owner_id,
 authSrc,
 authImageUrl=[],
+url_image_auth_id,
 authDocSrc,
 authDocImageUrl = [],
+url_image_auth_doc,
 productSrc,
 productImageUrl = [],
+url_image_product,
 produceSrc,
 produceImageUrl = [],
+url_image_produce,
 retailSrc,
-retailImageUrl = [];
+retailImageUrl = [],
+url_image_retail;
 
 
 const Upyun = require('../../utils/upyun-wxapp-sdk')
@@ -107,12 +116,12 @@ Page({
     name = e.detail.value
   },
   verName:function(e){
-    var patrn = /^.{7,30}$/; 
+    var patrn = /^.{5,35}$/; 
     if (patrn.test(name)){
 
     }else{
       wx.showToast({
-        title: '商家全称输入字符长度应在7到30个',
+        title: '商家全称输入字符长度应在5到35个',
         icon: 'loading',
         duration: 2000
       })
@@ -150,18 +159,26 @@ Page({
       })
     }
   },
+  getFullname_owner:function(e){
+    fullname_owner = e.detail.value
+
+  },
+  getFullname_auth:function(e){
+    fullname_auth = e.detail.value
+  },
   getCode_license: function (e) {
     code_license = e.detail.value
-    var patrn = /^.{18}$/; 
+    var patrn = /^[a-zA-Z0-9]{15,18}$/; 
     if (patrn.test(code_license)) {
-
     } else {
       wx.showToast({
-        title: '请输入18位营业执照号',
+        title: '请输入15-18位营业执照号',
         icon: 'loading',
         duration: 2000
       })
     }
+    code_license = code_license.toLowerCase()
+    console.log(code_license)
   },
   getCode_ssn_owner: function (e) {
     code_ssn_owner = e.detail.value
@@ -258,7 +275,8 @@ Page({
           console.log('uploadImage fail, errMsg is', errMsg)
         }
       })
-
+      url_image_license = licenseImageUrl.join(',')
+      console.log(url_image_license)
   },
   closeImgLicense: function (e) {
     var that = this;
@@ -312,7 +330,8 @@ Page({
         }
       })
     }
-    
+    url_image_owner_id = ownerImageUrl.join(',')
+    console.log(url_image_owner_id)
   },
   closeImgOwner:function(e){
     var that = this;
@@ -365,7 +384,8 @@ Page({
         }
       })
     }
-
+    url_image_auth_id = authImageUrl.join(',')
+    console.log(url_image_auth_id)
   },
   closeImgAuth: function (e) {
     var that = this;
@@ -418,7 +438,9 @@ Page({
           console.log('uploadImage fail, errMsg is', errMsg)
         }
       })
-    }
+    } 
+    url_image_auth_doc = authDocImageUrl.join(',')
+    console.log(url_image_auth_doc)
 
   },
   closeImgAuthDoc: function (e) {
@@ -435,7 +457,7 @@ Page({
   chooseImageProduct: function () {
     const self = this
     wx.chooseImage({
-      count: 1,
+      count: 4,
       sizeType: ['compressed'],
       sourceType: ['album'],
       success: function (res) {
@@ -455,8 +477,9 @@ Page({
     for (var i = 0; i < productSrc.length; i++) {
       console.log('this is  for')
       time = tick(i)
-      productImageUrl[i] = '/product/' + time
-      //console.log(arr[i])
+      productImageUrl[i] = 'product/' + time
+      var url_image_product = productImageUrl.join(',')
+      console.log(url_image_product)
       upyun.upload({
         localPath: productSrc[i],
         remotePath: '/biz/product/' + time,
@@ -473,7 +496,8 @@ Page({
         }
       })
     }
-
+    url_image_product = productImageUrl.join(',')
+    console.log(url_image_product)
   },
   closeImgProduct: function (e) {
     var that = this;
@@ -488,7 +512,7 @@ Page({
   chooseImageProduce: function () {
     const self = this
     wx.chooseImage({
-      count: 1,
+      count: 4,
       sizeType: ['compressed'],
       sourceType: ['album'],
       success: function (res) {
@@ -526,7 +550,8 @@ Page({
         }
       })
     }
-
+    url_image_produce = produceImageUrl.join(',')
+    console.log(url_image_produce)
   },
   closeImgProduce: function (e) {
     var that = this;
@@ -581,7 +606,8 @@ Page({
         }
       })
     }
-
+    url_image_retail = retailImageUrl.join(',')
+    console.log(url_image_retail)
   },
   closeImgRetail: function (e) {
     var that = this;
@@ -604,13 +630,14 @@ Page({
     var url = 'biz/create'
     var params = {}
     var api_result = api_request(url, params)
-    var url_image_license = licenseImageUrl.join(',')
-    var url_image_owner_id = ownerImageUrl.join(',')
-    var url_image_auth_id = authImageUrl.join(',')
-    var url_image_auth_doc = authDocImageUrl.join(',')
-    var url_image_product = productImageUrl.join(',')
-    var url_image_produce = produceImageUrl.join(',')
-    var url_image_retail = retailImageUrl.join(',')
+    
+    
+    
+    
+    
+    
+   
+    
     // 网络请求
     function api_request(url, api_params) {
       // 生成签名
@@ -624,7 +651,7 @@ Page({
         },
         url: app.globalData.url_api + url,
         data: {app_type:'biz',user_id: user_id, name: name, brief_name: brief_name,
-         description: description, tel_public: tel_public, tel_protected_biz: tel_protected_biz, 
+          description: description, tel_public: tel_public, tel_protected_biz: tel_protected_biz, fullname_owner: fullname_owner, fullname_auth: fullname_auth,
          code_license: code_license, code_ssn_owner: code_ssn_owner, code_ssn_auth: code_ssn_auth, url_image_license: url_image_license, url_image_owner_id: url_image_owner_id, 
          url_image_auth_id: url_image_auth_id, url_image_auth_doc: url_image_auth_doc, bank_name: bank_name, bank_account: bank_account, url_image_product: url_image_product,
          url_image_produce: url_image_produce, url_image_retail: url_image_retail},
@@ -639,12 +666,9 @@ Page({
               icon: 'success',
               duration: 1000
             })
-            wx.setStorage({
-              key: "biz",
-              data: result.data
-            })
+            
             wx.redirectTo({
-              url: 'pwresult?title="商家创建成功"'
+              url: '../login/pwresult?title="商家创建成功"'
             })
           }
           //传title = "成功创建商家"到商家操作结果页

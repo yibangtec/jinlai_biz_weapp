@@ -14,11 +14,11 @@
 </view>
  <view class="section">
     <view class="section__title">商家全称*</view>
-    <input type="text" maxlength="30" bindblur="getName" value="{{biz.name}}" placeholder="须与营业执照一致，7-30个字符" />
+    <input type="text" maxlength="35" bindblur="getName" value="{{biz.name}}" placeholder="须与营业执照一致，5-35个字符" />
   </view>
   <view class="section">
     <view class="section__title">商家简称*</view>
-    <input type="text" maxlength="10" bindblur="getBrief_name" value="{{biz.brief_name}}" placeholder="最多10个字符" />
+    <input type="text" maxlength="15" bindblur="getBrief_name" value="{{biz.brief_name}}" placeholder="最多15个字符" />
   </view>
    <view class="section">
     <view class="section__title">logo</view>
@@ -95,10 +95,17 @@
   </view>
   <view>经度（高德，下同）---{{biz.longitude}}</view>
   <view>纬度（高德）---{{biz.latitude}}</view>
-
+  <view class="section">
+    <view class="section__title">法人姓名*</view>
+    <input type="text" maxlength="15" bindblur="getFullname_owner" value="{{biz.fullname_owner}}" placeholder="请输入法人姓名" />
+  </view>
+  <view class="section">
+    <view class="section__title">经办人姓名</view>
+    <input type="text" maxlength="15" bindblur="getFullname_auth" value="{{biz.fullname_auth}}" placeholder="请输入经办人姓名" />
+  </view>
   <view class="section">
     <view class="section__title">统一社会信用代码/营业执照号*</view>
-    <input type="number" bindblur="getCode_license" value="{{biz.code_license}}" placeholder="18位，仅允许数字" />
+    <input type="number" bindblur="getCode_license" value="{{biz.code_license}}" placeholder="15-18位，仅允许数字" />
   </view>
   <view class="section">
     <view class="section__title">法人身份证号*</view>

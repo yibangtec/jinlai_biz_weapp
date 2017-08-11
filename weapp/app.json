@@ -21,7 +21,9 @@
     "pages/login/pwresult",
     "pages/biz/creat",
     "pages/biz/create_result",
-    "pages/biz/edit"
+    "pages/biz/edit",
+    "pages/biz/edit_certain",
+    "pages/biz/edit_img"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f7941c",

@@ -17,43 +17,6 @@ Page({
   {
     //清除本地存储
     //wx.clearStorage()
-    
-  },
- 
-  button_biz_create:function(e){
-    wx.navigateTo({
-      url: '../../pages/biz/creat',
-    })
-  },
-
-  
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function ()
-  {
-    return {
-      title: '进来商城',
-      path: '/pages/index/index'
-    }
-  },
-
-  onPullDownRefresh: function ()
-  {
-    console.log('onPullDownRefresh')
-  
-    wx.showLoading({
-      title: '载入中',
-    })
-
-    var that = this
-    that.get_biz(that)
-
-    wx.hideLoading()
-
-    wx.stopPullDownRefresh()
-  },
-  onShow: function () {
     var that = this;
     var timestamp = Date.parse(new Date())
     console.log(timestamp)
@@ -94,11 +57,11 @@ Page({
       }
     })
     wx.getStorage({
-      key: 'biz',
+      key: 'user',
       success: function (res) {
         console.log(res.data)
         //获取本地user.biz_id值，若为空则结束并显示button_biz_create
-        bizId = res.data.content.id
+        bizId = res.data.content.biz_id
         console.log(bizId)
         //调用BIZ2，若成功则显示info_biz并赋值相应元素；若status为414则显示button_biz_create，否则进行相应提示
         // 通过API获取或处理数据
@@ -121,7 +84,7 @@ Page({
             data: { id: bizId },
             success: function (result) {
               console.log(bizId)
-              console.log(result)
+              console.log('this is index info'+result)
               if (result.data.status === 200) {
                 that.setData({
                   infoStyle: 'display:block',
@@ -144,14 +107,16 @@ Page({
             }
           })
         }
-        if (res.data.content.id == "") {
+        if (res.data.content.biz_id == "") {
           that.setData({
             comeInBtn: 'display:block'
           });
         }
       },
       fail: function (err) {
-
+        that.setData({
+          comeInBtn: 'display:block'
+        });
       }
     })
     console.log("onLoad")
@@ -161,4 +126,40 @@ Page({
       url: '../../pages/biz/detail?id=' + bizId,
     })
   },
+ 
+  button_biz_create:function(e){
+    wx.navigateTo({
+      url: '../../pages/biz/creat',
+    })
+  },
+
+  
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function ()
+  {
+    return {
+      title: '进来商城',
+      path: '/pages/index/index'
+    }
+  },
+
+  onPullDownRefresh: function ()
+  {
+    console.log('onPullDownRefresh')
+  
+    wx.showLoading({
+      title: '载入中',
+    })
+
+    var that = this
+    that.get_biz(that)
+
+    wx.hideLoading()
+
+    wx.stopPullDownRefresh()
+  },
+  onShow: function () {
+  }
 }) // end Page

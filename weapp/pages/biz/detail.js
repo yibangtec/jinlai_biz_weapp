@@ -1,6 +1,6 @@
 // pages/biz/detail.js
 var app = getApp()
-var bizId;
+var text,bizId,biz;
 Page({
 
   /**
@@ -8,7 +8,8 @@ Page({
    */
   data: {
     biz : {},
-    id : ""
+    id : "",
+    pArr:[]
   },
 
   /**
@@ -45,13 +46,37 @@ Page({
         data: { id: bizId },
         success: function (result) {
           console.log(result.data)
-          that.setData({ biz: result.data.content });
+          biz = result.data.content
+          var p = result.data.content.url_image_product
+          var arr = p.split(",")
+          console.log(arr)
+          that.setData({ biz: result.data.content, pArr: arr });
+          
         },
         fail: function (result) {
           console.log(result)
         }
       })
     }
+  },
+  edit_name:function(e){
+    var n = e.currentTarget.dataset.name
+    var v = e.currentTarget.dataset.value
+    var t = e.currentTarget.dataset.text
+    console.log(bizId + n + biz[v]+t)
+    wx.navigateTo({
+      url: 'edit_certain?id=' + bizId + '&name=' + n + '&value=' + biz[v]+'&text='+t
+    })
+  },
+  edit_img:function(e){
+    var n = e.currentTarget.dataset.name
+    var v = e.currentTarget.dataset.name
+    var t = e.currentTarget.dataset.text
+    var img = e.currentTarget.dataset.img
+    console.log(bizId + n + biz[v] + t)
+    wx.navigateTo({
+      url: 'edit_img?id=' + bizId + '&name=' + n + '&value=' + biz[v] + '&text=' + t+'&img='+img
+    })
   },
   button_edit:function(e){
     wx.navigateTo({

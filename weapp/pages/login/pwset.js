@@ -17,7 +17,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    wx.getStorage({
+      key: 'user',
+      success: function (res) {
+        userId = res.data.data.content.user_id
+      },
+      fail: function (err) {
+        console.log(err)
+      }
+    })
   },
   getPw:function(e){
     pw = e.detail.value
@@ -42,19 +50,9 @@ Page({
   },
   getPwTow:function(e){
     pwtow = e.detail.value
-    wx.getStorage({
-      key: 'user',
-      success: function (res) {
-        userId = res.data.data.content.user_id
-
-        console.log(userId)
-      },
-      fail: function (err) {
-        console.log(err)
-      }
-    })
   },
   pwSet:function(){
+    console.log(userId)
     var that=this
     if(pw===pwtow){
       var url = 'account/password_set'
@@ -73,7 +71,7 @@ Page({
             'content-type': 'application/x-www-form-urlencoded'
           },
           url: app.globalData.url_api + url,
-          data: { user_id:userId, password:pw, password_confirm:pwtow },
+          data: {user_id:userId,password:pw,password_confirm:pwtow},
           success: function (result) {
             console.log(result)
             if (result.data.status == 200){

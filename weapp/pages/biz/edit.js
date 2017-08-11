@@ -1,10 +1,48 @@
 // edit.js
+const Upyun = require('../../utils/upyun-wxapp-sdk')
+const upyun = new Upyun({
+  bucket: 'jinlaisandbox-images',
+  operator: 'jinlaisandbox',
+})
+function tick(s) {
+  var objD = new Date();
+  var str;
+  var yy = objD.getYear();
+  if (yy < 1900) yy = yy + 1900;
+  var MM = objD.getMonth() + 1;
+  if (MM < 10) MM = '0' + MM;
+  var dd = objD.getDate();
+  if (dd < 10) dd = '0' + dd;
+  var hh = objD.getHours();
+  if (hh < 10) hh = '0' + hh;
+  var mm = objD.getMinutes();
+  if (mm < 10) mm = '0' + mm;
+  var ss = objD.getSeconds() + s;
+  if (ss < 10) ss = '0' + ss;
+  str = yy + MM + dd + "_" + hh + mm + ss + '.jpg';
+  return str;
+}
 var amapFile = require('../../utils/amap-wx')
 //var addToolbar = require('../../http://webapi.amap.com/maps?v=1.3&key=b0a6d590c3195b86fcc13676afa62eba&plugin=AMap.Geocoder')
 //var addToolbar = require('../../http://cache.amap.com/lbs/static/addToolbar')
 var user_id, bizId, name, brief_name, url_logo, url_name, slogan, description, notification, url_web, url_weibo, url_wechat,
   tel_public, tel_protected_biz, tel_protected_fiscal, tel_protected_order, nation, province, city, county, street, longitude, latitude,
-  code_license, code_ssn_owner, code_ssn_auth, bank_name, bank_account;
+  code_license, code_ssn_owner, code_ssn_auth, bank_name, bank_account, fullname_owner, fullname_auth;
+var time,
+  ownerSrc,//进行计算时候的url
+  ownerImageUrl = [],//回调给后台的图片又拍云存储地址
+  licenseSrc,
+  licenseImageUrl = [],
+  authSrc,
+  authImageUrl = [],
+  authDocSrc,
+  authDocImageUrl = [],
+  productSrc,
+  productImageUrl = [],
+  produceSrc,
+  produceImageUrl = [],
+  retailSrc,
+  retailImageUrl = [];
 var app = getApp()
 Page({
 
@@ -14,51 +52,27 @@ Page({
   data: {
     tel:'',
     biz:'',
-    con:'container'
+    con:'container',
+    ownerImageSrc: '',//展现到view层的图片地址
+    licenseImageSrc: '',
+    authImageSrc: '',
+    authDocImageSrc: '',
+    productImageSrc: '',
+    produceImageSrc: '',
+    retailImageSrc: '',
+    index: '',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
-    var that=this
-    
-    wx.request({
-      method: "GET",
-      header: {
-        'content-type': 'application/x-www-form-urlencoded'
-      },
-      url: 'https://restapi.amap.com/v3/geocode/geo?address=北京市朝阳区阜通东大街6号&output=JSON&key=b0a6d590c3195b86fcc13676afa62eba',
-      success: function (result) {
-        console.log(result)
-        
-      },
-      fail: function (result) {
-        console.log(result)
-      }
-    })
-    var myAmapFun = new amapFile.AMapWX({ key: 'b0a6d590c3195b86fcc13676afa62eba' });
-    myAmapFun.getRegeo({
-      success: function (data) {
-        //成功回调
-      },
-      fail: function (info) {
-        //失败回调
-        console.log(info)
-      }
-    })
-    var map = new AMap.Map(that.data.con, {
-      center: [117.000923, 36.675807],
-      zoom: 6
-    });
-    console.log(that.data.con)
-    //获取本地user.user_id值，以及传入的biz_id值
+    var that = this
     wx.getStorage({
       key: 'user',
       success: function (res) {
         console.log(res.data.content.mobile)
-        user_id = res.data.content.user_id
+        user_id = res.data.content.id
         that.setData({
           tel: res.data.content.mobile,
         })
@@ -67,7 +81,7 @@ Page({
 
       }
     })
-   
+    
     //调用BIZ2，若失败或结果为空则结束并进行相应提示
     // 通过API获取或处理数据
     var url = 'biz/detail'
@@ -104,12 +118,12 @@ Page({
   getName:function(e){
     name = e.detail.value
     console.log(name)
-    var patrn = /^.{7,30}$/;
+    var patrn = /^.{5,35}$/;
     if (patrn.test(name)) {
 
     } else {
       wx.showToast({
-        title: '商家全称输入字符长度应在7到30个',
+        title: '商家全称输入字符长度应在5到35个',
         icon: 'loading',
         duration: 2000
       })
@@ -118,6 +132,7 @@ Page({
   getBrief_name:function(e){
     brief_name = e.detail.value
   },
+
   getUrl_logo:function(e){
 
   },
@@ -194,6 +209,7 @@ Page({
       })
     }
   },
+
   getNation: function (e) {
     nation=e.detail.value
   },
@@ -209,14 +225,20 @@ Page({
   getStreet: function (e) {
     street=e.detail.value
   },
+  getFullname_owner:function(e){
+    fullname_owner = e.detail.value
+  },
+  getFullname_auth: function (e) {
+    fullname_auth = e.detail.value
+  },
   getCode_license: function (e) {
     code_license=e.detail.value
-    var patrn = /^.{18}$/;
+    var patrn = /^[a-zA-Z0-9]{15,18}$/;
     if (patrn.test(code_license)) {
 
     } else {
       wx.showToast({
-        title: '请输入18位营业执照号',
+        title: '请输入15-18位营业执照号',
         icon: 'loading',
         duration: 2000
       })
@@ -274,6 +296,480 @@ Page({
       })
     }
   },
+  //营业执照
+  chooseImageLicense: function () {
+    const self = this
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album'],
+      success: function (res) {
+        console.log('chooseImage success, temp path is', res.tempFilePaths)
+        licenseSrc = res.tempFilePaths
+        self.setData({
+          licenseImageSrc: licenseSrc
+        })
+      },
+      fail: function ({ errMsg }) {
+        console.log('chooseImage licenseImageSrc fail, err is', errMsg)
+      }
+    })
+  },
+  upImgLicense: function (e) {
+    console.log('this is  upImg')
+    console.log('this is  for')
+    time = tick(0)
+    licenseImageUrl[0] = '/license/' + time
+    console.log(time)
+    upyun.upload({
+      localPath: licenseSrc[0],
+      remotePath: '/biz/license/' + time,
+      success: function (res) {
+        console.log('uploadImage success, res is:', res)
+        if (res.statusCode == 200) {
+          wx.showToast({
+            title: '上传成功',
+            icon: 'success',
+            duration: 2000
+          })
+        }
+
+      },
+      fail: function ({ errMsg }) {
+        console.log('uploadImage fail, errMsg is', errMsg)
+      }
+    })
+
+  },
+  closeImgLicense: function (e) {
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var list = that.data.licenseImageSrc;
+    list.splice(index, 1)
+    that.setData({
+      licenseImageSrc: list
+    });
+  },
+  //法人身份证
+  chooseImageOwner: function () {
+    const self = this
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album'],
+      success: function (res) {
+        console.log('chooseImage success, temp path is', res.tempFilePaths)
+        ownerSrc = res.tempFilePaths
+        self.setData({
+          ownerImageSrc: ownerSrc,
+          disable: false
+        })
+      },
+      fail: function ({ errMsg }) {
+        console.log('chooseImage fail, err is', errMsg)
+      }
+    })
+  },
+  upImgOwner: function (e) {
+    console.log('this is  upImg')
+    for (var i = 0; i < ownerSrc.length; i++) {
+      console.log('this is  for')
+      time = tick(i)
+      ownerImageUrl[i] = '/owner_id/' + time
+      //console.log(arr[i])
+      upyun.upload({
+        localPath: ownerSrc[i],
+        remotePath: '/biz/owner_id/' + time,
+        success: function (res) {
+          console.log('uploadImage success, res is:', res)
+          wx.showToast({
+            title: '上传成功',
+            icon: 'success',
+            duration: 1000
+          })
+        },
+        fail: function ({ errMsg }) {
+          console.log('uploadImage fail, errMsg is', errMsg)
+        }
+      })
+    }
+
+  },
+  closeImgOwner: function (e) {
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var list = that.data.ownerImageSrc;
+    list.splice(index, 1)
+    that.setData({
+      ownerImageSrc: list
+    });
+  },
+  //经办人身份证
+  chooseImageAuth: function () {
+    const self = this
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album'],
+      success: function (res) {
+        console.log('chooseImage success, temp path is', res.tempFilePaths)
+        authSrc = res.tempFilePaths
+        self.setData({
+          authImageSrc: authSrc
+        })
+      },
+      fail: function ({ errMsg }) {
+        console.log('chooseImage fail, err is', errMsg)
+      }
+    })
+  },
+  upImgAuth: function (e) {
+    console.log('this is  upImg')
+    for (var i = 0; i < authSrc.length; i++) {
+      console.log('this is  for')
+      time = tick(i)
+      authImageUrl[i] = '/auth_id/' + time
+      //console.log(arr[i])
+      upyun.upload({
+        localPath: authSrc[i],
+        remotePath: '/biz/auth_id/' + time,
+        success: function (res) {
+          console.log('uploadImage success, res is:', res)
+          wx.showToast({
+            title: '上传成功',
+            icon: 'success',
+            duration: 1000
+          })
+        },
+        fail: function ({ errMsg }) {
+          console.log('uploadImage fail, errMsg is', errMsg)
+        }
+      })
+    }
+
+  },
+  closeImgAuth: function (e) {
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var list = that.data.authImageSrc;
+    list.splice(index, 1)
+    that.setData({
+      authImageSrc: list
+    });
+  },
+  //授权书
+
+  chooseImageAuthDoc: function () {
+    const self = this
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album'],
+      success: function (res) {
+        console.log('chooseImage success, temp path is', res.tempFilePaths)
+        authDocSrc = res.tempFilePaths
+        self.setData({
+          authDocImageSrc: authDocSrc
+        })
+      },
+      fail: function ({ errMsg }) {
+        console.log('chooseImage fail, err is', errMsg)
+      }
+    })
+  },
+  upImgAuthDoc: function (e) {
+    console.log('this is  upImg')
+    for (var i = 0; i < authDocSrc.length; i++) {
+      console.log('this is  for')
+      time = tick(i)
+      authDocImageUrl[i] = '/auth_doc/' + time
+      //console.log(arr[i])
+      upyun.upload({
+        localPath: authDocSrc[i],
+        remotePath: '/biz/auth_doc/' + time,
+        success: function (res) {
+          console.log('uploadImage success, res is:', res)
+          wx.showToast({
+            title: '上传成功',
+            icon: 'success',
+            duration: 1000
+          })
+        },
+        fail: function ({ errMsg }) {
+          console.log('uploadImage fail, errMsg is', errMsg)
+        }
+      })
+    }
+
+  },
+  closeImgAuthDoc: function (e) {
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var list = that.data.authDocImageSrc;
+    list.splice(index, 1)
+    that.setData({
+      authDocImageSrc: list
+    });
+  },
+  //产品
+
+  chooseImageProduct: function () {
+    const self = this
+    wx.chooseImage({
+      count: 4,
+      sizeType: ['compressed'],
+      sourceType: ['album'],
+      success: function (res) {
+        console.log('chooseImage success, temp path is', res.tempFilePaths)
+        productSrc = res.tempFilePaths
+        self.setData({
+          productImageSrc: productSrc
+        })
+      },
+      fail: function ({ errMsg }) {
+        console.log('chooseImage fail, err is', errMsg)
+      }
+    })
+  },
+  upImgProduct: function (e) {
+    console.log('this is  upImg')
+    for (var i = 0; i < productSrc.length; i++) {
+      console.log('this is  for')
+      time = tick(i)
+      productImageUrl[i] = '/product/' + time
+      //console.log(arr[i])
+      upyun.upload({
+        localPath: productSrc[i],
+        remotePath: '/biz/product/' + time,
+        success: function (res) {
+          console.log('uploadImage success, res is:', res)
+          wx.showToast({
+            title: '上传成功',
+            icon: 'success',
+            duration: 1000
+          })
+        },
+        fail: function ({ errMsg }) {
+          console.log('uploadImage fail, errMsg is', errMsg)
+        }
+      })
+    }
+
+  },
+  closeImgProduct: function (e) {
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var list = that.data.productImageSrc;
+    list.splice(index, 1)
+    that.setData({
+      productImageSrc: list
+    });
+  },
+  //工厂
+  chooseImageProduce: function () {
+    const self = this
+    wx.chooseImage({
+      count: 4,
+      sizeType: ['compressed'],
+      sourceType: ['album'],
+      success: function (res) {
+        console.log('chooseImage success, temp path is', res.tempFilePaths)
+        produceSrc = res.tempFilePaths
+        self.setData({
+          produceImageSrc: produceSrc
+        })
+      },
+      fail: function ({ errMsg }) {
+        console.log('chooseImage fail, err is', errMsg)
+      }
+    })
+  },
+  upImgProduce: function (e) {
+    console.log('this is  upImg')
+    for (var i = 0; i < produceSrc.length; i++) {
+      console.log('this is  for')
+      time = tick(i)
+      produceImageUrl[i] = '/produce/' + time
+      //console.log(arr[i])
+      upyun.upload({
+        localPath: produceSrc[i],
+        remotePath: '/biz/produce/' + time,
+        success: function (res) {
+          console.log('uploadImage success, res is:', res)
+          wx.showToast({
+            title: '上传成功',
+            icon: 'success',
+            duration: 1000
+          })
+        },
+        fail: function ({ errMsg }) {
+          console.log('uploadImage fail, errMsg is', errMsg)
+        }
+      })
+    }
+
+  },
+  closeImgProduce: function (e) {
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var list = that.data.produceImageSrc;
+    list.splice(index, 1)
+    that.setData({
+      produceImageSrc: list
+    });
+  },
+  //门店
+
+  chooseImageRetail: function () {
+    const self = this
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album'],
+      success: function (res) {
+        console.log('chooseImage success, temp path is', res.tempFilePaths)
+        retailSrc = res.tempFilePaths
+        self.setData({
+          retailImageSrc: retailSrc
+        })
+      },
+      fail: function ({ errMsg }) {
+        console.log('chooseImage fail, err is', errMsg)
+      }
+    })
+  },
+  upImgRetail: function (e) {
+    var that = this
+    console.log('this is  upImg')
+    for (var i = 0; i < retailSrc.length; i++) {
+      console.log('this is  for')
+      time = tick(i)
+      retailImageUrl[i] = '/retail/' + time
+      //console.log(arr[i])
+      upyun.upload({
+        localPath: retailSrc[i],
+        remotePath: '/biz/retail/' + time,
+        success: function (res) {
+          console.log('uploadImage success, res is:', res)
+          wx.showToast({
+            title: '上传成功',
+            icon: 'success',
+            duration: 1000
+          })
+        },
+        fail: function ({ errMsg }) {
+          console.log('uploadImage fail, errMsg is', errMsg)
+        }
+      })
+    }
+
+  },
+  closeImgRetail: function (e) {
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var list = that.data.retailImageSrc;
+    list.splice(index, 1)
+    that.setData({
+      retailImageSrc: list
+    });
+  },
+  submit: function (e) {
+    
+    var url = 'biz/edit'
+    var params = {}
+    var api_result = api_request(url, params)
+    var url_image_product = productImageUrl.join(',')
+    var url_image_produce = produceImageUrl.join(',')
+    var url_image_retail = retailImageUrl.join(',')
+    var url_image_license = licenseImageUrl[0]
+    var url_image_owner_id = ownerImageUrl[0]
+    var url_image_auth_id = authImageUrl[0] 
+    var url_image_auth_doc = authDocImageUrl[0] 
+    // 网络请求
+    function api_request(url, api_params) {
+      // 生成签名
+      app.sign_generate(api_params)
+
+      // 通过小程序的网络请求API发送请求
+      wx.request({
+        method: "POST",
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        url: app.globalData.url_api + url,
+        data: {
+          app_type: 'biz', 
+          id: bizId, 
+          user_id: user_id, 
+          name: name, 
+          brief_name: brief_name, 
+          url_name: url_name, 
+          url_logo: url_logo, 
+          slogan: slogan,
+          description: description, 
+          notification: notification, 
+          url_web: url_web, 
+          url_weibo: url_weibo, 
+          url_wechat: url_wechat, 
+          tel_public: tel_public, 
+          tel_protected_biz: tel_protected_biz, 
+          tel_protected_fiscal: tel_protected_fiscal, 
+          tel_protected_order:tel_protected_order,
+          fullname_owner: fullname_owner, 
+          fullname_auth: fullname_auth,
+          code_license: code_license, 
+          code_ssn_owner: code_ssn_owner, 
+          code_ssn_auth: code_ssn_auth, 
+          url_image_license: url_image_license, 
+          url_image_owner_id: url_image_owner_id,
+          url_image_auth_id: url_image_auth_id, 
+          url_image_auth_doc: url_image_auth_doc, 
+          bank_name: bank_name, 
+          bank_account: bank_account, 
+          url_image_product: url_image_product,
+          url_image_produce: url_image_produce, 
+          url_image_retail: url_image_retail,
+          nation: nation,
+          province: province,
+          city: city,
+          county: county,
+          street: street,
+          longitude: 39.23222,
+          latitude: 116.23456
+        },
+        success: function (result) {
+          console.log(result)
+          var user = result.data
+          //调用BIZ3，若失败则结束并进行提示
+          if (result.data.status == 200) {
+            //设置本地user.biz_id为返回结果中的biz_id值
+            wx.showToast({
+              title: '修改成功',
+              icon: 'success',
+              duration: 1000
+            })
+
+            //wx.redirectTo({
+              //url: 'pwresult?title="商家修改成功成功"'
+            //})
+          }
+          //传title = "成功创建商家"到商家操作结果页
+          //if (result.data.status == 200) {
+          // }
+          //wx.reLaunch({
+          //url: '../../pages/mine/index'
+          //})
+        },
+        fail: function (result) {
+          console.log(result)
+          wx.vibrateShort()
+        }
+      })
+    }
+  },
+
+
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

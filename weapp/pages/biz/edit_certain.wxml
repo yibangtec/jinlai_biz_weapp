@@ -1,0 +1,7 @@
+<!--edit_certain.wxml-->
+<text>{{title}}修改</text>
+<input type="text" value="{{value}}" bindblur="getEditVaue" placeholder="请输入修改内容"/>
+
+<button bindtap="edit_certain">确定</button>
+
+
