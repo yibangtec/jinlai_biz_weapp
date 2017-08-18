@@ -1,56 +1,131 @@
 <!--pages/biz/detail.wxml-->
 
-  <view data-text="商家全称" data-name="name" data-value="name" bindtap="edit_name">商家全称---{{biz.name}}<text class="right"> > </text></view>
-
-  <view data-text="商家全称" wx:if="{{biz.brief_name !== undefined||biz.brief_name!== null}}"> 商家简称---<text class="right">未设置 > </text></view>
-  <view wx:else> {{biz.brief_name}} </view>
   
+  <view  wx:if="{{biz.name == undefined||biz.name== null}}"> 商家全称：<text class="right">未设置 > </text></view>
+  <view wx:else>商家全称： {{biz.name}} <text class="right"> > </text></view>
 
-  <view data-text="店铺域名" data-name="name" bindtap="edit_name" wx:if="{{biz.url_name !== undefined||biz.url_name !== null}}"> 店铺域名---<text class="right">未设置 > </text></view>
-  <view wx:else> {{biz.url_name}} </view>
-  <view>LOGO---{{biz.url_logo}}</view>
-  <view data-name="slogan" bindtap="edit_name">>宣传语---{{biz.slogan}}</view>
-  <view data-name="notification" bindtap="edit_name">>公告---{{biz.notification}}</view>
-  <view data-name="tel_public" bindtap="edit_name">消费者联系电话---{{biz.tel_public}}</view>
-  <view data-name="tel_protected_biz" bindtap="edit_name">商务联系手机号---{{biz.tel_protected_biz}}</view>
-  <view data-name="tel_protected_fiscal" bindtap="edit_name">财务联系手机号---{{biz.tel_protected_fiscal}}</view>
-  <view data-name="tel_protected_order" bindtap="edit_name">订单通知手机号---{{biz.tel_protected_order}}</view>
-  <view data-name="fullname_owner" bindtap="edit_name">法人姓名---{{biz.fullname_owner}}</view>
-  <view data-name="fullname_auth" bindtap="edit_name">经办人姓名---{{biz.fullname_auth}}</view>
-
-  <view data-name="code_license" bindtap="edit_name" wx:if="{{biz.code_license !== undefined||biz.code_license !== null}}">统一社会信用代码 {{biz.code_license}} <text class="right"> > </text></view>
-  <view data-name="code_license" bindtap="edit_name" wx:else>统一社会信用代码---<text class="right">未设置 > </text> </view>
+  <view wx:if="{{biz.brief_name == undefined||biz.brief_name== null}}"> 商家简称：<text class="right">未设置 > </text></view>
+  <view wx:else>商家简称： {{biz.brief_name}} <text class="right"> > </text></view>
   
-  <view data-name="code_ssn_owner" bindtap="edit_name">法人身份证号---{{biz.code_ssn_owner}}</view>
-  <view data-name="code_ssn_auth" bindtap="edit_name">经办人身份证号---{{biz.code_ssn_auth}}</view>
-  <view data-name="min_order_subtotal" bindtap="edit_name">订单最低金额（元）---{{biz.min_order_subtotal}}</view>
-  <view data-name="delivery_time_start" bindtap="edit_name">配送起始时间（时）---{{biz.delivery_time_start}}</view>
-  <view data-name="delivery_time_end" bindtap="edit_name">配送结束时间（时）---{{biz.delivery_time_end}}</view>
-  <view data-name="country" bindtap="edit_name">国家；默认中国--{{biz.country}}</view>
-  <view data-name="province" bindtap="edit_name">省---{{biz.province}}</view>
-  <view data-name="city" bindtap="edit_name">市---{{biz.city}}</view>
-  <view data-name="county" bindtap="edit_name">区/县---{{biz.county}}</view>
-  <view data-name="detail" bindtap="edit_name">详细地址；小区名、路名、门牌号等---{{biz.detail}}</view>
-  <view>经度（高德，下同）---{{biz.longitude}}</view>
-  <view>纬度（高德）---{{biz.latitude}}</view>
-  <view data-name="bank_name" bindtap="edit_name">开户行名称；最长20位---{{biz.bank_name}}</view>
-  <view data-name="bank_account" bindtap="edit_name">开户行账号；最长30位---{{biz.bank_account}}</view>
-  <view>营业执照正/副本照片
-    <image src=""></image>
+  <view wx:if="{{biz.url_name == undefined||biz.url_name== null}}"> 店铺域名：<text class="right"> </text></view>
+  <view wx:else>店铺域名： {{biz.url_name}} <text class="right"> </text></view>
+
+  <view data-text="LOGO" data-name="url_logo" data-img="url_logo" bindtap="edit_img" wx:if="{{biz.url_logo == undefined||biz.url_logo== null}}"> LOGO：<text class="right">未设置 > </text></view>
+  <view data-text="LOGO" data-name="url_logo" data-img="url_logo" bindtap="edit_img" wx:else>LOGO： <text class="right"> > </text>
+    <image src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{biz.url_logo}}"></image>
   </view>
-  <view>经办人身份证照片---</view>
-  <view>经办人授权书照片---</view>
-  <view>官方网站---{{biz.url_web}}</view>
-  <view>官方微博---{{biz.url_weibo}}</view>
-  <view>微信二维码---</view>
-  <view data-text="产品照片" data-name="url_image_product" data-img="product" bindtap="edit_img">产品照片---</view>
+
+  <view data-text="公告" data-name="notification" bindtap="edit_name" wx:if="{{biz.notification == undefined||biz.notification== null}}"> 公告：<text class="right">未设置 > </text></view>
+  <view data-text="公告" data-name="notification" bindtap="edit_name"  wx:else>公告： {{biz.notification}} <text class="right"> > </text></view>
+
+  <view data-text="消费者联系电话" data-name="tel_public" bindtap="edit_name" wx:if="{{biz.tel_public == undefined||biz.tel_public== null}}"> 消费者联系电话：<text class="right">未设置 > </text></view>
+  <view data-text="消费者联系电话" data-name="tel_public" bindtap="edit_name" wx:else>消费者联系电话： {{biz.tel_public}} <text class="right"> > </text></view>
+  
+
+  <view data-text="商务联系手机号" data-name="tel_protected_biz" bindtap="edit_name" wx:if="{{biz.tel_protected_biz == undefined||biz.tel_protected_biz== null}}"> 商务联系手机号：<text class="right">未设置 > </text></view>
+  <view data-text="商务联系手机号" data-name="tel_protected_biz" bindtap="edit_name" wx:else>商务联系手机号： {{tel}} <text class="right"> > </text></view>
+  
+
+  <view data-text="财务联系手机号" data-name="tel_protected_fiscal" bindtap="edit_name" wx:if="{{biz.tel_protected_fiscal == undefined||biz.tel_protected_fiscal== null}}"> 财务联系手机号：<text class="right">未设置 > </text></view>
+  <view data-text="财务联系手机号" data-name="tel_protected_fiscal" bindtap="edit_name" wx:else>财务联系手机号： {{biz.tel_protected_fiscal}} <text class="right"> > </text></view>
+  
+
+  <view data-text="订单通知手机号" data-name="tel_protected_order" bindtap="edit_name" wx:if="{{biz.tel_protected_order == undefined||biz.tel_protected_order== null}}"> 订单通知手机号：<text class="right">未设置 > </text></view>
+  <view data-text="订单通知手机号" data-name="tel_protected_order" bindtap="edit_name" wx:else>订单通知手机号： {{biz.tel_protected_order}} <text class="right"> > </text></view>
+  
+
+  <view data-text="法人姓名" data-name="fullname_owner" bindtap="edit_name" wx:if="{{biz.fullname_owner == undefined||biz.fullname_owner== null}}"> 法人姓名：<text class="right">未设置 > </text></view>
+  <view data-text="法人姓名" data-name="fullname_owner" bindtap="edit_name" wx:else>法人姓名： {{biz.fullname_owner}} <text class="right"> > </text></view>
+  
+
+  <view data-text="经办人姓名" data-name="fullname_auth" bindtap="edit_name" wx:if="{{biz.fullname_auth == undefined||biz.fullname_auth== null}}"> 经办人姓名：<text class="right">未设置 > </text></view>
+  <view data-text="经办人姓名" data-name="fullname_auth" bindtap="edit_name" wx:else>经办人姓名： {{biz.fullname_auth}} <text class="right"> > </text></view>
+  
+
+  <view data-text="统一社会信用代码" data-name="code_license" bindtap="edit_name" wx:if="{{biz.code_license == undefined||biz.code_license== null}}"> 统一社会信用代码：<text class="right">未设置 > </text></view>
+  <view data-text="统一社会信用代码" data-name="code_license" bindtap="edit_name" wx:else>统一社会信用代码： {{biz.code_license}} <text class="right"> > </text></view>
+  
+  <view data-text="法人身份证号" data-name="code_ssn_owner" bindtap="edit_name" wx:if="{{biz.code_ssn_owner == undefined||biz.code_ssn_owner== null}}"> 法人身份证号：<text class="right">未设置 > </text></view>
+  <view data-text="法人身份证号" data-name="code_ssn_owner" bindtap="edit_name" wx:else>法人身份证号： {{biz.code_ssn_owner}} <text class="right"> > </text></view>
+  
+
+  <view data-text="经办人身份证号" data-name="code_ssn_auth" bindtap="edit_name" wx:if="{{biz.code_ssn_auth == undefined||biz.code_ssn_auth== null}}"> 经办人身份证号：<text class="right">未设置 > </text></view>
+  <view data-text="经办人身份证号" data-name="code_ssn_auth" bindtap="edit_name" wx:else>经办人身份证号： {{biz.code_ssn_auth}} <text class="right"> > </text></view>
+  
+
+  <view data-text="国家" data-name="country" bindtap="edit_name" wx:if="{{biz.country == undefined||biz.country== null}}"> 国家；默认中国：<text class="right">未设置 > </text></view>
+  <view data-text="国家" data-name="country" bindtap="edit_name" wx:else>国家；默认中国： {{biz.country}} <text class="right"> > </text></view>
+  
+
+  <view data-text="省" data-name="province" bindtap="edit_name" wx:if="{{biz.province == undefined||biz.province== null}}"> 省：<text class="right">未设置 > </text></view>
+  <view data-text="省" data-name="province" bindtap="edit_name" wx:else>省： {{biz.province}} <text class="right"> > </text></view>
+  
+
+  <view data-text="市" data-name="city" bindtap="edit_name" wx:if="{{biz.city == undefined||biz.city== null}}"> 市：<text class="right">未设置 > </text></view>
+  <view data-text="市" data-name="city" bindtap="edit_name" wx:else>市： {{biz.city}} <text class="right"> > </text></view>
+  
+
+  <view data-text="区/县" data-name="county" bindtap="edit_name" wx:if="{{biz.county == undefined||biz.county== null}}"> 区/县：<text class="right">未设置 > </text></view>
+  <view data-text="区/县" data-name="county" bindtap="edit_name" wx:else>区/县： {{biz.county}} <text class="right"> > </text></view>
+  
+
+  <view data-text="详细地址" data-name="detail" bindtap="edit_name" wx:if="{{biz.detail == undefined||biz.detail== null}}"> 详细地址；小区名、路名、门牌号等：<text class="right">未设置 > </text></view>
+  <view data-text="详细地址" data-name="detail" bindtap="edit_name" wx:else>详细地址；小区名、路名、门牌号等： {{biz.detail}} <text class="right"> > </text></view>
+  
+
+  <view>经度（高德，下同）：{{biz.longitude}}</view>
+  <view>纬度（高德）：{{biz.latitude}}</view>
+
+  <view data-text="开户行名称" data-name="bank_name" bindtap="edit_name" wx:if="{{biz.bank_name == undefined||biz.bank_name== null}}"> 开户行名称；最长20位：<text class="right">未设置 > </text></view>
+  <view data-text="开户行名称" data-name="bank_name" bindtap="edit_name" wx:else>开户行名称；最长20位： {{biz.bank_name}} <text class="right"> > </text></view>
+  
+
+  <view data-text="开户行账号" data-name="bank_account" bindtap="edit_name" wx:if="{{biz.bank_account == undefined||biz.bank_account== null}}"> 开户行账号；最长30位：<text class="right">未设置 > </text></view>
+  <view data-text="开户行账号" data-name="bank_account" bindtap="edit_name" wx:else>开户行账号；最长30位： {{biz.bank_account}} <text class="right"> > </text></view>
+  
+  <view wx:if="{{biz.url_image_license == undefined||biz.url_image_license== null}}"> 营业执照正/副本照片：<text data-text="营业执照正/副本照片" data-name="url_image_license" bindtap="edit_img"  class="right">未设置 > </text></view>
+  <view wx:else>营业执照正/副本照片： <text data-text="营业执照正/副本照片" data-name="url_image_license"  bindtap="edit_img"  class="right"> > </text>
+    <image data-name="url_image_license" bindtap="previewOneImg" src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{biz.url_image_license}}"></image>
+  </view>
+
+  <view data-text="法人人身份证照片" data-name="url_image_owner_id" bindtap="edit_img" wx:if="{{biz.url_image_owner_id == undefined||biz.url_image_owner_id== null}}"> 法人人身份证照片：<text class="right">未设置 > </text></view>
+  <view data-text="法人人身份证照片" data-name="url_image_owner_id" bindtap="edit_img" wx:else>法人人身份证照片： <text  class="right"> > </text>
+    <image src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{biz.url_image_owner_id}}"></image>
+  </view> 
+  
+  <view data-text="经办人身份证照片" data-name="url_image_auth_id" bindtap="edit_img" wx:if="{{biz.url_image_auth_id == undefined||biz.url_image_auth_id== null}}"> 经办人身份证照片：<text class="right">未设置 > </text></view>
+  <view data-text="经办人身份证照片" data-name="url_image_auth_id" bindtap="edit_img" wx:else>经办人身份证照片： <text class="right"> > </text>
+    <image src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{biz.url_image_auth_id}}"></image>
+  </view>
+  
+  <view data-text="经办人授权书照片" data-name="url_image_auth_doc" bindtap="edit_img" wx:if="{{biz.url_image_auth_doc == undefined||biz.url_image_auth_doc== null}}"> 经办人授权书照片：<text class="right">未设置 > </text></view>
+  <view data-text="经办人授权书照片" data-name="url_image_auth_doc" bindtap="edit_img" wx:else>经办人授权书照片-- <text class="right"> > </text>
+    <image src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{biz.url_image_auth_doc}}"></image>
+  </view>
+
+  <view data-text="官方网站" data-name="url_web" bindtap="edit_name" wx:if="{{biz.url_web == undefined||biz.url_web== null}}"> 官方网站：<text class="right">未设置 > </text></view>
+  <view data-text="官方网站" data-name="url_web" bindtap="edit_name" wx:else>官方网站： {{biz.url_web}} <text class="right"> > </text></view>  
+
+  <view data-text="官方微博" data-name="url_weibo" bindtap="edit_name" wx:if="{{biz.url_weibo == undefined||biz.url_weibo== null}}"> 官方微博：<text class="right">未设置 > </text></view>
+  <view data-text="官方微博" data-name="url_weibo" bindtap="edit_name" wx:else>官方微博： {{biz.url_weibo}} <text class="right"> > </text></view>
+
+  <view data-text="微信二维码" data-name="url_image_wechat" bindtap="edit_name" wx:if="{{biz.url_image_wechat == undefined||biz.url_image_wechat== null}}"> 微信二维码：<text class="right">未设置 > </text></view>
+  <view data-text="微信二维码" data-name="url_image_wechat" bindtap="edit_name" wx:else>微信二维码： {{biz.url_image_wechat}} <text class="right"> > </text></view>
+  
+    <view data-text="产品照片" data-name="url_image_product" data-img="product" bindtap="edit_img">产品照片：</view>
     <view wx:for="{{pArr}}" class="classname">
-      <image src="https://jinlaisandbox-images.b0.upaiyun.com/biz{{item}}"></image>
+      <image bindtap="preview" data-index="{{index}}" src="{{item}}"></image>
     </view>
-    
-  <view>工厂/产地照片---</view>
-  <view data-text="商家全称" data-name="url_image_retail" bindtap="deit_img">门店/柜台照片---</view>
-  <view>状态---{{biz.status}}</view>
+
+    <view data-text="产地照片" data-name="url_image_produce" data-img="produce" bindtap="edit_img">工厂/产地照片：</view>
+    <view wx:for="{{pArr1}}" class="classname">
+      <image src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{item}}"></image>
+    </view>  
+    <view data-text="柜台照片" data-name="url_image_retail" data-img="retail" bindtap="edit_img">工厂/产地照片：</view>
+    <view wx:for="{{pArr2}}" class="classname">
+      <image src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{item}}"></image>
+    </view>  
+  <view>状态：{{biz.status}}</view>
   <button wx:if="{{biz.status !== '受理中'}}" type="primary" size="mini" loading="{{loading}}" plain="{{plainde}}" bindtap="button_edit"> 修改 </button>
   <button wx:elif="{{biz.status == '受理中'}}" disabled="true" type="primary" size="mini" loading="{{loading}}" plain="{{plainde}}" bindtap="button_edit"> 修改 </button>
 

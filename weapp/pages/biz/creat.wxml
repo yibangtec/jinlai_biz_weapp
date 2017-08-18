@@ -25,7 +25,7 @@
   </view>
   <view class="section">
     <view class="section__title">商务联系手机号*</view>
-    <input type="number" bindblur="getTel_protected_biz" name="tel_protected_biz" placeholder="请输入手机号" />
+    <input type="number" bindblur="getTel_protected_biz" disabled="true" name="tel_protected_biz" value="{{tel}}" placeholder="请输入手机号" />
   </view>
   <view class="section">
     <view class="section__title">法人姓名*</view>
@@ -51,7 +51,7 @@
     <view class="section__title">营业执照正/副本*</view>
     <view class="page-body-info">
         <block wx:for="{{licenseImageSrc}}" wx:key="{{index}}">
-          <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgLicense" class="close" src="../../image/close.png"></image></image>
+          <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgLicense" class="close" src="../../image/close.png"></image></image>
         </block>
         <block >
           <view class="image-plus image-plus-nb" bindtap="chooseImageLicense">

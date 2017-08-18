@@ -4,9 +4,11 @@ const upyun = new Upyun({
   bucket: 'jinlaisandbox-images',
   operator: 'jinlaisandbox',
 })
-function tick(s) {
+function tick(s, bizId, userId) {
   var objD = new Date();
   var str;
+  var b = bizId
+  var u = userId
   var yy = objD.getYear();
   if (yy < 1900) yy = yy + 1900;
   var MM = objD.getMonth() + 1;
@@ -19,30 +21,37 @@ function tick(s) {
   if (mm < 10) mm = '0' + mm;
   var ss = objD.getSeconds() + s;
   if (ss < 10) ss = '0' + ss;
-  str = yy + MM + dd + "_" + hh + mm + ss + '.jpg';
+  u = u.toString()
+  b = b.toString()
+  str = b + '/'+ yy + MM + '/' + MM + dd + '/' + hh + mm + ss + u + '.jpg';
   return str;
 }
+
 var amapFile = require('../../utils/amap-wx')
 //var addToolbar = require('../../http://webapi.amap.com/maps?v=1.3&key=b0a6d590c3195b86fcc13676afa62eba&plugin=AMap.Geocoder')
 //var addToolbar = require('../../http://cache.amap.com/lbs/static/addToolbar')
-var user_id, bizId, name, brief_name, url_logo, url_name, slogan, description, notification, url_web, url_weibo, url_wechat,
-  tel_public, tel_protected_biz, tel_protected_fiscal, tel_protected_order, nation, province, city, county, street, longitude, latitude,
-  code_license, code_ssn_owner, code_ssn_auth, bank_name, bank_account, fullname_owner, fullname_auth;
+var user_id = '', bizId = '', name = '', brief_name = '', url_logo = '', url_name = '', slogan = '', 
+  description = '', notification = '', url_web = '', url_weibo = '', url_wechat = '',
+  tel_public = '', tel_protected_biz = '', tel_protected_fiscal = '', tel_protected_order = '',
+  nation, province = '', city = '', county = '', street = '', longitude = '', latitude = '',
+  code_license = '', code_ssn_owner = '', code_ssn_auth = '', bank_name = '', bank_account = '', fullname_owner = '',
+  fullname_auth = '';
 var time,
-  ownerSrc,//进行计算时候的url
+  ownerSrc = '',//进行计算时候的url
   ownerImageUrl = [],//回调给后台的图片又拍云存储地址
-  licenseSrc,
+  licenseSrc = '',
   licenseImageUrl = [],
-  authSrc,
+  authSrc = '',
   authImageUrl = [],
-  authDocSrc,
+  authDocSrc = '',
   authDocImageUrl = [],
-  productSrc,
+  productSrc = '',
   productImageUrl = [],
-  produceSrc,
+  produceSrc = '',
   produceImageUrl = [],
-  retailSrc,
-  retailImageUrl = [];
+  retailSrc = '',
+  retailImageUrl = [],
+  biz='';
 var app = getApp()
 Page({
 
@@ -104,6 +113,7 @@ Page({
         data: { id: bizId },
         success: function (result) {
           console.log(result.data)
+          biz = result.data.content
           that.setData({ biz: result.data.content });
         },
         fail: function (result) {
@@ -120,7 +130,7 @@ Page({
     console.log(name)
     var patrn = /^.{5,35}$/;
     if (patrn.test(name)) {
-
+     
     } else {
       wx.showToast({
         title: '商家全称输入字符长度应在5到35个',
@@ -318,8 +328,8 @@ Page({
   upImgLicense: function (e) {
     console.log('this is  upImg')
     console.log('this is  for')
-    time = tick(0)
-    licenseImageUrl[0] = '/license/' + time
+    time = tick(0, bizId, user_id)
+    licenseImageUrl[0] = 'license/' + time
     console.log(time)
     upyun.upload({
       localPath: licenseSrc[0],
@@ -374,8 +384,8 @@ Page({
     console.log('this is  upImg')
     for (var i = 0; i < ownerSrc.length; i++) {
       console.log('this is  for')
-      time = tick(i)
-      ownerImageUrl[i] = '/owner_id/' + time
+      time = tick(i, bizId, user_id)
+      ownerImageUrl[i] = 'owner_id/' + time
       //console.log(arr[i])
       upyun.upload({
         localPath: ownerSrc[i],
@@ -427,8 +437,8 @@ Page({
     console.log('this is  upImg')
     for (var i = 0; i < authSrc.length; i++) {
       console.log('this is  for')
-      time = tick(i)
-      authImageUrl[i] = '/auth_id/' + time
+      time = tick(i, bizId, user_id)
+      authImageUrl[i] = 'auth_id/' + time
       //console.log(arr[i])
       upyun.upload({
         localPath: authSrc[i],
@@ -481,8 +491,8 @@ Page({
     console.log('this is  upImg')
     for (var i = 0; i < authDocSrc.length; i++) {
       console.log('this is  for')
-      time = tick(i)
-      authDocImageUrl[i] = '/auth_doc/' + time
+      time = tick(i, bizId, user_id)
+      authDocImageUrl[i] = 'auth_doc/' + time
       //console.log(arr[i])
       upyun.upload({
         localPath: authDocSrc[i],
@@ -535,8 +545,8 @@ Page({
     console.log('this is  upImg')
     for (var i = 0; i < productSrc.length; i++) {
       console.log('this is  for')
-      time = tick(i)
-      productImageUrl[i] = '/product/' + time
+      time = tick(i, bizId, user_id)
+      productImageUrl[i] = 'product/' + time
       //console.log(arr[i])
       upyun.upload({
         localPath: productSrc[i],
@@ -588,8 +598,8 @@ Page({
     console.log('this is  upImg')
     for (var i = 0; i < produceSrc.length; i++) {
       console.log('this is  for')
-      time = tick(i)
-      produceImageUrl[i] = '/produce/' + time
+      time = tick(i, bizId, user_id)
+      produceImageUrl[i] = 'produce/' + time
       //console.log(arr[i])
       upyun.upload({
         localPath: produceSrc[i],
@@ -643,8 +653,8 @@ Page({
     console.log('this is  upImg')
     for (var i = 0; i < retailSrc.length; i++) {
       console.log('this is  for')
-      time = tick(i)
-      retailImageUrl[i] = '/retail/' + time
+      time = tick(i, bizId, user_id)
+      retailImageUrl[i] = 'retail/' + time
       //console.log(arr[i])
       upyun.upload({
         localPath: retailSrc[i],
@@ -674,7 +684,14 @@ Page({
     });
   },
   submit: function (e) {
-    
+    if (!name) {
+      name = biz.name
+      console.log(name)
+    }
+    if (!county){
+      county = biz.county
+      console.log(county)
+    }
     var url = 'biz/edit'
     var params = {}
     var api_result = api_request(url, params)

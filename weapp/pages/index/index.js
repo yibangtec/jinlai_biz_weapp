@@ -2,6 +2,7 @@
 //获取应用实例
 var app = getApp()
 var login, bizId;
+
 Page({
   data: {
     bizs: [],
@@ -15,110 +16,28 @@ Page({
   },
   onLoad: function ()
   {
-    //清除本地存储
-    //wx.clearStorage()
-    var that = this;
+    //获取本地time_expire_login值，若为空或小于当前时间戳则转到密码登录页
     var timestamp = Date.parse(new Date())
     console.log(timestamp)
-    //获取本地time_expire_login值，若为空或小于当前时间戳则转到密码登录页
     wx.getStorage({
       key: 'time_expire_login',
       success: function (res) {
         login = res.data
         console.log(login)
-        if (login == undefined || login < timestamp) {
-          wx.redirectTo({
+        if (login == "" || login < timestamp) {
+          wx.reLaunch({
             url: '../../pages/login/login'
           })
         }
       },
       fail: function (err) {
-        console.log(err)
-        wx.redirectTo({
+        wx.reLaunch({
           url: '../../pages/login/login'
         })
       }
     })
-    wx.getStorage({
-      key: 'user',
-      success: function (res) {
-        //获取本地user.password值，若为空则转到密码设置页
-        console.log(res.data)
-        if (res.data.content.password == "") {
-          wx.redirectTo({
-            url: '../../pages/login/pwset'
-          })
 
-        }
-
-      },
-      fail: function (err) {
-
-      }
-    })
-    wx.getStorage({
-      key: 'user',
-      success: function (res) {
-        console.log(res.data)
-        //获取本地user.biz_id值，若为空则结束并显示button_biz_create
-        bizId = res.data.content.biz_id
-        console.log(bizId)
-        //调用BIZ2，若成功则显示info_biz并赋值相应元素；若status为414则显示button_biz_create，否则进行相应提示
-        // 通过API获取或处理数据
-        var url = 'biz/detail'
-        var params = {}
-        var api_result = api_request(url, params)
-
-        // 网络请求
-        function api_request(url, api_params) {
-          // 生成签名
-          app.sign_generate(api_params)
-
-          // 通过小程序的网络请求API发送请求
-          wx.request({
-            method: "POST",
-            header: {
-              'content-type': 'application/x-www-form-urlencoded'
-            },
-            url: app.globalData.url_api + url,
-            data: { id: bizId },
-            success: function (result) {
-              console.log(bizId)
-              console.log('this is index info'+result)
-              if (result.data.status === 200) {
-                that.setData({
-                  infoStyle: 'display:block',
-                  name: result.data.content.name,
-                  brief_name: result.data.content.brief_name,
-                  tel_public: result.data.content.tel_public,
-                  tel_protected_biz: result.data.content.tel_protected_biz,
-                  status: result.data.content.status
-                });
-              } else if (result.data.status === 414) {
-                that.setData({
-                  comeInBtn: 'display:block'
-                });
-              }
-
-            },
-            fail: function (result) {
-              console.log(result)
-              wx.vibrateShort()
-            }
-          })
-        }
-        if (res.data.content.biz_id == "") {
-          that.setData({
-            comeInBtn: 'display:block'
-          });
-        }
-      },
-      fail: function (err) {
-        that.setData({
-          comeInBtn: 'display:block'
-        });
-      }
-    })
+   
     console.log("onLoad")
   },
   info_biz: function (e) {
@@ -160,6 +79,147 @@ Page({
 
     wx.stopPullDownRefresh()
   },
-  onShow: function () {
+  onShow: function (e) {
+    var that = this;
+    //清除本地存储
+    //wx.clearStorage()
+    var that = this;
+    wx.getStorage({
+      key: 'user',
+      success: function (res) {
+        console.log(res)
+        if (res.data.content.password == "") {
+          wx.redirectTo({
+            url: '../../pages/login/pwset'
+          })
+
+        }
+
+        //获取本地user.biz_id值，若为空则结束并显示button_biz_create
+        bizId = res.data.content.biz_id
+        if (bizId == undefined || bizId ==''){
+          wx.getStorage({
+            key: 'biz',
+            success: function (res) {
+              console.log(res)
+              //console.log(res.data)
+              //console.log(res.data.data.content)
+              //console.log(res.data.content)
+              //console.log(res.data.data.content.biz_id)
+              //console.log(res.data.content.biz_id)
+              //获取本地user.biz_id值，若为空则结束并显示button_biz_create
+              bizId = res.data.data.content.id
+              console.log(bizId)
+              //调用BIZ2，若成功则显示info_biz并赋值相应元素；若status为414则显示button_biz_create，否则进行相应提示
+              // 通过API获取或处理数据
+              var url = 'biz/detail'
+              var params = {}
+              var api_result = api_request(url, params)
+
+              // 网络请求
+              function api_request(url, api_params) {
+                // 生成签名
+                app.sign_generate(api_params)
+
+                // 通过小程序的网络请求API发送请求
+                wx.request({
+                  method: "POST",
+                  header: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                  },
+                  url: app.globalData.url_api + url,
+                  data: { id: bizId },
+                  success: function (result) {
+                    console.log(bizId)
+                    console.log(result)
+                    if (result.data.status === 200) {
+                      that.setData({
+                        infoStyle: 'display:block',
+                        name: result.data.content.name,
+                        brief_name: result.data.content.brief_name,
+                        tel_public: result.data.content.tel_public,
+                        tel_protected_biz: result.data.content.tel_protected_biz,
+                        status: result.data.content.status
+                      });
+                    } else if (result.data.status === 414) {
+                      that.setData({
+                        comeInBtn: 'display:block'
+                      });
+                    }
+
+                  },
+                  fail: function (result) {
+                    console.log(result)
+                    wx.vibrateShort()
+                  }
+                })
+              }
+            },
+            fail: function (err) {
+              console.log(err)
+              console.log("如果biz——id为空")
+              that.setData({
+                comeInBtn: 'display:block'
+              });
+            }
+          })
+        }else{
+          //调用BIZ2，若成功则显示info_biz并赋值相应元素；若status为414则显示button_biz_create，否则进行相应提示
+          // 通过API获取或处理数据
+          var url = 'biz/detail'
+          var params = {}
+          var api_result = api_request(url, params)
+
+          // 网络请求
+          function api_request(url, api_params) {
+            // 生成签名
+            app.sign_generate(api_params)
+
+            // 通过小程序的网络请求API发送请求
+            wx.request({
+              method: "POST",
+              header: {
+                'content-type': 'application/x-www-form-urlencoded'
+              },
+              url: app.globalData.url_api + url,
+              data: { id: bizId },
+              success: function (result) {
+                console.log(bizId)
+                console.log(result)
+                if (result.data.status === 200) {
+                  that.setData({
+                    infoStyle: 'display:block',
+                    name: result.data.content.name,
+                    brief_name: result.data.content.brief_name,
+                    tel_public: result.data.content.tel_public,
+                    tel_protected_biz: result.data.content.tel_protected_biz,
+                    status: result.data.content.status
+                  });
+                } else if (result.data.status === 414) {
+                  that.setData({
+                    comeInBtn: 'display:block'
+                  });
+                }
+
+              },
+              fail: function (result) {
+                console.log(result)
+                wx.vibrateShort()
+              }
+            })
+          }
+        }
+       
+        
+      },
+      fail: function (err) {
+        console.log("如果biz——id为空")
+        that.setData({
+          comeInBtn: 'display:block'
+        });
+        
+        console.log('fasdfhsdjkahfjsdhfjkhdsjkfhjsdkhfjksd')
+      }
+    })
   }
 }) // end Page

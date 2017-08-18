@@ -5,10 +5,15 @@ const upyun = new Upyun({
   operator: 'jinlaisandbox',
 })
 var app = getApp()
-var user_id, id, name, value, path, inputValue, productSrc, productImageUrl=[], url_image_product, time;
-function tick(s) {
+var arr = []
+var beforeArr = []
+var endArr=[]
+var user_id = '', id = '', name = '', value = '', path = '', inputValue = '', productSrc = '', productImageUrl = [], url_image_product = '', time = '';
+function tick(s, bizId, userId) {
   var objD = new Date();
   var str;
+  var b = bizId
+  var u = userId
   var yy = objD.getYear();
   if (yy < 1900) yy = yy + 1900;
   var MM = objD.getMonth() + 1;
@@ -21,7 +26,9 @@ function tick(s) {
   if (mm < 10) mm = '0' + mm;
   var ss = objD.getSeconds() + s;
   if (ss < 10) ss = '0' + ss;
-  str = yy + MM + dd + "_" + hh + mm + ss + '.jpg';
+  u = u.toString()
+  b = b.toString()
+  str = b + '/' + yy + MM + '/' + MM + dd + '/' + hh + mm + ss + u + '.jpg';
   return str;
 }
 Page({
@@ -40,6 +47,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that = this
     id = options.id
     name = options.name
     path = options.img
@@ -62,9 +70,15 @@ Page({
         url: app.globalData.url_api + url,
         data: { id: id },
         success: function (result) {
-
-          console.log(result.data.content)
-
+          console.log(result.data.content[name])
+          beforeArr = result.data.content[name].split(",")
+          console.log(beforeArr)
+          for (var i = 0; i < beforeArr.length; i++) {
+            beforeArr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + beforeArr[i]
+          }
+          that.setData({
+            productImageSrc: beforeArr
+          });
         },
         fail: function (result) {
           console.log(result)
@@ -109,8 +123,9 @@ Page({
       success: function (res) {
         console.log('chooseImage success, temp path is', res.tempFilePaths)
         productSrc = res.tempFilePaths
+        beforeArr = beforeArr.concat(productSrc)
         self.setData({
-          productImageSrc: productSrc
+          productImageSrc: beforeArr
         })
       },
       fail: function ({ errMsg }) {
@@ -122,9 +137,9 @@ Page({
     console.log('this is  upImg')
     for (var i = 0; i < productSrc.length; i++) {
       
-      time = tick(i)
+      time = tick(i, id, user_id)
       console.log(time)
-      productImageUrl[i] = '/'+path+'/' + time
+      productImageUrl[i] = path+'/' + time
       upyun.upload({
         localPath: productSrc[i],
         remotePath: '/biz/'+ path +'/' + time,
@@ -141,8 +156,6 @@ Page({
         }
       })
     }
-    url_image_product = productImageUrl.join(',')
-    console.log(url_image_product)
   },
   closeImgProduct: function (e) {
     var that = this;
@@ -153,12 +166,31 @@ Page({
       productImageSrc: list
     });
   },
+  moveLeft:function(e){
+    console.log(beforeArr)
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    if (index != 0){
+      console.log(index)
+      var temp = beforeArr[index - 1]
+      beforeArr[index - 1] = beforeArr[index]
+      beforeArr[index] = temp
+      console.log(beforeArr)
+      that.setData({
+        productImageSrc: beforeArr
+      });
+    }
+   
+  },
   edit_img: function (e) {
+
+    url_image_product = productImageUrl.join(',')
+    console.log(url_image_product)
     // 通过API获取或处理数据
     var url = 'biz/edit_certain'
     var params = {}
     var api_result = api_request(url, params)
-
+    var bizId = id
     // 网络请求
     function api_request(url, api_params) {
       // 生成签名
@@ -173,8 +205,16 @@ Page({
         url: app.globalData.url_api + url,
         data: { app_type: 'biz', id: id, user_id: user_id, name: name, value: url_image_product },
         success: function (result) {
-          console.log(result.data)
-
+          if(result.data.status==200){
+            wx.showToast({
+              title: '编辑成功',
+              icon: 'success',
+              duration: 1000
+            })
+            wx.navigateBack({
+              url: '../../pages/biz/detail?id=' + bizId,
+            })
+          }
         },
         fail: function (result) {
           console.log(result)

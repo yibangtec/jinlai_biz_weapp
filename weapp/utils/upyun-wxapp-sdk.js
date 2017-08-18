@@ -19,7 +19,7 @@ Upyun.prototype.upload = function (options) {
     bucket: self.bucket,
     expiration: Math.round(new Date().getTime() / 1000) + 3600,
     date: date,
-    'x-gmkerl-thumb': '/format/jpg',
+    'x-gmkerl-thumb': '/fw/2048/format/jpg',
   }
   var policy = Base64.encode(JSON.stringify(opts))
   var data = ['POST', '/' + self.bucket, date, policy].join('&')

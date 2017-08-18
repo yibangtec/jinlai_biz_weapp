@@ -20,21 +20,20 @@ Page({
    */
   onLoad: function (options) {
     //获取本地time_expire_login值，若大于当前时间戳则转到“我的”页
+    var timestamp = Date.parse(new Date())
     wx.getStorage({
       key: 'time_expire_login',
       success: function (res) {
         login = res.data
-        var timestamp = Date.parse(new Date())
         console.log(login)
-        console.log(timestamp)
         if (login > timestamp) {
-          //wx.reLaunch({
-           // url: '../../pages/mine/index'
-          //})
+          wx.reLaunch({
+            url: '../../pages/mine/index'
+          })
         }
       },
       fail: function (err) {
-        console.log(err)
+
       }
     })
     //获取本地time_end_countdown值，若无或该值小于当前时间戳则结束
@@ -117,6 +116,12 @@ Page({
               wx.setStorage({
                 key: "sms_id",
                 data: result.data.content.sms_id
+              })
+              var timestamp = Date.parse(new Date())
+              var time_expire_login = timestamp + 90 * 24 * 3600 * 1000
+              wx.setStorage({
+                key: "time_expire_login",
+                data: time_expire_login
               })
             },
             fail: function (result) {

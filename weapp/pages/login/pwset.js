@@ -20,7 +20,8 @@ Page({
     wx.getStorage({
       key: 'user',
       success: function (res) {
-        userId = res.data.data.content.user_id
+        console.log(res.data)
+        userId = res.data.content.user_id
       },
       fail: function (err) {
         console.log(err)

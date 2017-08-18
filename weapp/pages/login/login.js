@@ -91,6 +91,7 @@ Page({
           url: app.globalData.url_api + url,
           data: { password:pw, mobile: tel },
           success: function (result) {
+            console.log('这个是登录时候存起来的user')
             console.log(result)
             var user = result.data
             if (result.data.status==200){
@@ -106,6 +107,12 @@ Page({
               wx.reLaunch({
                 url: '../../pages/mine/index'
               })
+            }else{
+              wx.showToast({
+                title: result.data.content.error.message,
+                icon: 'loading',
+                duration: 2000
+              })
             }
            
             var timestamp = Date.parse(new Date())
@@ -120,6 +127,7 @@ Page({
           fail: function (result) {
             console.log(result)
             wx.vibrateShort()
+            
           }
         })
       }

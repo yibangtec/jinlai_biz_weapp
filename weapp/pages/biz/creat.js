@@ -1,39 +1,39 @@
 // creat.js
 var user_id,
-name, 
-brief_name, 
-description,
-tel_public,
-tel_protected_biz,
-fullname_owner,
-fullname_auth,
-code_license,
-code_ssn_owner,
-code_ssn_auth,
-bank_name,
-bank_account,
-time,
-ownerSrc,//进行计算时候的url
+name = '', 
+brief_name = '', 
+description = '',
+tel_public = '',
+tel_protected_biz = '',
+fullname_owner = '',
+fullname_auth = '',
+code_license = '',
+code_ssn_owner = '',
+code_ssn_auth = '',
+bank_name = '',
+bank_account = '',
+time = '',
+ownerSrc = '',//进行计算时候的url
 ownerImageUrl = [],//回调给后台的图片又拍云存储地址
-url_image_license,
-licenseSrc,
+url_image_license = '',
+licenseSrc = '',
 licenseImageUrl = [],
-url_image_owner_id,
-authSrc,
+url_image_owner_id = '',
+authSrc = '',
 authImageUrl=[],
-url_image_auth_id,
-authDocSrc,
+url_image_auth_id = '',
+authDocSrc = '',
 authDocImageUrl = [],
-url_image_auth_doc,
-productSrc,
+url_image_auth_doc = '',
+productSrc = '',
 productImageUrl = [],
-url_image_product,
-produceSrc,
+url_image_product = '',
+produceSrc = '',
 produceImageUrl = [],
-url_image_produce,
-retailSrc,
+url_image_produce = '',
+retailSrc = '',
 retailImageUrl = [],
-url_image_retail;
+url_image_retail = '';
 
 
 const Upyun = require('../../utils/upyun-wxapp-sdk')
@@ -46,9 +46,10 @@ const upyun = new Upyun({
 
 //var str = 'orderId=21140600050549799429&orderStatus=TRADE_SUCCESS&payTime=2014-07-22 11:43:31';
 //var key = 'REzySUKRCPfyfV/jfgwTA==';
-function tick(s) {
+function tick(s, bizId) {
   var objD = new Date();
   var str;
+  var u = bizId
   var yy = objD.getYear();
   if (yy < 1900) yy = yy + 1900;
   var MM = objD.getMonth() + 1;
@@ -61,7 +62,8 @@ function tick(s) {
   if (mm < 10) mm = '0' + mm;
   var ss = objD.getSeconds()+s;
   if (ss < 10) ss = '0' + ss;
-  str = yy + MM + dd + "_" + hh + mm + ss + '.jpg';
+  u = u.toString()
+  str = yy + MM + '/' + MM + dd + '/' + hh + mm + ss + u + '.jpg';
   return str;
 }
 
@@ -83,7 +85,7 @@ Page({
     produceImageSrc: '',
     retailImageSrc: '',
     index:'',
-    disable:true
+    disable:true,
   },
 
   /**
@@ -101,6 +103,7 @@ Page({
       success: function (res) {
         console.log(res.data.content.mobile)
         user_id = res.data.content.user_id
+        console.log(user_id)
         tel_protected_biz = res.data.content.mobile
         that.setData({
           tel: res.data.content.mobile,
@@ -253,9 +256,9 @@ Page({
   },
   upImgLicense: function (e) {
     console.log('this is  upImg')
-      console.log('this is  for')
-      time = tick(0)
-      licenseImageUrl[0] = '/license/' + time
+    console.log('this is  for' + user_id)
+      time = tick(0,user_id)
+      licenseImageUrl[0] = 'license/' + time
       console.log(time)
       upyun.upload({
         localPath: licenseSrc[0],
@@ -287,6 +290,16 @@ Page({
       licenseImageSrc: list
     });
   },
+  preview:function(e){
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var list = that.data.licenseImageSrc;
+    var curr=list[index]
+    wx.previewImage({
+      current: curr, // 当前显示图片的http链接
+      urls: list // 需要预览的图片http链接列表
+    })
+  },
 //法人身份证
   chooseImageOwner: function () {
     const self = this
@@ -311,8 +324,9 @@ Page({
     console.log('this is  upImg')
     for (var i = 0; i < ownerSrc.length;i++){
       console.log('this is  for')
-      time = tick(i)
-      ownerImageUrl[i] = '/owner_id/' + time
+      //time = tick()
+      time = tick(i, user_id)
+      ownerImageUrl[i] = 'owner_id/' + time
       //console.log(arr[i])
       upyun.upload({
         localPath: ownerSrc[i],
@@ -365,8 +379,8 @@ Page({
     console.log('this is  upImg')
     for (var i = 0; i < authSrc.length; i++) {
       console.log('this is  for')
-      time = tick(i)
-      authImageUrl[i] = '/auth_id/' + time
+      time = tick(i, user_id)
+      authImageUrl[i] = 'auth_id/' + time
       //console.log(arr[i])
       upyun.upload({
         localPath: authSrc[i],
@@ -420,8 +434,8 @@ Page({
     console.log('this is  upImg')
     for (var i = 0; i < authDocSrc.length; i++) {
       console.log('this is  for')
-      time = tick(i)
-      authDocImageUrl[i] = '/auth_doc/' + time
+      time = tick(i, user_id)
+      authDocImageUrl[i] = 'auth_doc/' + time
       //console.log(arr[i])
       upyun.upload({
         localPath: authDocSrc[i],
@@ -476,10 +490,9 @@ Page({
     console.log('this is  upImg')
     for (var i = 0; i < productSrc.length; i++) {
       console.log('this is  for')
-      time = tick(i)
+      time = tick(i, user_id)
       productImageUrl[i] = 'product/' + time
-      var url_image_product = productImageUrl.join(',')
-      console.log(url_image_product)
+      
       upyun.upload({
         localPath: productSrc[i],
         remotePath: '/biz/product/' + time,
@@ -531,8 +544,8 @@ Page({
     console.log('this is  upImg')
     for (var i = 0; i < produceSrc.length; i++) {
       console.log('this is  for')
-      time = tick(i)
-      produceImageUrl[i] = '/produce/' + time
+      time = tick(i, user_id)
+      produceImageUrl[i] = 'produce/' + time
       //console.log(arr[i])
       upyun.upload({
         localPath: produceSrc[i],
@@ -587,8 +600,8 @@ Page({
     console.log('this is  upImg')
     for (var i = 0; i < retailSrc.length; i++) {
       console.log('this is  for')
-      time = tick(i)
-      retailImageUrl[i] = '/retail/' + time
+      time = tick(i, user_id)
+      retailImageUrl[i] = 'retail/' + time
       //console.log(arr[i])
       upyun.upload({
         localPath: retailSrc[i],
@@ -620,6 +633,7 @@ Page({
   },
 
   submit:function(e){
+    var that = this
     if (name == null || brief_name == null || tel_public == null || tel_protected_biz == null || code_license == null || code_ssn_owner == null || licenseImageUrl == null || ownerImageUrl == null){
       wx.showToast({
         title: '带*号的是必须填写的，请补充完整',
@@ -630,13 +644,6 @@ Page({
     var url = 'biz/create'
     var params = {}
     var api_result = api_request(url, params)
-    
-    
-    
-    
-    
-    
-   
     
     // 网络请求
     function api_request(url, api_params) {
@@ -657,7 +664,8 @@ Page({
          url_image_produce: url_image_produce, url_image_retail: url_image_retail},
         success: function (result) {
           console.log(result)
-          var user = result.data
+          var bizId = result.data.content.biz_id
+          console.log(bizId)
           //调用BIZ3，若失败则结束并进行提示
           if (result.data.status==200){
             //设置本地user.biz_id为返回结果中的biz_id值
@@ -666,9 +674,19 @@ Page({
               icon: 'success',
               duration: 1000
             })
-            
+            wx.setStorage({
+              key: "biz",
+              data: result
+            })
             wx.redirectTo({
               url: '../login/pwresult?title="商家创建成功"'
+            })
+          }else{
+            var err = result.data.content.error.message
+            wx.showToast({
+              title: err,
+              icon: 'success',
+              duration: 1000
             })
           }
           //传title = "成功创建商家"到商家操作结果页
