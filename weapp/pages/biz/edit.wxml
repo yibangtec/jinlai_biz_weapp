@@ -121,15 +121,31 @@
         <block wx:for="{{licenseImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgLicense" class="close" src="../../image/close.png"></image></image>
         </block>
-        <block >
+        <view style="{{disLicense}}">
           <view class="image-plus image-plus-nb" bindtap="chooseImageLicense">
             <view class="image-plus-horizontal"></view>
             <view class="image-plus-vertical"></view>
           </view>
           <view class="image-plus-text">选择图片</view>
-        </block>
+        </view>
     </view>
     <button name="" type="primary" size="mini" bindtap="upImgLicense">开始上传图片</button>
+  </view>
+  <view class="section">
+    <view class="section__title">法人身份证</view>
+    <view class="page-body-info">
+        <block wx:for="{{ownerImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgOwner" class="close" src="../../image/close.png"></image></image>
+        </block>
+        <view style="{{disOwner}}">
+          <view class="image-plus image-plus-nb" bindtap="chooseImageOwner">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+          <view class="image-plus-text">选择图片</view>
+        </view>
+    </view>
+    <button name="" type="primary" size="mini" bindtap="upImgOwner">开始上传图片</button>
   </view>
   <view class="section">
     <view class="section__title">经办人身份证</view>
@@ -137,13 +153,13 @@
         <block wx:for="{{authImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgAuth" class="close" src="../../image/close.png"></image></image>
         </block>
-        <block >
+        <view style="{{disAuth}}">
           <view class="image-plus image-plus-nb" bindtap="chooseImageAuth">
             <view class="image-plus-horizontal"></view>
             <view class="image-plus-vertical"></view>
           </view>
           <view class="image-plus-text">选择图片</view>
-        </block>
+        </view>
     </view>
     <button name="" type="primary" size="mini" bindtap="upImgAuth">开始上传图片</button>
   </view>
@@ -151,15 +167,17 @@
     <view class="section__title">授权书</view>
    <view class="page-body-info">
         <block wx:for="{{authDocImageSrc}}" wx:key="{{index}}">
-          <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgAuthDoc" class="close" src="../../image/close.png"></image></image>
+          <image src="{{item}}" class="image" mode="aspectFill">
+            <image data-index="{{index}}" bindtap="closeImgAuthDoc" class="close" src="../../image/close.png"></image>
+          </image> 
         </block>
-        <block >
+        <view style="{{disAuthDoc}}">
           <view class="image-plus image-plus-nb" bindtap="chooseImageAuthDoc">
             <view class="image-plus-horizontal"></view>
             <view class="image-plus-vertical"></view>
           </view>
           <view class="image-plus-text">选择图片</view>
-        </block>
+        </view>
     </view>
     <button name="" type="primary" size="mini" bindtap="upImgAuthDoc">开始上传图片</button>
   </view>
@@ -172,50 +190,62 @@
     <input type="number" maxlength="30" bindblur="getBank_account" placeholder="最长30位，仅允许数字及-" />
   </view>
   <view class="section">
-    <view class="section__title">产品（最多允许8个图片URL，多个URL间以一个半角逗号分隔）</view>
+    <view class="section__title">产品（最多允许4个图片URL，多个URL间以一个半角逗号分隔）</view>
      <view class="page-body-info">
         <block wx:for="{{productImageSrc}}" wx:key="{{index}}">
-          <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgProduct" class="close" src="../../image/close.png"></image></image>
+          <image src="{{item}}" class="image" mode="aspectFill">
+            <image data-index="{{index}}" bindtap="closeImgProduct" class="close" src="../../image/close.png"></image>
+            <image data-index="{{index}}" bindtap="moveLeftPt" class="left" src="../../image/left.png"></image>
+            <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
+          </image>
         </block>
-        <block >
+         <view style="{{disProduct}}">
           <view class="image-plus image-plus-nb" bindtap="chooseImageProduct">
             <view class="image-plus-horizontal"></view>
             <view class="image-plus-vertical"></view>
           </view>
           <view class="image-plus-text">选择图片</view>
-        </block>
+        </view>
     </view>
     <button name="" type="primary" size="mini" bindtap="upImgProduct">开始上传图片</button>
   </view>
   <view class="section">
-    <view class="section__title">工厂/产地环境（最多允许8个图片URL，多个URL间以一个半角逗号分隔）</view>
+    <view class="section__title">工厂/产地环境（最多允许4个图片URL，多个URL间以一个半角逗号分隔）</view>
     <view class="page-body-info">
         <block wx:for="{{produceImageSrc}}" wx:key="{{index}}">
-          <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgProduce" class="close" src="../../image/close.png"></image></image>
+          <image src="{{item}}" class="image" mode="aspectFill">
+            <image data-index="{{index}}" bindtap="closeImgProduce" class="close" src="../../image/close.png"></image>
+            <image data-index="{{index}}" bindtap="moveLeftPe" class="left" src="../../image/left.png"></image>
+            <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
+          </image>
         </block>
-        <block >
+         <view style="{{disProduce}}">
           <view class="image-plus image-plus-nb" bindtap="chooseImageProduce">
             <view class="image-plus-horizontal"></view>
             <view class="image-plus-vertical"></view>
           </view>
           <view class="image-plus-text">选择图片</view>
-        </block>
+        </view>
     </view>
     <button name="" type="primary" size="mini" bindtap="upImgProduce">开始上传图片</button>
   </view>
   <view class="section">
-    <view class="section__title">门店/柜台环境（最多允许8个图片URL，多个URL间以一个半角逗号分隔）</view>
+    <view class="section__title">门店/柜台环境（最多允许4个图片URL，多个URL间以一个半角逗号分隔）</view>
     <view class="page-body-info">
         <block wx:for="{{retailImageSrc}}" wx:key="{{index}}">
-          <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgRetail" class="close" src="../../image/close.png"></image></image>
+          <image src="{{item}}" class="image" mode="aspectFill">
+            <image data-index="{{index}}" bindtap="closeImgRetail" class="close" src="../../image/close.png"></image>
+            <image data-index="{{index}}" bindtap="moveLeftRe" class="left" src="../../image/left.png"></image>
+            <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
+          </image>
         </block>
-        <block >
+         <view style="{{disRetail}}">
           <view class="image-plus image-plus-nb" bindtap="chooseImageRetail">
             <view class="image-plus-horizontal"></view>
             <view class="image-plus-vertical"></view>
           </view>
           <view class="image-plus-text">选择图片</view>
-        </block>
+        </view>
     </view>
     <button name="" type="primary" size="mini" bindtap="upImgRetail">开始上传图片</button>
   </view>

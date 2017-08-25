@@ -1,2 +1,7 @@
 <!--pages/item/index.wxml-->
-<text>pages/item/index.wxml</text>
+<view class="list">
+
+</view>
+<view class="btn-area">
+    <button type="primary" disabled="{{disable}}" bindtap="createItem">创建商品</button>
+</view>

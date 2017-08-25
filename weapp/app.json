@@ -23,7 +23,8 @@
     "pages/biz/create_result",
     "pages/biz/edit",
     "pages/biz/edit_certain",
-    "pages/biz/edit_img"
+    "pages/biz/edit_img",
+    "pages/item/createItem"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f7941c",
@@ -46,13 +47,13 @@
       },
       {
         "pagePath": "pages/explore/index",
-        "text": "发现",
+        "text": "订单",
         "iconPath": "image/nav/main/explore.png",
         "selectedIconPath": "image/nav/main/explore_active.png"
       },
       {
-        "pagePath": "pages/cart/index",
-        "text": "购物车",
+        "pagePath": "pages/item/index",
+        "text": "商品",
         "iconPath": "image/nav/main/cart.png",
         "selectedIconPath": "image/nav/main/cart_active.png"
       },

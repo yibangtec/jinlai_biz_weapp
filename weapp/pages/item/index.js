@@ -14,7 +14,11 @@ Page({
   onLoad: function (options) {
   
   },
-
+  createItem:function(e){
+    wx.navigateTo({
+      url: 'createItem',
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

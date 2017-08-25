@@ -5,20 +5,20 @@
      <view class="page-body-info">
         <block wx:for="{{productImageSrc}}">
           <image src="{{item}}" class="image" mode="aspectFill">
-            <image bindtap="closeImgProduct" class="close" src="../../image/close.png"></image>
+            <image data-index="{{index}}" bindtap="closeImgProduct" class="close" src="../../image/close.png"></image>
             <image data-index="{{index}}" bindtap="moveLeft" class="left" src="../../image/left.png"></image>
             <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
           </image>
         </block>
-        <block >
+        <view style="{{dis}}" >
           <view class="image-plus image-plus-nb" bindtap="chooseImageProduct">
             <view class="image-plus-horizontal"></view>
             <view class="image-plus-vertical"></view>
           </view>
           <view class="image-plus-text">选择图片</view>
-        </block>
+        </view>
     </view>
-    <button name="" type="primary" size="mini" bindtap="upImgProduct">开始上传图片</button>
+    <button name="" disabled="{{disUp}}" type="primary" size="mini" bindtap="upImgProduct">开始上传图片</button>
     
-  </view>
-<button bindtap="edit_img">确定</button>
+</view>
+<button disabled="{{disSub}}" type="primary" bindtap="edit_img">确定</button>

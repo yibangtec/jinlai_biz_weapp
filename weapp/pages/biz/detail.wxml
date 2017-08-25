@@ -83,23 +83,23 @@
   <view data-text="开户行账号" data-name="bank_account" bindtap="edit_name" wx:if="{{biz.bank_account == undefined||biz.bank_account== null}}"> 开户行账号；最长30位：<text class="right">未设置 > </text></view>
   <view data-text="开户行账号" data-name="bank_account" bindtap="edit_name" wx:else>开户行账号；最长30位： {{biz.bank_account}} <text class="right"> > </text></view>
   
-  <view wx:if="{{biz.url_image_license == undefined||biz.url_image_license== null}}"> 营业执照正/副本照片：<text data-text="营业执照正/副本照片" data-name="url_image_license" bindtap="edit_img"  class="right">未设置 > </text></view>
-  <view wx:else>营业执照正/副本照片： <text data-text="营业执照正/副本照片" data-name="url_image_license"  bindtap="edit_img"  class="right"> > </text>
+  <view wx:if="{{biz.url_image_license == undefined||biz.url_image_license== null}}"> 营业执照正/副本照片：<text data-sum="1" data-text="营业执照正/副本照片" data-name="url_image_license" bindtap="edit_img"  class="right">未设置 > </text></view>
+  <view wx:else>营业执照正/副本照片： <text data-sum="1" data-text="营业执照正/副本照片" data-name="url_image_license"  bindtap="edit_img"  class="right"> > </text>
     <image data-name="url_image_license" bindtap="previewOneImg" src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{biz.url_image_license}}"></image>
   </view>
 
-  <view data-text="法人人身份证照片" data-name="url_image_owner_id" bindtap="edit_img" wx:if="{{biz.url_image_owner_id == undefined||biz.url_image_owner_id== null}}"> 法人人身份证照片：<text class="right">未设置 > </text></view>
-  <view data-text="法人人身份证照片" data-name="url_image_owner_id" bindtap="edit_img" wx:else>法人人身份证照片： <text  class="right"> > </text>
+  <view data-sum="1" data-img="owner_id" data-text="法人人身份证照片" data-name="url_image_owner_id" bindtap="edit_img" wx:if="{{biz.url_image_owner_id == undefined||biz.url_image_owner_id== null}}"> 法人人身份证照片：<text class="right">未设置 > </text></view>
+  <view data-sum="1" data-img="owner_id" data-text="法人人身份证照片" data-name="url_image_owner_id" bindtap="edit_img" wx:else>法人人身份证照片： <text  class="right"> > </text>
     <image src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{biz.url_image_owner_id}}"></image>
   </view> 
   
-  <view data-text="经办人身份证照片" data-name="url_image_auth_id" bindtap="edit_img" wx:if="{{biz.url_image_auth_id == undefined||biz.url_image_auth_id== null}}"> 经办人身份证照片：<text class="right">未设置 > </text></view>
-  <view data-text="经办人身份证照片" data-name="url_image_auth_id" bindtap="edit_img" wx:else>经办人身份证照片： <text class="right"> > </text>
+  <view data-sum="1" data-text="经办人身份证照片" data-name="url_image_auth_id" bindtap="edit_img" wx:if="{{biz.url_image_auth_id == undefined||biz.url_image_auth_id== null}}"> 经办人身份证照片：<text class="right">未设置 > </text></view>
+  <view data-sum="1" data-text="经办人身份证照片" data-name="url_image_auth_id" bindtap="edit_img" wx:else>经办人身份证照片： <text class="right"> > </text>
     <image src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{biz.url_image_auth_id}}"></image>
   </view>
   
-  <view data-text="经办人授权书照片" data-name="url_image_auth_doc" bindtap="edit_img" wx:if="{{biz.url_image_auth_doc == undefined||biz.url_image_auth_doc== null}}"> 经办人授权书照片：<text class="right">未设置 > </text></view>
-  <view data-text="经办人授权书照片" data-name="url_image_auth_doc" bindtap="edit_img" wx:else>经办人授权书照片-- <text class="right"> > </text>
+  <view data-sum="1" data-text="经办人授权书照片" data-name="url_image_auth_doc" bindtap="edit_img" wx:if="{{biz.url_image_auth_doc == undefined||biz.url_image_auth_doc== null}}"> 经办人授权书照片：<text class="right">未设置 > </text></view>
+  <view data-sum="1" data-text="经办人授权书照片" data-name="url_image_auth_doc" bindtap="edit_img" wx:else>经办人授权书照片-- <text class="right"> > </text>
     <image src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{biz.url_image_auth_doc}}"></image>
   </view>
 
@@ -119,11 +119,11 @@
 
     <view data-text="产地照片" data-name="url_image_produce" data-img="produce" bindtap="edit_img">工厂/产地照片：</view>
     <view wx:for="{{pArr1}}" class="classname">
-      <image src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{item}}"></image>
+      <image src="{{item}}"></image>
     </view>  
-    <view data-text="柜台照片" data-name="url_image_retail" data-img="retail" bindtap="edit_img">工厂/产地照片：</view>
+    <view data-text="柜台照片" data-name="url_image_retail" data-img="retail" bindtap="edit_img">柜台照片:</view>
     <view wx:for="{{pArr2}}" class="classname">
-      <image src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{item}}"></image>
+      <image src="{{item}}"></image>
     </view>  
   <view>状态：{{biz.status}}</view>
   <button wx:if="{{biz.status !== '受理中'}}" type="primary" size="mini" loading="{{loading}}" plain="{{plainde}}" bindtap="button_edit"> 修改 </button>

@@ -8,6 +8,9 @@ var app = getApp()
 var arr = []
 var beforeArr = []
 var endArr=[]
+var cont=''
+var sum
+var o={}
 var user_id = '', id = '', name = '', value = '', path = '', inputValue = '', productSrc = '', productImageUrl = [], url_image_product = '', time = '';
 function tick(s, bizId, userId) {
   var objD = new Date();
@@ -40,7 +43,10 @@ Page({
     title: '',
     value: '',
     productImageSrc:'',
-    index:''
+    index:'',
+    dis:'display:none',
+    disUp:true,
+    disSub:true
   },
 
   /**
@@ -51,6 +57,8 @@ Page({
     id = options.id
     name = options.name
     path = options.img
+    sum = options.sum
+    console.log(sum)
     wx.setNavigationBarTitle({ title: options.text })
     var url = 'biz/detail'
     var params = {}
@@ -71,14 +79,45 @@ Page({
         data: { id: id },
         success: function (result) {
           console.log(result.data.content[name])
-          beforeArr = result.data.content[name].split(",")
-          console.log(beforeArr)
-          for (var i = 0; i < beforeArr.length; i++) {
-            beforeArr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + beforeArr[i]
+          if(sum==1){
+            beforeArr = result.data.content[name].split(",")
+            if (beforeArr.length>0){
+              for (var i = 0; i < beforeArr.length; i++) {
+                beforeArr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + beforeArr[i]
+              }
+              that.setData({
+                productImageSrc: beforeArr
+              });
+              that.setData({
+                dis: 'display:none'
+              })
+            }else{
+              cont=1
+              that.setData({
+                dis: 'display:block'
+              })
+            }
+          }else{
+            beforeArr = result.data.content[name].split(",")
+            
+              for (var i = 0; i < beforeArr.length; i++) {
+                beforeArr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + beforeArr[i]
+              }
+              that.setData({
+                productImageSrc: beforeArr,
+              })
+            if (beforeArr.length > 0 && beforeArr.length < 5) {
+              cont = 4 - beforeArr.length
+              that.setData({
+                dis: 'display:block'
+              })
+            } else if (beforeArr.length >= 4){
+              that.setData({
+                dis: 'display:none'
+              })
+            }
           }
-          that.setData({
-            productImageSrc: beforeArr
-          });
+          
         },
         fail: function (result) {
           console.log(result)
@@ -116,17 +155,35 @@ Page({
 
   chooseImageProduct: function () {
     const self = this
+    
     wx.chooseImage({
-      count: 4,
+      count: cont,
       sizeType: ['compressed'],
       sourceType: ['album'],
       success: function (res) {
         console.log('chooseImage success, temp path is', res.tempFilePaths)
+
         productSrc = res.tempFilePaths
-        beforeArr = beforeArr.concat(productSrc)
+        if (self.data.productImageSrc==''){
+          beforeArr = productSrc
+        }else{
+          beforeArr = self.data.productImageSrc
+          console.log(beforeArr)
+          beforeArr = beforeArr.concat(productSrc)
+          console.log(beforeArr)
+        }
+        
+        console.log('选择图片之后的')
+        console.log(beforeArr)
         self.setData({
-          productImageSrc: beforeArr
+          productImageSrc: beforeArr,
+          disUp: false
         })
+        if (beforeArr.length == 4) {
+          self.setData({
+            dis: 'display:none'
+          });
+        } 
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
@@ -134,12 +191,13 @@ Page({
     })
   },
   upImgProduct: function (e) {
+    var that =this
     console.log('this is  upImg')
     for (var i = 0; i < productSrc.length; i++) {
-      
       time = tick(i, id, user_id)
-      console.log(time)
       productImageUrl[i] = path+'/' + time
+      
+      o[productSrc[i]] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + productImageUrl[i]
       upyun.upload({
         localPath: productSrc[i],
         remotePath: '/biz/'+ path +'/' + time,
@@ -149,22 +207,34 @@ Page({
             title: '上传成功',
             icon: 'success',
             duration: 1000
-          })
+          }) 
+          that.setData({
+            disSub: false
+          });
         },
         fail: function ({ errMsg }) {
           console.log('uploadImage fail, errMsg is', errMsg)
         }
       })
     }
+    console.log(o)
   },
   closeImgProduct: function (e) {
     var that = this;
     var index = e.currentTarget.dataset.index;
-    var list = that.data.productImageSrc;
-    list.splice(index, 1)
+    beforeArr = that.data.productImageSrc;
+    beforeArr.splice(index, 1)
     that.setData({
-      productImageSrc: list
+      productImageSrc: beforeArr
     });
+    console.log('删除图片之后的')
+    console.log(beforeArr)
+    if (beforeArr.length >= 0 && beforeArr.length < 4) {
+      cont = 4 - beforeArr.length
+      that.setData({
+        dis: 'display:block'
+      });
+    }
   },
   moveLeft:function(e){
     console.log(beforeArr)
@@ -184,7 +254,16 @@ Page({
   },
   edit_img: function (e) {
 
-    url_image_product = productImageUrl.join(',')
+    for (var i = 0; i < beforeArr.length; i++){
+      if (o.hasOwnProperty(beforeArr[i])==true){
+        beforeArr[i] = o[beforeArr[i]]
+      }
+    }
+    console.log(beforeArr)
+    for (var i = 0; i < beforeArr.length; i++) {
+      beforeArr[i] = beforeArr[i].replace('https://jinlaisandbox-images.b0.upaiyun.com/biz/', "")
+    }
+    url_image_product = beforeArr.join(',')
     console.log(url_image_product)
     // 通过API获取或处理数据
     var url = 'biz/edit_certain'

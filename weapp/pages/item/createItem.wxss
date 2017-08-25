@@ -1,11 +1,6 @@
-/* edit.wxss */
-/* creat.wxss */
-
-input {
-  height: 90rpx;
-  border: 2rpx solid #ccc;
-  border-radius: 10rpx;
-  margin: 50rpx 0;
+/* createItem.wxss */
+input{
+  border: 1rpx solid #ccc;
 }
 .aspectFill {
   display: block;
@@ -88,20 +83,6 @@ input {
   top: 0;
   right: 0;
 }
-.page-body-info {
-  display: flex;
-  box-sizing: border-box;
-  padding: 30rpx;
-  border-top: 1rpx solid #D9D9D9;
-  border-bottom: 1rpx solid #D9D9D9;
-}
-.map_container{
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
 .left{
   width: 32rpx;
   height: 32rpx;
@@ -117,4 +98,15 @@ input {
   position: absolute;
   bottom: 0;
   right: 0;
+}
+.page-body-info {
+  display: flex;
+  box-sizing: border-box;
+  padding: 30rpx;
+  border-top: 1rpx solid #D9D9D9;
+  border-bottom: 1rpx solid #D9D9D9;
+}
+video{
+  width: 700rpx;
+  height: auto;
 }

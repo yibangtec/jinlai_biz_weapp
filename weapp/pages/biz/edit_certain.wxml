@@ -1,7 +1,11 @@
 <!--edit_certain.wxml-->
 <text>{{title}}修改</text>
-<input type="text" value="{{value}}" bindblur="getEditVaue" placeholder="请输入修改内容"/>
-
+<view wx:if="{{value == undefined}}" class="classname">
+  <input type="text"  bindblur="getEditVaue" placeholder="请输入修改内容"/>
+</view>
+<view wx:else class="classname">
+  <input type="text" value="{{value}}"  bindblur="getEditVaue" placeholder="请输入修改内容"/>
+</view>
 <button bindtap="edit_certain">确定</button>
 
 

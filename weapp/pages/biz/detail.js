@@ -62,15 +62,35 @@ Page({
           console.log(result.data)
           biz = result.data.content
           var p = result.data.content.url_image_product
-          var arr = p.split(",")
-          for (var i = 0; i < arr.length; i++) {
-            arr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + arr[i]
+          if (p){
+            var arr = p.split(",")
+            for (var i = 0; i < arr.length; i++) {
+              arr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + arr[i]
+            }
+          } else {
+            arr = []
           }
           console.log(arr)
           var p1 = result.data.content.url_image_produce
-          var arr1 = p1.split(",")
-          var p2 = result.data.content.url_image_retail
-          var arr2 = p2.split(",")
+          if(p1){
+            var arr1 = p1.split(",")
+            for (var i = 0; i < arr1.length; i++) {
+              arr1[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + arr1[i]
+            }
+          } else {
+            arr1 = []
+          }
+
+          if (p2) {
+            var p2 = result.data.content.url_image_retail
+            var arr2 = p2.split(",")
+            for (var i = 0; i < arr2.length; i++) {
+              arr2[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + arr2[i]
+            }
+          }else{
+            arr2=[]
+          }
+          
           that.setData({ biz: result.data.content, pArr: arr, pArr1: arr1, pArr2: arr2 });
 
         },
@@ -103,9 +123,9 @@ Page({
     var n = e.currentTarget.dataset.name
     var v = e.currentTarget.dataset.value
     var t = e.currentTarget.dataset.text
-    console.log(bizId + n + biz[v]+t)
+    console.log(bizId + n + biz[n]+t)
     wx.navigateTo({
-      url: 'edit_certain?id=' + bizId + '&name=' + n + '&value=' + biz[v]+'&text='+t
+      url: 'edit_certain?id=' + bizId + '&name=' + n + '&value=' + biz[n]+'&text='+t
     })
   },
   edit_img:function(e){
@@ -113,9 +133,11 @@ Page({
     var v = e.currentTarget.dataset.name
     var t = e.currentTarget.dataset.text
     var img = e.currentTarget.dataset.img
+    var s = e.currentTarget.dataset.sum
     console.log(bizId + n + biz[v] + t)
+    console.log(img)
     wx.navigateTo({
-      url: 'edit_img?id=' + bizId + '&name=' + n + '&value=' + biz[v] + '&text=' + t+'&img='+img
+      url: 'edit_img?id=' + bizId + '&name=' + n + '&value=' + biz[v] + '&text=' + t+'&img='+img+'&sum='+s
     })
   },
   button_edit:function(e){
@@ -181,8 +203,20 @@ Page({
           console.log(arr)
           var p1 = result.data.content.url_image_produce
           var arr1 = p1.split(",")
-          var p2 = result.data.content.url_image_retail
-          var arr2 = p2.split(",")
+          for (var i = 0; i < arr1.length; i++) {
+            arr1[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + arr1[i]
+          }
+          console.log(arr1)
+          if (p2) {
+            var p2 = result.data.content.url_image_retail
+            var arr2 = p2.split(",")
+            for (var i = 0; i < arr2.length; i++) {
+              arr2[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + arr2[i]
+            }
+          } else {
+            arr2 = []
+          }
+          console.log(arr2)
           that.setData({ biz: result.data.content, pArr: arr, pArr1: arr1, pArr2: arr2 });
 
         },

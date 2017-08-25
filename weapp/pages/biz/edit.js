@@ -35,7 +35,7 @@ var user_id = '', bizId = '', name = '', brief_name = '', url_logo = '', url_nam
   tel_public = '', tel_protected_biz = '', tel_protected_fiscal = '', tel_protected_order = '',
   nation, province = '', city = '', county = '', street = '', longitude = '', latitude = '',
   code_license = '', code_ssn_owner = '', code_ssn_auth = '', bank_name = '', bank_account = '', fullname_owner = '',
-  fullname_auth = '';
+  fullname_auth = '', product = '', produce = '', retail = '', license = '', owner_id = '', auth_id = '', auth_doc='';
 var time,
   ownerSrc = '',//进行计算时候的url
   ownerImageUrl = [],//回调给后台的图片又拍云存储地址
@@ -52,6 +52,9 @@ var time,
   retailSrc = '',
   retailImageUrl = [],
   biz='';
+var o={}
+var b={}
+var j={}
 var app = getApp()
 Page({
 
@@ -70,6 +73,13 @@ Page({
     produceImageSrc: '',
     retailImageSrc: '',
     index: '',
+    disLicense:'display:block',
+    disOwner: 'display:block',
+    disAuth: 'display:block',
+    disAuthDoc: 'display:block',
+    disProduct: 'display:block',
+    disProduce: 'display:block',
+    disRetail: 'display:block',
   },
 
   /**
@@ -80,8 +90,10 @@ Page({
     wx.getStorage({
       key: 'user',
       success: function (res) {
-        console.log(res.data.content.mobile)
-        user_id = res.data.content.id
+        console.log(res.data.content)
+        user_id = res.data.content.user_id
+        console.log('user_id')
+        console.log(user_id)
         that.setData({
           tel: res.data.content.mobile,
         })
@@ -112,9 +124,119 @@ Page({
         url: app.globalData.url_api + url,
         data: { id: bizId },
         success: function (result) {
-          console.log(result.data)
+          console.log(result.data.content.url_image_license)
           biz = result.data.content
-          that.setData({ biz: result.data.content });
+          that.setData({
+            biz: result.data.content,
+          });
+
+          if (biz.url_image_license !== '') {
+            var licenseArr = biz.url_image_license.split(",")
+            for (var i = 0; i < licenseArr.length; i++) {
+              licenseArr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + licenseArr[i]
+            }
+            
+            that.setData({
+              licenseImageSrc: licenseArr,
+            });
+            console.log(that.data.licenseImageSrc)
+            if (that.data.licenseImageSrc !== ''){
+              that.setData({
+                disLicense: 'display:none',
+              });
+            }
+          } 
+          console.log(biz.url_image_owner_id)
+          if (biz.url_image_owner_id !== '') {
+            var ownerArr = biz.url_image_owner_id.split(",")
+            for (var i = 0; i < ownerArr.length; i++) {
+              ownerArr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + ownerArr[i]
+            }
+            console.log(ownerArr)
+            that.setData({
+              ownerImageSrc: ownerArr,
+            });
+            if (that.data.ownerImageSrc !== '') {
+              that.setData({
+                disOwner: 'display:none',
+              });
+            }
+          }
+          if (biz.url_image_auth_id!==''){
+            var authArr = biz.url_image_auth_id.split(",")
+            for (var i = 0; i < authArr.length; i++) {
+              authArr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + authArr[i]
+            }
+            console.log(authArr)
+            that.setData({
+              authImageSrc: authArr,
+            });
+            if (that.data.authImageSrc !== '') {
+              that.setData({
+                disAuth: 'display:none',
+              });
+            }
+          }
+          if (biz.url_image_auth_doc !== '') {
+            var auth_docArr = biz.url_image_auth_doc.split(",")
+            for (var i = 0; i < auth_docArr.length; i++) {
+              auth_docArr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + auth_docArr[i]
+            }
+            console.log(auth_docArr)
+            that.setData({
+              authDocImageSrc: auth_docArr,
+            });
+            if (that.data.authImageSrc !== '') {
+              that.setData({
+                disAuthDoc: 'display:none',
+              });
+            }
+          }
+          if (biz.url_image_product!==''){
+            var productArr = biz.url_image_product.split(",")
+            for (var i = 0; i < productArr.length; i++) {
+              productArr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + productArr[i]
+            }
+            that.setData({
+              productImageSrc: productArr,
+            })
+            if (that.data.productImageSrc.length>=4){
+              that.setData({
+                disProduct: 'display:none',
+              });
+            }
+          }
+          if (biz.url_image_produce !== '') {
+            var produceArr = biz.url_image_produce.split(",")
+            for (var i = 0; i < produceArr.length; i++) {
+              produceArr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + produceArr[i]
+            }
+            that.setData({
+              produceImageSrc: produceArr,
+            })
+            if (that.data.produceImageSrc.lenght >= 4) {
+              that.setData({
+                disProduce: 'display:none',
+              });
+            }
+          }
+          if (biz.url_image_retail !== '') {
+            var retailArr = biz.url_image_retail.split(",")
+            var cont = 4 - productArr.length
+            for (var i = 0; i < retailArr.length; i++) {
+              retailArr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + retailArr[i]
+            }
+            that.setData({
+              retailImageSrc: retailArr,
+            })
+            if (that.data.retailImageSrc.lenght >= 4) {
+              that.setData({
+                disRetail: 'display:none',
+              });
+            }
+          }
+          
+         
         },
         fail: function (result) {
           console.log(result)
@@ -319,6 +441,15 @@ Page({
         self.setData({
           licenseImageSrc: licenseSrc
         })
+        if (self.data.licenseImageSrc !== '') {
+          self.setData({
+            disLicense: 'display:none',
+          });
+        } else {
+          self.setData({
+            disLicense: 'display:block',
+          });
+        }
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage licenseImageSrc fail, err is', errMsg)
@@ -359,6 +490,16 @@ Page({
     that.setData({
       licenseImageSrc: list
     });
+    if (that.data.licenseImageSrc == '') {
+      that.setData({
+        disLicense: 'display:block',
+      });
+    }else{
+      that.setData({
+        disLicense: 'display:none',
+      });
+    }
+
   },
   //法人身份证
   chooseImageOwner: function () {
@@ -374,6 +515,15 @@ Page({
           ownerImageSrc: ownerSrc,
           disable: false
         })
+        if (self.data.authImageSrc !== '') {
+          self.setData({
+            disAuth: 'display:none',
+          });
+        } else {
+          self.setData({
+            disAuth: 'display:block',
+          });
+        }
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
@@ -413,6 +563,15 @@ Page({
     that.setData({
       ownerImageSrc: list
     });
+    if (that.data.ownerImageSrc == '') {
+      that.setData({
+        disAuth: 'display:block',
+      });
+    }else{
+      that.setData({
+        disAuth: 'display:none',
+      });
+    }
   },
   //经办人身份证
   chooseImageAuth: function () {
@@ -427,6 +586,15 @@ Page({
         self.setData({
           authImageSrc: authSrc
         })
+        if (self.data.authImageSrc !== '') {
+          self.setData({
+            disAuth: 'display:none',
+          });
+        } else {
+          self.setData({
+            disAuth: 'display:block',
+          });
+        }
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
@@ -466,6 +634,15 @@ Page({
     that.setData({
       authImageSrc: list
     });
+    if (that.data.authImageSrc == '') {
+      that.setData({
+        disAuth: 'display:block',
+      });
+    }else{
+      that.setData({
+        disAuth: 'display:none',
+      });
+    }
   },
   //授权书
 
@@ -481,6 +658,15 @@ Page({
         self.setData({
           authDocImageSrc: authDocSrc
         })
+        if (self.data.authImageSrc !== '') {
+          self.setData({
+            disAuthDoc: 'display:none',
+          });
+        } else {
+          self.setData({
+            disAuthDoc: 'display:block',
+          });
+        }
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
@@ -520,21 +706,40 @@ Page({
     that.setData({
       authDocImageSrc: list
     });
+    if (that.data.authDocImageSrc == '') {
+      that.setData({
+        disAuthDoc: 'display:block',
+      });
+    }else{
+      that.setData({
+        disAuthDoc: 'display:none',
+      });
+    }
   },
+
   //产品
 
   chooseImageProduct: function () {
     const self = this
+    var num = 4 - self.data.productImageSrc.length
     wx.chooseImage({
-      count: 4,
+      count: num,
       sizeType: ['compressed'],
       sourceType: ['album'],
       success: function (res) {
         console.log('chooseImage success, temp path is', res.tempFilePaths)
+        var beforeProductArr = self.data.productImageSrc
         productSrc = res.tempFilePaths
+        beforeProductArr = beforeProductArr.concat(productSrc)
+        console.log(beforeProductArr)
         self.setData({
-          productImageSrc: productSrc
+          productImageSrc: beforeProductArr
         })
+        if (self.data.productImageSrc.length >= 4) {
+          self.setData({
+            disProduct: 'display:none',
+          });
+        }
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
@@ -548,6 +753,7 @@ Page({
       time = tick(i, bizId, user_id)
       productImageUrl[i] = 'product/' + time
       //console.log(arr[i])
+      o[productSrc[i]] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + productImageUrl[i]
       upyun.upload({
         localPath: productSrc[i],
         remotePath: '/biz/product/' + time,
@@ -574,12 +780,34 @@ Page({
     that.setData({
       productImageSrc: list
     });
+    if (that.data.productImageSrc.length < 4) {
+      that.setData({
+        disProduct: 'display:block',
+      });
+    }
+  },
+  moveLeftPt: function (e) {
+    var that = this;
+    var beforeArr = that.data.productImageSrc    
+    console.log(beforeArr)
+    var index = e.currentTarget.dataset.index;
+    if (index != 0) {
+      console.log(index)
+      var temp = beforeArr[index - 1]
+      beforeArr[index - 1] = beforeArr[index]
+      beforeArr[index] = temp
+      that.setData({
+        productImageSrc: beforeArr
+      });
+    } 
   },
   //工厂
   chooseImageProduce: function () {
     const self = this
+    var num = 4-self.data.produceImageSrc.length
+    console.log(num)
     wx.chooseImage({
-      count: 4,
+      count: num,
       sizeType: ['compressed'],
       sourceType: ['album'],
       success: function (res) {
@@ -601,6 +829,7 @@ Page({
       time = tick(i, bizId, user_id)
       produceImageUrl[i] = 'produce/' + time
       //console.log(arr[i])
+      b[produceSrc[i]] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + produceImageUrl[i]
       upyun.upload({
         localPath: produceSrc[i],
         remotePath: '/biz/produce/' + time,
@@ -627,13 +856,34 @@ Page({
     that.setData({
       produceImageSrc: list
     });
+    if (that.data.produceImageSrc.lenght < 4) {
+      that.setData({
+        disProduce: 'display:none',
+      });
+    }
+  },
+  moveLeftPe: function (e) {
+    var that = this;
+    var beforeArr = that.data.produceImageSrc
+    console.log(beforeArr)
+    var index = e.currentTarget.dataset.index;
+    if (index != 0) {
+      console.log(index)
+      var temp = beforeArr[index - 1]
+      beforeArr[index - 1] = beforeArr[index]
+      beforeArr[index] = temp
+      that.setData({
+        produceImageSrc: beforeArr
+      });
+    }
   },
   //门店
 
   chooseImageRetail: function () {
     const self = this
+    var num = 4 - self.data.retailImageSrc.length
     wx.chooseImage({
-      count: 1,
+      count: num,
       sizeType: ['compressed'],
       sourceType: ['album'],
       success: function (res) {
@@ -656,6 +906,7 @@ Page({
       time = tick(i, bizId, user_id)
       retailImageUrl[i] = 'retail/' + time
       //console.log(arr[i])
+      b[retailSrc[i]] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + retailImageUrl[i]
       upyun.upload({
         localPath: retailSrc[i],
         remotePath: '/biz/retail/' + time,
@@ -682,8 +933,29 @@ Page({
     that.setData({
       retailImageSrc: list
     });
+    if (that.data.retailImageSrc.lenght < 4) {
+      that.setData({
+        disRetail: 'display:none',
+      });
+    }
+  },
+  moveLeftRe: function (e) {
+    var that = this;
+    var beforeArr = that.data.retailImageSrc
+    console.log(beforeArr)
+    var index = e.currentTarget.dataset.index;
+    if (index != 0) {
+      console.log(index)
+      var temp = beforeArr[index - 1]
+      beforeArr[index - 1] = beforeArr[index]
+      beforeArr[index] = temp
+      that.setData({
+        retailImageSrc: beforeArr
+      });
+    }
   },
   submit: function (e) {
+    var that = this
     if (!name) {
       name = biz.name
       console.log(name)
@@ -692,21 +964,84 @@ Page({
       county = biz.county
       console.log(county)
     }
+    
+    var pt = that.data.productImageSrc
+    if (pt.length>0){
+      for (var i = 0; i < pt.length; i++) {
+        if (o.hasOwnProperty(pt[i]) == true) {
+          pt[i] = o[pt[i]]
+        }
+      }
+      console.log(pt)
+      for (var i = 0; i < pt.length; i++) {
+        pt[i] = pt[i].replace('https://jinlaisandbox-images.b0.upaiyun.com/biz/', "")
+      }
+      console.log(pt)
+      product = pt.join(',')
+      console.log(product)
+    }
+    var pe = that.data.produceImageSrc
+    if (pe.length > 0) {
+      for (var i = 0; i < pe.length; i++) {
+        if (b.hasOwnProperty(pe[i]) == true) {
+          pe[i] = b[pe[i]]
+        }
+      }
+      console.log(pe)
+      for (var i = 0; i < pe.length; i++) {
+        pe[i] = pe[i].replace('https://jinlaisandbox-images.b0.upaiyun.com/biz/', "")
+      }
+      produce = pe.join(',')
+      console.log(produce)
+    }
+    var re = that.data.retailImageSrc
+    if (re.length > 0) {
+      for (var i = 0; i < re.length; i++) {
+        if (j.hasOwnProperty(re[i]) == true) {
+          re[i] = j[re[i]]
+        }
+      }
+      console.log(pe)
+      for (var i = 0; i < re.length; i++) {
+        re[i] = re[i].replace('https://jinlaisandbox-images.b0.upaiyun.com/biz/', "")
+      }
+      retail = re.join(',')
+      console.log(retail)
+    }
+    
+    
+    if (licenseImageUrl.length >0){
+      license = licenseImageUrl[0]
+    }else{
+      license = biz.url_image_license
+    }
+    console.log(license)
+    if (ownerImageUrl.length > 0) {
+      owner_id = ownerImageUrl[0]
+    } else {
+      owner_id = biz.url_image_owner_id
+    }
+    console.log(owner_id)
+    if (authImageUrl.length > 0) {
+      auth_id = authImageUrl[0]
+    } else {
+      auth_id = biz.url_image_auth_id
+    }
+    console.log(auth_id)
+    if (authDocImageUrl.length > 0) {
+      auth_doc = authDocImageUrl[0]
+    } else {
+      auth_doc = biz.url_image_auth_doc
+    }
+    console.log(auth_doc)
     var url = 'biz/edit'
     var params = {}
     var api_result = api_request(url, params)
-    var url_image_product = productImageUrl.join(',')
-    var url_image_produce = produceImageUrl.join(',')
-    var url_image_retail = retailImageUrl.join(',')
-    var url_image_license = licenseImageUrl[0]
-    var url_image_owner_id = ownerImageUrl[0]
-    var url_image_auth_id = authImageUrl[0] 
-    var url_image_auth_doc = authDocImageUrl[0] 
     // 网络请求
     function api_request(url, api_params) {
       // 生成签名
       app.sign_generate(api_params)
-
+      console.log(product)
       // 通过小程序的网络请求API发送请求
       wx.request({
         method: "POST",
@@ -714,46 +1049,13 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         url: app.globalData.url_api + url,
-        data: {
-          app_type: 'biz', 
-          id: bizId, 
-          user_id: user_id, 
-          name: name, 
-          brief_name: brief_name, 
-          url_name: url_name, 
-          url_logo: url_logo, 
-          slogan: slogan,
-          description: description, 
-          notification: notification, 
-          url_web: url_web, 
-          url_weibo: url_weibo, 
-          url_wechat: url_wechat, 
-          tel_public: tel_public, 
-          tel_protected_biz: tel_protected_biz, 
-          tel_protected_fiscal: tel_protected_fiscal, 
-          tel_protected_order:tel_protected_order,
-          fullname_owner: fullname_owner, 
-          fullname_auth: fullname_auth,
-          code_license: code_license, 
-          code_ssn_owner: code_ssn_owner, 
-          code_ssn_auth: code_ssn_auth, 
-          url_image_license: url_image_license, 
-          url_image_owner_id: url_image_owner_id,
-          url_image_auth_id: url_image_auth_id, 
-          url_image_auth_doc: url_image_auth_doc, 
-          bank_name: bank_name, 
-          bank_account: bank_account, 
-          url_image_product: url_image_product,
-          url_image_produce: url_image_produce, 
-          url_image_retail: url_image_retail,
-          nation: nation,
-          province: province,
-          city: city,
-          county: county,
-          street: street,
-          longitude: 39.23222,
-          latitude: 116.23456
-        },
+        data: {app_type: 'biz', id: bizId, user_id: user_id, name: name, brief_name: brief_name, url_name: url_name,url_logo: url_logo, slogan: slogan,
+          description: description, notification: notification, url_web: url_web, url_weibo: url_weibo, url_wechat: url_wechat, 
+          tel_public: tel_public, tel_protected_biz: tel_protected_biz, tel_protected_fiscal: tel_protected_fiscal, tel_protected_order:tel_protected_order,
+          fullname_owner: fullname_owner, fullname_auth: fullname_auth,code_license: code_license,code_ssn_owner: code_ssn_owner, 
+          code_ssn_auth: code_ssn_auth, url_image_license: license, url_image_owner_id: owner_id,url_image_auth_id: auth_id,url_image_auth_doc: auth_doc, 
+          bank_name: bank_name, bank_account: bank_account, url_image_product: product, url_image_produce: produce, url_image_retail: retail,
+          nation: nation,province: province,city: city, county: county, street: street,longitude: 39.23222,latitude: 116.23456},
         success: function (result) {
           console.log(result)
           var user = result.data
@@ -765,10 +1067,9 @@ Page({
               icon: 'success',
               duration: 1000
             })
-
-            //wx.redirectTo({
-              //url: 'pwresult?title="商家修改成功成功"'
-            //})
+            wx.navigateBack({
+              url: '../../pages/biz/detail?id=' + bizId,
+            })
           }
           //传title = "成功创建商家"到商家操作结果页
           //if (result.data.status == 200) {
