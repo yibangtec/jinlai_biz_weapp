@@ -24,7 +24,10 @@
     "pages/biz/edit",
     "pages/biz/edit_certain",
     "pages/biz/edit_img",
-    "pages/item/createItem"
+    "pages/item/createItem",
+    "pages/item/edit",
+    "pages/item/editSingle",
+    "pages/item/editCertain"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f7941c",

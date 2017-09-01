@@ -1,0 +1,31 @@
+<!--pages/item/editCertain.wxml-->
+<view class="section" style="{{imgStyle}}">
+    <view class="section__title">主图*</view>
+    <view class="page-body-info">
+        <block wx:for="{{mainImageSrc}}" wx:key="{{index}}">
+          <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgMain" class="close"             src="../../image/close.png"></image></image>
+        </block>
+        <view style="{{dis}}">
+          <view class="image-plus image-plus-nb" bindtap="chooseImageMain">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+          <view class="image-plus-text">选择图片</view>
+        </view>
+    </view>
+  <button name="" type="primary" size="mini" bindtap="upImgMain">开始上传图片</button>
+</view>
+<view class="section" style="{{timeStyle}}">
+  <view class="section__title">预定上架时间</view>
+  <view class="section"> 
+    <picker mode="date" value="{{date}}" start="{{currentDate}}" bindtap="current"  bindchange="bindDateChange"> 
+      <input class="picker" value="{{dates}}"/>
+    </picker> 
+  </view> 
+  <view class="section"> 
+    <picker mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange"> 
+    <input class="picker" value="{{times}}"/>
+    </picker> 
+  </view> 
+</view>
+<button type="primary" disabled="{{disable}}" bindtap="submit">确定</button>

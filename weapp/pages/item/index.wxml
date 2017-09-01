@@ -1,6 +1,14 @@
 <!--pages/item/index.wxml-->
 <view class="list">
-
+  <view  wx:for="{{itemArray}}" wx:key="{{item.item_id}}">
+    <view class="classname" data-name="{{item.item_id}}" bindtap="listClick">
+      <view>商品id：{{item.item_id}}</view>
+      <view>商品名称：{{item.name}}</view>
+      <view>商城价/现价：{{item.price}}</view>
+      <view>库存量/份：{{item.stocks}}</view>
+      <view>状态：{{item.status}}</view>
+    </view>  
+  </view>
 </view>
 <view class="btn-area">
     <button type="primary" disabled="{{disable}}" bindtap="createItem">创建商品</button>

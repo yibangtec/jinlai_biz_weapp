@@ -46,7 +46,8 @@ Page({
     index:'',
     dis:'display:none',
     disUp:true,
-    disSub:true
+    disSub:true,
+   
   },
 
   /**

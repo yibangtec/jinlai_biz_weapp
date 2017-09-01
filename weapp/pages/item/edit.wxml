@@ -1,37 +1,21 @@
-<!--createItem.wxml-->
-<view class="section">
-  <view class="section__title">所属系统分类*</view>
-  <picker bindchange="bindPickerChange" value="{{index.name}}" range="{{objectArray}}" range-key="name">
-    <view class="picker">
-    <input value="{{objectArray[index].name}}" placeholder="请选择所属系统分类" />
-    </view>
-  </picker>
-</view>
-<view class="section">
-  <view class="section__title">所属品牌</view>
-  <picker bindchange="bindPickerArray" value="{{sum}}" range="{{array}}">
-    <view class="picker">
-    <input value="{{array[sum]}}" placeholder="请选择所属品牌" />
-    </view>
-  </picker>
-</view>
+<!--edit.wxml-->
 <view class="section">
   <view class="section__title">所属商家分类*</view>
-  <picker bindchange="bindPickerBiz" value="{{num.name}}" range="{{objectBizArray}}" range-key="name">
+  <picker bindchange="bindPickerBiz" value="{{sum.name}}" range="{{objectBizArray}}" range-key="name">
     <view class="picker">
-    <input value="{{objectBizArray[num].name}}" placeholder="请选择所属商家分类" />
+    <input value="{{objectBizArray[sum].name}}" placeholder="请选择所属商家分类" />
     </view>
   </picker>
 </view>
 <view class="section">
     <view class="section__title">商家自定义商品编码*</view>
-    <input type="text" maxlength="20" bindblur="getCode_biz" placeholder="最多20个字符" />
+    <input type="text" maxlength="20" bindblur="getCode_biz" value="{{itemObj.code_biz}}" placeholder="最多20个字符" />
 </view>
 <view class="section">
     <view class="section__title">主图*</view>
     <view class="page-body-info">
         <block wx:for="{{mainImageSrc}}" wx:key="{{index}}">
-          <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgMain" class="close" src="../../image/close.png"></image></image>
+          <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgMain" class="close"             src="../../image/close.png"></image></image>
         </block>
         <view style="{{dis}}">
           <view class="image-plus image-plus-nb" bindtap="chooseImageMain">
@@ -66,8 +50,12 @@
 <view class="section">
     <view class="section__title">形象视频</view>
     <view class="page-body-info">
-        <block>
-          <video src="{{src}}"></video>
+        <block wx:for="{{src}}">
+          <video src="{{item}}" class="image" mode="aspectFill">
+            <image bindtap="closeImgFigure" class="close" src="../../image/close.png"></image>
+            <image bindtap="moveLeft" class="left" src="../../image/left.png"></image>
+            <image bindtap="moveRight" class="right" src="../../image/right.png"></image>
+          </video>   
         </block>
         <view style="{{disSrc}}">
           <view class="image-plus image-plus-nb" bindtap="chooseVideo">
@@ -81,49 +69,49 @@
 </view>
 <view class="section">
     <view class="section__title">商品名称*</view>
-    <input type="text" maxlength="30" bindblur="getItem_name" placeholder="最多30个字符" />
+    <input type="text" maxlength="30" bindblur="getItem_name" value="{{itemObj.name}}" placeholder="最多30个字符" />
 </view>
 <view class="section">
     <view class="section__title">商品宣传语/卖点</view>
-    <input type="text" maxlength="30" bindblur="getSlogan" placeholder="最多30个字符" />
+    <input type="text" maxlength="30" bindblur="getSlogan" value="{{itemObj.slogan}}" placeholder="最多30个字符" />
 </view>
 <button name="" type="primary" size="mini" bindtap="upImgLicense">商品描述</button>
 
 <view class="section">
     <view class="section__title">标签价/原价（元）</view>
-    <input type="number" bindblur="getTag_price" placeholder="0.00为不显示，最高99999.99"/>
+    <input type="number" bindblur="getTag_price" value="{{itemObj.tag_price}}" placeholder="0.00为不显示，最高99999.99"/>
 </view>
 <view class="section">
     <view class="section__title">商城价/现价（元）*</view>
-    <input type="number" bindblur="getPrice" name="brief_name" placeholder="最高99999.99" />
+    <input type="number" bindblur="getPrice" value="{{itemObj.price}}" placeholder="最高99999.99" />
 </view>
 <view class="section">
     <view class="section__title">销售单位</view>
-    <input type="text" bindblur="getUnit_name" name="brief_name" placeholder="最多10个字符，例如斤、双、头、件等，默认份" />
+    <input type="text" bindblur="getUnit_name" value="{{itemObj.unit_name}}" placeholder="最多10个字符，例如斤、双、头、件等，默认份" />
 </view>
 <view class="section">
     <view class="section__title">净重（KG）</view>
-    <input type="number" bindblur="getWeight_net" name="brief_name" placeholder="最高999.99" />
+    <input type="number" bindblur="getWeight_net" value="{{itemObj.weight_net}}" placeholder="最高999.99" />
 </view>
 <view class="section">
     <view class="section__title">毛重（KG）</view>
-    <input type="number" bindblur="getWeight_gross" name="brief_name" placeholder="最高999.99" />
+    <input type="number" bindblur="getWeight_gross" value="{{itemObj.weight_gross}}" placeholder="最高999.99" />
 </view>
 <view class="section">
     <view class="section__title">体积重（KG）</view>
-    <input type="number" bindblur="getWeight_volume" name="brief_name" placeholder="最高999.99" />
+    <input type="number" bindblur="getWeight_volume" value="{{itemObj.weight_volume}}" placeholder="最高999.99" />
 </view>
 <view class="section">
     <view class="section__title">库存量（份）*</view>
-    <input type="number" bindblur="getStocks" name="brief_name" placeholder="最多65535" />
+    <input type="number" bindblur="getStocks" value="{{itemObj.stocks}}" placeholder="最多65535" />
 </view>
 <view class="section">
     <view class="section__title">每单最高限量（份）</view>
-    <input type="number" bindblur="getQuantity_max" name="brief_name" placeholder="0为不限，最高99" />
+    <input type="number" bindblur="getQuantity_max" value="{{itemObj.quantity_max}}" placeholder="0为不限，最高99" />
 </view>
 <view class="section">
     <view class="section__title">每单最低限量（份）</view>
-    <input type="number" bindblur="getQuantity_min" name="brief_name" placeholder="0为不限，最高99" />
+    <input type="number" bindblur="getQuantity_min" value="{{itemObj.quantity_min}}" placeholder="0为不限，最高99" />
 </view>
 <view class="section">
   <view class="section__title">是否可用优惠券</view>
@@ -135,11 +123,11 @@
 </view>
 <view class="section">
     <view class="section__title">积分抵扣率</view>
-    <input type="number" bindblur="getDiscount_credit" placeholder="例如允许5%的金额使用积分抵扣则为0.05，10%为0.1，最高0.5" />
+    <input type="number" bindblur="getDiscount_credit" value="{{itemObj.discount_credit}}" placeholder="例如允许5%的金额使用积分抵扣则为0.05，10%为0.1，最高0.5" />
 </view>
 <view class="section">
     <view class="section__title">佣金比例/提成率</view>
-    <input type="number" bindblur="getCommission_rate" placeholder="例如提成成交价5%的金额则为0.05，10%为0.1，最高0.5" />
+    <input type="number" bindblur="getCommission_rate" value="{{itemObj.commission_rate}}" placeholder="例如提成成交价5%的金额则为0.05，10%为0.1，最高0.5" />
 </view>
 
 <view class="section">
@@ -171,7 +159,7 @@
 </view>
 <view class="section">
     <view class="section__title">参与的营销活动ID</view>
-    <input type="number" bindblur="getPromotion_id" placeholder="参与的营销活动ID" />
+    <input type="number" bindblur="getPromotion_id" value="{{itemObj.promotion_id}}" placeholder="参与的营销活动ID" />
 </view>
 
 <button type="primary" disabled="{{disable}}" bindtap="submit">确定</button>

@@ -1,4 +1,4 @@
-/* createItem.wxss */
+/* pages/item/editCertain.wxss */
 input{
   border: 1rpx solid #ccc;
 }
