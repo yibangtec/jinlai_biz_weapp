@@ -1,0 +1,32 @@
+<!--pages/item/descriptionItem.wxml-->
+<view class='list' wx:for="{{array}}">
+  <view wx:if="{{item.type=='text'}}">{{item.value}} </view>
+  <image wx:elif="{{item.type=='img'}}" class='description_img' src='{{item.value}}'></image>
+  <view class='editIcon'>
+    <view class='float' data-index='{{index}}' bindtap="showDialogBtn">
+      <image src='../../image/text.png'></image>
+      <text class='text'>文本</text>
+    </view>
+    <view class='float' data-index='{{index}}' bindtap='chooseImage'>
+      <image src='../../image/img.png'></image>
+      <text class='text'>图片</text>
+    </view>
+  </view>
+</view>
+
+
+
+
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+<view class="modal-dialog" wx:if="{{showModal}}">
+  <view class="modal-content">
+    <view>
+      <label>请输入商品描述</label>
+      <textarea placeholder='请输入' bindblur='getText'></textarea>
+    </view>
+  </view>
+  <view class="modal-footer">
+    <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+    <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
+  </view>
+</view>

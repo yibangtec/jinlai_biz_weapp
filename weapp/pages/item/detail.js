@@ -103,6 +103,17 @@ Page({
       url: 'edit?id=' + itemId,
     })
   },
+  descriptionEdit:function(e){
+    var item = e.currentTarget.dataset.item
+    var name = e.currentTarget.dataset.name
+    var value = e.currentTarget.dataset.value
+    console.log(item)
+    console.log(name)
+    console.log(value)
+    wx.navigateTo({
+      url: 'descriptionItem?id=' + item + '&iName=' + name + '&iValue=' + value,
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -1,15 +1,47 @@
 <!--pages/item/index.wxml-->
-<view class="list">
-  <view  wx:for="{{itemArray}}" wx:key="{{item.item_id}}">
-    <view class="classname" data-name="{{item.item_id}}" bindtap="listClick">
-      <view>商品id：{{item.item_id}}</view>
-      <view>商品名称：{{item.name}}</view>
-      <view>商城价/现价：{{item.price}}</view>
-      <view>库存量/份：{{item.stocks}}</view>
-      <view>状态：{{item.status}}</view>
-    </view>  
+
+<view class="item-box">
+  <view class="items">
+    <view  wx:for="{{list}}" wx:key="{{index}}" class="item">
+      <view bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{item.txtStyle}}" class="inner txt" data-name="{{item.item_id}}" bindtap="listClick">
+        <view>商品id：{{item.item_id}}</view>
+        <view>商品名称：{{item.name}}</view>
+        <view>商城价/现价：{{item.price}}</view>
+        <view>库存量/份：{{item.stocks}}</view>
+        <view>状态：{{item.status}}</view>
+      </view>  
+      <view data-index="{{index}}"  data-name="{{item.item_id}}" bindtap="showDialogBtn" class="inner del">删除</view> 
+    </view>
   </view>
 </view>
 <view class="btn-area">
     <button type="primary" disabled="{{disable}}" bindtap="createItem">创建商品</button>
+</view>
+
+
+
+<!--index.wxml-->
+<button class="show-btn" bindtap="backItem">找回删除商品</button>
+<!--弹窗-->
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+<view class="modal-dialog" wx:if="{{showModal}}">
+  <view class="modal-content">
+    <view>商品id：{{itemObj.item_id}}</view>
+    <view>所属系统分类：{{itemObj.category_id}}</view>
+    <view>所属商家分类：{{itemObj.category_biz_id}}</view>
+    <view>主图：<image src="https://jinlaisandbox-images.b0.upaiyun.com/item/{{itemObj.url_image_main}}"></image></view>
+    <view>商品名称：{{itemObj.name}}</view>
+    <view>商城价/原价：{{itemObj.tag_price}}</view>
+    <view>商城价/现价：{{itemObj.price}}</view>
+    <view>销售单位：{{itemObj.unit_name}}</view>
+    <view>
+      <label>请输入密码</label>
+      <input placeholder='请输入密码' bindblur='getPassword'></input>
+    </view>
+  </view>
+  <view class="modal-title">确定要删除上述商品？</view>
+  <view class="modal-footer">
+    <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+    <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
+  </view>
 </view>

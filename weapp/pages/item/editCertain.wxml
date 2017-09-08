@@ -1,6 +1,6 @@
 <!--pages/item/editCertain.wxml-->
 <view class="section" style="{{imgStyle}}">
-    <view class="section__title">主图*</view>
+    <view class="section__title">{{title}}修改</view>
     <view class="page-body-info">
         <block wx:for="{{mainImageSrc}}" wx:key="{{index}}">
           <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgMain" class="close"             src="../../image/close.png"></image></image>
@@ -14,6 +14,46 @@
         </view>
     </view>
   <button name="" type="primary" size="mini" bindtap="upImgMain">开始上传图片</button>
+</view>
+<view class="section" style="{{styleFigure}}">
+    <view class="section__title">形象图</view>
+    <view class="page-body-info">
+        <block wx:for="{{figureImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill">
+            <image data-index="{{index}}" bindtap="closeImgFigure" class="close" src="../../image/close.png"></image>
+            <image data-index="{{index}}" bindtap="moveLeft" class="left" src="../../image/left.png"></image>
+            <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
+          </image>   
+        </block>
+        <view style="{{disfig}}">
+          <view class="image-plus image-plus-nb" bindtap="chooseImageFigure">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+          <view class="image-plus-text">选择图片</view>
+        </view>
+    </view>
+  <button name="" type="primary" size="mini" bindtap="upImgFigure">开始上传图片</button>
+</view>
+<view class="section" style="{{videoImgStyle}}">
+    <view class="section__title">{{title}}修改</view>
+    <view class="page-body-info">
+        <block wx:for="{{src}}">
+          <video src="{{item}}" class="image" mode="aspectFill">
+            <image bindtap="closeImgFigure" class="close" src="../../image/close.png"></image>
+            <image bindtap="moveLeft" class="left" src="../../image/left.png"></image>
+            <image bindtap="moveRight" class="right" src="../../image/right.png"></image>
+          </video>   
+        </block>
+        <view style="{{disSrc}}">
+          <view class="image-plus image-plus-nb" bindtap="chooseVideo">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+          <view class="image-plus-text">选择视频</view>
+        </view>
+    </view>
+  <button name="" type="primary" size="mini" bindtap="upVideo">开始上传视频</button>
 </view>
 <view class="section" style="{{timeStyle}}">
   <view class="section__title">预定上架时间</view>

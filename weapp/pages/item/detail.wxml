@@ -37,8 +37,8 @@
 <view data-item="{{itemObj.item_id}}" data-name="商品宣传语/卖点" data-value="slogan" bindtap="itemEdit" wx:if="{{itemObj.slogan==null}}">商品宣传语/卖点:未设置</view>
 <view data-item="{{itemObj.item_id}}" data-name="商品宣传语/卖点" data-value="slogan" bindtap="itemEdit" wx:else>商品宣传语/卖点:{{itemObj.slogan}}</view>
 
-<view data-item="{{itemObj.item_id}}" data-name="商品描述" data-value="description" bindtap="itemEdit" wx:if="{{itemObj.description==null}}">商品描述:未设置</view>
-<view data-item="{{itemObj.item_id}}" data-name="商品描述" data-value="description" bindtap="itemEdit" wx:else>商品描述:{{itemObj.description}}</view>
+<view data-item="{{itemObj.item_id}}" data-name="商品描述" data-value="description" bindtap="descriptionEdit" wx:if="{{itemObj.description==null}}">商品描述:未设置</view>
+<view data-item="{{itemObj.item_id}}" data-name="商品描述" data-value="description" bindtap="descriptionEdit" wx:else>商品描述:{{itemObj.description}}</view>
 
 <view data-item="{{itemObj.item_id}}" data-name="标签价/原价（元）" data-value="tag_price" bindtap="itemEdit" wx:if="{{itemObj.tag_price==null}}">标签价/原价（元）:未设置</view>
 <view data-item="{{itemObj.item_id}}" data-name="标签价/原价（元）" data-value="tag_price" bindtap="itemEdit" wx:else>标签价/原价（元）:{{itemObj.tag_price}}</view>
