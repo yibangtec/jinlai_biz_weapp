@@ -7,8 +7,8 @@
 
 </view>-->
 <view bindtap="bindViewTap" class="userinfo">
-    <image src="{{headerImg}}"></image>
-    <label>昵称:{{nickName}}</label>
+    <image bindtap='headerImgEdit' class='userinfo-avatar' src="{{headerImg}}"></image>
+    <label bindtap='nickNameEdit'>{{nickName}}</label>
 </view>
 <button class="bnt-right" type="primary" size="mini" loading="{{loading}}" plain="{{plain}}"
         disabled="{{disabled}}" bindtap="login_change"> 密码修改 </button>

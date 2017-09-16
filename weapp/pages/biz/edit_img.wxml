@@ -2,14 +2,14 @@
 
 <view class="section">
     <view class="section__title">{{title}}上传</view>
-     <view class="page-body-info">
-        <block wx:for="{{productImageSrc}}">
+    <view class="page-body-info">
+        <view wx:for="{{productImageSrc}}">
           <image src="{{item}}" class="image" mode="aspectFill">
             <image data-index="{{index}}" bindtap="closeImgProduct" class="close" src="../../image/close.png"></image>
-            <image data-index="{{index}}" bindtap="moveLeft" class="left" src="../../image/left.png"></image>
-            <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
+            <image style='{{leftAndRight}}' data-index="{{index}}" bindtap="moveLeft" class="left" src="../../image/left.png"></image>
+            <image style='{{leftAndRight}}' data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
           </image>
-        </block>
+        </view>
         <view style="{{dis}}" >
           <view class="image-plus image-plus-nb" bindtap="chooseImageProduct">
             <view class="image-plus-horizontal"></view>

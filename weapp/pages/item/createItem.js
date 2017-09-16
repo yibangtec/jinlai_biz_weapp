@@ -1,4 +1,5 @@
 // createItem.js
+var pickerFile = require('../../utils/picker_datetime.js');
 const Upyun = require('../../utils/upyun-wxapp-sdk')
 const yun = require('../../utils/video')
 const upyun = new Upyun({
@@ -74,10 +75,6 @@ Page({
       { name: 0, value: '是' },
       { name: 1, value: '否', checked: 'true' },
     ],
-    dates: '',
-    times: '',
-    dateDowns:'',
-    timeDowns:'',
     mainImageSrc:'',
     figureImageSrc:'',
     dis:'display:block',
@@ -85,106 +82,35 @@ Page({
     src:'',
     disSrc:'display:block',
     currentDate:'',
-    disable:'true'
+    disable:'true',
+    videoStyle:'display:none',
+    str:''
   },
   radioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value)
     obj.coupon_allowed = e.detail.value
   },
   // 点击时间组件确定事件 
-  current:function(e){
-   
-    var objD = new Date();
-    var yy = objD.getYear();
-    if (yy < 1900) yy = yy + 1900;
-    var MM = objD.getMonth() + 1;
-    if (MM < 10) MM = '0' + MM;
-    var dd = objD.getDate();
-    if (dd < 10) dd = '0' + dd;
-    var strd=yy+'-'+MM+'-'+dd
-    this.setData({
-      currentDate: strd
-    })
-  },
-  bindTimeChange: function (e) {
-    if (this.data.dates==''){
-      wx.showToast({
-        title: '请先选择上架日期',
-        icon: 'loading',
-        duration: 2000
-      })
-    }
-    console.log(e.detail.value)
-    this.setData({
-      times: e.detail.value + ':00'
-    })
-    // 获取当前时间戳(以s为单位)
-    var timestamp = Date.parse(new Date());
-    timestamp = timestamp / 1000;
-    //当前时间戳为：1403149534
-    console.log("当前时间戳为：" + timestamp);
-    var stringTime = this.data.dates + ' ' + e.detail.value + ':00';
-    var timestamp2 = Date.parse(new Date(stringTime));
-    timestamp2 = timestamp2 / 1000;
-    //2014-07-10 10:21:12的时间戳为：1404958872 
-    console.log(stringTime + "的时间戳为：" + timestamp2);
-    if (timestamp2 < timestamp){
-      wx.showToast({
-        title: '商品上架时间不能小于当前时间',
-        icon: 'loading',
-        duration: 2000
-      })
-    }
+  
 
+  startTap: function () {
+    var that =this
+    this.datetimePicker.setPicker('startDate');
   },
-  // 点击日期组件确定事件 
-  bindDateChange: function (e) {
-    console.log(e.detail.value)
-    this.setData({
-      dates: e.detail.value
-    })
-  },
-  bindTimeChangeDown: function (e) {
-    if (this.data.dateDowns == '') {
-      wx.showToast({
-        title: '请先选择上架日期',
-        icon: 'loading',
-        duration: 2000
-      })
-    }
-    console.log(e.detail.value)
-    this.setData({
-      timeDowns: e.detail.value+':00'
-    })
-    // 获取当前时间戳(以s为单位)
-    var timestamp = Date.parse(new Date());
-    timestamp = timestamp / 1000;
-    //当前时间戳为：1403149534
-    console.log("当前时间戳为：" + timestamp);
-    var stringTime = this.data.dateDowns + ' ' + e.detail.value + ':00';
-    var timestamp2 = Date.parse(new Date(stringTime));
-    timestamp2 = timestamp2 / 1000;
-    //2014-07-10 10:21:12的时间戳为：1404958872 
-    console.log(stringTime + "的时间戳为：" + timestamp2);
-    if (timestamp2 < timestamp) {
-      wx.showToast({
-        title: '商品下架时间不能小于当前时间',
-        icon: 'loading',
-        duration: 2000
-      })
-    }
-  },
-  // 点击日期组件确定事件 
-  bindDateChangeDown: function (e) {
-    console.log(e.detail.value)
-    this.setData({
-      dateDowns: e.detail.value
-    })
+  endTap: function () {
+    this.datetimePicker.setPicker('endDate');
+    console.log(this.data.endDate)
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log(options.str)
+    this.datetimePicker = new pickerFile.pickerDatetime({
+      page: this,
+      animation: 'slide',
+      duration: 500
+    });
     var that =this
     wx.getStorage({
       key: 'user',
@@ -510,6 +436,11 @@ Page({
       obj.commission_rate = e.detail.value
     }
   },
+  itemDescription:function(e){
+    wx.navigateTo({
+      url: 'descriptionItem',
+    })
+  },
   getPromotion_id:function(e){
     obj.promotion_id = e.detail.value
   },
@@ -706,6 +637,7 @@ Page({
       success: function (res) {
         console.log(res.tempFilePath)
         that.setData({
+          videoStyle: 'display:block',
           src: res.tempFilePath
         })
         console.log(that.data.src)
@@ -759,6 +691,8 @@ Page({
   },
   submit:function(e){
     obj.app_type='biz'
+    console.log(this.data.str)
+    obj.description = this.data.str
     var url = 'item/create'
     var params = {}
     var api_result = api_request(url, params)
@@ -787,6 +721,12 @@ Page({
             wx.redirectTo({
               url: '../login/pwresult?title="商家创建成功"'
             })
+          }else{
+            wx.showToast({
+              title: result.data.content.error.message,
+              icon: 'success',
+              duration: 2000
+            })
           }
           
         },
@@ -807,8 +747,8 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
-  
+  onShow: function (options) {
+    
   },
 
   /**

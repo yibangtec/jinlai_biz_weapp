@@ -1,21 +1,40 @@
 <!--pages/item/descriptionItem.wxml-->
+<view class='con'>
+<view class='editIcon' >
+      <view class='float' data-index='0' bindtap="showDialogBtn">
+        <image src='../../image/text.png'></image>
+        <text class='text'>文本</text>
+      </view>
+      <view class='float' data-index='0' bindtap='chooseImage'>
+        <image src='../../image/img.png'></image>
+        <text class='text'>图片</text>
+      </view>
+</view>
 <view class='list' wx:for="{{array}}">
-  <view wx:if="{{item.type=='text'}}">{{item.value}} </view>
-  <image wx:elif="{{item.type=='img'}}" class='description_img' src='{{item.value}}'></image>
-  <view class='editIcon'>
-    <view class='float' data-index='{{index}}' bindtap="showDialogBtn">
-      <image src='../../image/text.png'></image>
-      <text class='text'>文本</text>
+    <view class='desText' wx:if="{{item.type=='p'}}">{{item.value}} 
+    <image bindtap='closeImg' class='imgClose' src='../../image/close.png'></image>
+    <image bindtap='moveTop' class='imgTop' src='../../image/top.png'></image>
+    <image bindtap='moveBot' class='imgBot' src='../../image/bot.png'></image>
     </view>
-    <view class='float' data-index='{{index}}' bindtap='chooseImage'>
-      <image src='../../image/img.png'></image>
-      <text class='text'>图片</text>
+    <view class='desText' wx:elif="{{item.type=='img'}}">
+    <image class='description_img' src='{{item.value}}'></image>
+    <image bindtap='closeImg' class='imgClose' src='../../image/close.png'></image>
+    <image bindtap='moveTop' class='imgTop' src='../../image/top.png'></image>
+    <image  bindtap='moveBot' class='imgBot' src='../../image/bot.png'></image>
     </view>
-  </view>
+    <view class='editIcon' >
+      <view class='float' data-index='{{index}}' bindtap="showDialogBtn">
+        <image src='../../image/text.png'></image>
+        <text class='text'>文本</text>
+      </view>
+      <view class='float' data-index='{{index}}' bindtap='chooseImage'>
+        <image src='../../image/img.png'></image>
+        <text class='text'>图片</text>
+      </view>
+    </view>
 </view>
 
-
-
+<button type="primary" bindtap="submit">确定</button>
 
 <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
 <view class="modal-dialog" wx:if="{{showModal}}">
@@ -30,3 +49,5 @@
     <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
   </view>
 </view>
+</view>
+

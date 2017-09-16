@@ -2,26 +2,26 @@
 <text>creat.wxml</text>
 <form bindsubmit="formSubmit" bindreset="formReset">
 <view class="classname">
-  <text>“商务联系电话 ”+ {{tel}}</text>
+  <text>商务联系电话 {{tel}}</text>
 </view>
 <view class="classname">
   <text>您可在入驻申请通过后申请修改商务联系电话</text>
 </view>
   <view class="section">
     <view class="section__title">商家全称*</view>
-    <input type="text" maxlength="35" bindblur="getName" name="name" placeholder="须与营业执照一致，5-35个字符" />
+    <input type="text" maxlength="35" bindblur="getName" name="name" placeholder="须与营业执照一致" />
   </view>
   <view class="section">
     <view class="section__title">商家简称*</view>
-    <input type="text" maxlength="15" bindfocus="verName" bindblur="getBrief_name" name="brief_name" placeholder="最多15个字符" />
+    <input type="text" maxlength="15" bindfocus="verName" bindblur="getBrief_name" name="brief_name" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">简介</view>
-    <input type="text" maxlength="200"  bindblur="getDescription" name="description" placeholder="最多200个字符" />
+    <input type="text" maxlength="200"  bindblur="getDescription" name="description" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">消费者联系电话*</view>
-    <input type="number" name="tel_public"  bindblur="getTel_public" placeholder="400或800开头的10位数字、11位数字（手机号）、12/13位数字及最多1个-" />
+    <input type="number" name="tel_public"  bindblur="getTel_public" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">商务联系手机号*</view>
@@ -29,23 +29,23 @@
   </view>
   <view class="section">
     <view class="section__title">法人姓名*</view>
-    <input type="text" maxlength="15" bindblur="getFullname_owner" name="fullname_owner" placeholder="法人姓名最多15个字符" />
+    <input type="text" maxlength="15" bindblur="getFullname_owner" name="fullname_owner" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">经办人姓名</view>
-    <input type="text" maxlength="15" bindblur="getFullname_auth" name="fullname_auth" placeholder="经办人姓名最多15个字符" />
+    <input type="text" maxlength="15" bindblur="getFullname_auth" name="fullname_auth" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">统一社会信用代码/营业执照号*</view>
-    <input type="number" bindblur="getCode_license" name="code_license" placeholder="15-18位，允许数字及英文字母，请求接口时英文字母转为小写" />
+    <input type="text" bindblur="getCode_license" name="code_license" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">法人身份证号*</view>
-    <input type="idcard" bindblur="getCode_ssn_owner" name="code_ssn_owner" placeholder="18位，仅允许数字及大小写x" />
+    <input type="idcard" bindblur="getCode_ssn_owner" name="code_ssn_owner" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">经办人身份证号</view>
-    <input type="idcard" bindblur="getCode_ssn_auth" name="code_ssn_auth" placeholder="18位，仅允许数字及大小写x" />
+    <input type="idcard" bindblur="getCode_ssn_auth" name="code_ssn_auth" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">营业执照正/副本*</view>
@@ -114,15 +114,15 @@
 
   <view class="section">
     <view class="section__title">开户行名称</view>
-    <input type="text" bindblur="getBank_name" name="bank_name" placeholder="3-20位，仅允许中英文及空格" />
+    <input type="text" bindblur="getBank_name" name="bank_name" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">开户行账号</view>
-    <input type="number" maxlength="200" bindblur="getBank_account" name="bank_account" placeholder="最长30位，仅允许数字及-请求API时去掉-" />
+    <input type="number" maxlength="200" bindblur="getBank_account" name="bank_account" placeholder="请输入" />
   </view>
 
   <view class="section">
-    <view class="section__title">产品（最多允许4个图片URL，多个URL间以一个半角逗号分隔）</view>
+    <view class="section__title">产品（最多允许4个图片）</view>
      <view class="page-body-info">
         <block wx:for="{{productImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgProduct" class="close" src="../../image/close.png"></image></image>
@@ -138,7 +138,7 @@
     <button name="" type="primary" size="mini" bindtap="upImgProduct">开始上传图片</button>
   </view>
   <view class="section">
-    <view class="section__title">工厂/产地环境（最多允许4个图片URL，多个URL间以一个半角逗号分隔）</view>
+    <view class="section__title">工厂/产地环境（最多允许4个图片）</view>
     <view class="page-body-info">
         <block wx:for="{{produceImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgProduce" class="close" src="../../image/close.png"></image></image>
@@ -154,7 +154,7 @@
     <button name="" type="primary" size="mini" bindtap="upImgProduce">开始上传图片</button>
   </view>
   <view class="section">
-    <view class="section__title">门店/柜台环境（最多允许4个图片URL，多个URL间以一个半角逗号分隔）</view>
+    <view class="section__title">门店/柜台环境（最多允许4个图片）</view>
     <view class="page-body-info">
         <block wx:for="{{retailImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgRetail" class="close" src="../../image/close.png"></image></image>

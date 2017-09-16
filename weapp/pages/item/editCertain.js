@@ -1,4 +1,5 @@
 // pages/item/editCertain.js
+var pickerFile = require('../../utils/picker_datetime.js');
 const Upyun = require('../../utils/upyun-wxapp-sdk')
 const yun = require('../../utils/video')
 const upyun = new Upyun({
@@ -89,6 +90,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.datetimePicker = new pickerFile.pickerDatetime({
+      page: this,
+      animation: 'slide',
+      duration: 500
+    });
     var that = this
     wx.getStorage({
       key: 'user',
@@ -549,6 +555,14 @@ Page({
         disfig: 'display:block'
       })
     }
+  },
+  startTap: function () {
+    var that = this
+    this.datetimePicker.setPicker('startDate');
+  },
+  endTap: function () {
+    this.datetimePicker.setPicker('endDate');
+    console.log(this.data.endDate)
   },
   submit:function(e){
     var url = 'item/edit_certain'

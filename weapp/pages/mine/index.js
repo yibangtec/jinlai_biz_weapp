@@ -1,6 +1,9 @@
 // /pages/mine/index.js
 var app = getApp()
 var timeLogin;
+var user_id=''
+var value=''
+var imgSrc=''
 Page({
 
   /**
@@ -35,32 +38,76 @@ Page({
       key: 'user',
       success: function (res) {
         console.log(res)
-        //获取本地user.password值，若为空则转到密码设置页
-        if (res.data.content.passworde == "") {
-          wx.redirectTo({
-            url: '../../pages/login/pwset'
+        user_id = res.data.content.user_id
+
+        
+        
+        var url = 'user/detail'
+        var params = {}
+        var api_result = api_request(url, params)
+
+        // 网络请求
+        function api_request(url, api_params) {
+          // 生成签名
+          app.sign_generate(api_params)
+
+          // 通过小程序的网络请求API发送请求
+          wx.request({
+            method: "POST",
+            header: {
+              'content-type': 'application/x-www-form-urlencoded'
+            },
+            url: app.globalData.url_api + url,
+            data: { app_type: 'biz', id: user_id},
+            success: function (result) {
+              console.log(result)
+              if (result.data.status == 200) {
+                value = result.data.content.nickname
+                imgSrc = result.data.content.avatar
+                //获取本地user.password值，若为空则转到密码设置页
+                if (result.data.content.passworde == "") {
+                  wx.redirectTo({
+                    url: '../../pages/login/pwset'
+                  })
+                }
+                //获取本地user表，并赋值info_user中涉及到的字段；其中avatar项若user.avatar为空，
+                //则显示占位图像（待设计提供）；nickname项若user.nickname为空，则显示user.mobile
+                if (result.data.content.nickname == null) {
+                  that.setData({
+                    nickName: result.data.content.mobile,
+                  })
+                } else {
+                  that.setData({
+                    nickName: result.data.content.nickname,
+                  })
+                }
+                if (result.data.content.avatar == null) {
+                  console.log(result.data.content.avatar)
+                  that.setData({
+                    headerImg: '../../image/header.png',//如果没有头像时的占位符
+                  })
+                } else {
+                  console.log(result.data.content.avatar)
+                  that.setData({
+                    headerImg: 'https://jinlaisandbox-images.b0.upaiyun.com/user/' + result.data.content.avatar,
+                  })
+                }
+
+              } else {
+                wx.showToast({
+                  title: result.data.content.error.message,
+                  icon: 'loading',
+                  duration: 2000
+                })
+              }
+            },
+            fail: function (result) {
+              console.log(result)
+              wx.vibrateShort()
+            }
           })
         }
-        //获取本地user表，并赋值info_user中涉及到的字段；其中avatar项若user.avatar为空，
-        //则显示占位图像（待设计提供）；nickname项若user.nickname为空，则显示user.mobile
-        if (res.data.content.nickname == null) {
-          that.setData({
-            nickName: res.data.content.mobile,
-          })
-        } else {
-          that.setData({
-            nickName: res.data.content.nickname,
-          })
-        }
-        if (res.data.content.avatar == null) {
-          that.setData({
-            headerImg: '',//如果没有头像时的占位符
-          })
-        } else {
-          that.setData({
-            headerImg: res.data.content.avatar,
-          })
-        }
+        
       },
       fail: function (err) {
       }
@@ -72,7 +119,7 @@ Page({
       that.setData({
         userInfo: userInfo,
       })
-    });
+    })
   },
   mineExit:function(e){
     wx.removeStorage({
@@ -83,6 +130,17 @@ Page({
     })
     wx.reLaunch({
       url: '../../pages/index/index'
+    })
+  },
+  nickNameEdit:function(e){
+    wx.redirectTo({
+      url: 'mineEdit?vue='+value+'&mineId='+user_id
+    })
+    
+  },
+  headerImgEdit:function(e){
+    wx.redirectTo({
+      url: 'headerImgEdit?vue=' + imgSrc + '&mineId=' + user_id
     })
   },
 

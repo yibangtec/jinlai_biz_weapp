@@ -69,17 +69,17 @@
 </view>
 <view class="section">
     <view class="section__title">商品名称*</view>
-    <input type="text" maxlength="30" bindblur="getItem_name" value="{{itemObj.name}}" placeholder="最多30个字符" />
+    <input type="text" maxlength="30" bindblur="getItem_name" value="{{itemObj.name}}" placeholder="请输入" />
 </view>
 <view class="section">
     <view class="section__title">商品宣传语/卖点</view>
-    <input type="text" maxlength="30" bindblur="getSlogan" value="{{itemObj.slogan}}" placeholder="最多30个字符" />
+    <input type="text" maxlength="30" bindblur="getSlogan" value="{{itemObj.slogan}}" placeholder="请输入" />
 </view>
 <button name="" type="primary" size="mini" bindtap="upImgLicense">商品描述</button>
 
 <view class="section">
     <view class="section__title">标签价/原价（元）</view>
-    <input type="number" bindblur="getTag_price" value="{{itemObj.tag_price}}" placeholder="0.00为不显示，最高99999.99"/>
+    <input type="number" bindblur="getTag_price" value="{{itemObj.tag_price}}" placeholder="最高99999.99"/>
 </view>
 <view class="section">
     <view class="section__title">商城价/现价（元）*</view>
@@ -87,7 +87,7 @@
 </view>
 <view class="section">
     <view class="section__title">销售单位</view>
-    <input type="text" bindblur="getUnit_name" value="{{itemObj.unit_name}}" placeholder="最多10个字符，例如斤、双、头、件等，默认份" />
+    <input type="text" bindblur="getUnit_name" value="{{itemObj.unit_name}}" placeholder="请输入" />
 </view>
 <view class="section">
     <view class="section__title">净重（KG）</view>
@@ -123,11 +123,11 @@
 </view>
 <view class="section">
     <view class="section__title">积分抵扣率</view>
-    <input type="number" bindblur="getDiscount_credit" value="{{itemObj.discount_credit}}" placeholder="例如允许5%的金额使用积分抵扣则为0.05，10%为0.1，最高0.5" />
+    <input type="number" bindblur="getDiscount_credit" value="{{itemObj.discount_credit}}" placeholder="最高0.5" />
 </view>
 <view class="section">
     <view class="section__title">佣金比例/提成率</view>
-    <input type="number" bindblur="getCommission_rate" value="{{itemObj.commission_rate}}" placeholder="例如提成成交价5%的金额则为0.05，10%为0.1，最高0.5" />
+    <input type="number" bindblur="getCommission_rate" value="{{itemObj.commission_rate}}" placeholder="最高0.5" />
 </view>
 
 <view class="section">

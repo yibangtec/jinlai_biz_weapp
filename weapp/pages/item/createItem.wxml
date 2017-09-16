@@ -3,7 +3,7 @@
   <view class="section__title">所属系统分类*</view>
   <picker bindchange="bindPickerChange" value="{{index.name}}" range="{{objectArray}}" range-key="name">
     <view class="picker">
-    <input value="{{objectArray[index].name}}" placeholder="请选择所属系统分类" />
+    <input disabled="true" value="{{objectArray[index].name}}" placeholder="请选择所属系统分类" />
     </view>
   </picker>
 </view>
@@ -11,7 +11,7 @@
   <view class="section__title">所属品牌</view>
   <picker bindchange="bindPickerArray" value="{{sum}}" range="{{array}}">
     <view class="picker">
-    <input value="{{array[sum]}}" placeholder="请选择所属品牌" />
+    <input disabled="true" value="{{array[sum]}}" placeholder="请选择所属品牌" />
     </view>
   </picker>
 </view>
@@ -19,13 +19,13 @@
   <view class="section__title">所属商家分类*</view>
   <picker bindchange="bindPickerBiz" value="{{num.name}}" range="{{objectBizArray}}" range-key="name">
     <view class="picker">
-    <input value="{{objectBizArray[num].name}}" placeholder="请选择所属商家分类" />
+    <input disabled="true" value="{{objectBizArray[num].name}}" placeholder="请选择所属商家分类" />
     </view>
   </picker>
 </view>
 <view class="section">
     <view class="section__title">商家自定义商品编码*</view>
-    <input type="text" maxlength="20" bindblur="getCode_biz" placeholder="最多20个字符" />
+    <input type="text" maxlength="20" bindblur="getCode_biz" placeholder="请输入" />
 </view>
 <view class="section">
     <view class="section__title">主图*</view>
@@ -66,9 +66,9 @@
 <view class="section">
     <view class="section__title">形象视频</view>
     <view class="page-body-info">
-        <block>
+        <view style='{{videoStyle}}'>
           <video src="{{src}}"></video>
-        </block>
+        </view>
         <view style="{{disSrc}}">
           <view class="image-plus image-plus-nb" bindtap="chooseVideo">
             <view class="image-plus-horizontal"></view>
@@ -81,37 +81,37 @@
 </view>
 <view class="section">
     <view class="section__title">商品名称*</view>
-    <input type="text" maxlength="30" bindblur="getItem_name" placeholder="最多30个字符" />
+    <input type="text" maxlength="30" bindblur="getItem_name" placeholder="请输入" />
 </view>
 <view class="section">
     <view class="section__title">商品宣传语/卖点</view>
-    <input type="text" maxlength="30" bindblur="getSlogan" placeholder="最多30个字符" />
+    <input type="text" maxlength="30" bindblur="getSlogan" placeholder="请输入" />
 </view>
-<button name="" type="primary" size="mini" bindtap="upImgLicense">商品描述</button>
+<button name="" type="primary" size="mini" bindtap="itemDescription">商品描述</button>
 
 <view class="section">
     <view class="section__title">标签价/原价（元）</view>
-    <input type="number" bindblur="getTag_price" placeholder="0.00为不显示，最高99999.99"/>
+    <input type="digit" bindblur="getTag_price" placeholder="最高99999.99"/>
 </view>
 <view class="section">
     <view class="section__title">商城价/现价（元）*</view>
-    <input type="number" bindblur="getPrice" name="brief_name" placeholder="最高99999.99" />
+    <input type="digit" bindblur="getPrice" name="brief_name" placeholder="最高99999.99" />
 </view>
 <view class="section">
     <view class="section__title">销售单位</view>
-    <input type="text" bindblur="getUnit_name" name="brief_name" placeholder="最多10个字符，例如斤、双、头、件等，默认份" />
+    <input type="text" bindblur="getUnit_name" name="brief_name" placeholder="请输入" />
 </view>
 <view class="section">
     <view class="section__title">净重（KG）</view>
-    <input type="number" bindblur="getWeight_net" name="brief_name" placeholder="最高999.99" />
+    <input type="digit" bindblur="getWeight_net" name="brief_name" placeholder="最高999.99" />
 </view>
 <view class="section">
     <view class="section__title">毛重（KG）</view>
-    <input type="number" bindblur="getWeight_gross" name="brief_name" placeholder="最高999.99" />
+    <input type="digit" bindblur="getWeight_gross" name="brief_name" placeholder="最高999.99" />
 </view>
 <view class="section">
     <view class="section__title">体积重（KG）</view>
-    <input type="number" bindblur="getWeight_volume" name="brief_name" placeholder="最高999.99" />
+    <input type="digit" bindblur="getWeight_volume" name="brief_name" placeholder="最高999.99" />
 </view>
 <view class="section">
     <view class="section__title">库存量（份）*</view>
@@ -135,43 +135,24 @@
 </view>
 <view class="section">
     <view class="section__title">积分抵扣率</view>
-    <input type="number" bindblur="getDiscount_credit" placeholder="例如允许5%的金额使用积分抵扣则为0.05，10%为0.1，最高0.5" />
+    <input type="digit" bindblur="getDiscount_credit" placeholder="最高0.5" />
 </view>
 <view class="section">
     <view class="section__title">佣金比例/提成率</view>
-    <input type="number" bindblur="getCommission_rate" placeholder="例如提成成交价5%的金额则为0.05，10%为0.1，最高0.5" />
+    <input type="digit" bindblur="getCommission_rate" placeholder="最高0.5" />
 </view>
 
 <view class="section">
-  <view class="section__title">预定上架时间</view>
-  <view class="section"> 
-    <picker mode="date" value="{{date}}" start="{{currentDate}}" bindtap="current"  bindchange="bindDateChange"> 
-      <input class="picker" value="{{dates}}"/>
-    </picker> 
-  </view> 
-  <view class="section"> 
-    <picker mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange"> 
-    <input class="picker" value="{{times}}"/>
-    </picker> 
-  </view> 
+  <view bindtap="startTap" class="form">预定上架时间：{{startDate}}</view>
 </view>
 <view class="section">
-  <view class="section__title">预定下架时间</view>
-  <view class="section"> 
-    <picker mode="date" value="{{date}}" start="{{currentDate}}" bindtap="current"  bindchange="bindDateChangeDown"> 
-      <input class="picker" value="{{dateDowns}}"/>
-    </picker> 
-  </view> 
-  <view class="section"> 
-    <picker mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChangeDown"> 
-    <input class="picker" value="{{timeDowns}}"/>
-    </picker> 
-  </view> 
-
+  <view bindtap="endTap" class="form">预定下架时间：{{endDate}}</view>
 </view>
 <view class="section">
     <view class="section__title">参与的营销活动ID</view>
-    <input type="number" bindblur="getPromotion_id" placeholder="参与的营销活动ID" />
+    <input type="number" bindblur="getPromotion_id" placeholder="请输入" />
 </view>
 
 <button type="primary" disabled="{{disable}}" bindtap="submit">确定</button>
+
+<include src="../../utils/picker_datetime.wxml"/>

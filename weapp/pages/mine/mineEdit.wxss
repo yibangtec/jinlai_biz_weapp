@@ -1,0 +1,5 @@
+/* pages/mine/mineEdit.wxss */
+input{
+  border: 1rpx solid #ccc;
+  margin: 20rpx;
+}

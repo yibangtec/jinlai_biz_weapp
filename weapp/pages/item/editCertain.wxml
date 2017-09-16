@@ -56,16 +56,9 @@
   <button name="" type="primary" size="mini" bindtap="upVideo">开始上传视频</button>
 </view>
 <view class="section" style="{{timeStyle}}">
-  <view class="section__title">预定上架时间</view>
-  <view class="section"> 
-    <picker mode="date" value="{{date}}" start="{{currentDate}}" bindtap="current"  bindchange="bindDateChange"> 
-      <input class="picker" value="{{dates}}"/>
-    </picker> 
-  </view> 
-  <view class="section"> 
-    <picker mode="time" value="{{time}}" start="00:00" end="23:59" bindchange="bindTimeChange"> 
-    <input class="picker" value="{{times}}"/>
-    </picker> 
-  </view> 
+  <view class="section">
+  <view bindtap="startTap" class="form">预定上架时间：{{startDate}}</view>
+  </view>
 </view>
 <button type="primary" disabled="{{disable}}" bindtap="submit">确定</button>
+<include src="../../utils/picker_datetime.wxml"/>

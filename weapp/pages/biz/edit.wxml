@@ -3,7 +3,7 @@
 <view src="http://webapi.amap.com/maps?v=1.3&key=b0a6d590c3195b86fcc13676afa62eba&plugin=AMap.Geocoder"></view>
 <text>edit.wxml</text>
 <view class="classname">
-  <text>“商务联系电话 ”+ {{tel}}</text>
+  <text>商务联系电话 {{tel}}</text>
 </view>
 <view class="classname">
   <text>您可在入驻申请通过后申请修改商务联系电话</text>
@@ -14,47 +14,47 @@
 </view>
  <view class="section">
     <view class="section__title">商家全称*</view>
-    <input type="text" maxlength="35" bindblur="getName" value="{{biz.name}}" placeholder="须与营业执照一致，5-35个字符" />
+    <input type="text" maxlength="35" bindblur="getName" value="{{biz.name}}" placeholder="须与营业执照一致" />
   </view>
   <view class="section">
     <view class="section__title">商家简称*</view>
-    <input type="text" maxlength="15" bindblur="getBrief_name" value="{{biz.brief_name}}" placeholder="最多15个字符" />
+    <input type="text" maxlength="15" bindblur="getBrief_name" value="{{biz.brief_name}}" placeholder="请输入" />
   </view>
    <view class="section">
     <view class="section__title">logo</view>
     <input type="text"  bindblur="getUrl_logo" value="{{biz.url_logo}}" placeholder="LOGO"/>
   </view>
   <view class="section">
-    <view class="section__title">店铺域名*</view>
-    <input type="number" maxlength="20"  bindblur="getUrl_name" value="{{biz.url_name}}" placeholder="最多20个字符" />
+    <view class="section__title">店铺域名</view>
+    <input type="text" maxlength="20"  bindblur="getUrl_name" value="{{biz.url_name}}" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">宣传语</view>
-    <input type="text" maxlength="20"  bindblur="getSlogan" value="{{biz.slogan}}" placeholder="最多20个字符" />
+    <input type="text" maxlength="20"  bindblur="getSlogan" value="{{biz.slogan}}" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">简介</view>
-    <input type="text" maxlength="200"  bindblur="getDescription" value="{{biz.description}}" placeholder="最多200个字符" />
+    <input type="text" maxlength="200"  bindblur="getDescription" value="{{biz.description}}" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">公告</view>
-    <input type="text" maxlength="100"  bindblur="getNotification" value="{{biz.notification}}" placeholder="最多100个字符" />
+    <input type="text" maxlength="100"  bindblur="getNotification" value="{{biz.notification}}" placeholder="请输入" />
   </view>
    <view class="section">
     <view class="section__title">官方网站</view>
-    <input type="text" bindblur="getUrl_web" value="{{biz.url_web}}" placeholder="官方网站"/>
+    <input type="text" bindblur="getUrl_web" value="{{biz.url_web}}" placeholder="请输入"/>
   </view>
   <view class="section">
     <view class="section__title">官方微博</view>
-    <input type="text"  bindblur="getUrl_weibo" value="{{biz.url_weibo}}" placeholder="官方微博"/>
+    <input type="text"  bindblur="getUrl_weibo" value="{{biz.url_weibo}}" placeholder="请输入"/>
   </view>
   <view class="section">
     <view class="section__title">微信二维码</view>
-    <input type="text" maxlength="200"  bindblur="getUrl_wechat" value="{{biz.url_wechat}}" placeholder="最多200个字符"/>
+    <input type="text" maxlength="200"  bindblur="getUrl_wechat" value="{{biz.url_wechat}}" placeholder="请输入"/>
   </view>
   <view class="section">
     <view class="section__title">消费者联系电话*</view>
-    <input type="number" value="{{biz.tel_public}}"  bindblur="getTel_public" placeholder="400或800开头的10位数字、11位数字（手机号）、12/13位数字及最多1个-" />
+    <input type="number" value="{{biz.tel_public}}"  bindblur="getTel_public" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">商务联系手机号*</view>
@@ -68,26 +68,25 @@
     <view class="section__title">订单通知手机号*</view>
     <input type="number" bindblur="getTel_protected_order" value="{{biz.tel_protected_order}}" placeholder="请输入手机号" />
   </view>
-  
-  <view class="section">
+  <!--<view class="section">
     <view class="section__title">国家；默认中国</view>
     <input type="text" bindblur="getNation" value="{{biz.nation}}" placeholder="最多200个字符"/>
-  </view>
+  </view>-->
   <view class="section">
     <view class="section__title">省</view>
-    <input type="text" bindblur="getProvince" value="{{biz.province}}" placeholder="最多200个字符"/>
+    <input type="text" bindblur="getProvince" value="{{biz.province}}" placeholder="请输入"/>
   </view>
   <view class="section">
     <view class="section__title">市</view>
-    <input type="text" bindblur="getCity" value="{{biz.city}}" placeholder="最多200个字符"/>
+    <input type="text" bindblur="getCity" value="{{biz.city}}" placeholder="请输入"/>
   </view>
   <view class="section">
     <view class="section__title">区/县</view>
-    <input type="text" bindblur="getCounty" value="{{biz.county}}" placeholder="最多200个字符"/>
+    <input type="text" bindblur="getCounty" value="{{biz.county}}" placeholder="请输入"/>
   </view>
   <view class="section">
-    <view class="section__title">详细地址；小区名、路名、门牌号等</view>
-    <input type="text"  bindblur="getStreet" value="{{biz.street}}" placeholder="详细地址；小区名、路名、门牌号等"/>
+    <view class="section__title">详细地址</view>
+    <input type="text"  bindblur="getStreet" value="{{biz.street}}" placeholder="请输入详细地址"/>
   </view>
   <div id="{{con}}" style="width:500px; height:300px"></div>
   <view class="map_container">
@@ -105,15 +104,15 @@
   </view>
   <view class="section">
     <view class="section__title">统一社会信用代码/营业执照号*</view>
-    <input type="number" bindblur="getCode_license" value="{{biz.code_license}}" placeholder="15-18位，仅允许数字" />
+    <input type="number" bindblur="getCode_license" value="{{biz.code_license}}" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">法人身份证号*</view>
-    <input type="idcard" bindblur="getCode_ssn_owner" value="{{biz.code_ssn_owner}}" placeholder="18位，仅允许数字及大小写x" />
+    <input type="idcard" bindblur="getCode_ssn_owner" value="{{biz.code_ssn_owner}}" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">经办人身份证号</view>
-    <input type="idcard" bindblur="getCode_ssn_auth" value="{{biz.code_ssn_auth}}" placeholder="18位，仅允许数字及大小写x" />
+    <input type="idcard" bindblur="getCode_ssn_auth" value="{{biz.code_ssn_auth}}" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">营业执照正/副本*</view>
@@ -183,11 +182,11 @@
   </view>
   <view class="section">
     <view class="section__title">开户行名称</view>
-    <input type="text"maxlength="20" bindblur="getBank_name" placeholder="3-20位，仅允许中英文及空格" />
+    <input type="text"maxlength="20" bindblur="getBank_name" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">开户行账号</view>
-    <input type="number" maxlength="30" bindblur="getBank_account" placeholder="最长30位，仅允许数字及-" />
+    <input type="number" maxlength="30" bindblur="getBank_account" placeholder="请输入" />
   </view>
   <view class="section">
     <view class="section__title">产品（最多允许4个图片URL，多个URL间以一个半角逗号分隔）</view>

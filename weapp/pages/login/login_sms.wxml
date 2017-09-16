@@ -9,7 +9,7 @@
  <input type="number" placeholder="请输入手机号" bindblur="getTel" focus="{{telFocus}}" auto-focus/>
  <button class="verify-code clearfix" class="bnt-left" type="primary" size="{{btnMin}}" loading="{{loading}}" plain="{{defaultPlain}}"
         disabled="{{disableVer}}" bindtap="getVerify"> {{getVer}} </button>
-  <input class="verify verCode" type="text" bindblur="getCode" bindfocus="verifyTel" focus="{{codeFocus}}" placeholder="请输入验证码" auto-focus/>
+  <input class="verify verCode" type="number" bindblur="getCode" bindfocus="verifyTel" focus="{{codeFocus}}" placeholder="请输入验证码" auto-focus/>
   
 </view>
 <view class="body-view">

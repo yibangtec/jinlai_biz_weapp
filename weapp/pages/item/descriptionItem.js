@@ -32,6 +32,8 @@ var itemName = ''
 var thisObj = ''
 var itemValue = ''
 var text = ''
+var indexText=''
+
 function formatDateTime(timeStamp) {
   var date = new Date();
   date.setTime(timeStamp * 1000);
@@ -61,10 +63,7 @@ Page({
     showModal: false,
     text:'',
     imgSrc:'',
-    array:[
-      {type:'text',value:'qwerjkwejrwqer'},
-      { type: 'img', value:'https://jinlaisandbox-images.b0.upaiyun.com/item/description/201709/0908/17014812.jpg'}
-    ]
+    array:[]
   },
 
   /**
@@ -84,22 +83,36 @@ Page({
     
   },
   showDialogBtn: function (e) {
+    
+    indexText = e.currentTarget.dataset.index + 1
+    console.log(indexText)
     this.setData({
       showModal: true
     })
   },
   getText:function(e){
     text=e.detail.value
-    var index = e.currentTarget.dataset.index
-    console.log(index)
+    console.log(indexText)
     var that = this
+    var arr = that.data.array
+    var objText = {}
+    objText.type = 'p'
+    objText.value = text
+    if (indexText==='01'){
+      arr.splice(0, 1, objText) 
+    }else{
+      arr = that.data.array
+      arr.splice(indexText, 0, objText)
+    } 
     console.log(text)
     that.setData({
-      text: text
+      array: arr
     })
+    console.log(arr)
   },
   chooseImage: function (e) {
-    var index = e.currentTarget.dataset.index
+    var index = e.currentTarget.dataset.index + 1
+    console.log(index)
     const self = this
     wx.chooseImage({
       count: 1,
@@ -110,6 +123,22 @@ Page({
         var licenseSrc = res.tempFilePaths
         var time = tick(0, user_id)
         var descriptionSrc = 'https://jinlaisandbox-images.b0.upaiyun.com/item/description/' + time
+        var obj = {}
+        obj.type='img'
+        obj.value = descriptionSrc
+        var arr = self.data.array
+        console.log(self.data.array.length)
+        if (index === '01') {
+          arr.splice(0, 1, obj) 
+        } else if (index == self.data.array.length){
+          arr = self.data.array
+          arr.push(obj)
+          console.log(arr)
+        } else {
+          arr = self.data.array
+          arr.splice(index, 0, obj)
+        } 
+       
         console.log(time)
         upyun.upload({
           localPath: licenseSrc[0],
@@ -123,10 +152,9 @@ Page({
                 duration: 2000
               })
               self.setData({
-                imgSrc: descriptionSrc
+                array: arr
               })
             }
-
           },
           fail: function ({ errMsg }) {
             console.log('uploadImage fail, errMsg is', errMsg)
@@ -173,8 +201,33 @@ Page({
    * 对话框确认按钮点击事件
    */
   onConfirm: function () {
-    
+    var that =this
     this.hideModal();
+  },
+
+  submit:function(e){
+    var that = this 
+    var arr = that.data.array
+    console.log(arr)
+    var str=''
+    for(var i=0;i<arr.length;i++){
+      if (arr[i].type == 'p'){
+        str += '<p>' + arr[i].value + '<p>'
+      } else if (arr[i].type == 'img'){
+        str += '<img ' + 'src="'+ arr[i].value +'" '+ '/>'
+      }
+    }
+    var pages = getCurrentPages(); 
+    var currPage = pages[pages.length - 1]; 
+    //当前页面
+    var prevPage = pages[pages.length - 2]; 
+    //上一个页面
+    //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
+    prevPage.setData({str: str})
+    
+    wx.navigateBack({
+      url: 'createItem',
+    })
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

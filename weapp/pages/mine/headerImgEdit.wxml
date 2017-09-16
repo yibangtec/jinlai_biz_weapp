@@ -1,0 +1,19 @@
+<!--pages/mine/headerImgEdit.wxml-->
+<view class="section">
+    <view class="section__title">头像修改</view>
+    <view class="page-body-info">
+        <view style='{{imgStyle}}' wx:for="{{mainImageSrc}}" wx:key="{{index}}">
+          <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgMain" class="close"             src="../../image/close.png"></image></image>
+        </view>
+        <view style="{{dis}}">
+          <view class="image-plus image-plus-nb" bindtap="chooseImageMain">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+          <view class="image-plus-text">选择图片</view>
+        </view>
+    </view>
+  <button name="" type="primary" size="mini" bindtap="upImgMain">开始上传图片</button>
+</view>
+<button class="submit-verify" type="primary" size="{{defaultSize}}" loading="{{loading}}" plain="{{plainde}}"
+        disabled="{{disVerBtn}}" bindtap="primary"> 确定 </button>

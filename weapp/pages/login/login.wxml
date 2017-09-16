@@ -1,14 +1,20 @@
 <!--login.wxml-->
-
-<view class="flex-wrp" style="flex-direction:row;">
-  <text>密码登录</text>
-  <button class="bnt-right" type="primary" size="{{btnMin}}" loading="{{loading}}" plain="{{plain}}"
-        disabled="{{disabled}}" bindtap="login_sms"> 短信登录 </button>
+<view class='loginTab'>
+  <view class='tabText textLeft'><text class='current'>密码登录</text></view>
+  <view class='tabText' bindtap="login_sms"><text>短信登录</text></view>
 </view>
-<view class="section">
-  <input type="number" placeholder="请输入手机号" bindblur="getTel" focus="{{telFocus}}" />
-  <input type="text" password="true" placeholder="请输入密码" bindfocus="verifyTel" bindblur="getPw" focus="{{pwFocus}}" />
-  <button class="submit" type="primary" size="{{defaultSize}}" loading="{{loading}}" plain="{{plainde}}"
-        disabled="{{disbtn}}" bindtap="pwLogin"> 确定 </button>
+<view class='input-box'>
+  <view class='input-item'>
+    <text>手机号</text>
+    <input type="number" placeholder="请输入手机号" bindblur="getTel" focus="{{telFocus}}" />
+  </view>
+  <view class='input-item'>
+    <text>短信验证码</text>
+    <input type="text" password="true" placeholder="请输入密码" bindfocus="verifyTel" bindblur="getPw" focus="{{pwFocus}}" />
+  </view>
+  <view class='agreement'>点击“确定”即表示您已完整阅读并同意最新版<text class='textlight'>《用户协议》</text>。</view>
+  <button class="submitBtn" style="opacity: {{opacity}};color: white; background-color: #ff3649;" disabled="{{disbtn}}" bindtap="pwLogin"> 确定 </button>
   <view class="forgetPw">忘记密码</view>   
 </view>
+
+

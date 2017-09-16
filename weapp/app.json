@@ -28,7 +28,9 @@
     "pages/item/edit",
     "pages/item/editSingle",
     "pages/item/editCertain",
-    "pages/item/descriptionItem"
+    "pages/item/descriptionItem",
+    "pages/mine/mineEdit",
+    "pages/mine/headerImgEdit"
   ],
   "window": {
     "navigationBarBackgroundColor": "#f7941c",
@@ -50,7 +52,7 @@
         "selectedIconPath": "image/nav/main/home_active.png"
       },
       {
-        "pagePath": "pages/item/descriptionItem",
+        "pagePath": "pages/explore/index",
         "text": "订单",
         "iconPath": "image/nav/main/explore.png",
         "selectedIconPath": "image/nav/main/explore_active.png"

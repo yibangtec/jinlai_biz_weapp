@@ -47,6 +47,9 @@ Page({
     dis:'display:none',
     disUp:true,
     disSub:true,
+    leftAndRight:'display:block',
+    currentValue:'',
+    nullValue:'display:block'
    
   },
 
@@ -79,8 +82,13 @@ Page({
         url: app.globalData.url_api + url,
         data: { id: id },
         success: function (result) {
+          console.log(result)
           console.log(result.data.content[name])
-          if(sum==1){
+          if (sum == 1 && (result.data.content[name] !== null || result.data.content[name] === '')){
+            console.log('sdkflskdfl')
+            that.setData({
+              leftAndRight: 'display:none'
+            })
             beforeArr = result.data.content[name].split(",")
             if (beforeArr.length>0){
               for (var i = 0; i < beforeArr.length; i++) {
@@ -98,15 +106,31 @@ Page({
                 dis: 'display:block'
               })
             }
-          }else{
+          } else if (result.data.content[name] === null || result.data.content[name] === '') {
+            that.setData({
+              dis: 'display:block'
+            })
+          } else if (sum == 4 && result.data.content[name]!==''){
             beforeArr = result.data.content[name].split(",")
-            
+            console.log(beforeArr)
+            if (beforeArr.length <= 1){
+                that.setData({
+                  leftAndRight: 'display:none'
+                })
+                var arr = new Array
+                arr[0] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + result.data.content[name]
+                that.setData({
+                  productImageSrc: arr
+                })
+            }else{
               for (var i = 0; i < beforeArr.length; i++) {
                 beforeArr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + beforeArr[i]
               }
               that.setData({
                 productImageSrc: beforeArr,
               })
+            }
+              
             if (beforeArr.length > 0 && beforeArr.length < 5) {
               cont = 4 - beforeArr.length
               that.setData({
@@ -163,7 +187,6 @@ Page({
       sourceType: ['album'],
       success: function (res) {
         console.log('chooseImage success, temp path is', res.tempFilePaths)
-
         productSrc = res.tempFilePaths
         if (self.data.productImageSrc==''){
           beforeArr = productSrc
@@ -171,6 +194,13 @@ Page({
           beforeArr = self.data.productImageSrc
           console.log(beforeArr)
           beforeArr = beforeArr.concat(productSrc)
+          if (beforeArr.length>=2){
+            self.setData({
+              leftAndRight: 'display:block'
+            })
+          }else{
+            leftAndRight: 'display:none'
+          }
           console.log(beforeArr)
         }
         

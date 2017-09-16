@@ -1,6 +1,7 @@
 // pages/biz/detail.js
 var app = getApp()
 var text = '', bizId = '', biz = '';
+var markersData = [];
 Page({
 
   /**
@@ -13,8 +14,8 @@ Page({
     pArr1: [],
     pArr2: [],
     tel:'',
+    markers: '',
   },
-
   /**
    * 生命周期函数--监听页面加载
    */
@@ -26,6 +27,7 @@ Page({
     wx.getStorage({
       key: 'user',
       success: function (res) {
+        console.log(res)
         that.setData({
           tel: res.data.content.mobile,
         })
@@ -60,6 +62,16 @@ Page({
         data: { id: bizId },
         success: function (result) {
           console.log(result.data)
+          that.setData({
+            markers: [{
+              iconPath: "../../image/map.png",
+              id: 0,
+              latitude: result.data.content.latitude,
+              longitude: result.data.content.longitude,
+              width: 30,
+              height: 30
+            }],
+          })
           biz = result.data.content
           var p = result.data.content.url_image_product
           if (p){
@@ -99,7 +111,35 @@ Page({
         }
       })
     }
+
+
+    
   },
+  showMarkerInfo: function (data, i) {
+    var that = this;
+    that.setData({
+      textData: {
+        name: data[i].name,
+        desc: data[i].address
+      }
+    });
+  },
+  changeMarkerColor: function (data, i) {
+    var that = this;
+    var markers = [];
+    for (var j = 0; j < data.length; j++) {
+      if (j == i) {
+        data[j].iconPath = "选中 marker 图标的相对路径"; //如：..­/..­/img/marker_checked.png
+      } else {
+        data[j].iconPath = "未选中 marker 图标的相对路径"; //如：..­/..­/img/marker.png
+      }
+      markers.push(data[j]);
+    }
+    that.setData({
+      markers: markers
+    });
+  },
+
   previewOneImg:function(e){
     var OneImg = e.currentTarget.dataset.name
     var str = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + biz[OneImg]

@@ -1,0 +1,5 @@
+<!--pages/mine/mineEdit.wxml-->
+<text>昵称修改</text>
+<input placeholder='请输入' value='{{value}}' bindblur='getValue'></input>
+<button class="bnt-right" type="primary" size="default" loading="{{loading}}" plain="{{plain}}"
+        disabled="{{disabled}}" bindtap="mineEdit">确定</button>

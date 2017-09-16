@@ -97,3 +97,27 @@ input-holder {
   color: #ec5300;
   text-align: center;
 }
+.desText{
+  margin: 30rpx;
+  padding-left: 20rpx;
+  border: 1rpx solid #ddd;
+  position: relative;
+}
+.imgClose{
+  position: absolute;
+  left: -12rpx;
+  top: -12rpx;
+}
+.imgTop{
+  position: absolute;
+  right: -12rpx;
+  top: -12rpx;
+}
+.imgBot{
+  position: absolute;
+  right: -12rpx;
+  bottom: -12rpx;
+}
+button{
+  margin: 20rpx;
+}

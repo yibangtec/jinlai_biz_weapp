@@ -53,7 +53,7 @@ Page({
               'content-type': 'application/x-www-form-urlencoded'
             },
             url: app.globalData.url_api + url,
-            data: { app_type: 'biz', biz_id: bizId },
+            data: { app_type: 'item', time_delete:'null', biz_id: bizId },
             success: function (result) {
               if (result.data.status == 200) {
                 for (var i = 0; i < result.data.content.length; i++) {

@@ -1,6 +1,6 @@
 <!--pages/item/editSingle.wxml-->
 <view class="section">
     <view class="section__title">{{title}}修改</view>
-    <input type="text" value="{{value}}" bindfocus='verUpdate' bindblur="getCode_biz" placeholder="最多20个字符" />
+    <input focus='true' type="text" value="{{value}}" bindfocus='verUpdate' bindblur="getCode_biz" placeholder="请输入" />
 </view>
 <button type="primary" disabled="{{dis}}" bindtap="submitUpdate">编辑</button>
