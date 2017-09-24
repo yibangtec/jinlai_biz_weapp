@@ -1,7 +1,25 @@
 <!--pwresult.wxml-->
+
+<view class='result'>
+  <image class='success-img' src='../../image/chenggong@3x.png'></image>
+  <view class='success-title'>{{title}}</view>
+</view>
+<view class="btn-area" style='margin:0 20rpx'>
+    <button style='height:80rpx; font-size:30rpx; color:#fff;background-color:#A0A0A0; border-raidus:0;' bindtap="backIndex">首页</button>
+</view>
+<view class="btn-area" style='margin:30rpx 20rpx'>
+    <button style='height:80rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:0;'  bindtap="backMine">我的</button>
+</view>
+
+
+
+
+
+<!--
 <text>pwresult.wxml</text>
 <text>{{title}}</text>
 <button class="verify-code clearfix" class="bnt-left" type="primary" size="mini" loading="{{loading}}" plain="{{defaultPlain}}"
         disabled="{{disableVer}}" bindtap="backIndex"> 首页 </button>
         <button class="verify-code clearfix" class="bnt-left" type="primary" size="mini" loading="{{loading}}" plain="{{defaultPlain}}"
         disabled="{{disableVer}}" bindtap="backMine"> 我的 </button>
+-->
