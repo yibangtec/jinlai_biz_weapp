@@ -32,7 +32,7 @@ Page({
     pw = e.detail.value
   },
   verifyPw:function(e){
-    var that=this
+    var that = this
     var re = /^[a-zA-Z0-9]{6,20}$/
     if (re.test(pw)) {
       that.setData({

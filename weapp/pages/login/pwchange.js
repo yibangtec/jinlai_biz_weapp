@@ -113,7 +113,7 @@ Page({
         focusConfirmPw: true,
       })
     }
-    if (confirmPw===newPw){
+    if (confirmPw == newPw){
       var url = 'account/password_change'
       var params = {}
       var api_result = api_request(url, params)

@@ -8,11 +8,20 @@
 </view>-->
 <view bindtap="bindViewTap" class="userinfo">
     <image bindtap='headerImgEdit' class='userinfo-avatar' src="{{headerImg}}"></image>
-    <label bindtap='nickNameEdit'>{{nickName}}</label>
+    <label class="userinfo-nickname" bindtap='nickNameEdit' wx:if="{{if}}">kon{{nickName}}</label>
+    <label class="userinfo-nickname" bindtap='nickNameEdit'>{{nickName}}</label>
 </view>
-<button class="bnt-right" type="primary" size="mini" loading="{{loading}}" plain="{{plain}}"
-        disabled="{{disabled}}" bindtap="login_change"> 密码修改 </button>
-<button class="bnt-right" type="primary" size="mini" loading="{{loading}}" plain="{{plain}}"
-        disabled="{{disabled}}" bindtap="login_reset"> 密码重置 </button>
-        <button class="bnt-right" type="primary" size="default" loading="{{loading}}" plain="{{plain}}"
-        disabled="{{disabled}}" bindtap="mineExit"> 退出 </button>
+<view class='userList'>
+  <view class='list' bindtap='personalData'>
+    <text>个人资料</text> <image class='leftLink' src='../../image/leftLink.png'></image>
+  </view>
+  <view class='list' bindtap="login_change">
+    <text>密码修改</text> <image class='leftLink' src='../../image/leftLink.png'></image>
+  </view>
+  <view class='list' style='border:none;' bindtap="login_reset">
+    <text>密码重置</text> <image class='leftLink' src='../../image/leftLink.png'></image>
+  </view>
+</view>
+<view class='button'>
+  <button class="submitBtn" style="opacity: {{opacity}};color: white; background-color: #9fa0a0;" bindtap="mineExit">退出账号</button>
+</view>

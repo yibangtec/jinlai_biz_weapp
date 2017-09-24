@@ -1,5 +1,20 @@
 <!--pages/mine/mineEdit.wxml-->
+
+
+<view class='temp-box'>
+  <view class='label-text'>昵称修改</view>
+  <input class='temp-input' placeholder='请输入' value='{{value}}' bindblur='getValue'></input>
+</view>
+
+<view class="btn-area">
+    <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:0;' disabled="{{disabled}}" bindtap="mineEdit">确定</button>
+</view>
+
+<!--
 <text>昵称修改</text>
+
 <input placeholder='请输入' value='{{value}}' bindblur='getValue'></input>
 <button class="bnt-right" type="primary" size="default" loading="{{loading}}" plain="{{plain}}"
         disabled="{{disabled}}" bindtap="mineEdit">确定</button>
+
+-->

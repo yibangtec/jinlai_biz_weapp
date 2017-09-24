@@ -1,0 +1,39 @@
+<!--pages/mine/personalData.wxml-->
+<view bindtap="bindViewTap" class="userinfo">
+    <image bindtap='headerImgEdit' class='userinfo-avatar' src="{{headerImg}}"></image>
+    <label class="userinfo-nickname" bindtap='nickNameEdit'>点击修改头像</label>
+</view>
+<view class='userList'>
+  <view class='list'>
+    <view class='list-left'>用户ID</view>
+    <view class='list-right'>{{user.user_id}}</view>
+  </view>
+  <view class='list'>
+    <view class='list-left'>会员等级</view>
+    <view class='list-right'>{{user.user_id}}</view>
+  </view>
+  <view class='list'>
+    <view class='list-left lastname' wx:if="{{user.lastname==null}}">姓 未设置</view>
+    <view class='list-left lastname' wx:else>姓 {{user.lastname}}</view>
+    <view class='list-right firstname' wx:if="{{user.firstname==null}}">名 未设置</view>
+    <view class='list-right firstname' wx:else>名 {{user.firstname}}</view>
+  </view>
+  <view class='list'>
+    <view class='list-left'>昵称</view>
+    <view class='list-right' wx:if="{{user.nickname==null}}"> 未设置</view>
+    <view class='list-right' wx:else>{{user.nickname}}</view>
+  </view>
+   <view class='list'>
+    <view class='list-left'>性别</view>
+    <view class='list-right'> 
+      <view class='gender' wx:if="{{user.gender=='男'}}"><image src='../../image/weixuanzhong@3x.png'></image> 男</view>
+      <view class='gender' wx:elif="{{user.gender=='女'}}"><image src='../../image/xuanzhong@3x.png'></image> 女</view>
+      <view class='gender' else>未设置</view>
+    </view>
+  </view>
+  <view class='list' style='border:none;' bindtap="login_reset">
+    <view class='list-left'>出生日期</view>
+    <view class='list-right' wx:if="{{user.dob==null}}"> 未设置</view>
+    <view class='list-right' wx:else>{{user.dob}}</view>
+  </view>
+</view>

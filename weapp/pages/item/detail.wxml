@@ -1,4 +1,117 @@
 <!--pages/item/detail.wxml-->
+<view class='temp-box'>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="主图" data-value="url_image_main" bindtap="ImageEdit" wx:if="{{itemObj.url_image_main==null}}">主图： 未上传</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="主图" data-value="url_image_main" bindtap="ImageEdit" wx:else>主图 
+    <image class='image' src="https://jinlaisandbox-images.b0.upaiyun.com/item/{{itemObj.url_image_main}}"></image>
+  </view>
+  
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="形象图" data-value="figure_image_urls" bindtap="ImageEdit" wx:if="{{itemObj.figure_image_urls==null}}">形象图： 未上传</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="形象图" data-value="figure_image_urls" bindtap="ImageEdit" wx:else>形象图 
+    <view class="classname" wx:for="{{figureImage}}">
+      <image class='image' src="https://jinlaisandbox-images.b0.upaiyun.com/item/{{item}}"></image>
+    </view>
+  </view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="形象视频" data-value="figure_video_urls" bindtap="ImageEdit" wx:if="{{itemObj.figure_video_urls==null||itemObj.figure_video_urls==''}}">形象视频： 未上传</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="形象视频" data-value="figure_video_urls" bindtap="ImageEdit" wx:else>形象视频 
+    <video class='image' src="https://jinlaisandbox-images.b0.upaiyun.com/item/{{itemObj.figure_video_urls}}" ></video>
+  </view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="状态" data-value="status" wx:if="{{itemObj.status==null}}">状态： 暂无</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="状态" data-value="status" wx:else>状态： {{itemObj.status}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="商品ID" data-value="item_id" wx:if="{{itemObj.item_id==null}}">商品ID： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="商品ID" data-value="item_id" wx:else>商品ID： {{itemObj.item_id}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="所属系统分类ID" data-value="category_id" wx:if="{{itemObj.category_id==null}}">所属系统分类ID： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="所属系统分类ID" data-value="category_id" wx:else>所属系统分类ID： {{itemObj.category_id}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="所属商家分类ID" data-value="category_biz_id"  bindtap="itemEdit" wx:if="{{itemObj.category_biz_id==null}}">所属商家分类ID： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="所属商家分类ID" data-value="category_biz_id"  bindtap="itemEdit" wx:else>所属商家分类ID： {{itemObj.category_biz_id}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="所属品牌ID" data-value="brand_id"  wx:if="{{itemObj.brand_id==null}}">所属品牌ID： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="所属品牌ID" data-value="brand_id"  wx:else>所属品牌ID： {{itemObj.brand_id}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="商品名称" data-value="name" bindtap="itemEdit" wx:if="{{itemObj.name==null}}">商品名称： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="商品名称" data-value="name" bindtap="itemEdit" wx:else>商品名称： {{itemObj.name}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="商品宣传语/卖点" data-value="slogan" bindtap="itemEdit" wx:if="{{itemObj.slogan==null}}">商品宣传语/卖点： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="商品宣传语/卖点" data-value="slogan" bindtap="itemEdit" wx:else>商品宣传语/卖点： {{itemObj.slogan}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="标签价/原价（元）" data-value="tag_price" bindtap="itemEdit" wx:if="{{itemObj.tag_price==null}}">标签价/原价（元）： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="标签价/原价（元）" data-value="tag_price" bindtap="itemEdit" wx:else>标签价/原价（元）： {{itemObj.tag_price}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="商城价/现价（元）" data-value="price" bindtap="itemEdit" wx:if="{{itemObj.price==null}}">商城价/现价（元）： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="商城价/现价（元）" data-value="price" bindtap="itemEdit" wx:else>商城价/现价（元）： {{itemObj.price}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="库存量（份）" data-value="stocks" bindtap="itemEdit" wx:if="{{itemObj.stocks==null}}">库存量（份）： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="库存量（份）" data-value="stocks" bindtap="itemEdit" wx:else>库存量（份）： {{itemObj.stocks}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="每单最高限量（份）" data-value="quantity_max" bindtap="itemEdit" wx:if="{{itemObj.weight_volume==null}}">每单最高限量（份）： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="每单最高限量（份）" data-value="quantity_max" bindtap="itemEdit" wx:else>每单最高限量（份）： {{itemObj.stocks}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="每单最低限量（份）" data-value="quantity_min" bindtap="itemEdit" wx:if="{{itemObj.quantity_min==null}}">每单最低限量（份）： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="每单最低限量（份）" data-value="quantity_min" bindtap="itemEdit" wx:else>每单最低限量（份）： {{itemObj.quantity_min}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="是否可用优惠券" data-value="coupon_allowed" bindtap="itemEdit" wx:if="{{itemObj.coupon_allowed}}">是否可用优惠券： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="是否可用优惠券" data-value="coupon_allowed" bindtap="itemEdit" wx:else>是否可用优惠券： {{itemObj.coupon_allowed}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="积分抵扣率" data-value="discount_credit" bindtap="itemEdit" wx:if="{{itemObj.discount_credit==null}}">积分抵扣率： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="积分抵扣率" data-value="discount_credit" bindtap="itemEdit" wx:else>积分抵扣率： {{itemObj.discount_credit}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="佣金比例/提成率" data-value="commission_rate" bindtap="itemEdit" wx:if="{{itemObj.commission_rate==null}}">佣金比例/提成率： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="佣金比例/提成率" data-value="commission_rate" bindtap="itemEdit" wx:else>佣金比例/提成率： {{itemObj.commission_rate}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="预定上架时间" data-value="time_to_publish" bindtap="ImageEdit" wx:if="{{itemObj.time_to_publish==null}}">预定上架时间： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="预定上架时间" data-value="time_to_publish" bindtap="ImageEdit" wx:else>预定上架时间： {{itemObj.time_to_publish}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="预定下架时间" data-value="time_to_suspend" bindtap="ImageEdit" wx:if="{{itemObj.time_to_suspend==null}}">预定下架时间： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="预定下架时间" data-value="time_to_suspend" bindtap="ImageEdit" wx:else>	预定下架时间： {{itemObj.time_to_suspend}}</view>
+
+  <view class='label-text'>物流信息</view>
+  <view class='line'></view>
+  <view class='tips' style='padding-top:35rpx'>以下3项择一项填写即可</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="净重（KG）" data-value="weight_net" bindtap="itemEdit" wx:if="{{itemObj.weight_net==null}}">净重（KG）： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="净重（KG）" data-value="weight_net" bindtap="itemEdit" wx:else>净重（KG）： {{itemObj.weight_net}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="毛重（KG）" data-value="weight_gross" bindtap="itemEdit" wx:if="{{itemObj.weight_gross==null}}">毛重（KG）： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="毛重（KG）" data-value="weight_gross" bindtap="itemEdit" wx:else>毛重（KG）： {{itemObj.weight_gross}}</view>
+
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="体积重（KG）" data-value="weight_volume" bindtap="itemEdit" wx:if="{{itemObj.weight_volume==null}}">体积重（KG）： 未设置</view>
+  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="体积重（KG）" data-value="weight_volume" bindtap="itemEdit" wx:else>体积重（KG）： {{itemObj.weight_volume}}</view>
+
+  <view class='line'></view>
+
+  <view class='label-text'>运费模板： 包邮（免运费）</view>
+  <view class='label-text'>店内活动： 不参加</view>
+</view>
+
+<view class='temp-box outer'>
+  <view class='label-text' style='border-bottom: 1rpx solid #E1E1E1;'>商品规格</view>
+  <view class='outer'>
+    <view class='specifications' style='width:320rpx;'>一级规格：500g/份</view><view class='specifications'>商城价/现价：{{itemObj.price}}</view>
+    <view class='specifications' style='width:320rpx;'>二级规格：1kg/份</view><view class='specifications'>库存：{{itemObj.stocks}}</view>
+    <view class='specifications'>三级规格：1.5kg/份</view>
+  </view>
+  
+</view>
+<view class='temp-box outer'>
+  <view class='label-text'>商品描述</view>
+  <view class='tips'>该商品尚未填写商品描述</view>
+</view>
+<view class='temp-box outer'>
+  <view class='label-text'>商品描述： 2017-09-06 15：36：27</view>
+</view>
+
+
+
+
+
+
+<!--
+
+
 <view data-item="{{itemObj.item_id}}" data-name="商品ID" data-value="item_id" wx:if="{{itemObj.item_id==null}}">商品ID 未设置</view>
 <view data-item="{{itemObj.item_id}}" data-name="商品ID" data-value="item_id" wx:else>商品ID {{itemObj.item_id}}</view>
 
@@ -107,3 +220,5 @@
 <view data-item="{{itemObj.item_id}}" data-name="状态" data-value="status" wx:else>状态 {{itemObj.status}}</view>
 
 <button type="primary" disabled="{{disable}}" bindtap="submit">编辑</button>
+
+-->

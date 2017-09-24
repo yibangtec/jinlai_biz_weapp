@@ -30,12 +30,16 @@
     "pages/item/editCertain",
     "pages/item/descriptionItem",
     "pages/mine/mineEdit",
-    "pages/mine/headerImgEdit"
+    "pages/mine/headerImgEdit",
+    "pages/item/deleteItem",
+    "pages/item/result",
+    "pages/mine/userEdit",
+    "pages/mine/personalData"
   ],
   "window": {
-    "navigationBarBackgroundColor": "#f7941c",
+    "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "进来",
-    "navigationBarTextStyle": "#fff",
+    "navigationBarTextStyle": "black",
     "backgroundTextStyle": "light",
     "enablePullDownRefresh": true
   },

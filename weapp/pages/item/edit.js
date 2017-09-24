@@ -1,4 +1,5 @@
 // edit.js
+var pickerFile = require('../../utils/picker_datetime.js');
 const Upyun = require('../../utils/upyun-wxapp-sdk')
 const yun = require('../../utils/video')
 const upyun = new Upyun({
@@ -49,7 +50,25 @@ function tr(s, bizId) {
   str = yy + MM + '/' + MM + dd + '/' + hh + mm + ss + u + '.mp4';
   return str;
 }
+function formatDateTime(timeStamp) {
+  var date = new Date();
+  date.setTime(timeStamp * 1000);
+  var y = date.getFullYear();
+  var m = date.getMonth() + 1;
+  m = m < 10 ? ('0' + m) : m;
+  var d = date.getDate();
+  d = d < 10 ? ('0' + d) : d;
+  var h = date.getHours();
+  h = h < 10 ? ('0' + h) : h;
+  var minute = date.getMinutes();
+  var second = date.getSeconds();
+  minute = minute < 10 ? ('0' + minute) : minute;
+  second = second < 10 ? ('0' + second) : second;
+  return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
+};
 var app = getApp();
+var timestamp = ''
+var timestamp2 = ''
 var itemId = ''
 var obj={}
 var user_id=''
@@ -61,6 +80,8 @@ var o={}
 var newChoose=''
 var newSrc=[]
 var b={}
+var time_to_publish =''
+var time_to_suspend=''
 Page({
 
   /**
@@ -84,12 +105,21 @@ Page({
       { name: 0, value: '是' },
       { name: 1, value: '否', checked: 'true' },
     ],
+    currentYes:'',
+    currentNo:'coupon-current',
+    time_to_publish:'',
+    time_to_suspend:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.datetimePicker = new pickerFile.pickerDatetime({
+      page: this,
+      animation: 'slide',
+      duration: 500
+    });
     var that = this
     wx.getStorage({
       key: 'user',
@@ -158,11 +188,30 @@ Page({
         success: function (result) {
           if (result.data.status == 200) {
             obj = result.data.content
+            
             delete obj.freight_template_id
             biz_id = result.data.content.biz_id
             obj.user_id = user_id
             obj.id=itemId
+            time_to_publish = formatDateTime(obj.time_to_publish)
+            time_to_suspend = formatDateTime(obj.time_to_suspend)
+            that.setData({
+              time_to_publish: time_to_publish,
+              time_to_suspend: time_to_suspend,
+            })
             console.log(user_id)
+            if (obj.coupon_allowed == 0){
+              that.setData({
+                currentYes: '',
+                currentNo: 'coupon-current'
+              })
+            } else if (obj.coupon_allowed == 1){
+              that.setData({
+                currentYes: '',
+                currentNo: 'coupon-current'
+              })
+            }
+            
             var arr = []
             arr = result.data.content.url_image_main.split(",")
             if (arr.length > 0) {
@@ -218,6 +267,7 @@ Page({
             })
           }
           console.log(result)
+          /*
           if (result.data.content.time_to_publish){
             var strArr=[]
             strArr = result.data.content.time_create.split(" ")
@@ -234,21 +284,8 @@ Page({
               timeDowns: endArr[1],
             })
           }
-          if (result.data.content.coupon_allowed==0){
-            that.setData({
-              items: [
-                { name: 0, value: '是', checked: 'true'},
-                { name: 1, value: '否' },
-              ],
-            })
-          }else{
-            that.setData({
-              items: [
-                { name: 0, value: '是'},
-                { name: 1, value: '否', checked: 'true' },
-              ],
-            })
-          }
+          */
+          
         },
         fail: function (result) {
           console.log(result)
@@ -260,6 +297,43 @@ Page({
   radioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value)
     obj.coupon_allowed = e.detail.value
+  },
+  startTap: function () {
+    var that = this
+    timestamp = Date.parse(new Date());
+    timestamp = timestamp / 1000;
+    this.datetimePicker.setPicker('startDate');
+  },
+  endTap: function () {
+    this.datetimePicker.setPicker('endDate');
+    var stringTime = this.data.startDate;
+    timestamp2 = Date.parse(new Date(stringTime));
+    timestamp2 = timestamp2 / 1000;
+    if (timestamp2< timestamp) {
+      wx.showToast({
+        title: '上架时间不能小于当前时间',
+        icon: 'loading',
+        duration: 2000
+      })
+    }
+    console.log(this.data.startDate)
+    obj.time_to_publish = timestamp2
+  },
+  yes:function(e){
+    var yes = e.currentTarget.dataset.coupon
+    this.setData({
+      currentYes: 'coupon-current',
+      currentNo: ''
+    })
+    obj.coupon_allowed = yes
+  },
+  no:function(e){
+    var yes = e.currentTarget.dataset.coupon
+    this.setData({
+      currentYes: '',
+      currentNo: 'coupon-current'
+    })
+    obj.coupon_allowed = yes
   },
   bindPickerBiz: function (e) {
     console.log('所属商家', e.detail.value)
@@ -300,6 +374,9 @@ Page({
       })
     }
     obj.name = e.detail.value
+  },
+  getDescription:function(e){
+    obj.description = e.detail.value
   },
   getTag_price: function (e) {
     if (e.detail.value > 99999.99) {
@@ -854,6 +931,37 @@ Page({
     }
   },
   submit:function(e){
+    if (obj.time_to_publish == null) {
+      console.log('jskadfksdkfh')
+      delete obj.time_to_publish
+      
+    }
+    if (obj.time_to_suspend == null) {
+      delete obj.time_to_suspend
+    }
+
+    if (this.data.endDate){
+      var stringTime = this.data.endDate;
+      var timestamp4 = Date.parse(new Date(stringTime));
+      timestamp4 = timestamp4 / 1000;
+      if (timestamp4 < timestamp2) {
+        wx.showToast({
+          title: '下架时间不能小于上架时间',
+          icon: 'loading',
+          duration: 2000
+        })
+      }
+      console.log(timestamp4 + '+' + timestamp2)
+      obj.time_to_suspend = timestamp4
+    }
+    
+    for (var key in obj) {
+      //只遍历对象自身的属性，而不包含继承于原型链上的属性。  
+      if (obj[key] == null) {
+        delete obj[key]
+      }
+    }
+    console.log(obj)
     obj.app_type = 'biz'
     var url = 'item/edit'
     var params = {}
@@ -881,7 +989,7 @@ Page({
               duration: 2000
             })
             wx.redirectTo({
-              url: '../login/pwresult?title="商品创建成功"'
+              url: 'result?title="商品修改成功"'
             })
           }
 

@@ -23,7 +23,7 @@ Page({
     })
   },
   getValue:function(e){
-    newValue=e.detail.value
+    newValue= e.detail.value
   },
   mineEdit:function(e){
     // 通过API获取或处理数据

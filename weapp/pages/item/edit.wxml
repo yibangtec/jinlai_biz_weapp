@@ -1,4 +1,115 @@
 <!--edit.wxml-->
+<view class='temp-box'>
+  <view class='tips-title'>必填项以“*”符号标示</view>
+  <view class='label-text'>所属系统分类<text> {{index.name}}</text></view>
+  <view class='tips'>系统分类有客服修改</view>
+
+  <view class='label-text'>店内分类</view>
+  <picker bindchange="bindPickerBiz" value="{{num.name}}" range="{{objectBizArray}}" range-key="name">
+    <view class="picker">
+    <input class='temp-input' disabled="true" value="{{objectBizArray[num].name}}" placeholder="请选择所属商家分类" />
+    </view>
+  </picker>
+  <view class='label-text'>商品名称<text class='must'> *</text></view>
+  <input class='temp-input' type="text" maxlength="30" bindblur="getItem_name" value="{{itemObj.name}}" placeholder="请输入" />
+  <view class="label-text">商品宣传语/卖点</view>
+  <input class='temp-input' type="text" maxlength="30" bindblur="getSlogan" value="{{itemObj.slogan}}" placeholder="请输入" />
+  <view class='label-text'>商家自定义货号</view>
+  <input class='temp-input' type="text" maxlength="20" bindblur="getCode_biz" value="{{itemObj.code_biz}}" placeholder="最多20个字符" />
+  <view class='label-text'>主图<text class='must'> *</text></view>
+  <view class='tips'>正方形图片视觉效果最佳</view>
+  <view class="page-body-info">
+        <block wx:for="{{mainImageSrc}}" wx:key="{{index}}">
+          <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill">
+            <image index="{{index}}" bindtap="closeImgMain" class="close" src="../../image/shanchu@3x.png"></image>
+          </image>
+        </block>
+        <view style="{{dis}}">
+          <view class="image-plus" bindtap="chooseImageMain">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+        </view>
+  </view>
+  <button style='height:80rpx; margin:0 20rpx; border:1rpx solid #FF3649; font-size:30rpx; color:#FF3649;background-color:#fff; border-raidus:12rpx;' bindtap="upImgMain">开始上传图片</button>
+  <view class='label-text'>形象图</view>
+  <view class='tips'>最多可上传4张图片</view>
+  <view class="page-body-info">
+        <block wx:for="{{figureImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill">
+            <image data-index="{{index}}" bindtap="closeImgFigure" class="close" src="../../image/shanchu@3x.png"></image>
+            <image data-index="{{index}}" bindtap="moveLeft" class="left" src="../../image/left.png"></image>
+            <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
+          </image>   
+        </block>
+        <view style="{{disfig}}">
+          <view class="image-plus" bindtap="chooseImageFigure">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+        </view>
+  </view>
+  <button style='height:80rpx; margin:0 20rpx; border:1rpx solid #FF3649; font-size:30rpx; color:#FF3649;background-color:#fff; border-raidus:12rpx;' bindtap="upImgFigure">开始上传图片</button>
+  <view class='label-text'>商品描述</view>
+  <view class='tips'>在电脑上编辑可添加更丰富内容</view>
+  <view style='margin:0 20rpx;'>
+    <textarea bindblur='getDescription' placeholder='可选不超过2000个字符'></textarea>
+  </view>
+  <!--
+  <button name="" type="primary" size="mini" bindtap="itemDescription">商品描述</button>
+  -->
+  <view class='label-text'>标签价/原价（元）</view>
+  <input class='temp-input' type="digit" bindblur="getTag_price" value="{{itemObj.tag_price}}" placeholder="最高99999.99"/>
+  <view class='label-text'>商城价/现价（元）<text class='must'> *</text></view>
+  <input class='temp-input' type="digit" bindblur="getPrice" value="{{itemObj.price}}" placeholder="最高99999.99" />
+  <view class='label-text'>销售单位</view>
+  <input class='temp-input' type="text" bindblur="getUnit_name" value="{{itemObj.unit_name}}" placeholder="请输入" />
+  <view class='label-text'>库存量（份）<text class='must'> *</text></view>
+  <input class='temp-input' type="number" bindblur="getStocks" value="{{itemObj.stocks}}" placeholder="最多65535" />
+  <view class='label-text'>每单最高限量（份）</view>
+  <input class='temp-input' type="number" bindblur="getQuantity_max" value="{{itemObj.quantity_max}}" placeholder="0为不限，最高99" />
+  <view class='label-text'>每单最低限量（份）</view>
+  <input class='temp-input' type="number" bindblur="getQuantity_min" value="{{itemObj.quantity_min}}" placeholder="0为不限，最高99" />
+  <view class='line'></view>
+  <view class='tips' style='padding-top:35rpx'>以下3项择一项填写即可</view>
+  <view class='label-text'>净重（KG）</view>
+  <input class='temp-input' type="digit" bindblur="getWeight_net" value="{{itemObj.weight_net}}" placeholder="最高999.99" />
+  <view class='label-text'>毛重（KG）</view>
+  <input class='temp-input' type="digit" bindblur="getWeight_gross" value="{{itemObj.weight_gross}}" placeholder="最高999.99" />
+  <view class='label-text'>体积重（KG）</view>
+  <input class='temp-input' type="digit" bindblur="getWeight_volume" value="{{itemObj.weight_volume}}" placeholder="最高999.99" />
+  <view class='line'></view>
+  <view class='label-text'>是否可用优惠券<text class='must'> *</text></view>
+  <view class='coupon outer'>
+    <view data-coupon='1' bindtap='yes' class='coupon-yes {{currentYes}}'>是</view>
+    <view data-coupon='0' bindtap='no' class='coupon-none {{currentNo}}'>否</view>
+  </view>
+  <view class='label-text'>积分抵扣率</view>
+  <input class='temp-input' type="digit" bindblur="getDiscount_credit" value="{{itemObj.discount_credit}}" placeholder="最高0.5" />
+  <view class='label-text'>佣金比例/提成率</view>
+  <input class='temp-input' type="digit" bindblur="getCommission_rate" value="{{itemObj.commission_rate}}" placeholder="最高0.5" />
+  <view class='label-text'>预定上架时间</view>
+  <input class='temp-input' disabled='true' bindtap="startTap" value='{{startDate}}' placeholder="{{time_to_publish}}" />
+  <view class='label-text'>预定下架时间</view>
+  <input class='temp-input' disabled='true' bindtap="endTap" value='{{endDate}}' placeholder="{{time_to_suspend}}"/>
+  <view class='label-text'>运费模板</view>
+  <view class='tips'>您目前没有可用的运费模板仅可包邮</view>
+  <button style='height:80rpx; margin:0 20rpx; border:1rpx solid #FF3649; font-size:30rpx; color:#FF3649;background-color:#fff; border-raidus:12rpx;' bindtap="upImgFigure">创建一个</button>
+  <input style='margin:20rpx 20rpx;' class='temp-input' type="digit"  placeholder="默认包邮" />
+</view>
+
+<view class="btn-area">
+    <button style='height:80rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:0;' disabled="{{disable}}" bindtap="submit">确定</button>
+</view>
+
+
+
+
+
+
+
+<!--
+
 <view class="section">
   <view class="section__title">所属商家分类*</view>
   <picker bindchange="bindPickerBiz" value="{{sum.name}}" range="{{objectBizArray}}" range-key="name">
@@ -163,3 +274,6 @@
 </view>
 
 <button type="primary" disabled="{{disable}}" bindtap="submit">确定</button>
+-->
+
+<include src="../../utils/picker_datetime.wxml"/>

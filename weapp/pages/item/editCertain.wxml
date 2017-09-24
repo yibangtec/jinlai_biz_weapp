@@ -3,7 +3,9 @@
     <view class="section__title">{{title}}修改</view>
     <view class="page-body-info">
         <block wx:for="{{mainImageSrc}}" wx:key="{{index}}">
-          <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill"><image index="{{index}}" bindtap="closeImgMain" class="close"             src="../../image/close.png"></image></image>
+          <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill">
+            <image index="{{index}}" bindtap="closeImgMain" class="close" src="../../image/shanchu@3x.png"></image>
+          </image>
         </block>
         <view style="{{dis}}">
           <view class="image-plus image-plus-nb" bindtap="chooseImageMain">
@@ -20,7 +22,7 @@
     <view class="page-body-info">
         <block wx:for="{{figureImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill">
-            <image data-index="{{index}}" bindtap="closeImgFigure" class="close" src="../../image/close.png"></image>
+            <image data-index="{{index}}" bindtap="closeImgFigure" class="close" src="../../image/shanchu@3x.png"></image>
             <image data-index="{{index}}" bindtap="moveLeft" class="left" src="../../image/left.png"></image>
             <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
           </image>   
@@ -40,7 +42,7 @@
     <view class="page-body-info">
         <block wx:for="{{src}}">
           <video src="{{item}}" class="image" mode="aspectFill">
-            <image bindtap="closeImgFigure" class="close" src="../../image/close.png"></image>
+            <image bindtap="closeImgFigure" class="close" src="../../image/shanchu@3x.png"></image>
             <image bindtap="moveLeft" class="left" src="../../image/left.png"></image>
             <image bindtap="moveRight" class="right" src="../../image/right.png"></image>
           </video>   

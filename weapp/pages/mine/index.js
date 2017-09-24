@@ -72,7 +72,7 @@ Page({
                 }
                 //获取本地user表，并赋值info_user中涉及到的字段；其中avatar项若user.avatar为空，
                 //则显示占位图像（待设计提供）；nickname项若user.nickname为空，则显示user.mobile
-                if (result.data.content.nickname == null) {
+                if (result.data.content.nickname == null || result.data.content.nickname == '') {
                   that.setData({
                     nickName: result.data.content.mobile,
                   })
@@ -133,17 +133,20 @@ Page({
     })
   },
   nickNameEdit:function(e){
-    wx.redirectTo({
-      url: 'mineEdit?vue='+value+'&mineId='+user_id
+    wx.navigateTo({
+      url: 'mineEdit?vue=' + value + '&mineId=' + user_id
     })
-    
   },
   headerImgEdit:function(e){
-    wx.redirectTo({
+    wx.navigateTo({
       url: 'headerImgEdit?vue=' + imgSrc + '&mineId=' + user_id
     })
   },
-
+  personalData:function(e){
+    wx.navigateTo({
+      url: 'personalData?&mineId=' + user_id
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

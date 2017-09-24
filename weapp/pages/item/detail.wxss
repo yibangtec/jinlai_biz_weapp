@@ -1,1 +1,49 @@
 /* pages/item/detail.wxss */
+.outer {zoom:1;}    /*==for IE6/7 Maxthon2==*/
+.outer::after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
+page {  
+  display: block; 
+  width: 100%; 
+  background-color: #f6f6f6;  
+  position: relative;
+}  
+.temp-box{
+  margin: 20rpx 20rpx;
+  background-color: #fff; 
+  border-radius: 20rpx;
+  overflow: hidden;
+  position: relative;
+}
+.label-text{
+  text-align: left;
+  font-size: 26rpx;
+  line-height: 66rpx;
+  color:  #3e3e39;
+  padding: 20rpx 0;
+  margin: 0 20rpx;
+}
+.specifications{
+  float: left;
+  text-align: left;
+  font-size: 26rpx;
+  margin: 20rpx;
+  color:  #3e3e39;
+}
+.image {
+  width: 150rpx;
+  height: 150rpx;
+  display: block;
+  margin:0 20rpx 0 0;
+  border-radius: 15rpx;
+  position: relative;
+}
+.tips{
+  margin: 0 20rpx;
+  font-size: 22rpx;
+  color: #9fa0a0;
+  padding: 0 0 20rpx 0;
+}
+.line{
+  margin: 50rpx 20rpx 10rpx;
+  border-bottom: 1rpx dashed #9FA0A0;
+}

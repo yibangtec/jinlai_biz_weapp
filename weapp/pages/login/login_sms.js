@@ -44,6 +44,11 @@ Page({
 
    
   },
+  login: function (e) {
+    wx.redirectTo({
+      url: 'login'
+    })
+  },
   getTel:function(e){
     tel = e.detail.value
   },

@@ -1,1 +1,20 @@
 /* pwresult.wxss */
+page {  
+  display: block; 
+  width: 100%; 
+  background-color: #ffffff;  
+  position: relative;
+} 
+.result{
+  text-align: center;
+}
+.success-img{
+  height: 180rpx;
+  width: 180rpx;
+  margin: 70rpx 0 20rpx 0;
+}
+.success-title{
+  font: 45rpx;
+  color: #3D3B39;
+  margin: 0 0 100rpx 0;
+}

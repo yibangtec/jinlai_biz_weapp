@@ -1,3 +1,7 @@
+var timestamp=''
+var timestamp2=''
+var endTimestamp=''
+var endTimestamp2=''
 var pickerDatetime = function(obj) {
   //初始化参数
   var _this = this;
@@ -63,48 +67,8 @@ pickerDatetime.prototype.setPicker = function(pickerName) {
     var pickerPreHour = pickerPreDate.getHours();
     var pickerPreMinute = pickerPreDate.getMinutes();
     var obj = new Object();
-    obj[pickerName] = pickerPreYear+'年'+pickerPreMonth+'月' + pickerPreDay+'日 '+ addDatetimeZero(pickerPreHour)+':' + addDatetimeZero(pickerPreMinute);
+    obj[pickerName] = pickerPreYear+'-'+pickerPreMonth+'-' + pickerPreDay+' '+ addDatetimeZero(pickerPreHour)+':' + addDatetimeZero(pickerPreMinute)
     this.page.setData(obj);
-    if (pickerName=='startDate'){
-      // 获取当前时间戳(以s为单位)
-      var timestamp = Date.parse(new Date());
-      timestamp = timestamp / 1000;
-      //当前时间戳为：1403149534
-      console.log("当前时间戳为：" + timestamp);
-      var stringTime = pickerPreYear + '-' + pickerPreMonth + '-' + pickerPreDay + '- ' + addDatetimeZero(pickerPreHour) + ':' + addDatetimeZero(pickerPreMinute)+':00';
-      var timestamp2 = Date.parse(new Date(stringTime));
-      timestamp2 = timestamp2 / 1000;
-      //2014-07-10 10:21:12的时间戳为：1404958872 
-      console.log(stringTime + "的时间戳为：" + timestamp2);
-      obj.time_to_publish = timestamp2
-      if (timestamp2 < timestamp) {
-        wx.showToast({
-          title: '商品上架架时间不能小于当前时间',
-          icon: 'loading',
-          duration: 2000
-        })
-      }
-    } else if (pickerName == 'endDate'){
-      // 获取当前时间戳(以s为单位)
-      var timestamp = Date.parse(new Date());
-      timestamp = timestamp / 1000;
-      //当前时间戳为：1403149534
-      console.log("当前时间戳为：" + timestamp);
-      var stringTime = pickerPreYear + '-' + pickerPreMonth + '-' + pickerPreDay + '- ' + addDatetimeZero(pickerPreHour) + ':' + addDatetimeZero(pickerPreMinute) + ':00';
-      var timestamp2 = Date.parse(new Date(stringTime));
-      timestamp2 = timestamp2 / 1000;
-      //2014-07-10 10:21:12的时间戳为：1404958872 
-      console.log(stringTime + "的时间戳为：" + timestamp2);
-      obj.time_to_suspend = timestamp2
-      itemValue = timestamp2
-      if (timestamp2 < timestamp) {
-        wx.showToast({
-          title: '商品下架架时间不能小于当前时间',
-          icon: 'loading',
-          duration: 2000
-        })
-      }
-    }
   } else {
     var pickerPreDate = new Date(Date.parse(this.page.data[pickerName].replace('年','/').replace('月','/').replace('日','/')));
     var pickerPreYear = pickerPreDate.getFullYear();
@@ -150,7 +114,7 @@ pickerDatetime.prototype.setPicker = function(pickerName) {
         } else {
           this.pickerDateTextArr.push(m+'月'+d+'日 星期' + w);
         }
-        this.pickerDateValueArr.push(y+'年'+m+'月'+d+'日');
+        this.pickerDateValueArr.push(y+'-'+m+'-'+d+' ');
       } 
     }
   }

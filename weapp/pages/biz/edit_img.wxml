@@ -5,7 +5,7 @@
     <view class="page-body-info">
         <view wx:for="{{productImageSrc}}">
           <image src="{{item}}" class="image" mode="aspectFill">
-            <image data-index="{{index}}" bindtap="closeImgProduct" class="close" src="../../image/close.png"></image>
+            <image data-index="{{index}}" bindtap="closeImgProduct" class="close" src="../../image/shanchu@3x.png"></image>
             <image style='{{leftAndRight}}' data-index="{{index}}" bindtap="moveLeft" class="left" src="../../image/left.png"></image>
             <image style='{{leftAndRight}}' data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
           </image>

@@ -1,0 +1,23 @@
+<!--pages/item/deleteItem.wxml-->
+<view class='delete-box'>
+  <view class='temp-box outer' wx:for="{{list}}" wx:key="{{index}}">
+    <view class='outer'>
+      <view class='specifications' style='width:320rpx;'>商品ID： {{item.item_id}}</view>
+      <view class='specifications'>名称： {{item.name}}</view>
+      <view class='specifications' style='width:320rpx;'>商城价/现价： {{item.price}}</view>
+      <view class='specifications'>状态： {{item.status}}</view>
+    </view> 
+  </view>
+  <view class='temp-box outer' style='background-color:#FCF6CB;'>
+    <view class='delete-text'>
+      确认要删除？
+    </view> 
+  </view>
+  <view class='temp-box'>
+    <view class='label-text'>密码</view>
+    <input class='temp-input' type='password' bindblur='getPassword' placeholder='请输入'></input>
+  </view>
+  <view class="btn-area" style='margin:0 20rpx'>
+    <button style='height:80rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:0;' disabled="{{disable}}" bindtap="bindDelete">确定</button>
+  </view>
+</view>

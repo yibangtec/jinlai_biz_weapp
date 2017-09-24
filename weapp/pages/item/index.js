@@ -23,6 +23,10 @@ Page({
     list:'',
     showModal: false,
     itemObj:'',
+    itemStyle:'display:none',
+    itemNone:'display:block',
+    selectedAllStatus: false,
+    userId:''
   },
 
   /**
@@ -36,6 +40,9 @@ Page({
         console.log(res.data.content)
         user_id = res.data.content.user_id
         bizId = res.data.content.biz_id
+        that.setData({
+          userId: user_id,
+        })
         var url = 'item/index'
         var params = {}
         var api_result = api_request(url, params)
@@ -44,23 +51,27 @@ Page({
         function api_request(url, api_params) {
           // 生成签名
           console.log(bizId)
+          console.log(app.globalData.url_api + url)
           app.sign_generate(api_params)
 
-          // 通过小程序的网络请求API发送请求
+          // 通过小程序的网络请求API发送请求 time_delete:'null',
           wx.request({
             method: "POST",
             header: {
               'content-type': 'application/x-www-form-urlencoded'
             },
             url: app.globalData.url_api + url,
-            data: { app_type: 'item', time_delete:'null', biz_id: bizId },
+            data: { app_type: 'item', time_delete: 'NULL', biz_id: bizId },
             success: function (result) {
               if (result.data.status == 200) {
                 for (var i = 0; i < result.data.content.length; i++) {
                   result.data.content[i].txtStyle = ""
+                  result.data.content[i].selected = false
                 }
                 that.setData({
-                  list: result.data.content
+                  list: result.data.content,
+                  itemStyle: 'display:block',
+                  itemNone: 'display:none'
                 })
               }
               console.log(result)
@@ -78,6 +89,95 @@ Page({
     })
    
   },
+  bindCheckbox: function (e) {
+    var index = parseInt(e.currentTarget.dataset.index);
+    var selected = this.data.list[index].selected;
+    var list = this.data.list;
+    var num = parseInt(this.data.list[index].num);
+    var price = this.data.list[index].price;
+    if (!selected) {
+      this.setData({
+        count: this.data.count + num * price,
+        number: num + this.data.number
+
+      });
+    } else {
+      this.setData({
+        count: this.data.count - num * price,
+        number: this.data.number - num
+
+      });
+    }
+
+    list[index].selected = !selected;
+
+    this.setData({
+      list: list
+    });
+  },
+  bindSelectAll: function (e) {
+    var selectedAllStatus = this.data.selectedAllStatus;
+    var selectedAll = !selectedAllStatus;
+    var list = this.data.list;
+    
+    if (!selectedAllStatus) {
+      for (var i = 0; i < list.length; i++) {
+        list[i].selected = selectedAll;
+        //var num = parseInt(this.data.list[i].num);
+        //var price = parseInt(this.data.list[i].price);
+        //this.setData({
+          //count: this.data.count - num * price,
+          //number: this.data.number - num
+
+        //});
+      }
+      this.setData({
+        list: list,
+        selectedAllStatus:true
+      });
+    }else{
+      for (var i = 0; i < list.length; i++) {
+        list[i].selected = selectedAll;
+        //var num = parseInt(this.data.list[i].num);
+        //var price = parseInt(this.data.list[i].price);
+        //this.setData({
+        //count: this.data.count - num * price,
+        //number: this.data.number - num
+
+        //});
+      }
+      this.setData({
+        list: list,
+        selectedAllStatus: false
+      });
+    }
+  },
+  deleteItemAll:function(e){
+    var all = this.data.selectedAllStatus
+    var userId = e.currentTarget.dataset.user
+    var arr = []
+    var list = this.data.list
+    if (this.data.selectedAllStatus === true){
+      console.log(this.data.selectedAllStatus)
+      for (var i = 0; i < list.length; i++){
+        arr[i] = list[i].item_id
+      }
+    }else{
+      console.log(this.data.selectedAllStatus)
+      for (var i = 0; i < list.length; i++) {
+        if (list[i].selected === true){
+          arr.push(list[i])
+        }
+      }
+      wx.setStorage({
+        key: 'list',
+        data: arr,
+      })
+    }
+    wx.navigateTo({
+      url: 'deleteItem?user=' + userId + '&biz=' + bizId + '&all=' + all,
+    })
+  },
   listClick:function(e){
     var itemId = e.currentTarget.dataset.name
     wx.navigateTo({
@@ -85,8 +185,32 @@ Page({
     })
   },
   createItem:function(e){
+    if (bizId){
+      wx.navigateTo({
+        url: 'createItem?biz='+bizId,
+      })
+    }else{
+      wx.showToast({
+        title: '请先创建商家',
+        icon: 'loading',
+        duration: 2000
+      })
+    }
+    
+    
+  },
+  editItem: function (e) {
+    var itemId = e.currentTarget.dataset.name
+    console.log(itemId)
     wx.navigateTo({
-      url: 'createItem',
+      url: 'edit?id=' + itemId,
+    })
+  },
+  delete:function(e){
+    var itemId = e.currentTarget.dataset.name
+    console.log(itemId)
+    wx.navigateTo({
+      url: 'deleteItem?id=' + itemId + '&biz=' + bizId,
     })
   },
   touchS: function (e) {

@@ -12,7 +12,8 @@ Page({
     brief_name:'',
     tel_public:'',
     tel_protected_biz:'',
-    status:''
+    status:'',
+    src:''
   },
   onLoad: function ()
   {
@@ -139,7 +140,7 @@ Page({
                         brief_name: result.data.content.brief_name,
                         tel_public: result.data.content.tel_public,
                         tel_protected_biz: result.data.content.tel_protected_biz,
-                        status: result.data.content.status
+                        status: result.data.content.status,
                       });
                     } else if (result.data.status === 414) {
                       that.setData({
@@ -187,13 +188,19 @@ Page({
                 console.log(bizId)
                 console.log(result)
                 if (result.data.status === 200) {
+                  if (result.data.content.url_logo == null) {
+                    var src = '../../image/header.png'
+                  }else{
+                    src = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/'+ result.data.content.url_logo
+                  }
                   that.setData({
                     infoStyle: 'display:block',
                     name: result.data.content.name,
                     brief_name: result.data.content.brief_name,
                     tel_public: result.data.content.tel_public,
                     tel_protected_biz: result.data.content.tel_protected_biz,
-                    status: result.data.content.status
+                    status: result.data.content.status,
+                    src: src
                   });
                 } else if (result.data.status === 414) {
                   that.setData({

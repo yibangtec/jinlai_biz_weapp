@@ -32,7 +32,7 @@ Page({
       key: 'user',
       success: function (res) {
         console.log(res.data.content.password)
-        if (res.data.content.password.data==""){
+        if (res.data.content.password==""){
           wx.redirectTo({
             url: 'login_sms'
           })
@@ -168,6 +168,7 @@ Page({
     code = e.detail.value
   },
   verCode:function(e){
+    var that = this
     var re = /^\d{6}$/
     if (re.test(code)) {
 

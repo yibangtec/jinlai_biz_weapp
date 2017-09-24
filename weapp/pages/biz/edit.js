@@ -40,7 +40,9 @@ var time,
   ownerSrc = '',//进行计算时候的url
   ownerImageUrl = [],//回调给后台的图片又拍云存储地址
   licenseSrc = '',
+  url_logoSrc='',
   licenseImageUrl = [],
+  url_logoImageUrl = [],
   authSrc = '',
   authImageUrl = [],
   authDocSrc = '',
@@ -55,6 +57,7 @@ var time,
 var o={}
 var b={}
 var j={}
+var bizObj={}
 var app = getApp()
 Page({
 
@@ -67,6 +70,7 @@ Page({
     con:'container',
     ownerImageSrc: '',//展现到view层的图片地址
     licenseImageSrc: '',
+    url_logoImageSrc:'',
     authImageSrc: '',
     authDocImageSrc: '',
     productImageSrc: '',
@@ -80,6 +84,7 @@ Page({
     disProduct: 'display:block',
     disProduce: 'display:block',
     disRetail: 'display:block',
+    disUrl_logo: 'display:block',
   },
 
   /**
@@ -124,12 +129,31 @@ Page({
         url: app.globalData.url_api + url,
         data: { id: bizId },
         success: function (result) {
-          console.log(result.data.content.url_image_license)
+          console.log(result.data.content)
           biz = result.data.content
+          for (var key in biz) {
+            //只遍历对象自身的属性，而不包含继承于原型链上的属性。  
+            if (biz[key] === 'null') {
+              biz[key] = ''
+            }
+          }  
           that.setData({
             biz: result.data.content,
           });
-
+          if (biz.url_logo !== 'null') {
+            var url_logo = []
+              url_logo[0] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + url_logo[i]
+            
+            that.setData({
+              url_logoImageSrc: url_logo,
+            });
+            console.log(that.data.licenseImageSrc)
+            if (that.data.url_logoImageSrc !== 'null') {
+              that.setData({
+                disUrl_logo: 'display:none',
+              });
+            }
+          }
           if (biz.url_image_license !== '') {
             var licenseArr = biz.url_image_license.split(",")
             for (var i = 0; i < licenseArr.length; i++) {
@@ -252,7 +276,7 @@ Page({
     console.log(name)
     var patrn = /^.{5,35}$/;
     if (patrn.test(name)) {
-     
+      biz.name = name
     } else {
       wx.showToast({
         title: '商家全称输入字符长度应在5到35个',
@@ -260,40 +284,122 @@ Page({
         duration: 2000
       })
     }
+
   },
   getBrief_name:function(e){
     brief_name = e.detail.value
+    biz.brief_name = brief_name
   },
 
   getUrl_logo:function(e){
+    url_logo
+  },
+  chooseImageUrl_logo: function () {
+    const self = this
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album'],
+      success: function (res) {
+        console.log('chooseImage success, temp path is', res.tempFilePaths)
+        url_logoSrc = res.tempFilePaths
+        self.setData({
+          url_logoImageSrc: url_logoSrc
+        })
+        if (self.data.url_logoImageSrc !== '') {
+          self.setData({
+            disUrl_logo: 'display:none',
+          });
+        } else {
+          self.setData({
+            disUrl_logo: 'display:block',
+          });
+        }
+      },
+      fail: function ({ errMsg }) {
+        console.log('urllogo err is', errMsg)
+      }
+    })
+  },
+  upImgUrl_logo: function (e) {
+    console.log('this is  upImg')
+    console.log('this is  for')
+    time = tick(0, bizId, user_id)
+    url_logoImageUrl[0] = 'url_logo/' + time
+    console.log(time)
+    upyun.upload({
+      localPath: url_logoSrc[0],
+      remotePath: '/biz/url_logo/' + time,
+      success: function (res) {
+        console.log('uploadImage success, res is:', res)
+        if (res.statusCode == 200) {
+          wx.showToast({
+            title: '上传成功',
+            icon: 'success',
+            duration: 2000
+          })
+          biz.url_logo = url_logoImageUrl[0]
+        }
+
+      },
+      fail: function ({ errMsg }) {
+        console.log('uploadImage fail, errMsg is', errMsg)
+      }
+    })
+
+  },
+  closeImgUrl_logo: function (e) {
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var list = that.data.url_logoImageSrc;
+    list.splice(index, 1)
+    that.setData({
+      url_logoImageSrc: list
+    });
+    if (that.data.url_logoImageSrc == '') {
+      that.setData({
+        disUrl_logo: 'display:block',
+      });
+    } else {
+      that.setData({
+        disUrl_logo: 'display:none',
+      });
+    }
 
   },
   getUrl_name:function(e){
     url_name = e.detail.value
+    biz.url_name = url_name
   },
   getSlogan: function (e) {
     slogan=e.detail.value
+    biz.slogan = slogan
   },
   getDescription: function (e) {
     description = e.detail.value
+    biz.description = description
   },
   getNotification: function (e) {
     notification=e.detail.value
+    biz.notification = notification
   },
   getUrl_web: function (e) {
     url_web=e.detail.value
+    biz.url_web = url_web
   },
   getUrl_weibo: function (e) {
     url_weibo=e.detail.value
+    biz.url_weibo = url_weibo
   },
   getUrl_wechat: function (e) {
     url_wechat=e.detail.value
+    biz.url_wechat = url_wechat
   },
   getTel_public: function (e) {
     tel_public=e.detail.value
     var patrn = /(^(400|800)\d{7})|(\d{3,4}(-){0,1}\d{7,8}$)/;
     if (patrn.test(tel_public)) {
-
+      biz.tel_public = tel_public
     } else {
       wx.showToast({
         title: '消费者联系电话输入格式不正确',
@@ -306,7 +412,7 @@ Page({
     tel_protected_biz=e.detail.value
     var re = /^1\d{10}$/
     if (re.test(tel_protected_biz)) {
-
+      biz.tel_protected_biz = tel_protected_biz
     } else {
       wx.showToast({
         title: '商务联系电话输入格式不正确',
@@ -319,7 +425,7 @@ Page({
     tel_protected_fiscal=e.detail.value
     var re = /^1\d{10}$/
     if (re.test(tel_protected_fiscal)) {
-
+      biz.tel_protected_fiscal = tel_protected_fiscal
     } else {
       wx.showToast({
         title: '财务联系电话输入格式不正确',
@@ -332,7 +438,7 @@ Page({
     tel_protected_order=e.detail.value
     var re = /^1\d{10}$/
     if (re.test(tel_protected_order)) {
-
+      biz.tel_protected_order = tel_protected_order
     } else {
       wx.showToast({
         title: '订单通知手机号输入格式不正确',
@@ -344,30 +450,37 @@ Page({
 
   getNation: function (e) {
     nation=e.detail.value
+    biz.nation = nation
   },
   getProvince: function (e) {
     province=e.detail.value
+    biz.province = province
   },
   getCity: function (e) {
     city=e.detail.value
+    biz.city = city
   },
   getCounty: function (e) {
     county=e.detail.value
+    biz.county = county
   },
   getStreet: function (e) {
     street=e.detail.value
+    biz.street = street
   },
   getFullname_owner:function(e){
     fullname_owner = e.detail.value
+    biz.fullname_owner = fullname_owner
   },
   getFullname_auth: function (e) {
     fullname_auth = e.detail.value
+    biz.fullname_auth = fullname_auth
   },
   getCode_license: function (e) {
     code_license=e.detail.value
     var patrn = /^[a-zA-Z0-9]{15,18}$/;
     if (patrn.test(code_license)) {
-
+      biz.code_license = code_license
     } else {
       wx.showToast({
         title: '请输入15-18位营业执照号',
@@ -380,7 +493,7 @@ Page({
     code_ssn_owner=e.detail.value
     var isIDCard2 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X|x)$/;
     if (isIDCard2.test(code_ssn_owner)) {
-
+      biz.code_ssn_owner = code_ssn_owner
     } else {
       wx.showToast({
         title: '请输入18正确格式法人身份证号',
@@ -393,7 +506,7 @@ Page({
     code_ssn_auth=e.detail.value
     var isIDCard2 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X|x)$/;
     if (isIDCard2.test(code_ssn_auth)) {
-
+      biz.code_ssn_auth = code_ssn_auth
     } else {
       wx.showToast({
         title: '请输入18正确格式经办人身份证号',
@@ -406,7 +519,7 @@ Page({
     bank_name=e.detail.value
     var re = /[\u4e00-\u9fa5a-zA-Z\u0020]{3,20}/
     if (re.test(bank_name)) {
-
+      biz.bank_name = bank_name
     } else {
       wx.showToast({
         title: '请输入正确格式开户行名称',
@@ -419,7 +532,7 @@ Page({
     bank_account = e.detail.value
     var re = /[0-9]|[-]/
     if (re.test(bank_account)) {
-
+      biz.bank_account = bank_account
     } else {
       wx.showToast({
         title: '请输入正确格式开户行账号',
@@ -473,6 +586,7 @@ Page({
             icon: 'success',
             duration: 2000
           })
+          biz.url_image_license = licenseImageUrl[0]
         }
 
       },
@@ -542,11 +656,14 @@ Page({
         remotePath: '/biz/owner_id/' + time,
         success: function (res) {
           console.log('uploadImage success, res is:', res)
-          wx.showToast({
-            title: '上传成功',
-            icon: 'success',
-            duration: 1000
-          })
+          if (res.statusCode == 200) {
+            wx.showToast({
+              title: '上传成功',
+              icon: 'success',
+              duration: 1000
+            })
+            biz.url_image_owner_id = ownerImageUrl[i]
+          }
         },
         fail: function ({ errMsg }) {
           console.log('uploadImage fail, errMsg is', errMsg)
@@ -613,17 +730,22 @@ Page({
         remotePath: '/biz/auth_id/' + time,
         success: function (res) {
           console.log('uploadImage success, res is:', res)
-          wx.showToast({
-            title: '上传成功',
-            icon: 'success',
-            duration: 1000
-          })
+          if (res.statusCode == 200) {
+            wx.showToast({
+              title: '上传成功',
+              icon: 'success',
+              duration: 1000
+            })
+            biz.url_image_auth_id = authImageUrl[i]
+          }
+          
         },
         fail: function ({ errMsg }) {
           console.log('uploadImage fail, errMsg is', errMsg)
         }
       })
     }
+    
 
   },
   closeImgAuth: function (e) {
@@ -690,6 +812,7 @@ Page({
             icon: 'success',
             duration: 1000
           })
+          biz.url_image_auth_doc = authDocImageUrl[i]
         },
         fail: function ({ errMsg }) {
           console.log('uploadImage fail, errMsg is', errMsg)
@@ -770,7 +893,7 @@ Page({
         }
       })
     }
-
+    //biz.url_image_product = productImageUrl.join(",")
   },
   closeImgProduct: function (e) {
     var that = this;
@@ -846,7 +969,7 @@ Page({
         }
       })
     }
-
+    //biz.url_image_produce = produceImageUrl.join(",")
   },
   closeImgProduce: function (e) {
     var that = this;
@@ -923,7 +1046,7 @@ Page({
         }
       })
     }
-
+    //biz.url_image_retail = retailImageUrl.join(",")
   },
   closeImgRetail: function (e) {
     var that = this;
@@ -978,6 +1101,7 @@ Page({
       }
       console.log(pt)
       product = pt.join(',')
+      biz.url_image_product = product
       console.log(product)
     }
     var pe = that.data.produceImageSrc
@@ -992,6 +1116,7 @@ Page({
         pe[i] = pe[i].replace('https://jinlaisandbox-images.b0.upaiyun.com/biz/', "")
       }
       produce = pe.join(',')
+      biz.url_image_produce = produce
       console.log(produce)
     }
     var re = that.data.retailImageSrc
@@ -1006,6 +1131,7 @@ Page({
         re[i] = re[i].replace('https://jinlaisandbox-images.b0.upaiyun.com/biz/', "")
       }
       retail = re.join(',')
+      biz.url_image_retail = retail
       console.log(retail)
     }
     
@@ -1033,7 +1159,20 @@ Page({
     } else {
       auth_doc = biz.url_image_auth_doc
     }
-    console.log(auth_doc)
+    
+    biz.app_type= 'biz'
+    biz.id = bizId
+    biz.user_id = user_id
+
+    for (var key in biz) {
+      //只遍历对象自身的属性，而不包含继承于原型链上的属性。  
+      if (biz[key] === 'null') {
+        biz[key] =''
+      }
+    }  
+    console.log(biz)
+
+
     var url = 'biz/edit'
     var params = {}
     var api_result = api_request(url, params)
@@ -1049,13 +1188,7 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         url: app.globalData.url_api + url,
-        data: {app_type: 'biz', id: bizId, user_id: user_id, name: name, brief_name: brief_name, url_name: url_name,url_logo: url_logo, slogan: slogan,
-          description: description, notification: notification, url_web: url_web, url_weibo: url_weibo, url_wechat: url_wechat, 
-          tel_public: tel_public, tel_protected_biz: tel_protected_biz, tel_protected_fiscal: tel_protected_fiscal, tel_protected_order:tel_protected_order,
-          fullname_owner: fullname_owner, fullname_auth: fullname_auth,code_license: code_license,code_ssn_owner: code_ssn_owner, 
-          code_ssn_auth: code_ssn_auth, url_image_license: license, url_image_owner_id: owner_id,url_image_auth_id: auth_id,url_image_auth_doc: auth_doc, 
-          bank_name: bank_name, bank_account: bank_account, url_image_product: product, url_image_produce: produce, url_image_retail: retail,
-          nation: nation,province: province,city: city, county: county, street: street,longitude: 39.23222,latitude: 116.23456},
+        data: biz,
         success: function (result) {
           console.log(result)
           var user = result.data
@@ -1089,6 +1222,13 @@ Page({
 
 
   /**
+   * {app_type: 'biz', id: bizId, user_id: user_id, name: name, brief_name: brief_name, url_name: url_name,url_logo: url_logo, slogan: slogan,
+          description: description, notification: notification, url_web: url_web, url_weibo: url_weibo, url_wechat: url_wechat,
+          tel_public: tel_public, tel_protected_biz: tel_protected_biz, tel_protected_fiscal: tel_protected_fiscal, tel_protected_order:tel_protected_order,
+          fullname_owner: fullname_owner, fullname_auth: fullname_auth,code_license: code_license,code_ssn_owner: code_ssn_owner,
+          code_ssn_auth: code_ssn_auth, url_image_license: license, url_image_owner_id: owner_id,url_image_auth_id: auth_id,url_image_auth_doc: auth_doc,
+          bank_name: bank_name, bank_account: bank_account, url_image_product: product, url_image_produce: produce, url_image_retail: retail,
+          nation: nation,province: province,city: city, county: county, street: street,longitude: 39.23222,latitude: 116.23456}
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function (e) {

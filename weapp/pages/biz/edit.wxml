@@ -1,7 +1,224 @@
 <!--edit.wxml-->
+<view class='item-title'>必填项以”*“符号标示</view>
+<view class='temp-box'>
+  <view class='temp-title'>基本资料</view>
+  <view class='temp-text'>该部分信息需要通过您的专属顾问进行修改或分配</view>
+  <view class='temp-list'>
+    <view class='left'>商务联系手机号</view> <view class='right'>{{tel}}</view>
+  </view>
+  <view class='temp-list'>
+    <text class='left'>商家全称</text> <text class='right'>{{biz.name}}</text>
+  </view>
+  <view class='temp-list'>
+    <text class='left'>简称</text> <text class='right'>{{biz.brief_name}}</text>
+  </view>
+  <view class='temp-list'>
+    <text class='left'>店铺域名</text> 
+    <text class='right' wx:if="{{biz.url_name == null}}">未分配</text>
+    <text class='right' wx:else>{{biz.url_name}}</text>
+  </view>
+</view>
 
-<view src="http://webapi.amap.com/maps?v=1.3&key=b0a6d590c3195b86fcc13676afa62eba&plugin=AMap.Geocoder"></view>
-<text>edit.wxml</text>
+<view class='temp-box' style='padding-bottom:50rpx;'>
+  <view class='label-text'>LOGO</view>
+  <view class="page-body-info">
+        <block wx:for="{{url_logoImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill">
+            <image data-index="{{index}}" bindtap="closeImgUrl_logo" class="close" src="../../image/shanchu@3x.png"></image>
+            <image data-index="{{index}}" bindtap="moveLeftRe" class="left" src="../../image/left.png"></image>
+            <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
+          </image>
+        </block>
+         <view style="{{disUrl_logo}}">
+          <view class="image-plus" bindtap="chooseImageUrl_logo">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+        </view>
+    </view>
+    <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgUrl_logo">上传</button>
+  <view class='label-text'>宣传语</view>
+  <input class='temp-input' type="text" maxlength="20"  bindblur="getSlogan" value="{{biz.slogan}}" placeholder="宣传语" />
+  <view class='label-text'>简介</view>
+  <textarea class='temp-textarea' placeholder='最多255个字符，请简述企业主要经营范围，主营产品等信息。'></textarea>
+  <view class='label-text'>店铺公告</view>
+  <textarea class='temp-textarea' placeholder='最多255个字符，请简述企业主要经营范围，主营产品等信息。'></textarea>
+  <view class='label-text'>消费者服务电话<text class='must'> *</text></view>
+  <input class='temp-input' type="number" value="{{biz.tel_public}}"  bindblur="getTel_public" placeholder="400、800、手机号、带区号的固定电话均可" />
+  <view class='tips'>即客服电话，不要加空格或者是其他符号，固定电话请填写区号</view>
+  <view class='label-text'>订单通知手机号<text class='must'> *</text></view>
+  <input class='temp-input' type="number" bindblur="getTel_protected_order" value="{{biz.tel_protected_order}}" placeholder="请填写手机号" />
+</view>
+
+<view class='temp-box'>
+  <view class='temp-title' style='border-bottom:2rpx solid #f6f6f6;'>资质信息</view>
+  <view class='label-text'>工商注册号<text class='must'> *</text></view>
+  <input class='temp-input' type="number" bindblur="getCode_license" value="{{biz.code_license}}" placeholder="请填写" />
+  <view class='tips'>请填写营业执照上的15位工商注册号；或三证合一后的统一社会信用代码</view>
+  <view class='label-text'>法人姓名<text class='must'> *</text></view>
+  <input class='temp-input' type="text" maxlength="15" bindblur="getFullname_owner" value="{{biz.fullname_owner}}" placeholder="请输入法人姓名" />
+  <view class='tips'>按照营业执照上填写。如果属于分公司则填写工商营业执照上明确的负责人，个体工商请填写经营者姓名，合伙企业请填写合伙人姓名，个人独资企业请填写投资人姓名，企业法人的非法人分支机构填写负责人姓名</view>
+  <view class='label-text'>法人身份证号<text class='must'> *</text></view>
+  <input class='temp-input' type="idcard" bindblur="getCode_ssn_owner" value="{{biz.code_ssn_owner}}" placeholder="请填写" />
+  <view class='label-text'>经办人姓名</view>
+  <input class='temp-input' type="text" maxlength="15" bindblur="getFullname_auth" value="{{biz.fullname_auth}}" placeholder="请输入经办人姓名" />
+  <view class='tips'>如果负责业务对接的不是法人本人，请填写此项</view>
+  <view class='label-text'>经办人身份证号</view>
+  <input class='temp-input' type="idcard" bindblur="getCode_ssn_auth" value="{{biz.code_ssn_auth}}" placeholder="请输入" />
+  <view class='tips'>如果负责业务对接的不是法人本人，请填写此项</view>
+</view>
+
+<view class='temp-box' style='padding-bottom:50rpx;'>
+  <view class='temp-title' style='border-bottom:2rpx solid #f6f6f6;'>财务信息</view>
+  <view class='label-text'>对公账户开户行</view>
+  <input class='temp-input' type="text"maxlength="20" bindblur="getBank_name" value='{{biz.bank_name}}' placeholder="基本户、一般户均可" />
+  <view class='label-text'>对公账户账号</view>
+  <input class='temp-input' type="number" maxlength="30" bindblur="getBank_account" value='{{biz.bank_account}}' placeholder="基本户、一般户均可" />
+  <view class='tips'>我们会向该公司对公账户汇入一笔非常小的金额和备注信息，需要您后续与审核人员确认。</view>
+  <view class='label-text'>财务联系手机号<text class='must'> *</text></view>
+  <input class='temp-input' type="number" bindblur="getTel_protected_fiscal" value="{{biz.tel_protected_fiscal}}" placeholder="请输入手机号" />
+</view>
+
+<view class='temp-box' style='padding-bottom:50rpx;'>
+  <view class='temp-title' style='border-bottom:2rpx solid #f6f6f6;'>资质授权证明书</view>
+  <view class='tips'>以下资料需要彩色原件的扫描件或数码照</view>
+  <view class='label-text'>营业执照<text class='must'> *</text></view>
+  <view class="page-body-info">
+        <block wx:for="{{licenseImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill">
+            <image index="{{index}}" bindtap="closeImgLicense" class="close" src="../../image/shanchu@3x.png"></image>
+          </image>
+        </block>
+        <view style="{{disLicense}}">
+          <view class="image-plus" bindtap="chooseImageLicense">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+        </view>
+  </view>
+  <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgLicense">开始上传图片</button>
+  <view class='label-text'>法人身份证<text class='must'> *</text></view>
+  <view class="page-body-info">
+        <block wx:for="{{ownerImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill">
+            <image index="{{index}}" bindtap="closeImgOwner" class="close" src="../../image/shanchu@3x.png"></image>
+          </image>
+        </block>
+        <view style="{{disOwner}}">
+          <view class="image-plus" bindtap="chooseImageOwner">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+        </view>
+  </view>
+  <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgOwner">开始上传图片</button>
+  <view class='label-text'>经办人身份证</view>
+  <view class='tips'>如果负责业务的不是法人本人，请上传经办人身份证</view>
+  <view class="page-body-info">
+        <block wx:for="{{authImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill">
+            <image index="{{index}}" bindtap="closeImgAuth" class="close" src="../../image/shanchu@3x.png"></image>
+          </image>
+        </block>
+        <view style="{{disAuth}}">
+          <view class="image-plus" bindtap="chooseImageAuth">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+        </view>
+  </view>
+  <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgAuth">开始上传图片</button>
+  <view class='label-text'>经办人授权书</view>
+  <view class="page-body-info">
+        <block wx:for="{{authDocImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill">
+            <image data-index="{{index}}" bindtap="closeImgAuthDoc" class="close" src="../../image/shanchu@3x.png"></image>
+          </image> 
+        </block>
+        <view style="{{disAuthDoc}}">
+          <view class="image-plus" bindtap="chooseImageAuthDoc">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+        </view>
+  </view>
+  <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgAuthDoc">开始上传图片</button>
+</view>
+
+<view class='temp-box' style='padding-bottom:50rpx;'>
+  <view class='temp-title' style='border-bottom:2rpx solid #f6f6f6;'>形象展示</view>
+  <view class='tips'>您可根据自身情况上传合适的照片，向消费者展现企业形象，每种照片可上传4张</view>
+  <view class='label-text'>产品</view>
+  <view class="page-body-info">
+        <block wx:for="{{productImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill">
+            <image data-index="{{index}}" bindtap="closeImgProduct" class="close" src="../../image/shanchu@3x.png"></image>
+            <image data-index="{{index}}" bindtap="moveLeftPt" class="left" src="../../image/left.png"></image>
+            <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
+          </image>
+        </block>
+         <view style="{{disProduct}}">
+          <view class="image-plus" bindtap="chooseImageProduct">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+        </view>
+  </view>
+  <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgProduct">开始上传图片</button>
+  <view class='label-text'>工厂产地</view>
+  <view class="page-body-info">
+        <block wx:for="{{produceImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill">
+            <image data-index="{{index}}" bindtap="closeImgProduce" class="close" src="../../image/shanchu@3x.png"></image>
+            <image data-index="{{index}}" bindtap="moveLeftPe" class="left" src="../../image/left.png"></image>
+            <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
+          </image>
+        </block>
+         <view style="{{disProduce}}">
+          <view class="image-plus" bindtap="chooseImageProduce">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+        </view>
+  </view>
+  <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgProduce">开始上传图片</button>
+  <view class='label-text'>门店柜台</view>
+  <view class="page-body-info">
+        <block wx:for="{{retailImageSrc}}" wx:key="{{index}}">
+          <image src="{{item}}" class="image" mode="aspectFill">
+            <image data-index="{{index}}" bindtap="closeImgRetail" class="close" src="../../image/shanchu@3x.png"></image>
+            <image data-index="{{index}}" bindtap="moveLeftRe" class="left" src="../../image/left.png"></image>
+            <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
+          </image>
+        </block>
+         <view style="{{disRetail}}">
+          <view class="image-plus" bindtap="chooseImageRetail">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+        </view>
+  </view>
+  <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgRetail">开始上传图片</button>
+</view>
+
+<view class='temp-box' style='padding-bottom:50rpx;'>
+  <view class='temp-title' style='border-bottom:2rpx solid #f6f6f6;'>联系地址</view>
+  <view class='label-text outer'>
+    <view class='linkage'>省</view><view class='linkage'>市</view><view class='linkage'>区/县</view>
+    <view class='linkage'><input class='linkage-input' type="text" bindblur="getProvince" value="{{biz.province}}" placeholder="请输入"/></view>
+    <view class='linkage'><input class='linkage-input' type="text" bindblur="getCity" value="{{biz.city}}" placeholder="请输入"/></view>
+    <view class='linkage'><input class='linkage-input' style='margin-right: 0;' type="text" bindblur="getCounty" value="{{biz.county}}" placeholder="请输入"/></view>
+  </view>
+  <view class='label-text'>具体地址</view>
+  <input class='temp-input' type="text"  bindblur="getStreet" value="{{biz.street}}" placeholder="请输入详细地址"/>
+</view>
+
+<view class="btn-area">
+    <button style='height:80rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:0;' disabled="{{disable}}" bindtap="submit">确定</button>
+</view>
+
+
+<!--
 <view class="classname">
   <text>商务联系电话 {{tel}}</text>
 </view>
@@ -68,10 +285,10 @@
     <view class="section__title">订单通知手机号*</view>
     <input type="number" bindblur="getTel_protected_order" value="{{biz.tel_protected_order}}" placeholder="请输入手机号" />
   </view>
-  <!--<view class="section">
+  <view class="section">
     <view class="section__title">国家；默认中国</view>
     <input type="text" bindblur="getNation" value="{{biz.nation}}" placeholder="最多200个字符"/>
-  </view>-->
+  </view>
   <view class="section">
     <view class="section__title">省</view>
     <input type="text" bindblur="getProvince" value="{{biz.province}}" placeholder="请输入"/>
@@ -90,7 +307,7 @@
   </view>
   <div id="{{con}}" style="width:500px; height:300px"></div>
   <view class="map_container">
-  <!--定义页面结构，可以使用地图组件也能使用其他组件 -->
+  定义页面结构，可以使用地图组件也能使用其他组件
   </view>
   <view>经度（高德，下同）---{{biz.longitude}}</view>
   <view>纬度（高德）---{{biz.latitude}}</view>
@@ -252,3 +469,4 @@
 <view class="btn-area">
     <button type="primary" disabled="{{disable}}" bindtap="submit">Submit</button>
 </view>
+-->

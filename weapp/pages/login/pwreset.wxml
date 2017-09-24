@@ -1,11 +1,24 @@
 <!--pwreset.wxml-->
-<text>pwreset.wxml</text>
-<text>pwchange.wxml</text>
- <input type="number" placeholder="请输入手机号" bindblur="getTel" focus="{{telFocus}}" value="{{tell}}"/>
-  <button class="verify-code clearfix" class="bnt-left" type="primary" size="mini" loading="{{loading}}" plain="{{defaultPlain}}"
-        disabled="{{disableVer}}" bindtap="getVerify"> {{getVer}} </button>
-  <input type="number" placeholder="请输入验证码"  bindblur="getCode" focus="{{codeFocus}}" />
-   <input type="text" password="true" placeholder="请输入新密码" bindfocus="verCode" bindblur="getNewPw" focus="{{focusNewPw}}" />
-   <input type="text" password="true" placeholder="请确认新密码" bindfocus="verNewPw" bindblur="getPwConfirm" focus="{{focusConfirmPw}}" />
-   <button class="submit" type="primary" size="{{defaultSize}}" loading="{{loading}}" plain="{{plainde}}"
-        disabled="{{disbtn}}" bindtap="resetPw"> 确定 </button>
+<view class='passwordCon'>
+  <view class='input-item' style='margin-top:30rpx;'>
+    <text>手机号</text>
+    <input type="number" placeholder="请输入手机号" bindblur="getTel" focus="{{telFocus}}" value="{{tell}}"/>
+  </view>
+  <view class='input-item'>
+    <text>短信验证码</text>
+    <input type="number" placeholder="请输入验证码"  bindblur="getCode" focus="{{codeFocus}}" />
+    <text style='height:33rpx; line-height:30rpx; padding-left:25rpx; border-left: 2rpx solid #c9caca;' disabled="{{disableVer}}" bindtap="getVerify"> {{getVer}}</text>
+  </view>
+  <view class='input-item'>
+    <text>新密码</text>
+    <input type="text" password="true" placeholder="请输入新密码" bindfocus="verCode" bindblur="getNewPw" focus="{{focusNewPw}}" />
+  </view>
+  <view class='input-item' style='margin-bottom:120rpx;'>
+    <text>确认密码</text>
+    <input type="text" password="true" placeholder="请确认新密码" bindfocus="verNewPw" bindblur="getPwConfirm" focus="{{focusConfirmPw}}" />
+  </view>
+  <button class="submitBtn" style="opacity: {{opacity}};color: white; background-color: #ff3649;" disabled="{{disbtn}}" bindtap="resetPw"> 确定      </button>  
+</view>
+
+
+

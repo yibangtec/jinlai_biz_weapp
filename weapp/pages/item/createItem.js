@@ -10,6 +10,7 @@ const yu = new yun({
   bucket: 'jinlaisandbox-images',
   operator: 'jinlaisandbox',
 })
+
 function tick(s, bizId) {
   var objD = new Date();
   var str;
@@ -51,6 +52,8 @@ function tr(s, bizId) {
   return str;
 }
 var app = getApp();
+var timestamp = ''
+var timestamp2 = ''
 var objectArray=[]
 var objectBizArray=[]
 var obj={}
@@ -84,28 +87,60 @@ Page({
     currentDate:'',
     disable:'true',
     videoStyle:'display:none',
-    str:''
+    str:'',
+    currentYes: '',
+    currentNo: 'coupon-current'
   },
   radioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value)
     obj.coupon_allowed = e.detail.value
   },
   // 点击时间组件确定事件 
-  
+  yes: function (e) {
+    var yes = e.currentTarget.dataset.coupon
+    this.setData({
+      currentYes: 'coupon-current',
+      currentNo: ''
+    })
+    obj.coupon_allowed = yes
+  },
+  no: function (e) {
+    var yes = e.currentTarget.dataset.coupon
+    this.setData({
+      currentYes: '',
+      currentNo: 'coupon-current'
+    })
+    obj.coupon_allowed = yes
+  },
 
   startTap: function () {
-    var that =this
+    var that = this
+    timestamp = Date.parse(new Date());
+    timestamp = timestamp / 1000;
     this.datetimePicker.setPicker('startDate');
   },
   endTap: function () {
     this.datetimePicker.setPicker('endDate');
-    console.log(this.data.endDate)
+    var stringTime = this.data.startDate;
+    timestamp2 = Date.parse(new Date(stringTime));
+    timestamp2 = timestamp2 / 1000;
+    if (timestamp2 < timestamp) {
+      wx.showToast({
+        title: '上架时间不能小于当前时间',
+        icon: 'loading',
+        duration: 2000
+      })
+    }
+    console.log(this.data.startDate)
+    obj.time_to_publish = timestamp2
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.str)
+    console.log(options.biz)
+    biz_id = options.biz
+    obj.biz_id = biz_id
     this.datetimePicker = new pickerFile.pickerDatetime({
       page: this,
       animation: 'slide',
@@ -121,16 +156,6 @@ Page({
       },
       fail: function (err) {
 
-      }
-    })
-    wx.getStorage({
-      key: 'biz',
-      success: function (res) {
-        console.log(res)
-        biz_id = res.data.data.content.id
-        obj.biz_id = biz_id
-      },
-      fail: function (err) {
       }
     })
 
@@ -243,6 +268,9 @@ Page({
       })
     }
     obj.name = e.detail.value
+  },
+  getDescription: function (e) {
+    obj.description = e.detail.value
   },
   getSlogan: function (e) {
     if (typeof (e.detail.value) == 'number') {
@@ -690,6 +718,36 @@ Page({
     }
   },
   submit:function(e){
+    if (obj.time_to_publish == null) {
+      console.log('jskadfksdkfh')
+      delete obj.time_to_publish
+
+    }
+    if (obj.time_to_suspend == null) {
+      delete obj.time_to_suspend
+    }
+
+    if (this.data.endDate) {
+      var stringTime = this.data.endDate;
+      var timestamp4 = Date.parse(new Date(stringTime));
+      timestamp4 = timestamp4 / 1000;
+      if (timestamp4 < timestamp2) {
+        wx.showToast({
+          title: '下架时间不能小于上架时间',
+          icon: 'loading',
+          duration: 2000
+        })
+      }
+      console.log(timestamp4 + '+' + timestamp2)
+      obj.time_to_suspend = timestamp4
+    }
+    for (var key in obj) {
+      //只遍历对象自身的属性，而不包含继承于原型链上的属性。  
+      if (obj[key] == null) {
+        obj[key] = ''
+      }
+    }
+
     obj.app_type='biz'
     console.log(this.data.str)
     obj.description = this.data.str
@@ -719,7 +777,7 @@ Page({
               duration: 2000
             })
             wx.redirectTo({
-              url: '../login/pwresult?title="商家创建成功"'
+              url: 'result?title="商家创建成功"'
             })
           }else{
             wx.showToast({
