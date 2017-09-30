@@ -204,7 +204,48 @@ Page({
     var that =this
     this.hideModal();
   },
-
+  closeImg:function(e){
+    var that = this;
+    var index = e.currentTarget.dataset.current;
+    var list = that.data.array;
+    list.splice(index, 1)
+    that.setData({
+      array: list
+    });
+    
+  },
+  moveTop: function (e) {
+    var that = this;
+    var beforeArr = that.data.array
+    console.log(beforeArr)
+    var index = e.currentTarget.dataset.current;
+    if (index != 0) {
+      console.log(index)
+      var temp = beforeArr[index - 1]
+      beforeArr[index - 1] = beforeArr[index]
+      beforeArr[index] = temp
+      console.log(beforeArr)
+      that.setData({
+        array: beforeArr
+      });
+    }
+  },
+  moveBot: function (e) {
+    var that = this;
+    var beforeArr = that.data.array
+    console.log(beforeArr)
+    var index = e.currentTarget.dataset.current;
+    if (index != beforeArr.length - 1) {
+      console.log(index)
+      var temp = beforeArr[index + 1]
+      beforeArr[index + 1] = beforeArr[index]
+      beforeArr[index] = temp
+      console.log(beforeArr)
+      that.setData({
+        array: beforeArr
+      });
+    }
+  },
   submit:function(e){
     var that = this 
     var arr = that.data.array
@@ -261,7 +302,17 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    var that = this
+    console.log('onPullDownRefresh')
 
+    wx.showLoading({
+      title: '载入中',
+    })
+    //that.get_biz(that)
+
+    wx.hideLoading()
+
+    wx.stopPullDownRefresh()
   },
 
   /**

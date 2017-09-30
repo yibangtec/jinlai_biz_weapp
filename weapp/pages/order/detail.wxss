@@ -1,1 +1,99 @@
 /* pages/order/detail.wxss */
+.outer {zoom:1;}    /*==for IE6/7 Maxthon2==*/
+.outer::after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
+page {  
+  display: block; 
+  width: 100%;
+  background-color: #f6f6f6;  
+  position: relative;
+}  
+.temp-box{
+  margin: 20rpx 20rpx;
+  background-color: #fff; 
+  border-radius: 20rpx;
+  overflow: hidden;
+  position: relative;
+}
+.order-list{
+  display: flex;
+  margin: 0 20rpx;
+  padding: 32rpx 0;
+  border-bottom: 1rpx solid #f6f6f6;
+}
+.list-text{
+  font-size: 26rpx;
+  color: #3e3a39;
+}
+.list-left{
+  width: 205rpx;
+
+}
+.list-right{
+  flex: 1;
+}
+.tips{
+  margin: 0 20rpx;
+  font-size: 22rpx;
+  color: #9fa0a0;
+  padding: 0 0 20rpx 0;
+}
+.line{
+  margin: 50rpx 20rpx 10rpx;
+  border-bottom: 1rpx dashed #9FA0A0;
+}
+
+.order-item{
+  display: flex;
+  padding: 20rpx;
+  border-top: 1rpx solid #f6f6f6;
+}
+.order-img{
+  width: 140rpx;
+  height: 140rpx;
+  background-color: #9fa0a0;
+}
+.img-main{
+  display: block;
+  width: 140rpx;
+  height: 140rpx;
+}
+.order-right{
+  flex: 1;
+  padding-left: 20rpx;
+}
+.order-title{
+  font-size: 28rpx;
+  color: #3e3a39;
+  padding: 30rpx 0 20rpx 20rpx;
+}
+.order-name{
+  font-size: 26rpx;
+  color: #3e3a39;
+  margin: 10rpx 0;
+}
+.order-introduce{
+  font-size: 22rpx;
+  color: #9fa0a0;
+  margin: 10rpx 0 15rpx 0;
+}
+.bottom{
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background-color: #fff;
+  padding: 7rpx 0 10rpx 0;
+}
+.bottom-list{
+  float: left;
+  width: 25%;
+  text-align: center;
+}
+.bottom-img{
+  width: 44rpx;
+  height: 44rpx;
+  vertical-align: middle;
+}
+.bottom-text{
+  font-size: 30rpx;
+  color: #666464;
+}

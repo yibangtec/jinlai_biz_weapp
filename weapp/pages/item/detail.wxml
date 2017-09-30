@@ -1,14 +1,15 @@
 <!--pages/item/detail.wxml-->
 <view class='temp-box'>
   <view class='label-text' data-item="{{itemObj.item_id}}" data-name="主图" data-value="url_image_main" bindtap="ImageEdit" wx:if="{{itemObj.url_image_main==null}}">主图： 未上传</view>
-  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="主图" data-value="url_image_main" bindtap="ImageEdit" wx:else>主图 
+  <view class='label-text' style='padding-bottom:0;' data-item="{{itemObj.item_id}}" data-name="主图" data-value="url_image_main" bindtap="ImageEdit" wx:else>主图 
     <image class='image' src="https://jinlaisandbox-images.b0.upaiyun.com/item/{{itemObj.url_image_main}}"></image>
   </view>
   
   <view class='label-text' data-item="{{itemObj.item_id}}" data-name="形象图" data-value="figure_image_urls" bindtap="ImageEdit" wx:if="{{itemObj.figure_image_urls==null}}">形象图： 未上传</view>
-  <view class='label-text' data-item="{{itemObj.item_id}}" data-name="形象图" data-value="figure_image_urls" bindtap="ImageEdit" wx:else>形象图 
-    <view class="classname" wx:for="{{figureImage}}">
-      <image class='image' src="https://jinlaisandbox-images.b0.upaiyun.com/item/{{item}}"></image>
+  <view class='label-text outer' style='padding-bottom:0;' data-item="{{itemObj.item_id}}" data-name="形象图" data-value="figure_image_urls" bindtap="ImageEdit" wx:else>
+    <view class='label-text' style='padding:0;'>形象图</view>  
+    <view style='float:left;' wx:for="{{figureImage}}" wx:key="{{index}}">
+        <image class='image' src="https://jinlaisandbox-images.b0.upaiyun.com/item/{{item}}"></image>
     </view>
   </view>
 
@@ -102,6 +103,10 @@
 </view>
 <view class='temp-box outer'>
   <view class='label-text'>商品描述： 2017-09-06 15：36：27</view>
+  <import src="../../utils/wxParse.wxml"/>
+   
+  <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+  
 </view>
 
 

@@ -2,17 +2,17 @@
 <view class='passwordCon'>
   <view class='input-item' style='margin-top:30rpx;'>
     <text>原密码</text>
-    <input type="text" password="true" placeholder="请输入原始密码" bindblur="getCurrentPw" focus="{{focusCurrentPw}}" />
+    <input type="text" style='padding:6rpx 0 0 50rpx;' password="true" placeholder="请输入原始密码" bindblur="getCurrentPw" focus="{{focusCurrentPw}}" />
   </view>
   <view class='input-item'>
     <text>新密码</text>
-    <input type="text" password="true" placeholder="请输入新密码" bindfocus="verCurrentPw" bindblur="getNewPw" focus="{{focusNewPw}}"/>
+    <input type="text" style='padding:6rpx 0 0 50rpx;' password="true" placeholder="请输入新密码" bindfocus="verCurrentPw" bindblur="getNewPw" focus="{{focusNewPw}}"/>
   </view>
   <view class='input-item' style='margin-bottom:120rpx;'>
     <text>确认密码</text>
     <input type="text" password="true" placeholder="请确认新密码" bindfocus="verNewPw" bindblur="getPwConfirm" focus="{{focusConfirmPw}}"/>
   </view>
   <button class="submitBtn" style="opacity: {{opacity}};color: white; background-color: #ff3649;" disabled="{{disbtn}}" bindtap="changePw"> 确定      </button>
-  <view class="forgetPw">忘记密码</view>  
+  <view class="forgetPw" bindtap='forgetPassword'>忘记密码</view>  
 </view>
 

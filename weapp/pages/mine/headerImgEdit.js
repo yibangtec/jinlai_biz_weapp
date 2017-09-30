@@ -52,7 +52,7 @@ Page({
     if (value!=='null'){
       console.log(value)
       var arr = new Array
-      arr[0] = 'https://jinlaisandbox-images.b0.upaiyun.com/user/' +value
+      arr[0] = 'https://jinlaisandbox-images.b0.upaiyun.com/' +value
       this.setData({
         mainImageSrc: arr,
       })

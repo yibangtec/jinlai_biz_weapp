@@ -5,6 +5,8 @@ var bizId=''
 var idSum=''
 var password=''
 var id=''
+var value = ''
+var title = ''
 var app = getApp();
 Page({
 
@@ -19,11 +21,25 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
     var that = this
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      //上一个页面实例对象
+      var prePage = pages[pages.length - 2];
+      //关键在这里
+      //prePage.changeData(e.detail.value)
+      value = prePage.data.value
+
+      wx.setNavigationBarTitle({ title: prePage.data.title })
+      console.log(prePage.data.value)
+    }
     user_id = options.user
     all = options.all
     bizId = options.biz
     id = options.id
+    console.log(options.value)
+    
     
     var url = 'item/index'
     var params = {}
@@ -45,15 +61,18 @@ Page({
         success: function (result) {
           if (result.data.status == 200) {
             var list = result.data.content
+            console.log(list)
             if(id){
               var arr = []
               for (var i = 0; i < list.length; i++) {
+                
                 if (list[i].item_id == id){
                   arr[0] = list[i]
                 }
               }
+              console.log(arr)
               that.setData({
-                list: list,
+                list: arr,
               })
               idSum = id
             }else{
@@ -97,7 +116,7 @@ Page({
         }
       })
     }
-    
+    console.log(this.data.list)
   
   },
   getPassword: function (e) {
@@ -105,6 +124,7 @@ Page({
   },
   bindDelete:function(e){
     console.log(idSum)
+    
     var url = 'item/edit_bulk'
     var params = {}
     var api_result = api_request(url, params)
@@ -122,7 +142,7 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         url: app.globalData.url_api + url,
-        data: { app_type: 'biz', user_id: user_id, ids: idSum, operation: 'delete', password: password },
+        data: { app_type: 'biz', user_id: user_id, biz_id:bizId, ids: idSum, operation: value, password: password },
         success: function (result) {
           console.log(user_id)
           console.log(password)
@@ -131,6 +151,9 @@ Page({
               title: '商品删除成功',
               icon: 'loading',
               duration: 2000
+            })
+            wx.redirectTo({
+              url: 'result?title="商品操作成功"'
             })
           }
           console.log(result)
@@ -174,7 +197,17 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    var that = this
+    console.log('onPullDownRefresh')
+
+    wx.showLoading({
+      title: '载入中',
+    })
+    //that.get_biz(that)
+
+    wx.hideLoading()
+
+    wx.stopPullDownRefresh()
   },
 
   /**

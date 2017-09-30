@@ -34,7 +34,13 @@
     "pages/item/deleteItem",
     "pages/item/result",
     "pages/mine/userEdit",
-    "pages/mine/personalData"
+    "pages/mine/personalData",
+    "pages/item/itemDeleted",
+    "pages/freight/index",
+    "pages/item/grounding",
+    "pages/item/undercarriage",
+    "pages/order/orderOperation",
+    "pages/freight/createFreight"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",
@@ -56,7 +62,7 @@
         "selectedIconPath": "image/nav/main/home_active.png"
       },
       {
-        "pagePath": "pages/explore/index",
+        "pagePath": "pages/order/index",
         "text": "订单",
         "iconPath": "image/nav/main/explore.png",
         "selectedIconPath": "image/nav/main/explore_active.png"

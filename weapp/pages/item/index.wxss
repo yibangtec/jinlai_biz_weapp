@@ -130,10 +130,25 @@ page {
   position: fixed;
   bottom: 0;
 }
+.bottom-box{
+  width: 100%;
+  display: flex;
+}
+.bottomSelect{
+  flex: 1;
+  background-color:#fff;
+  height: 85rpx;
+}
 .total{
+  display: block;
+  float: left;
   font-size: 26rpx;
   color: #3E3A39;
-  margin-bottom: 25rpx;
+  padding: 10rpx;
+  margin-top: 20rpx;
+}
+.bot-right{
+  width: 480rpx;
 }
 .bottom-list{
   float: left;
@@ -146,6 +161,7 @@ page {
 }
 .my-check{
   margin: 25rpx;
+  float: left
 }
 
 

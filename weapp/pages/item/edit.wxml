@@ -38,8 +38,19 @@
         <block wx:for="{{figureImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill">
             <image data-index="{{index}}" bindtap="closeImgFigure" class="close" src="../../image/shanchu@3x.png"></image>
-            <image data-index="{{index}}" bindtap="moveLeft" class="left" src="../../image/left.png"></image>
-            <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
+            <view style='visibility: hidden;' wx:if='{{figureImageSrc.length == 1}}'>
+              
+            </view>
+            <view class='icon-box' wx:else>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeft">
+                <image class="left-img" style='visibility: hidden;' src="../../image/left.png" wx:if='{{index==0}}'></image>
+                <image class="left-img" src="../../image/left.png" wx:else></image>
+              </view>
+              <view class='icon-right' data-index="{{index}}" bindtap="moveRight">
+                <image class="right-img" style='visibility: hidden;' src="../../image/right.png" wx:if='{{index == (figureImageSrc.length-1)}}'></image>
+                <image class="right-img" src="../../image/right.png" wx:else></image>
+              </view>
+            </view>
           </image>   
         </block>
         <view style="{{disfig}}">
@@ -50,14 +61,14 @@
         </view>
   </view>
   <button style='height:80rpx; margin:0 20rpx; border:1rpx solid #FF3649; font-size:30rpx; color:#FF3649;background-color:#fff; border-raidus:12rpx;' bindtap="upImgFigure">开始上传图片</button>
-  <view class='label-text'>商品描述</view>
+  <view class='label-text'>形象图</view>
   <view class='tips'>在电脑上编辑可添加更丰富内容</view>
   <view style='margin:0 20rpx;'>
     <textarea bindblur='getDescription' placeholder='可选不超过2000个字符'></textarea>
   </view>
-  <!--
+  
   <button name="" type="primary" size="mini" bindtap="itemDescription">商品描述</button>
-  -->
+  
   <view class='label-text'>标签价/原价（元）</view>
   <input class='temp-input' type="digit" bindblur="getTag_price" value="{{itemObj.tag_price}}" placeholder="最高99999.99"/>
   <view class='label-text'>商城价/现价（元）<text class='must'> *</text></view>

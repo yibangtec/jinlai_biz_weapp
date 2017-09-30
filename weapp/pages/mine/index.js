@@ -89,7 +89,7 @@ Page({
                 } else {
                   console.log(result.data.content.avatar)
                   that.setData({
-                    headerImg: 'https://jinlaisandbox-images.b0.upaiyun.com/user/' + result.data.content.avatar,
+                    headerImg: 'https://jinlaisandbox-images.b0.upaiyun.com/' + result.data.content.avatar,
                   })
                 }
 

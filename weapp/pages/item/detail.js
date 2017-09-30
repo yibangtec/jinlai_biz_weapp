@@ -1,4 +1,5 @@
 // pages/item/detail.js
+var WxParse = require('../../utils/wxParse.js');
 var app = getApp();
 var itemId =''
 function formatDateTime(timeStamp) {
@@ -24,7 +25,8 @@ Page({
    */
   data: {
     itemObj:'',
-    figureImage:''
+    figureImage:'',
+    description:''
   },
 
   /**
@@ -52,7 +54,21 @@ Page({
         data: { app_type: 'item', id: itemId },
         success: function (result) {
           if (result.data.status == 200) {
+            var description = result.data.content.description
+            var article = description;
+            /**
+            * WxParse.wxParse(bindName , type, data, target,imagePadding)
+            * 1.bindName绑定的数据名(必填)
+            * 2.type可以为html或者md(必填)
+            * 3.data为传入的具体数据(必填)
+            * 4.target为Page对象,一般为this(必填)
+            * 5.imagePadding为当图片自适应是左右的单一padding(默认为0,可选)
+            */
+            
+            WxParse.wxParse('article', 'html', article, that, 5);
+            console.log(article)
             var thisObj = result.data.content
+            console.log(thisObj)
             if (thisObj.coupon_allowed==0){
               thisObj.coupon_allowed = "是"
             }else{
@@ -62,9 +78,11 @@ Page({
             thisObj.time_to_suspend = formatDateTime(thisObj.time_to_suspend)
             var arr=[]
             arr=result.data.content.figure_image_urls.split(",")
+            console.log(thisObj)
             that.setData({
               itemObj: thisObj,
-              figureImage: arr
+              figureImage: arr,
+              description: description
             })
           }
           console.log(result)
@@ -146,7 +164,17 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    var that = this
+    console.log('onPullDownRefresh')
+
+    wx.showLoading({
+      title: '载入中',
+    })
+    //that.get_biz(that)
+
+    wx.hideLoading()
+
+    wx.stopPullDownRefresh()
   },
 
   /**

@@ -11,7 +11,6 @@ var user_id=''
 var id = ''
 var operation = ''
 var password = ''
-
 var bizId = ''
 Page({
 
@@ -25,9 +24,13 @@ Page({
     itemObj:'',
     itemStyle:'display:none',
     itemNone:'display:block',
+    groundingStyle:'display:none',
+    underStyle: 'display:none',
+    deleteStyle: 'display:none',
     selectedAllStatus: false,
     userId:''
   },
+  
 
   /**
    * 生命周期函数--监听页面加载
@@ -54,14 +57,14 @@ Page({
           console.log(app.globalData.url_api + url)
           app.sign_generate(api_params)
 
-          // 通过小程序的网络请求API发送请求 time_delete:'null',
+          // 通过小程序的网络请求API发送请求 time_delete:'null', bizId
           wx.request({
             method: "POST",
             header: {
               'content-type': 'application/x-www-form-urlencoded'
             },
             url: app.globalData.url_api + url,
-            data: { app_type: 'item', time_delete: 'NULL', biz_id: bizId },
+            data: { app_type: 'item', time_delete: 'NULL', biz_id: bizId},
             success: function (result) {
               if (result.data.status == 200) {
                 for (var i = 0; i < result.data.content.length; i++) {
@@ -71,7 +74,14 @@ Page({
                 that.setData({
                   list: result.data.content,
                   itemStyle: 'display:block',
-                  itemNone: 'display:none'
+                  itemNone: 'display:none',
+                  groundingStyle: 'display:none',
+                  underStyle: 'display:none',
+                  deleteStyle: 'display:none',
+                })
+              } else {
+                that.setData({
+                  list: [],
                 })
               }
               console.log(result)
@@ -155,6 +165,8 @@ Page({
   deleteItemAll:function(e){
     var all = this.data.selectedAllStatus
     var userId = e.currentTarget.dataset.user
+    var value = e.currentTarget.dataset.value
+    var title = e.currentTarget.dataset.title
     var arr = []
     var list = this.data.list
     if (this.data.selectedAllStatus === true){
@@ -174,9 +186,83 @@ Page({
         data: arr,
       })
     }
+    this.setData({
+      title: title,
+      value: value
+    });
     wx.navigateTo({
       url: 'deleteItem?user=' + userId + '&biz=' + bizId + '&all=' + all,
     })
+  },
+  delete: function (e) {
+    var itemId = e.currentTarget.dataset.name
+    var value = e.currentTarget.dataset.value
+    var title = e.currentTarget.dataset.title
+    console.log(value)
+    this.setData({
+      title: title,
+      value: value
+    });
+    wx.navigateTo({
+      url: 'deleteItem?id=' + itemId + '&biz=' + bizId + '&user=' + user_id,
+    })
+  },
+  itemDeleted:function(e){
+
+    var that = this
+    that.setData({
+      itemStyle: 'display:none',
+      itemNone: 'display:none',
+      groundingStyle: 'display:none',
+      underStyle: 'display:none',
+      deleteStyle: 'display:block',
+    })
+    var url = 'item/index'
+    var params = {}
+    var api_result = api_request(url, params)
+    that.initEleWidth();
+    // 网络请求
+    function api_request(url, api_params) {
+      // 生成签名
+      console.log(bizId)
+      console.log(app.globalData.url_api + url)
+      app.sign_generate(api_params)
+
+      // 通过小程序的网络请求API发送请求 time_delete:'null', bizId
+      wx.request({
+        method: "POST",
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        url: app.globalData.url_api + url,
+        data: { app_type: 'item', time_delete: 'IS NOT NULL', biz_id: bizId },
+        success: function (result) {
+          if (result.data.status == 200) {
+            for (var i = 0; i < result.data.content.length; i++) {
+              result.data.content[i].txtStyle = ""
+              result.data.content[i].selected = false
+            }
+            that.setData({
+              list: result.data.content,
+            })
+          } else {
+            that.setData({
+              list: [],
+            })
+          }
+          console.log(result)
+        },
+        fail: function (result) {
+          console.log(result)
+          wx.vibrateShort()
+        }
+      })
+    }
+    /* 
+    wx.navigateTo({
+      url: 'itemDeleted',
+    })
+    */
   },
   listClick:function(e){
     var itemId = e.currentTarget.dataset.name
@@ -185,20 +271,229 @@ Page({
     })
   },
   createItem:function(e){
-    if (bizId){
-      wx.navigateTo({
-        url: 'createItem?biz='+bizId,
-      })
-    }else{
-      wx.showToast({
-        title: '请先创建商家',
-        icon: 'loading',
-        duration: 2000
-      })
-    }
+    wx.getStorage({
+      key: 'user',
+      success: function (res) {
+        console.log(res)
+        bizId = bizId = res.data.content.biz_id
+        console.log(bizId)
+        if (bizId) {
+          wx.navigateTo({
+            url: 'createItem?biz=' + bizId,
+          })
+        }
+      },
+      fail: function (err) {
+        console.log(err)
+        console.log("用户注册后创建了biz，这里user中没有bizID要去biz本地中")
+        wx.getStorage({
+          key: 'biz',
+          success: function (res) {
+            console.log(res)
+            bizId = res.data.data.content.id
+            console.log(bizId)
+            if (bizId) {
+              wx.navigateTo({
+                url: 'createItem?biz=' + bizId,
+              })
+            }
+          },
+          fail: function (err) {
+            console.log(err)
+            console.log("如果biz——id为空")
+            wx.showToast({
+              title: '请先创建商家',
+              icon: 'loading',
+              duration: 2000
+            })
+          }
+        })
+      }
+    })
+    
     
     
   },
+  //快速创建
+  fastCreateItem: function (e) {
+
+  },
+  allItem:function(e){
+    var that = this
+    that.setData({
+      itemStyle: 'display:block',
+      itemNone: 'display:none',
+      groundingStyle: 'display:none',
+      underStyle: 'display:none',
+      deleteStyle: 'display:none',
+    })
+    var url = 'item/index'
+    var params = {}
+    var api_result = api_request(url, params)
+    that.initEleWidth();
+    // 网络请求
+    function api_request(url, api_params) {
+      // 生成签名
+      console.log(bizId)
+      console.log(app.globalData.url_api + url)
+      app.sign_generate(api_params)
+
+      // 通过小程序的网络请求API发送请求 time_delete:'null', bizId
+      wx.request({
+        method: "POST",
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        url: app.globalData.url_api + url,
+        data: { app_type: 'item', time_delete: 'NULL', biz_id: bizId },
+        success: function (result) {
+          if (result.data.status == 200) {
+            for (var i = 0; i < result.data.content.length; i++) {
+              result.data.content[i].txtStyle = ""
+              result.data.content[i].selected = false
+            }
+            that.setData({
+              list: result.data.content,
+              itemStyle: 'display:block',
+              itemNone: 'display:none',
+              groundingStyle: 'display:none',
+              underStyle: 'display:none',
+              deleteStyle: 'display:none',
+            })
+          } else {
+            that.setData({
+              list: [],
+            })
+          }
+          console.log(result)
+        },
+        fail: function (result) {
+          console.log(result)
+          wx.vibrateShort()
+        }
+      })
+    }
+  },
+  //上架
+  grounding:function(e){
+    var that = this
+    that.setData({
+      itemStyle: 'display:none',
+      itemNone: 'display:none',
+      groundingStyle: 'display:block',
+      underStyle: 'display:none',
+      deleteStyle: 'display:none',
+    })
+    var url = 'item/index'
+    var params = {}
+    var api_result = api_request(url, params)
+    that.initEleWidth();
+    // 网络请求
+    function api_request(url, api_params) {
+      // 生成签名
+      console.log(bizId)
+      console.log(app.globalData.url_api + url)
+      app.sign_generate(api_params)
+
+      // 通过小程序的网络请求API发送请求 time_delete:'null', bizId
+      wx.request({
+        method: "POST",
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        url: app.globalData.url_api + url,
+        data: { app_type: 'item', time_delete: 'IS PUBLISH NULL', biz_id: bizId },
+        success: function (result) {
+          if (result.data.status == 200) {
+            for (var i = 0; i < result.data.content.length; i++) {
+              result.data.content[i].txtStyle = ""
+              result.data.content[i].selected = false
+            }
+            that.setData({
+              list: result.data.content,
+            })
+          }else{
+            that.setData({
+              list: [],
+            })
+          }
+          console.log(result)
+        },
+        fail: function (result) {
+          console.log(result)
+          wx.vibrateShort()
+        }
+      })
+    }
+    /* 
+    wx.navigateTo({
+      url: 'grounding'
+    })
+    */
+  },
+  //下架
+  undercarriage:function(e){
+    var that = this
+    that.setData({
+      itemStyle: 'display:none',
+      itemNone: 'display:none',
+      groundingStyle: 'display:none',
+      underStyle: 'display:block',
+      deleteStyle: 'display:none',
+    })
+    var url = 'item/index'
+    var params = {}
+    var api_result = api_request(url, params)
+    that.initEleWidth();
+    // 网络请求
+    function api_request(url, api_params) {
+      // 生成签名
+      console.log(bizId)
+      console.log(app.globalData.url_api + url)
+      app.sign_generate(api_params)
+
+      // 通过小程序的网络请求API发送请求 time_delete:'null', bizId
+      wx.request({
+        method: "POST",
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        url: app.globalData.url_api + url,
+        data: { app_type: 'item', time_delete: 'IS SUSPEND NULL', biz_id: bizId },
+        success: function (result) {
+          if (result.data.status == 200) {
+            for (var i = 0; i < result.data.content.length; i++) {
+              result.data.content[i].txtStyle = ""
+              result.data.content[i].selected = false
+            }
+            that.setData({
+              list: result.data.content,
+            })
+          } else {
+            that.setData({
+              list: [],
+            })
+          }
+          console.log(result)
+        },
+        fail: function (result) {
+          console.log(result)
+          wx.vibrateShort()
+        }
+      })
+    }
+    /*
+    wx.navigateTo({
+      url: 'undercarriage'
+    })
+    */
+  },
+  freightTemplate:function(e){
+    wx.navigateTo({
+      url: '../freight/index'
+    })
+  },
+  
   editItem: function (e) {
     var itemId = e.currentTarget.dataset.name
     console.log(itemId)
@@ -206,13 +501,7 @@ Page({
       url: 'edit?id=' + itemId,
     })
   },
-  delete:function(e){
-    var itemId = e.currentTarget.dataset.name
-    console.log(itemId)
-    wx.navigateTo({
-      url: 'deleteItem?id=' + itemId + '&biz=' + bizId,
-    })
-  },
+  
   touchS: function (e) {
     if (e.touches.length == 1) {
       this.setData({
@@ -465,7 +754,18 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    var that = this
+    console.log('onPullDownRefresh')
+
+    wx.showLoading({
+      title: '载入中',
+    })
+    //that.get_biz(that)
+    
+
+    wx.hideLoading()
+
+    wx.stopPullDownRefresh()
   },
 
   /**

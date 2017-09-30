@@ -42,6 +42,11 @@ Page({
       url: 'login_sms'
     })
   },
+  forgetPassword:function(e){
+    wx.navigateTo({
+      url: 'pwreset?title=找回密码'
+    })
+  },
   //手机号输入框失去焦点获取tel
   getTel:function(e){
     tel = e.detail.value
@@ -67,12 +72,57 @@ Page({
   //失去焦点的时候获取pw
   getPw:function(e){
     pw = e.detail.value
+    var re = /^[a-zA-Z0-9]{6,20}$/
+    if (re.test(pw)) {
+
+    } else {
+      wx.showToast({
+        title: '请输入正确的密码格式',
+        icon: 'loading',
+        duration: 2000
+      })
+      that.setData({
+        pwFocus: true,
+      })
+    }
   },
   //点击确定判断pw,登录
   pwLogin:function(e){
     var that=this
-    var re = /^[a-zA-Z0-9]{6,20}$/
-    if (re.test(pw)) {
+    var re = /^1\d{10}$/
+    if (re.test(tel)) {
+      that.setData({
+        disbtn: false
+      })
+    } else {
+      wx.showToast({
+        title: '请输入正确的手机号',
+        icon: 'loading',
+        duration: 2000
+      })
+      that.setData({
+        telFocus: true,
+      })
+    }
+    var reg = /^1\d{10}$/
+    if (reg.test(tel)) {
+      that.setData({
+        disbtn: false
+      })
+    } else {
+      wx.showToast({
+        title: '请输入正确的手机号',
+        icon: 'loading',
+        duration: 2000
+      })
+      that.setData({
+        telFocus: true,
+      })
+    }
+
+
+
+
       var url = 'account/login'
       var params = {}
       var api_result = api_request(url, params)
@@ -95,11 +145,6 @@ Page({
             console.log(result)
             var user = result.data
             if (result.data.status==200){
-              wx.showToast({
-                title: '登录成功',
-                icon: 'loading',
-                duration: 2000
-              })
               wx.setStorage({
                 key: "user",
                 data: user
@@ -131,16 +176,7 @@ Page({
           }
         })
       }
-    } else {
-      wx.showToast({
-        title: '请输入正确的密码格式',
-        icon: 'loading',
-        duration: 2000
-      })
-      that.setData({
-        pwFocus: true,
-      })
-    }
+    
   },
 
   /**

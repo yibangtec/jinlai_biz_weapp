@@ -52,8 +52,21 @@ Page({
       url: '../../pages/biz/creat',
     })
   },
-
-  
+  toOrder:function(e){
+    wx.switchTab({
+      url: '../../pages/order/index'
+    })
+  },
+  toItem: function (e) {
+    wx.switchTab({
+      url: '../../pages/item/index'
+    })
+  },
+  freight:function(e){
+    wx.navigateTo({
+      url: '../../pages/freight/index',
+    })
+  },
   /**
    * 用户点击右上角分享
    */
@@ -67,14 +80,13 @@ Page({
 
   onPullDownRefresh: function ()
   {
+    var that =this
     console.log('onPullDownRefresh')
   
     wx.showLoading({
       title: '载入中',
     })
-
-    var that = this
-    that.get_biz(that)
+    //that.get_biz(that)
 
     wx.hideLoading()
 
@@ -134,6 +146,12 @@ Page({
                     console.log(bizId)
                     console.log(result)
                     if (result.data.status === 200) {
+                      var src = ''
+                      if (result.data.content.url_logo == '' || result.data.content.url_logo == null) {
+                        src = '../../image/header.png'
+                      } else {
+                        src = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + result.data.content.url_logo
+                      }
                       that.setData({
                         infoStyle: 'display:block',
                         name: result.data.content.name,
@@ -141,6 +159,7 @@ Page({
                         tel_public: result.data.content.tel_public,
                         tel_protected_biz: result.data.content.tel_protected_biz,
                         status: result.data.content.status,
+                        src: src
                       });
                     } else if (result.data.status === 414) {
                       that.setData({
@@ -188,11 +207,13 @@ Page({
                 console.log(bizId)
                 console.log(result)
                 if (result.data.status === 200) {
-                  if (result.data.content.url_logo == null) {
-                    var src = '../../image/header.png'
+                  var src=''
+                  if (result.data.content.url_logo == '' || result.data.content.url_logo == null) {
+                    src = '../../image/header.png'
                   }else{
                     src = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/'+ result.data.content.url_logo
                   }
+                  console.log(src)
                   that.setData({
                     infoStyle: 'display:block',
                     name: result.data.content.name,

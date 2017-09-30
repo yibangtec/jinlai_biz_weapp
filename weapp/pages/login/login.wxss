@@ -65,6 +65,7 @@
   padding: 50rpx 0;
   font-size: 20rpx;
   color: #7d7d7d;
+  text-align: center;
 }
 .submitBtn{
   margin: 0 30rpx;

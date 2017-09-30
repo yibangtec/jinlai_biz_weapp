@@ -1,0 +1,50 @@
+<!--pages/item/grounding.wxml-->
+<view style='margin-bottom:80rpx;'>
+  <view>
+    <view class='temp-box outer'>
+      <view class='tab'>所有</view>
+      <view class='tab tab-current'>上架</view>
+      <view class='tab'>下架</view>
+      <view class='tab'>已删除</view>
+    </view>
+    <view wx:for="{{list}}" wx:key="{{index}}">
+      <view class='temp-box' style="{{item.txtStyle}}">
+        <view class='item-list'>
+          <view class='item-list-left' data-index="{{index}}" data-name="{{item.item_id}}" bindtap="listClick">
+            <view class='list-text'>商品id： {{item.item_id}}</view>
+            <view class='list-text'>名称： {{item.name}}</view>
+            <view class='list-text'>商城价/现价(元)： {{item.price}}</view>
+            <view class='list-text'>状态： {{item.status}}</view>
+          </view>
+          <view class='item-list-right'>
+            <view class='list-text'>商品规格/SKU</view>
+            <view class='suk-list'>规格列表<image class='list-img' src='../../image/left-item.png'></image> </view>
+          </view>
+        </view>
+        <view class='item-btn'>
+          <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+          <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+          <view style='float:right'>
+            <view class='select-list select-right' data-index="{{index}}"  data-name="{{item.item_id}}" bindtap="delete">下架</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='bottom'>
+      <view class='bottom-box'>
+        <view class='bottomSelect'>
+          <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="my-check"/>
+          <icon bindtap="bindSelectAll" wx:else type="circle" size="20" class="my-check"/>
+          <text class='total'>全选</text>
+        </view>
+        <view class='bot-right'>
+          <view class='bottom-list' style='background-color:#fff'>上架</view>
+          <view class='bottom-list' style='background-color:#fff'>下架</view>
+          <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649'>下架</view>
+        </view>
+      </view>  
+    </view>
+  
+  </view>
+</view>
+

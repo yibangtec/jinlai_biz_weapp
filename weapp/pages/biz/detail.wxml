@@ -6,22 +6,22 @@
 
     <view class='temp-list'><text class='left'>商家ID</text><text class="right">{{biz.biz_id}}</text></view>
 
-    <view class='temp-list' wx:if="{{biz.name == undefined||biz.name== null}}"><text class='left'>商家全称</text><text class="right">未设置</text></view>
+    <view class='temp-list' wx:if="{{biz.name == ''||biz.name== null}}"><text class='left'>商家全称</text><text class="right">未设置</text></view>
     <view class='temp-list' wx:else><text class='left'>商家全称</text><text class="right">{{biz.name}}</text></view>
 
-    <view class='temp-list' wx:if="{{biz.brief_name == undefined||biz.brief_name== null}}"><text class='left'>商家简称</text><text class="right">未设置 > </text></view>
+    <view class='temp-list' wx:if="{{biz.brief_name == ''||biz.brief_name== null}}"><text class='left'>商家简称</text><text class="right">未设置 > </text></view>
     <view class='temp-list' wx:else><text class='left'> 商家简称</text><text class="right">{{biz.brief_name}}</text></view>
 
-    <view class='temp-list' data-text="店铺域名" data-name="url_name" bindtap="edit_name" wx:if="{{biz.url_name == undefined||biz.url_name== null}}"><text class='left'>店铺域名</text><text class="right">未分配</text></view>
+    <view class='temp-list' data-text="店铺域名" data-name="url_name" bindtap="edit_name" wx:if="{{biz.url_name == ''||biz.url_name== null}}"><text class='left'>店铺域名</text><text class="right">未分配</text></view>
     <view class='temp-list' data-text="店铺域名" data-name="url_name" bindtap="edit_name" wx:else><text class='left'>店铺域名</text><text class="right">{{biz.url_name}}</text></view>
 
-    <view class='temp-list' data-text="消费者联系电话" data-name="tel_public" bindtap="edit_name" wx:if="{{biz.tel_public == undefined||biz.tel_public== null}}"><text class='left'> 消费者联系电话 </text><text class="right">未设置 > </text></view>
+    <view class='temp-list' data-text="消费者联系电话" data-name="tel_public" bindtap="edit_name" wx:if="{{biz.tel_public == ''||biz.tel_public== null}}"><text class='left'> 消费者联系电话 </text><text class="right">未设置 > </text></view>
     <view class='temp-list' data-text="消费者联系电话" data-name="tel_public" bindtap="edit_name" wx:else><text class='left'>消费者联系电话</text><text class="right">  {{biz.tel_public}}  </text></view>
   
-    <view class='temp-list' data-text="商务联系手机号" data-name="tel_protected_biz" bindtap="edit_name" wx:if="{{biz.tel_protected_biz == undefined||biz.tel_protected_biz== null}}"><text class='left'>商务联系手机号</text><text class="right">未设置 > </text></view>
+    <view class='temp-list' data-text="商务联系手机号" data-name="tel_protected_biz" bindtap="edit_name" wx:if="{{biz.tel_protected_biz == ''||biz.tel_protected_biz== null}}"><text class='left'>商务联系手机号</text><text class="right">未设置 > </text></view>
     <view class='temp-list' data-text="商务联系手机号" data-name="tel_protected_biz" bindtap="edit_name" wx:else><text class='left'>商务联系手机号</text><text class="right">{{tel}}</text></view>
 
-  <view class='temp-list border-bot' data-text="财务联系手机号" data-name="tel_protected_fiscal" bindtap="edit_name" wx:if="{{biz.tel_protected_fiscal == undefined||biz.tel_protected_fiscal== null}}">
+  <view class='temp-list border-bot' data-text="财务联系手机号" data-name="tel_protected_fiscal" bindtap="edit_name" wx:if="{{biz.tel_protected_fiscal == ''||biz.tel_protected_fiscal== null}}">
    <text class='left'>财务联系手机号</text><text class="right">未设置</text>
   </view>
   <view class='temp-list border-bot' data-text="财务联系手机号" data-name="tel_protected_fiscal" bindtap="edit_name" wx:else>
@@ -30,7 +30,7 @@
 
   </view>
 <view class='temp-box'>
-  <view class='temp-list' data-sum="1" data-img="url_logo" data-text="LOGO" data-name="url_logo" bindtap="edit_img" wx:if="{{biz.url_logo == undefined||biz.url_logo== null}}">
+  <view class='temp-list' data-sum="1" data-img="url_logo" data-text="LOGO" data-name="url_logo" bindtap="edit_img" wx:if="{{biz.url_logo == ''||biz.url_logo== null}}">
     <text class='left'> LOGO</text><text class="right">未上传</text>
   </view>
   <view class='temp-list' data-sum="1" data-img="url_logo" data-text="LOGO" data-name="url_logo" bindtap="edit_img" wx:else>
@@ -38,14 +38,14 @@
     <view class="right"><image src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{biz.url_logo}}"></image></view>
   </view>
 
-  <view class='temp-list' data-text="宣传语" data-name="slogan" bindtap="edit_name" wx:if="{{biz.slogan == undefined || biz.slogan == 'null'}}">
+  <view class='temp-list' data-text="宣传语" data-name="slogan" bindtap="edit_name" wx:if="{{biz.slogan == '' || biz.slogan == null}}">
     <text class='left'>宣传语</text><text class="right">未设置</text>
   </view>
   <view class='temp-list' data-text="宣传语" data-name="slogan" bindtap="edit_name" wx:else>
     <text class='left'>宣传语</text><text class="right">{{biz.slogan}}</text>
   </view>
 
-  <view class='temp-list' data-text="简介" data-name="description" bindtap="edit_name" wx:if="{{biz.description == undefined||biz.description== null}}">
+  <view class='temp-list' data-text="简介" data-name="description" bindtap="edit_name" wx:if="{{biz.description == ''||biz.description== null}}">
     <text class='left'>简介</text><text class="right">未设置</text>
   </view>
   <view class='temp-list' data-text="简介" data-name="description" bindtap="edit_name" wx:else>
@@ -58,7 +58,7 @@
   <view class='temp-list' style='padding:10rpx 0;' data-sum="4" data-text="产品照片" data-name="url_image_product" data-img="product" bindtap="edit_img" wx:else>
     <view class='left' style='line-height: 70rpx;'>产品</view>
     <view class="right" wx:for="{{pArr}}">
-      <image bindtap="preview" data-index="{{index}}" src="{{item}}"></image>
+      <image class='detailImg' bindtap="preview" data-index="{{index}}" src="{{item}}"></image>
     </view>
   </view>
 
@@ -67,8 +67,8 @@
   </view>
   <view class='temp-list' data-sum="4" data-text="产地照片" data-name="url_image_produce" data-img="produce" bindtap="edit_img"  wx:else>
     <view class='left' style='line-height: 70rpx;'>工厂/产地</view>
-    <view class="right" wx:for="{{pArr1}}" class="classname">
-      <image src="{{item}}"></image>
+    <view class="right" wx:for="{{pArr1}}">
+      <image class='detailImg' bindtap="preview" data-index="{{index}}" src="{{item}}"></image>
     </view> 
   </view>
 
@@ -86,35 +86,35 @@
 <view class='item-title'>资质信息</view>
 
 <view class='temp-box'>
-  <view class='temp-list' data-text="工商注册号" data-name="code_license" bindtap="edit_name" wx:if="{{biz.code_license == undefined||biz.code_license== null}}">
+  <view class='temp-list' data-text="工商注册号" data-name="code_license" bindtap="edit_name" wx:if="{{biz.code_license == ''||biz.code_license== null}}">
     <text class='left'>工商注册号</text><text class="right">未设置</text>
   </view>
   <view class='temp-list' data-text="工商注册号" data-name="code_license" bindtap="edit_name" wx:else>
     <text class='left'>工商注册号</text><text class="right">{{biz.code_license}}</text>
   </view>
 
-  <view class='temp-list' data-text="法人姓名" data-name="fullname_owner" bindtap="edit_name" wx:if="{{biz.fullname_owner == undefined||biz.fullname_owner== null}}">
+  <view class='temp-list' data-text="法人姓名" data-name="fullname_owner" bindtap="edit_name" wx:if="{{biz.fullname_owner == ''||biz.fullname_owner== null}}">
     <text class='left'>法人</text><text class="right">未设置</text>
   </view>
   <view class='temp-list' data-text="法人姓名" data-name="fullname_owner" bindtap="edit_name" wx:else>
     <text class='left'>法人</text><text class="right">{{biz.fullname_owner}}</text>
   </view>
   
-  <view class='temp-list' data-text="法人身份证号" data-name="code_ssn_owner" bindtap="edit_name" wx:if="{{biz.code_ssn_owner == undefined||biz.code_ssn_owner== null}}"> 
+  <view class='temp-list' data-text="法人身份证号" data-name="code_ssn_owner" bindtap="edit_name" wx:if="{{biz.code_ssn_owner == ''||biz.code_ssn_owner== null}}"> 
     <text class='left'>法人身份证号</text><text class="right">未设置</text>
   </view>
   <view class='temp-list' data-text="法人身份证号" data-name="code_ssn_owner" bindtap="edit_name" wx:else>
     <text class='left'>法人身份证号</text><text class="right">{{biz.code_ssn_owner}}</text>
   </view>
   
-  <view class='temp-list' data-text="经办人姓名" data-name="fullname_auth" bindtap="edit_name" wx:if="{{biz.fullname_auth == undefined||biz.fullname_auth== null}}">
+  <view class='temp-list' data-text="经办人姓名" data-name="fullname_auth" bindtap="edit_name" wx:if="{{biz.fullname_auth == ''||biz.fullname_auth== null}}">
     <text class='left'>经办人</text><text class="right">未设置</text>
   </view>
   <view class='temp-list' data-text="经办人姓名" data-name="fullname_auth" bindtap="edit_name" wx:else>
     <text class='left'>经办人</text><text class="right">{{biz.fullname_auth}} </text>
   </view>
   
-  <view class='temp-list border-bot' data-text="经办人身份证号" data-name="code_ssn_auth" bindtap="edit_name" wx:if="{{biz.code_ssn_auth == undefined||biz.code_ssn_auth== null}}">
+  <view class='temp-list border-bot' data-text="经办人身份证号" data-name="code_ssn_auth" bindtap="edit_name" wx:if="{{biz.code_ssn_auth == ''||biz.code_ssn_auth== null}}">
     <text class='left'>经办人身份证号</text><text class="right">未设置</text>
   </view>
   <view class='temp-list border-bot' data-text="经办人身份证号" data-name="code_ssn_auth" bindtap="edit_name" wx:else>
@@ -125,21 +125,21 @@
 <view class='item-title'>财务信息</view>
 
 <view class="temp-box">
-  <view class='temp-list' data-text="开户行名称" data-name="bank_name" bindtap="edit_name" wx:if="{{biz.bank_name == undefined||biz.bank_name== null}}"> 
+  <view class='temp-list' data-text="开户行名称" data-name="bank_name" bindtap="edit_name" wx:if="{{biz.bank_name == ''||biz.bank_name== null}}"> 
     <text class='left'>开户行名称</text><text class="right">未设置</text>
   </view>
   <view class='temp-list' data-text="开户行名称" data-name="bank_name" bindtap="edit_name" wx:else>
     <text class='left'>开户行名称</text><text class="right">{{biz.bank_name}}</text>
   </view>
   
-  <view class='temp-list' data-text="开户行账号" data-name="bank_account" bindtap="edit_name" wx:if="{{biz.bank_account == undefined||biz.bank_account== null}}"> 
+  <view class='temp-list' data-text="开户行账号" data-name="bank_account" bindtap="edit_name" wx:if="{{biz.bank_account == ''||biz.bank_account== null}}"> 
     <text class='left'>开户行账号</text><text class="right">未设置</text>
   </view>
   <view class='temp-list' data-text="开户行账号" data-name="bank_account" bindtap="edit_name" wx:else>
     <text class='left'>开户行账号</text><text class="right">{{biz.bank_account}} </text>
   </view>
 
-  <view class='temp-list border-bot' data-text="财务联系手机号" data-name="tel_protected_fiscal" bindtap="edit_name" wx:if="{{biz.tel_protected_fiscal == undefined||biz.tel_protected_fiscal== null}}">
+  <view class='temp-list border-bot' data-text="财务联系手机号" data-name="tel_protected_fiscal" bindtap="edit_name" wx:if="{{biz.tel_protected_fiscal == ''||biz.tel_protected_fiscal== null}}">
    <text class='left'>财务联系手机号</text><text class="right">未设置</text>
   </view>
   <view class='temp-list border-bot' data-text="财务联系手机号" data-name="tel_protected_fiscal" bindtap="edit_name" wx:else>
@@ -151,7 +151,9 @@
 
 <view class="temp-box">
    <view class='temp-list border-bot' data-text="联系地址" data-name="tel_protected_fiscal">
-    <text class='left'>联系地址</text><text class="right">未设置</text>
+    <text class='left'>联系地址</text>
+    <text class="right" wx:if="{{biz.street == ''|| biz.street == null}}">未设置</text>
+    <text class="right" wx:else>{{biz.street}}</text>
   </view>
 </view>
 
@@ -164,8 +166,8 @@
 </view>
 
 <view class="temp-box">
-   <view class='temp-list border-bot' data-text="联系地址" data-name="tel_protected_fiscal">
-    <text class='left'>查看创建者</text><text class="right"> </text>
+  <view class='list' style='border:none;' bindtap="login_reset">
+    <text>查看创建者</text> <image class='leftLink' src='../../image/leftLink.png'></image>
   </view>
 </view>
 

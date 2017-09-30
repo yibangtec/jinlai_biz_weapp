@@ -1,2 +1,104 @@
 <!--pages/order/detail.wxml-->
-<text>pages/order/detail.wxml</text>
+
+<view class='temp-box'>
+  <view class='order-list list-text'>
+    <view class='list-left'>状态</view>
+    <view class='list-right'>待付款</view>
+  </view>
+  <view class='order-list list-text'>
+    <view class='list-left'>退款</view>
+    <view class='list-right'>未申请</view>
+  </view>
+  <view class='order-list list-text'>
+    <view class='list-left'>发票</view>
+    <view class='list-right'>未申请</view>
+  </view>
+</view>
+
+<view class='temp-box'>
+  <view class='order-list list-text'>
+    <view class='list-left'>订单ID</view>
+    <view class='list-right'>待付款</view>
+  </view>
+  <view class='order-list list-text'>
+    <view class='list-left'>用户ID</view>
+    <view class='list-right'>未申请</view>
+  </view>
+  <view class='order-list list-text'>
+    <view class='list-left'>小计</view>
+    <view class='list-right'>未申请</view>
+  </view>
+  <view class='order-list list-text'>
+    <view class='list-left'>应支付</view>
+    <view class='list-right'>未申请</view>
+  </view>
+  <view class='order-list list-text'>
+    <view class='list-left'>已支付</view>
+    <view class='list-right'>未申请</view>
+  </view>
+</view>
+
+<view class='temp-box'>
+  <view class='order-list list-text'>
+    <view class='list-left'>姓名</view>
+    <view class='list-right'>待付款</view>
+  </view>
+  <view class='order-list list-text'>
+    <view class='list-left'>手机号</view>
+    <view class='list-right'>未申请</view>
+  </view>
+  <view class='order-list list-text'>
+    <view class='list-left'>地址</view>
+    <view class='list-right'>未申请</view>
+  </view>
+</view>
+<view class='temp-box' style='padding-bottom:10rpx; background-color:#FFFCDC'>
+  <view class='list-text' style='padding:30rpx 0 20rpx 20rpx;'>用户留言</view>
+  <view class='list-text' style='font-size:22rpx; padding:0 20rpx 20rpx 20rpx;'>还是大家凤凰军事倒海翻江时代峻峰时代峻峰哈送到家发货速度介绍的回复击杀对方家哈桑的减肥反馈</view>
+</view>
+
+<view class='temp-box'>
+  <view class='order-title'>订单商品</view>
+  <view class='order-item'>
+    <view class='order-img'><image class='img-main' src='../../image/header.png'></image> </view>
+    <view class='order-right'>
+      <view class='order-name'>新西兰进口</view>
+      <view class='order-introduce'>含有丰富的vc</view>
+      <view class='order-name'>¥49.8   ×1</view>
+    </view>
+  </view>
+</view>
+
+<view class='temp-box' style='margin-bottom:120rpx;'>
+  <view class='order-list list-text'>
+    <view class='list-left'>用户下单时间</view>
+    <view class='list-right'>待付款</view>
+  </view>
+  <view class='order-list list-text'>
+    <view class='list-left'>用户取消时间</view>
+    <view class='list-right'>未申请</view>
+  </view>
+  <view class='order-list list-text'>
+    <view class='list-left'>自动过期时间</view>
+    <view class='list-right'>未申请</view>
+  </view>
+</view>
+
+<view class='bottom outer'>
+  <view class='bottom-list' bindtap='remarks'>
+    <image class='bottom-img' src='../../image/order/beizhu@3x.png'></image>
+    <view class='bottom-text'>备注</view>
+  </view>
+  <view class='bottom-list' bindtap='chargeback'>
+    <image class='bottom-img' src='../../image/order/tuihuo@3x.png'></image>
+    <view class='bottom-text'>退单</view>
+  </view>
+  <view class='bottom-list' bindtap='ordertaking'>
+    <image class='bottom-img' src='../../image/order/dingdan@3x.png'></image>
+    <view class='bottom-text'>接单</view>
+  </view>
+  <view class='bottom-list' bindtap='delivergoods'>
+    <image class='bottom-img' src='../../image/order/fahuo@3x.png'></image>
+    <view class='bottom-text'>发货</view>
+  </view>
+</view>

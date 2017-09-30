@@ -4,14 +4,16 @@
 <view class='temp-box'>
   <view class='temp-title' style='border-bottom:2rpx solid #f6f6f6;'>基本资料</view>
   <view class='label-text'>商务联系手机号：{{tel}}</view>
-  <view class='tips'>即客服电话，不要加空格或者是其他符号，固定电话请填写区号</view>
-  <text class='label-text'>商家全称<text class='must'> *</text></text>
+  <view class='tips'>我们将通过该号码与您联系，您可在入驻申请通过后，通过专属顾问修改信息。</view>
+  <text class='label-text'>商家名称<text class='must'> *</text></text>
   <input class='temp-input' type="text" maxlength="35" bindblur="getName" name="name" placeholder="须与营业执照一致" />
-  <view class='tips'>即客服电话，不要加空格或者是其他符号，固定电话请填写区号</view>
+  <view class='tips'>只支持中国大陆工商局或市场监督管理局登记的企业。请填写工商营业执照上的企业全称，该名称将作为后续所有费用的发票抬头</view>
   <text class='label-text'>简称<text class='must'> *</text></text>
   <input class='temp-input' type="text" maxlength="15" bindfocus="verName" bindblur="getBrief_name" name="brief_name" placeholder="请输入" />
   <view class='label-text'>简介</view>
-  <textarea class='temp-textarea' placeholder='最多255个字符，请简述企业主要经营范围，主营产品等信息。'></textarea>
+  <view class='textarea-box'>
+    <textarea class='temp-textarea' placeholder='最多255个字符，请简述企业主要经营范围，主营产品等信息。' bindblur="getDescription"></textarea>
+  </view>
   <view class='label-text'>消费者服务电话<text class='must'> *</text></view>
   <input class='temp-input' type="number" value="{{biz.tel_public}}"  bindblur="getTel_public" placeholder="400、800、手机号、带区号的固定电话均可" />
   <view class='tips'>即客服电话，不要加空格或者是其他符号，固定电话请填写区号</view>
@@ -20,42 +22,49 @@
 <view class='temp-box'>
   <view class='temp-title' style='border-bottom:2rpx solid #f6f6f6;'>资质信息</view>
   <view class='label-text'>工商注册号<text class='must'> *</text></view>
-  <input class='temp-input' type="text" bindblur="getCode_license" name="code_license" placeholder="请输入" />
-  <view class='tips'>请填写营业执照上的15位工商注册号；或三证合一后的统一社会信用代码</view>
+  <input class='temp-input' type="text" bindblur="getCode_license" name="code_license" placeholder="如为三证合一，请填写统一社会信用代码" />
+  <view class='tips'>请填写营业执照上的15位工商注册号；或三证合一后的统一社会信用代码。</view>
   <view class='label-text'>法人姓名<text class='must'> *</text></view>
-  <input class='temp-input' type="text" maxlength="15" bindblur="getFullname_owner" name="fullname_owner" placeholder="请输入" />
-  <view class='tips'>按照营业执照上填写。如果属于分公司则填写工商营业执照上明确的负责人，个体工商请填写经营者姓名，合伙企业请填写合伙人姓名，个人独资企业请填写投资人姓名，企业法人的非法人分支机构填写负责人姓名</view>
+  <input class='temp-input' type="text" maxlength="15" bindblur="getFullname_owner" name="fullname_owner" placeholder="需与身份证一致" />
+  <view class='tips'>按照营业执照上填写。如果属于分公司则填写工商营业执照上明确的负责人，个体工商请填写经营者姓名，合伙企业请填写合伙人姓名，个人独资企业请填写投资人姓名，企业法人的非法人分支机构填写负责人姓名。</view>
   <view class='label-text'>法人身份证号<text class='must'> *</text></view>
-  <input class='temp-input' type="idcard" bindblur="getCode_ssn_owner" name="code_ssn_owner" placeholder="请输入" />
+  <input class='temp-input' type="idcard" bindblur="getCode_ssn_owner" name="code_ssn_owner" placeholder="请输入18位有效身份证号" />
   <view class='label-text'>经办人姓名</view>
-  <input class='temp-input' type="text" maxlength="15" bindblur="getFullname_auth" name="fullname_auth" placeholder="请输入" />
+  <input class='temp-input' type="text" maxlength="15" bindblur="getFullname_auth" name="fullname_auth" placeholder="需与身份证一致" />
   <view class='tips'>如果负责业务对接的不是法人本人，请填写此项</view>
   <view class='label-text'>经办人身份证号</view>
-  <input class='temp-input'  bindblur="getCode_ssn_auth" name="code_ssn_auth" placeholder="请输入" />
+  <input class='temp-input'  bindblur="getCode_ssn_auth" name="code_ssn_auth" placeholder="请输入18位有效身份证号" />
   <view class='tips'>如果负责业务对接的不是法人本人，请填写此项</view>
 </view>
 
 <view class='temp-box' style='padding-bottom:50rpx;'>
   <view class='temp-title' style='border-bottom:2rpx solid #f6f6f6;'>财务信息</view>
   <view class='label-text'>对公账户开户行</view>
-  <input class='temp-input' type="text" bindblur="getBank_name" name="bank_name" placeholder="请输入" />
+  <input class='temp-input' type="text" bindblur="getBank_name" name="bank_name" placeholder="基本户、一般户均可" />
   <view class='label-text'>对公账户账号</view>
-  <input class='temp-input' type="number" maxlength="200" bindblur="getBank_account" name="bank_account" placeholder="请输入" />
+  <input class='temp-input' type="number" maxlength="200" bindblur="getBank_account" name="bank_account" placeholder="基本户、一般户均可" />
   <view class='tips'>我们会向该公司对公账户汇入一笔非常小的金额和备注信息，需要您后续与审核人员确认。</view>
   <view class='label-text'>财务联系手机号</view>
   <input class='temp-input' type="number" bindblur="getTel_protected_fiscal" value="{{biz.tel_protected_fiscal}}" placeholder="请输入手机号" />
 </view>
 
+<view class='outer' style='margin:0 40rpx;padding:30rpx 0;{{lineUp}}'>
+  <button style='width:280rpx;height:80rpx;font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:12rpx;float:left'  bindtap="submit">排队申请</button>
+  <button style='width:280rpx;height:80rpx;font-size:30rpx; color:#fff;background-color:#9fa0a0; border-raidus:12rpx;float:right' bindtap='firstIn'>优先申请</button>
+</view>
+
+
+<view style='{{firstIn}}'>
 <view class='outer' style='margin:0 40rpx;padding:30rpx 0;'>
   <button style='width:280rpx;height:80rpx;font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:12rpx;float:left'>优先申请</button>
-  <button style='width:280rpx;height:80rpx;font-size:30rpx; color:#fff;background-color:#9fa0a0; border-raidus:12rpx;float:right'>排队申请</button>
+  <button style='width:280rpx;height:80rpx;font-size:30rpx; color:#fff;background-color:#9fa0a0; border-raidus:12rpx;float:right' bindtap='lineUp'>排队申请</button>
 </view>
 <view class='temp-title' style='text-align:left;text-indent:20rpx;padding:0;'><text class='must'>* </text>请补充以下资料</view>
 
 <view class='temp-box' style='padding-bottom:50rpx;'>
   <view class='temp-title' style='border-bottom:2rpx solid #f6f6f6;'>资质授权证明书</view>
   <view class='tips'>以下资料需要彩色原件的扫描件或数码照</view>
-  <view class='label-text'>营业执照<text class='must'> *</text></view>
+  <view class='label-text'>营业执照</view>
   <view class="page-body-info">
         <block wx:for="{{licenseImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill">
@@ -70,7 +79,7 @@
         </view>
   </view>
   <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgLicense">开始上传图片</button>
-  <view class='label-text'>法人身份证<text class='must'> *</text></view>
+  <view class='label-text'>法人身份证</view>
   <view class="page-body-info">
         <block wx:for="{{ownerImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill">
@@ -126,8 +135,19 @@
         <block wx:for="{{productImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill">
             <image data-index="{{index}}" bindtap="closeImgProduct" class="close" src="../../image/shanchu@3x.png"></image>
-            <image data-index="{{index}}" bindtap="moveLeftPt" class="left" src="../../image/left.png"></image>
-            <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
+            <view style='visibility: hidden;' wx:if='{{productImageSrc.length == 1}}'>
+              
+            </view>
+            <view class='icon-box' wx:else>
+              <view class='icon-left' style='{{disLeftImg}}' data-index="{{index}}" bindtap="moveLeftPt">
+                <image class="left-img" style='visibility: hidden;' src="../../image/left.png" wx:if='{{index==0}}'></image>
+                <image class="left-img" src="../../image/left.png" wx:else></image>
+              </view>
+              <view class='icon-right' data-index="{{index}}" bindtap="moveRightPt">
+                <image class="right-img" style='visibility: hidden;' src="../../image/right.png" wx:if='{{index == (productImageSrc.length-1)}}'></image>
+                <image class="right-img" src="../../image/right.png" wx:else></image>
+              </view>
+            </view>
           </image>
         </block>
          <view style="{{disProduct}}">
@@ -143,8 +163,19 @@
         <block wx:for="{{produceImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill">
             <image data-index="{{index}}" bindtap="closeImgProduce" class="close" src="../../image/shanchu@3x.png"></image>
-            <image data-index="{{index}}" bindtap="moveLeftPe" class="left" src="../../image/left.png"></image>
-            <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
+            <view style='visibility: hidden;' wx:if='{{produceImageSrc.length == 1}}'>
+              
+            </view>
+            <view class='icon-box' wx:else>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeftCe">
+                <image class="left-img" style='visibility: hidden;' src="../../image/left.png" wx:if='{{index==0}}'></image>
+                <image class="left-img" src="../../image/left.png" wx:else></image>
+              </view>
+              <view class='icon-right' data-index="{{index}}" bindtap="moveRightCe">
+                <image class="right-img" style='visibility: hidden;' src="../../image/right.png" wx:if='{{index == (produceImageSrc.length-1)}}'></image>
+                <image class="right-img" src="../../image/right.png" wx:else></image>
+              </view>
+            </view>
           </image>
         </block>
          <view style="{{disProduce}}">
@@ -160,8 +191,19 @@
         <block wx:for="{{retailImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill">
             <image data-index="{{index}}" bindtap="closeImgRetail" class="close" src="../../image/shanchu@3x.png"></image>
-            <image data-index="{{index}}" bindtap="moveLeftRe" class="left" src="../../image/left.png"></image>
-            <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
+            <view style='visibility: hidden;' wx:if='{{retailImageSrc.length == 1}}'>
+              
+            </view>
+            <view class='icon-box' wx:else>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeftRe">
+                <image class="left-img" style='visibility: hidden;' src="../../image/left.png" wx:if='{{index==0}}'></image>
+                <image class="left-img" src="../../image/left.png" wx:else></image>
+              </view>
+              <view class='icon-right' data-index="{{index}}" bindtap="moveRightRe">
+                <image class="right-img" style='visibility: hidden;' src="../../image/right.png" wx:if='{{index == (retailImageSrc.length-1)}}'></image>
+                <image class="right-img" src="../../image/right.png" wx:else></image>
+              </view>
+            </view>
           </image>
         </block>
          <view style="{{disRetail}}">
@@ -185,10 +227,13 @@
   <view class='label-text'>具体地址</view>
   <input class='temp-input' type="text"  bindblur="getStreet" value="{{biz.street}}" placeholder="请输入详细地址"/>
 </view>
-
 <view class="btn-area">
-    <button style='height:80rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:0;' disabled="{{disable}}" bindtap="submit">确定</button>
+    <button style='height:80rpx; font-size:30rpx; color:#fff; margin:0 40rpx 20rpx 40rpx; background-color:#ff3649; border-raidus:0;' disabled="{{disable}}" bindtap="submit">确定</button>
 </view>
+</view>
+
+
+
 
 
 

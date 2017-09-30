@@ -51,7 +51,7 @@ var time,
   productImageUrl = [],
   produceSrc = '',
   produceImageUrl = [],
-  retailSrc = '',
+  retailSrc = [],
   retailImageUrl = [],
   biz='';
 var o={}
@@ -85,6 +85,7 @@ Page({
     disProduce: 'display:block',
     disRetail: 'display:block',
     disUrl_logo: 'display:block',
+    disLeftImg:''
   },
 
   /**
@@ -133,14 +134,14 @@ Page({
           biz = result.data.content
           for (var key in biz) {
             //只遍历对象自身的属性，而不包含继承于原型链上的属性。  
-            if (biz[key] === 'null') {
+            if (biz[key] === null) {
               biz[key] = ''
             }
           }  
           that.setData({
             biz: result.data.content,
           });
-          if (biz.url_logo !== 'null') {
+          if (biz.url_logo !== '') {
             var url_logo = []
               url_logo[0] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + url_logo[i]
             
@@ -148,7 +149,7 @@ Page({
               url_logoImageSrc: url_logo,
             });
             console.log(that.data.licenseImageSrc)
-            if (that.data.url_logoImageSrc !== 'null') {
+            if (that.data.url_logoImageSrc !== '') {
               that.setData({
                 disUrl_logo: 'display:none',
               });
@@ -216,11 +217,14 @@ Page({
               });
             }
           }
-          if (biz.url_image_product!==''){
+          if (biz.url_image_product !== ''){
+            console.log(biz.url_image_product)
             var productArr = biz.url_image_product.split(",")
+            console.log(productArr)
             for (var i = 0; i < productArr.length; i++) {
               productArr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + productArr[i]
             }
+            console.log(productArr)
             that.setData({
               productImageSrc: productArr,
             })
@@ -629,13 +633,13 @@ Page({
           ownerImageSrc: ownerSrc,
           disable: false
         })
-        if (self.data.authImageSrc !== '') {
+        if (self.data.ownerImageSrc !== '') {
           self.setData({
-            disAuth: 'display:none',
+            disOwner: 'display:none',
           });
         } else {
           self.setData({
-            disAuth: 'display:block',
+            disOwner: 'display:block',
           });
         }
       },
@@ -682,11 +686,11 @@ Page({
     });
     if (that.data.ownerImageSrc == '') {
       that.setData({
-        disAuth: 'display:block',
+        disOwner: 'display:block',
       });
     }else{
       that.setData({
-        disAuth: 'display:none',
+        disOwner: 'display:none',
       });
     }
   },
@@ -851,14 +855,22 @@ Page({
       sourceType: ['album'],
       success: function (res) {
         console.log('chooseImage success, temp path is', res.tempFilePaths)
+        console.log(self.data.productImageSrc)
         var beforeProductArr = self.data.productImageSrc
         productSrc = res.tempFilePaths
-        beforeProductArr = beforeProductArr.concat(productSrc)
+        console.log( productSrc)
+        if (beforeProduceArr) {
+          beforeProductArr = beforeProductArr.concat(productSrc)
+        } else {
+          beforeProductArr = productSrc
+        }
+        
         console.log(beforeProductArr)
         self.setData({
           productImageSrc: beforeProductArr
         })
         if (self.data.productImageSrc.length >= 4) {
+          console.log(self.data.productImageSrc)
           self.setData({
             disProduct: 'display:none',
           });
@@ -899,6 +911,7 @@ Page({
     var that = this;
     var index = e.currentTarget.dataset.index;
     var list = that.data.productImageSrc;
+    console.log( list)
     list.splice(index, 1)
     that.setData({
       productImageSrc: list
@@ -908,6 +921,7 @@ Page({
         disProduct: 'display:block',
       });
     }
+    console.log(that.data.productImageSrc)
   },
   moveLeftPt: function (e) {
     var that = this;
@@ -935,10 +949,23 @@ Page({
       sourceType: ['album'],
       success: function (res) {
         console.log('chooseImage success, temp path is', res.tempFilePaths)
+        var beforeProduceArr = self.data.produceImageSrc
         produceSrc = res.tempFilePaths
+        console.log(productSrc)
+        if (beforeProduceArr) {
+          beforeProduceArr = beforeProduceArr.concat(produceSrc)
+        } else {
+          beforeProduceArr = produceSrc
+        }
+        
         self.setData({
-          produceImageSrc: produceSrc
+          produceImageSrc: beforeProduceArr
         })
+        if (self.data.produceImageSrc.length >= 4) {
+          self.setData({
+            disProduce: 'display:none',
+          });
+        }
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
@@ -1011,10 +1038,28 @@ Page({
       sourceType: ['album'],
       success: function (res) {
         console.log('chooseImage success, temp path is', res.tempFilePaths)
+        var beforeRetailArr = self.data.retailImageSrc
+        console.log('图片选择是beforeRetailArr')
+        console.log(beforeRetailArr)
         retailSrc = res.tempFilePaths
+        console.log('图片选择是retailSrc')
+        console.log(retailSrc)
+        if (beforeRetailArr){
+          beforeRetailArr = beforeRetailArr.concat(retailSrc)
+        }else{
+          beforeRetailArr = retailSrc
+        }
+        
+        console.log('图片选择是concat')
+        console.log(beforeRetailArr)
         self.setData({
-          retailImageSrc: retailSrc
+          retailImageSrc: beforeRetailArr
         })
+        if (self.data.retailImageSrc.length >= 4) {
+          self.setData({
+            disRetail: 'display:none',
+          });
+        }
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
@@ -1029,7 +1074,7 @@ Page({
       time = tick(i, bizId, user_id)
       retailImageUrl[i] = 'retail/' + time
       //console.log(arr[i])
-      b[retailSrc[i]] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + retailImageUrl[i]
+      j[retailSrc[i]] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + retailImageUrl[i]
       upyun.upload({
         localPath: retailSrc[i],
         remotePath: '/biz/retail/' + time,
@@ -1058,7 +1103,7 @@ Page({
     });
     if (that.data.retailImageSrc.lenght < 4) {
       that.setData({
-        disRetail: 'display:none',
+        disRetail: 'display:block',
       });
     }
   },
@@ -1260,7 +1305,17 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    var that = this
+    console.log('onPullDownRefresh')
+
+    wx.showLoading({
+      title: '载入中',
+    })
+    //that.get_biz(that)
+
+    wx.hideLoading()
+
+    wx.stopPullDownRefresh()
   },
 
   /**

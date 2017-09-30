@@ -10,17 +10,17 @@
         <text class='text'>图片</text>
       </view>
 </view>
-<view class='list' wx:for="{{array}}">
+<view class='list' wx:for="{{array}}" wx:key="{{index}}">
     <view class='desText' wx:if="{{item.type=='p'}}">{{item.value}} 
-    <image bindtap='closeImg' class='imgClose' src='../../image/close.png'></image>
-    <image bindtap='moveTop' class='imgTop' src='../../image/top.png'></image>
-    <image bindtap='moveBot' class='imgBot' src='../../image/bot.png'></image>
+    <image bindtap='closeImg' data-current='{{index}}' class='imgClose' src='../../image/close.png'></image>
+    <image bindtap='moveTop' data-current='{{index}}' class='imgTop' src='../../image/top.png'></image>
+    <image bindtap='moveBot' data-current='{{index}}' class='imgBot' src='../../image/bot.png'></image>
     </view>
     <view class='desText' wx:elif="{{item.type=='img'}}">
     <image class='description_img' src='{{item.value}}'></image>
-    <image bindtap='closeImg' class='imgClose' src='../../image/close.png'></image>
-    <image bindtap='moveTop' class='imgTop' src='../../image/top.png'></image>
-    <image  bindtap='moveBot' class='imgBot' src='../../image/bot.png'></image>
+    <image bindtap='closeImg' data-current='{{index}}' class='imgClose' src='../../image/close.png'></image>
+    <image bindtap='moveTop' data-current='{{index}}' class='imgTop' src='../../image/top.png'></image>
+    <image  bindtap='moveBot' data-current='{{index}}' class='imgBot' src='../../image/bot.png'></image>
     </view>
     <view class='editIcon' >
       <view class='float' data-index='{{index}}' bindtap="showDialogBtn">

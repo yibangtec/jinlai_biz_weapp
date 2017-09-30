@@ -108,7 +108,9 @@ Page({
     currentYes:'',
     currentNo:'coupon-current',
     time_to_publish:'',
-    time_to_suspend:''
+    time_to_suspend:'',
+    start:'',
+    end:''
   },
 
   /**
@@ -187,6 +189,7 @@ Page({
         data: { app_type: 'item', id: itemId },
         success: function (result) {
           if (result.data.status == 200) {
+            console.log(result)
             obj = result.data.content
             
             delete obj.freight_template_id
@@ -212,31 +215,33 @@ Page({
               })
             }
             
-            var arr = []
-            arr = result.data.content.url_image_main.split(",")
-            if (arr.length > 0) {
+            var arr = result.data.content.url_image_main
+            if (arr) {
+              arr = arr.split(",")
               for (var i = 0; i < arr.length; i++) {
                 arr[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/item/' + arr[i]
               }
+            } else {
+              arr = []
             }
+            console.log(arr)
             if (arr.length>=1){
               that.setData({
                 dis: 'display:none'
               })
             }
             
-            var arrFigure=[] 
-            arrFigure = result.data.content.figure_image_urls.split(",")
-            console.log('figure')
-            console.log(arrFigure)
-            if (result.data.content.figure_image_urls =='' ) {
-              arrFigure=[]
-            }else{
+            var arrFigure = result.data.content.figure_image_urls
+            if (arrFigure){
+              arrFigure = arrFigure.split(",")
               for (var i = 0; i < arrFigure.length; i++) {
                 arrFigure[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/item/' + arrFigure[i]
               }
+            }else{
+              arrFigure = []
             }
-            if (arr.arrFigure >= 4) {
+            
+            if (arrFigure.length >= 4) {
               that.setData({
                 disfig: 'display:none'
               })
@@ -294,30 +299,20 @@ Page({
       })
     }
   },
+  itemDescription: function (e) {
+    wx.navigateTo({
+      url: 'descriptionItem',
+    })
+  },
   radioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value)
     obj.coupon_allowed = e.detail.value
   },
   startTap: function () {
-    var that = this
-    timestamp = Date.parse(new Date());
-    timestamp = timestamp / 1000;
     this.datetimePicker.setPicker('startDate');
   },
   endTap: function () {
     this.datetimePicker.setPicker('endDate');
-    var stringTime = this.data.startDate;
-    timestamp2 = Date.parse(new Date(stringTime));
-    timestamp2 = timestamp2 / 1000;
-    if (timestamp2< timestamp) {
-      wx.showToast({
-        title: '上架时间不能小于当前时间',
-        icon: 'loading',
-        duration: 2000
-      })
-    }
-    console.log(this.data.startDate)
-    obj.time_to_publish = timestamp2
   },
   yes:function(e){
     var yes = e.currentTarget.dataset.coupon
@@ -744,8 +739,20 @@ Page({
       sourceType: ['album'],
       success: function (res) {
         console.log('chooseImage success, temp path is', res.tempFilePaths)
+        var before = self.data.figureImageSrc
+        console.log('选择之前的before')
+        console.log(before)
         newChoose = res.tempFilePaths
-        var before = self.data.figureImageSrc.concat(newChoose)
+        console.log('选择的')
+        console.log(newChoose)
+        if (before) {
+          console.log('zhen')
+          before = before.concat(newChoose)
+        } else {
+          before = newChoose
+        }
+        console.log('显示的')
+        console.log(before)
         self.setData({
           figureImageSrc: before
         })
@@ -764,6 +771,7 @@ Page({
   },
   upImgFigure: function (e) {
     var that = this
+    var currArr=[]
     console.log('this is  upImg')
     for (var i = 0; i < newChoose.length; i++) {
       console.log('this is  for' + user_id)
@@ -782,7 +790,7 @@ Page({
               icon: 'success',
               duration: 2000
             })
-            var currArr = that.data.figureImageSrc
+            currArr = that.data.figureImageSrc
             for (var i = 0; i < currArr.length; i++) {
               if (o.hasOwnProperty(currArr[i]) == true) {
                 currArr[i] = o[currArr[i]]
@@ -792,8 +800,6 @@ Page({
             for (var i = 0; i < currArr.length; i++) {
               currArr[i] = currArr[i].replace('https://jinlaisandbox-images.b0.upaiyun.com/item/', "")
             }
-            obj.figure_image_urls = currArr.join(',')
-            console.log(obj.figure_image_urls)
           }
 
         },
@@ -802,7 +808,7 @@ Page({
         }
       })
     }
-    obj.figure_image_urls = figureImageUrl.join(',')
+    obj.figure_image_urls = currArr.join(',')
   },
   closeImgFigure: function (e) {
     var that = this;
@@ -830,6 +836,24 @@ Page({
       console.log(index)
       var temp = beforeArr[index - 1]
       beforeArr[index - 1] = beforeArr[index]
+      beforeArr[index] = temp
+      console.log(beforeArr)
+      that.setData({
+        figureImageSrc: beforeArr
+      });
+    }
+
+  },
+  moveRight: function (e) {
+
+    var that = this;
+    var beforeArr = that.data.figureImageSrc
+    console.log(beforeArr)
+    var index = e.currentTarget.dataset.index;
+    if (index != beforeArr.length-1) {
+      console.log(index)
+      var temp = beforeArr[index + 1]
+      beforeArr[index + 1] = beforeArr[index]
       beforeArr[index] = temp
       console.log(beforeArr)
       that.setData({
@@ -879,7 +903,7 @@ Page({
     var that = this
       var time = tr(0, user_id)
       srcUrl[0] = 'video_figure/' + time
-      b[newSrc] = 'https://jinlaisandbox-images.b0.upaiyun.com/item/' + srcUrl[0]
+      //b[newSrc] = 'https://jinlaisandbox-images.b0.upaiyun.com/item/' + srcUrl[0]
       console.log(time)
       yu.upload({
         localPath: newSrc,
@@ -931,36 +955,44 @@ Page({
     }
   },
   submit:function(e){
+    var that = this
+    obj.time_to_publish = this.data.start
+    obj.time_to_suspend = this.data.end
+    console.log(obj)
     if (obj.time_to_publish == null) {
       console.log('jskadfksdkfh')
       delete obj.time_to_publish
-      
+
     }
     if (obj.time_to_suspend == null) {
       delete obj.time_to_suspend
     }
-
-    if (this.data.endDate){
-      var stringTime = this.data.endDate;
-      var timestamp4 = Date.parse(new Date(stringTime));
-      timestamp4 = timestamp4 / 1000;
-      if (timestamp4 < timestamp2) {
-        wx.showToast({
-          title: '下架时间不能小于上架时间',
-          icon: 'loading',
-          duration: 2000
-        })
+    var pt = that.data.figureImageSrc
+    if (pt.length > 0) {
+      for (var i = 0; i < pt.length; i++) {
+        if (o.hasOwnProperty(pt[i]) == true) {
+          pt[i] = o[pt[i]]
+        }
       }
-      console.log(timestamp4 + '+' + timestamp2)
-      obj.time_to_suspend = timestamp4
+      console.log(pt)
+      for (var i = 0; i < pt.length; i++) {
+        pt[i] = pt[i].replace('https://jinlaisandbox-images.b0.upaiyun.com/biz/', "")
+      }
+      console.log(pt)
+      var product = pt.join(',')
+      obj.figure_image_urls = product
     }
-    
     for (var key in obj) {
       //只遍历对象自身的属性，而不包含继承于原型链上的属性。  
       if (obj[key] == null) {
         delete obj[key]
       }
     }
+
+
+
+
+
     console.log(obj)
     obj.app_type = 'biz'
     var url = 'item/edit'
@@ -1033,7 +1065,17 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    var that = this
+    console.log('onPullDownRefresh')
+
+    wx.showLoading({
+      title: '载入中',
+    })
+    //that.get_biz(that)
+
+    wx.hideLoading()
+
+    wx.stopPullDownRefresh()
   },
 
   /**

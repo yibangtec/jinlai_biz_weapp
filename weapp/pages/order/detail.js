@@ -1,4 +1,5 @@
 // pages/order/detail.js
+var app = getApp()
 Page({
 
   /**
@@ -13,6 +14,26 @@ Page({
    */
   onLoad: function (options) {
   
+  },
+  remarks:function(e){
+    wx.navigateTo({
+      url: 'orderOperation?title='+'订单备注'
+    })
+  },
+  chargeback: function (e) {
+    wx.navigateTo({
+      url: 'orderOperation?title=' + '订单退单'
+    })
+  },
+  ordertaking: function (e) {
+    wx.navigateTo({
+      url: 'orderOperation?title=' + '订单接单'
+    })
+  },
+  delivergoods: function (e) {
+    wx.navigateTo({
+      url: 'orderOperation?title=' + '订单发货'
+    })
   },
 
   /**

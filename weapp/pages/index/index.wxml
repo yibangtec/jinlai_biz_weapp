@@ -1,25 +1,25 @@
 <!--index.wxml-->
 <view style="{{infoStyle}}">
   <view class='header' bindtap="info_biz">
-    <view class='header-status'><image src='../../image/left.png'></image>{{status}}</view>
+    <view class='header-status'><image style='display:block;float:left;margin-top:5rpx;' src='../../image/i.png'></image>{{status}}</view>
     <view class='header-logo'><image src='{{src}}'></image></view>
-    <view class='header-name'>商家全称：{{brief_name}}</view>
-    <view class='header-tel'>电话：{{tel_protected_biz}}</view>
+    <view class='header-name'>{{brief_name}}</view>
+    <view class='header-tel'>{{tel_protected_biz}}</view>
   </view>
   <view class='order outer'>
-    <view class='order-list'><image src='../../image/daijiedan@3x.png'></image><view>订单(0)</view></view>
+    <view class='order-list' bindtap='toOrder'><image src='../../image/daijiedan@3x.png'></image><view>订单(0)</view></view>
     <view class='order-list'><image src='../../image/shouhou@3x.png'></image><view>退款/售后</view></view>
     <view class='order-list'><image src='../../image/pingjia@3x.png'></image><view>商品评价</view></view>
     <view class='order-list border-none'><image src='../../image/dingdan-pingjia@3x.png'></image><view>订单评价</view></view>
   </view>
   <view class='item outer'>
-    <view class='item-list'><image src='../../image/shangpin@3x.png'></image><view>商品</view></view>
-    <view class='item-list'><image src='../../image/fenlei@3x.png'></image><view>分类</view></view>
-    <view class='item-list border-none'><image src='../../image/tuandui@3x.png'></image><view>团队</view></view>
-    <view class='item-list'><image src='../../image/mendian@3x.png'></image><view>门店</view></view>
-    <view class='item-list'><image src='../../image/huodong-platform@3x.png'></image><view>平台活动</view></view>
-    <view class='item-list border-none'><image src='../../image/huodong-biz@3x.png'></image><view>店内活动</view></view>
-    <view class='item-list border-bot'><image src='../../image/moban@3x.png'></image><view>运费模板</view></view>
+    <view class='item-list' bindtap='toItem'><image src='../../image/shangpin@3x.png'></image><view>商品(0)</view></view>
+    <view class='item-list'><image src='../../image/fenlei@3x.png'></image><view>分类(0)</view></view>
+    <view class='item-list border-none'><image src='../../image/tuandui@3x.png'></image><view>团队(0)</view></view>
+    <view class='item-list'><image src='../../image/mendian@3x.png'></image><view>门店(0)</view></view>
+    <view class='item-list'><image src='../../image/huodong-platform@3x.png'></image><view>平台活动(0)</view></view>
+    <view class='item-list border-none'><image src='../../image/huodong-biz@3x.png'></image><view>店内活动(0)</view></view>
+    <view class='item-list border-bot' bindtap='freight'><image src='../../image/moban@3x.png'></image><view>运费模板(0)</view></view>
     <view class='item-list border-bot'><image src='../../image/coupon@3x.png'></image><view>优惠券</view></view>
     <view class='item-list border-none border-bot'><image src='../../image/combo@3x.png'></image><view>优惠包</view></view>
   </view>

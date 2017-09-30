@@ -6,15 +6,15 @@
 <view class='input-box'>
   <view class='input-item'>
     <text>手机号</text>
-    <input type="number" placeholder="请输入手机号" bindblur="getTel" focus="{{telFocus}}" />
+    <input type="number" style='padding-top:6rpx;' placeholder="请输入手机号" bindblur="getTel" focus="{{telFocus}}" />
   </view>
   <view class='input-item'>
     <text>密码</text>
-    <input type="text" password="true" placeholder="请输入密码" bindfocus="verifyTel" bindblur="getPw" focus="{{pwFocus}}" />
+    <input style='padding-left:50rpx; padding-top:6rpx;' type="text" password="true" placeholder="请输入密码" bindfocus="verifyTel" bindblur="getPw" focus="{{pwFocus}}" />
   </view>
   <view class='agreement'>点击“确定”即表示您已完整阅读并同意最新版<text class='textlight'>《用户协议》</text>。</view>
   <button class="submitBtn" style="opacity: {{opacity}};color: white; background-color: #ff3649;" disabled="{{disbtn}}" bindtap="pwLogin"> 确定 </button>
-  <view class="forgetPw">忘记密码</view>   
+  <view class="forgetPw" bindtap='forgetPassword'>忘记密码</view>   
 </view>
 
 

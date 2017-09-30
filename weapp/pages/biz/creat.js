@@ -34,7 +34,9 @@ url_image_produce = '',
 retailSrc = '',
 retailImageUrl = [],
 url_image_retail = '';
-
+var o = {}
+var b = {}
+var j = {}
 
 const Upyun = require('../../utils/upyun-wxapp-sdk')
 const upyun = new Upyun({
@@ -86,6 +88,15 @@ Page({
     retailImageSrc: '',
     index:'',
     disable:true,
+    disLicense: 'display:block',
+    disOwner: 'display:block',
+    disAuth: 'display:block',
+    disAuthDoc: 'display:block',
+    disProduct: 'display:block',
+    disProduce: 'display:block',
+    disRetail: 'display:block',
+    lineUp:'display:block;',
+    firstIn:'display:none;'
   },
 
   /**
@@ -114,6 +125,18 @@ Page({
       }
     })
   
+  },
+  firstIn:function(e){  
+    this.setData({
+      lineUp: 'display:none;',
+      firstIn: 'display:block;'
+    })
+  },
+  lineUp:function(e){
+    this.setData({
+      lineUp: 'display:block;',
+      firstIn: 'display:none;'
+    })
   },
   getName:function(e){
     name = e.detail.value
@@ -248,6 +271,15 @@ Page({
         self.setData({
           licenseImageSrc: licenseSrc
         })
+        if (self.data.licenseImageSrc !== '') {
+          self.setData({
+            disLicense: 'display:none',
+          });
+        } else {
+          self.setData({
+            disLicense: 'display:block',
+          });
+        }
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage licenseImageSrc fail, err is', errMsg)
@@ -288,7 +320,16 @@ Page({
     list.splice(index, 1)
     that.setData({
       licenseImageSrc: list
-    });
+    })
+    if (that.data.licenseImageSrc == '') {
+      that.setData({
+        disLicense: 'display:block',
+      });
+    } else {
+      that.setData({
+        disLicense: 'display:none',
+      });
+    }
   },
   preview:function(e){
     var that = this;
@@ -314,6 +355,15 @@ Page({
           ownerImageSrc: ownerSrc,
           disable: false
         })  
+        if (self.data.ownerImageSrc !== '') {
+          self.setData({
+            disOwner: 'display:none',
+          });
+        } else {
+          self.setData({
+            disOwner: 'display:block',
+          });
+        }
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
@@ -355,6 +405,15 @@ Page({
     that.setData({
       ownerImageSrc: list
     });
+    if (that.data.ownerImageSrc == '') {
+      that.setData({
+        disOwner: 'display:block',
+      });
+    } else {
+      that.setData({
+        disOwner: 'display:none',
+      });
+    }
   },
   //经办人身份证
   chooseImageAuth: function () {
@@ -369,6 +428,15 @@ Page({
         self.setData({
           authImageSrc: authSrc
         })
+        if (self.data.authImageSrc !== '') {
+          self.setData({
+            disAuth: 'display:none',
+          });
+        } else {
+          self.setData({
+            disAuth: 'display:block',
+          });
+        }
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
@@ -409,6 +477,15 @@ Page({
     that.setData({
       authImageSrc: list
     });
+    if (that.data.authImageSrc == '') {
+      that.setData({
+        disAuth: 'display:block',
+      });
+    } else {
+      that.setData({
+        disAuth: 'display:none',
+      });
+    }
   },
   //授权书
   
@@ -424,6 +501,15 @@ Page({
         self.setData({
           authDocImageSrc: authDocSrc
         })
+        if (self.data.authImageSrc !== '') {
+          self.setData({
+            disAuthDoc: 'display:none',
+          });
+        } else {
+          self.setData({
+            disAuthDoc: 'display:block',
+          });
+        }
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
@@ -465,6 +551,15 @@ Page({
     that.setData({
       authDocImageSrc: list
     });
+    if (that.data.authDocImageSrc == '') {
+      that.setData({
+        disAuthDoc: 'display:block',
+      });
+    } else {
+      that.setData({
+        disAuthDoc: 'display:none',
+      });
+    }
   },
   //产品
  
@@ -476,10 +571,22 @@ Page({
       sourceType: ['album'],
       success: function (res) {
         console.log('chooseImage success, temp path is', res.tempFilePaths)
+        var productArr = [] 
+        productArr= self.data.productImageSrc
         productSrc = res.tempFilePaths
+        if (productArr){
+          productArr = productArr.concat(productSrc)
+        }else{
+          productArr = productSrc
+        }
         self.setData({
-          productImageSrc: productSrc
+          productImageSrc: productArr
         })
+        if (self.data.productImageSrc.length >= 4) {
+          self.setData({
+            disProduct: 'display:none',
+          });
+        }
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
@@ -492,7 +599,7 @@ Page({
       console.log('this is  for')
       time = tick(i, user_id)
       productImageUrl[i] = 'product/' + time
-      
+      o[productSrc[i]] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + productImageUrl[i]
       upyun.upload({
         localPath: productSrc[i],
         remotePath: '/biz/product/' + time,
@@ -509,8 +616,8 @@ Page({
         }
       })
     }
-    url_image_product = productImageUrl.join(',')
-    console.log(url_image_product)
+    //url_image_product = productImageUrl.join(',')
+    //console.log(url_image_product)
   },
   closeImgProduct: function (e) {
     var that = this;
@@ -519,7 +626,42 @@ Page({
     list.splice(index, 1)
     that.setData({
       productImageSrc: list
-    });
+    })
+    if (that.data.productImageSrc.length < 4) {
+      that.setData({
+        disProduct: 'display:block',
+      });
+    }
+  },
+  moveLeftPt: function (e) {
+    var that = this;
+    var beforeArr = that.data.productImageSrc
+    console.log(beforeArr)
+    var index = e.currentTarget.dataset.index;
+    if (index != 0) {
+      console.log(index)
+      var temp = beforeArr[index - 1]
+      beforeArr[index - 1] = beforeArr[index]
+      beforeArr[index] = temp
+      that.setData({
+        productImageSrc: beforeArr
+      });
+    }
+  },
+  moveRightPt: function (e) {
+    var that = this;
+    var beforeArr = that.data.productImageSrc
+    console.log(beforeArr)
+    var index = e.currentTarget.dataset.index;
+    if (index != beforeArr.length-1) {
+      console.log(index)
+      var temp = beforeArr[index + 1]
+      beforeArr[index + 1] = beforeArr[index]
+      beforeArr[index] = temp
+      that.setData({
+        productImageSrc: beforeArr
+      });
+    }
   },
   //工厂
   chooseImageProduce: function () {
@@ -530,10 +672,22 @@ Page({
       sourceType: ['album'],
       success: function (res) {
         console.log('chooseImage success, temp path is', res.tempFilePaths)
+        var produceArr =[]
+        produceArr= self.data.produceImageSrc
         produceSrc = res.tempFilePaths
+        if (produceArr){
+          produceArr = produceArr.concat(produceSrc)
+        }else{
+          produceArr = produceSrc
+        }
         self.setData({
-          produceImageSrc: produceSrc
+          produceImageSrc: produceArr
         })
+        if (self.data.produceImageSrc.length >= 4) {
+          self.setData({
+            disProduce: 'display:none',
+          });
+        }
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
@@ -546,6 +700,7 @@ Page({
       console.log('this is  for')
       time = tick(i, user_id)
       produceImageUrl[i] = 'produce/' + time
+      b[produceSrc[i]] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + produceImageUrl[i]
       //console.log(arr[i])
       upyun.upload({
         localPath: produceSrc[i],
@@ -563,8 +718,8 @@ Page({
         }
       })
     }
-    url_image_produce = produceImageUrl.join(',')
-    console.log(url_image_produce)
+    //url_image_produce = produceImageUrl.join(',')
+    //console.log(url_image_produce)
   },
   closeImgProduce: function (e) {
     var that = this;
@@ -573,22 +728,70 @@ Page({
     list.splice(index, 1)
     that.setData({
       produceImageSrc: list
-    });
+    })
+    if (that.data.produceImageSrc.lenght < 4) {
+      that.setData({
+        disProduce: 'display:none',
+      })
+    }
+  },
+  moveLeftCe: function (e) {
+    var that = this;
+    var beforeArr = that.data.produceImageSrc
+    console.log(beforeArr)
+    var index = e.currentTarget.dataset.index;
+    if (index != 0) {
+      console.log(index)
+      var temp = beforeArr[index - 1]
+      beforeArr[index - 1] = beforeArr[index]
+      beforeArr[index] = temp
+      that.setData({
+        produceImageSrc: beforeArr
+      });
+    }
+  },
+  moveRightCe: function (e) {
+    var that = this;
+    var beforeArr = that.data.produceImageSrc
+    console.log(beforeArr)
+    var index = e.currentTarget.dataset.index;
+    if (index != beforeArr.length - 1) {
+      console.log(index)
+      var temp = beforeArr[index + 1]
+      beforeArr[index + 1] = beforeArr[index]
+      beforeArr[index] = temp
+      that.setData({
+        produceImageSrc: beforeArr
+      });
+    }
   },
   //门店
 
   chooseImageRetail: function () {
     const self = this
     wx.chooseImage({
-      count: 1,
+      count: 4,
       sizeType: ['compressed'],
       sourceType: ['album'],
       success: function (res) {
         console.log('chooseImage success, temp path is', res.tempFilePaths)
+        var retailArr = []
+        retailArr= self.data.retailImageSrc
         retailSrc = res.tempFilePaths
+        if (retailArr){
+          retailArr = retailArr.concat(retailSrc)
+        }else{
+          retailArr = retailSrc
+        }
+        
         self.setData({
-          retailImageSrc: retailSrc
+          retailImageSrc: retailArr
         })
+        if (self.data.retailImageSrc.length >= 4) {
+          self.setData({
+            disRetail: 'display:none',
+          });
+        }
       },
       fail: function ({ errMsg }) {
         console.log('chooseImage fail, err is', errMsg)
@@ -602,6 +805,7 @@ Page({
       console.log('this is  for')
       time = tick(i, user_id)
       retailImageUrl[i] = 'retail/' + time
+      b[retailSrc[i]] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + retailImageUrl[i]
       //console.log(arr[i])
       upyun.upload({
         localPath: retailSrc[i],
@@ -619,8 +823,8 @@ Page({
         }
       })
     }
-    url_image_retail = retailImageUrl.join(',')
-    console.log(url_image_retail)
+    //url_image_retail = retailImageUrl.join(',')
+    //console.log(url_image_retail)
   },
   closeImgRetail: function (e) {
     var that = this;
@@ -629,11 +833,88 @@ Page({
     list.splice(index, 1)
     that.setData({
       retailImageSrc: list
-    });
+    })
+    if (that.data.retailImageSrc.lenght < 4) {
+      that.setData({
+        disRetail: 'display:block',
+      });
+    }
   },
-
+  moveLeftRe: function (e) {
+    var that = this;
+    var beforeArr = that.data.retailImageSrc
+    console.log(beforeArr)
+    var index = e.currentTarget.dataset.index;
+    if (index != 0) {
+      console.log(index)
+      var temp = beforeArr[index - 1]
+      beforeArr[index - 1] = beforeArr[index]
+      beforeArr[index] = temp
+      that.setData({
+        retailImageSrc: beforeArr
+      });
+    }
+  },
+  moveRightRe: function (e) {
+    var that = this;
+    var beforeArr = that.data.retailImageSrc
+    console.log(beforeArr)
+    var index = e.currentTarget.dataset.index;
+    if (index != beforeArr.length - 1) {
+      console.log(index)
+      var temp = beforeArr[index + 1]
+      beforeArr[index + 1] = beforeArr[index]
+      beforeArr[index] = temp
+      that.setData({
+        retailImageSrc: beforeArr
+      });
+    }
+  },
   submit:function(e){
     var that = this
+    var pt = that.data.productImageSrc
+    if (pt.length > 0) {
+      for (var i = 0; i < pt.length; i++) {
+        if (o.hasOwnProperty(pt[i]) == true) {
+          pt[i] = o[pt[i]]
+        }
+      }
+      console.log(pt)
+      for (var i = 0; i < pt.length; i++) {
+        pt[i] = pt[i].replace('https://jinlaisandbox-images.b0.upaiyun.com/biz/', "")
+      }
+      console.log(pt)
+      url_image_product = pt.join(',')
+      console.log(url_image_product)
+    }
+    var pe = that.data.produceImageSrc
+    if (pe.length > 0) {
+      for (var i = 0; i < pe.length; i++) {
+        if (b.hasOwnProperty(pe[i]) == true) {
+          pe[i] = b[pe[i]]
+        }
+      }
+      console.log(pe)
+      for (var i = 0; i < pe.length; i++) {
+        pe[i] = pe[i].replace('https://jinlaisandbox-images.b0.upaiyun.com/biz/', "")
+      }
+      url_image_produce = pe.join(',')
+      console.log(url_image_produce)
+    }
+    var re = that.data.retailImageSrc
+    if (re.length > 0) {
+      for (var i = 0; i < re.length; i++) {
+        if (j.hasOwnProperty(re[i]) == true) {
+          re[i] = j[re[i]]
+        }
+      }
+      console.log(pe)
+      for (var i = 0; i < re.length; i++) {
+        re[i] = re[i].replace('https://jinlaisandbox-images.b0.upaiyun.com/biz/', "")
+      }
+      url_image_retail = re.join(',')
+      console.log(url_image_retail)
+    }
     if (name == null || brief_name == null || tel_public == null || tel_protected_biz == null || code_license == null || code_ssn_owner == null || licenseImageUrl == null || ownerImageUrl == null){
       wx.showToast({
         title: '带*号的是必须填写的，请补充完整',
@@ -735,7 +1016,17 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    var that = this
+    console.log('onPullDownRefresh')
+
+    wx.showLoading({
+      title: '载入中',
+    })
+    //that.get_biz(that)
+
+    wx.hideLoading()
+
+    wx.stopPullDownRefresh()
   },
 
   /**

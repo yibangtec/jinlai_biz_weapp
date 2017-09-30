@@ -1,0 +1,14 @@
+<!--pages/freight/index.wxml-->
+<view class='temp-box outer' style='position: relative;'>
+  <view class='tab'><view class='tab-text tab-current'>所有</view></view>
+  <view class='tab'><view class='tab-text'>回收站</view></view>
+  <view class='tab'><view class='tab-text'>创建</view></view>
+</view>
+
+<view class='content'>
+  <image class='content-img' src='../../image/kong@3x.png'></image>
+  <view class='content-text'>这里空空如也,快点添加运费模板吧</view>
+</view>
+<view class='freight-bottom' bindtap='createFreight'>
+  创建
+</view> 

@@ -48,8 +48,19 @@
         <block wx:for="{{figureImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill">
             <image data-index="{{index}}" bindtap="closeImgFigure" class="close" src="../../image/shanchu@3x.png"></image>
-            <image data-index="{{index}}" bindtap="moveLeft" class="left" src="../../image/left.png"></image>
-            <image data-index="{{index}}" bindtap="moveRight" class="right" src="../../image/right.png"></image>
+            <view style='visibility: hidden;' wx:if='{{figureImageSrc.length == 1}}'>
+              
+            </view>
+            <view class='icon-box' wx:else>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeft">
+                <image class="left-img" style='visibility: hidden;' src="../../image/left.png" wx:if='{{index==0}}'></image>
+                <image class="left-img" src="../../image/left.png" wx:else></image>
+              </view>
+              <view class='icon-right' data-index="{{index}}" bindtap="moveRight">
+                <image class="right-img" style='visibility: hidden;' src="../../image/right.png" wx:if='{{index == (figureImageSrc.length-1)}}'></image>
+                <image class="right-img" src="../../image/right.png" wx:else></image>
+              </view>
+            </view>
           </image>   
         </block>
         <view style="{{disfig}}">
@@ -99,13 +110,20 @@
   <view class='label-text'>佣金比例/提成率</view>
   <input class='temp-input' type="digit" bindblur="getCommission_rate" placeholder="最高0.5" />
   <view class='label-text'>预定上架时间</view>
-  <input class='temp-input' disabled='true' bindtap="startTap" value='{{startDate}}' placeholder="请选择" />
+  <input class='temp-input' disabled='true' bindblur='getStart' bindtap="startTap" value='{{startDate}}' placeholder="请选择" />
   <view class='label-text'>预定下架时间</view>
   <input class='temp-input' disabled='true' bindtap="endTap" value='{{endDate}}' placeholder="请选择" />
   <view class='label-text'>运费模板</view>
   <view class='tips'>您目前没有可用的运费模板仅可包邮</view>
   <button style='height:80rpx; margin:0 20rpx; border:1rpx solid #FF3649; font-size:30rpx; color:#FF3649;background-color:#fff; border-raidus:12rpx;' bindtap="upImgFigure">创建一个</button>
   <input style='margin:20rpx 20rpx;' class='temp-input' type="digit"  placeholder="默认包邮" />
+  <!--
+  <picker bindchange="bindPickerChange" value="{{areaIndex}}" range="{{area}}">  
+    <view class="picker">  
+      当前选择：{{area[areaIndex]}}  
+    </view>  
+  </picker> 
+  -->
 </view>
 
 <view class="btn-area">

@@ -62,6 +62,9 @@ var biz_id=''
 var mainImageUrl=[]
 var figureImageUrl=[]
 var srcUrl=[]
+var newChoose = []
+var o = {}
+var currArr = ''
 Page({
 
   /**
@@ -89,7 +92,16 @@ Page({
     videoStyle:'display:none',
     str:'',
     currentYes: '',
-    currentNo: 'coupon-current'
+    currentNo: 'coupon-current',
+    areaIndex: 0,
+    area: ['北京', '广州', '上海', '深圳'] ,
+    start:'',
+    end:''
+  },
+  bindPickerChange: function (e) {
+    this.setData({
+      areaIndex: e.detail.value
+    })
   },
   radioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value)
@@ -115,24 +127,10 @@ Page({
 
   startTap: function () {
     var that = this
-    timestamp = Date.parse(new Date());
-    timestamp = timestamp / 1000;
     this.datetimePicker.setPicker('startDate');
   },
   endTap: function () {
     this.datetimePicker.setPicker('endDate');
-    var stringTime = this.data.startDate;
-    timestamp2 = Date.parse(new Date(stringTime));
-    timestamp2 = timestamp2 / 1000;
-    if (timestamp2 < timestamp) {
-      wx.showToast({
-        title: '上架时间不能小于当前时间',
-        icon: 'loading',
-        duration: 2000
-      })
-    }
-    console.log(this.data.startDate)
-    obj.time_to_publish = timestamp2
   },
   /**
    * 生命周期函数--监听页面加载
@@ -563,8 +561,22 @@ Page({
       sourceType: ['album'],
       success: function (res) {
         console.log('chooseImage success, temp path is', res.tempFilePaths)
+        var before = self.data.figureImageSrc
+        console.log('选择之前的before')
+        console.log(before)
+        newChoose = res.tempFilePaths
+        console.log('选择的')
+        console.log(newChoose)
+        if (before) {
+          console.log('zhen')
+          before = before.concat(newChoose)
+        } else {
+          before = newChoose
+        }
+        console.log('显示的')
+        console.log(before)
         self.setData({
-          figureImageSrc: res.tempFilePaths
+          figureImageSrc: before
         })
         console.log(self.data.figureImageSrc.length)
         var le = self.data.figureImageSrc.length
@@ -718,6 +730,10 @@ Page({
     }
   },
   submit:function(e){
+    var that = this
+    obj.time_to_publish=this.data.start
+    obj.time_to_suspend = this.data.end
+    console.log(obj)
     if (obj.time_to_publish == null) {
       console.log('jskadfksdkfh')
       delete obj.time_to_publish
@@ -727,19 +743,23 @@ Page({
       delete obj.time_to_suspend
     }
 
-    if (this.data.endDate) {
-      var stringTime = this.data.endDate;
-      var timestamp4 = Date.parse(new Date(stringTime));
-      timestamp4 = timestamp4 / 1000;
-      if (timestamp4 < timestamp2) {
-        wx.showToast({
-          title: '下架时间不能小于上架时间',
-          icon: 'loading',
-          duration: 2000
-        })
+    
+      
+    
+    var pt = that.data.figureImageSrc
+    if (pt.length > 0) {
+      for (var i = 0; i < pt.length; i++) {
+        if (o.hasOwnProperty(pt[i]) == true) {
+          pt[i] = o[pt[i]]
+        }
       }
-      console.log(timestamp4 + '+' + timestamp2)
-      obj.time_to_suspend = timestamp4
+      console.log(pt)
+      for (var i = 0; i < pt.length; i++) {
+        pt[i] = pt[i].replace('https://jinlaisandbox-images.b0.upaiyun.com/item/', "")
+      }
+      console.log(pt)
+      var product = pt.join(',')
+      obj.figure_image_urls = product
     }
     for (var key in obj) {
       //只遍历对象自身的属性，而不包含继承于原型链上的属性。  
@@ -827,7 +847,17 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    var that = this
+    console.log('onPullDownRefresh')
+
+    wx.showLoading({
+      title: '载入中',
+    })
+    //that.get_biz(that)
+
+    wx.hideLoading()
+
+    wx.stopPullDownRefresh()
   },
 
   /**

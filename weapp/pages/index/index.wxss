@@ -34,6 +34,7 @@ page {
   height: 150rpx;
   width: 150rpx;
   border-radius: 50%;
+  border: 2rpx solid #efefef;
 }
 .header-name{
   text-align: center;

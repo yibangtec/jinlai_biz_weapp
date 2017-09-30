@@ -38,6 +38,11 @@ Page({
       }
     })
   },
+  forgetPassword: function (e) {
+    wx.navigateTo({
+      url: 'pwreset?title=找回密码'
+    })
+  },
   getCurrentPw:function(e){
     currentPw=e.detail.value
   },

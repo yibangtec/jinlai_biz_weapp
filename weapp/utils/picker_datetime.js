@@ -38,6 +38,41 @@ var pickerDatetime = function(obj) {
         _this.page.setData({pickerViewShow:false});
       },_this.duration);
       _this.success();
+      console.log(_this)
+      if (_this.pickerName == 'startDate'){
+        var timestamp = Date.parse(new Date());
+        timestamp = timestamp / 1000;
+        var stringTime = _this.page.data.startDate;
+        timestamp2 = Date.parse(new Date(stringTime));
+        timestamp2 = timestamp2 / 1000;
+        _this.page.setData({ start: timestamp2 });
+        console.log(timestamp+'dangqian')
+        console.log(timestamp2 + 'shangjia')
+        if (timestamp2 < timestamp) {
+          wx.showToast({
+            title: '不能早于当前时间',
+            icon: 'loading',
+            duration: 2000
+          })
+        }
+      } else if (_this.pickerName == 'endDate'){
+        var timestamp = Date.parse(_this.page.data.endDate);
+        timestamp = timestamp / 1000;
+        var stringTime = _this.page.data.startDate;
+        timestamp2 = Date.parse(new Date(stringTime));
+        timestamp2 = timestamp2 / 1000;
+        _this.page.setData({ end: timestamp });
+        console.log(timestamp+'xiajia')
+        console.log(timestamp2 + 'shangjia')
+        if (timestamp < timestamp2) {
+          wx.showToast({
+            title: '下架不能早于上架',
+            icon: 'loading',
+            duration: 2000
+          })
+        }
+      }
+      
     };
   } else {
     this.animation = '';
