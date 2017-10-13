@@ -146,6 +146,7 @@ page {
   color: #3E3A39;
   padding: 10rpx;
   margin-top: 20rpx;
+ 
 }
 .bot-right{
   width: 480rpx;

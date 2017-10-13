@@ -28,7 +28,9 @@ Page({
     underStyle: 'display:none',
     deleteStyle: 'display:none',
     selectedAllStatus: false,
-    userId:''
+    userId:'',
+    isEdit:'display:block',
+    isSelect:'display:none;'
   },
   
 
@@ -64,7 +66,7 @@ Page({
               'content-type': 'application/x-www-form-urlencoded'
             },
             url: app.globalData.url_api + url,
-            data: { app_type: 'item', time_delete: 'NULL', biz_id: bizId},
+            data: { app_type: 'item', time_delete: 'NULL', biz_id: 2},
             success: function (result) {
               if (result.data.status == 200) {
                 for (var i = 0; i < result.data.content.length; i++) {
@@ -269,6 +271,14 @@ Page({
     wx.navigateTo({
       url: 'detail?id='+itemId,
     })
+  },
+  editClick:function(e){
+    var that = this
+    that.setData({
+      isEdit: 'display:none',
+      isSelect: 'display:block;'
+    })
+    
   },
   createItem:function(e){
     wx.getStorage({

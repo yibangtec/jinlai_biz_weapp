@@ -22,8 +22,11 @@
           </view>
         </view>
         <view class='item-btn'>
-          <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+          <view style='{{isSelect}}'>
+            <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
           <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+          </view>
+          
           <view style='float:right'>
             <view class='select-list select-left' data-name="{{item.item_id}}" bindtap='editItem'>编辑</view>
             <view class='select-list select-right' data-index="{{index}}"  data-name="{{item.item_id}}" data-title='商品删除' data-value='delete' bindtap="delete">删除</view>
@@ -31,7 +34,21 @@
         </view>
       </view>
     </view>
-    <view class='bottom'>
+    
+    <view class='bottom' style='{{isEdit}}'>
+      <view class='bottom-box'>
+        <view class='bottomSelect' bindtap='editClick'>
+          <image style='width:36rpx; height:36rpx; margin:28rpx 20rpx 0 40rpx; float:left;' src='../../image/caozuo@3x.png'></image>
+          <view style='font-size: 26rpx; color: #3E3A39; float:left; margin-top:28rpx;'>编辑</view>
+        </view>
+        <view class='bot-right'>
+          <view class='bottom-list' style='background-color:#fff' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
+          <view class='bottom-list' style='background-color:#fff' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
+          <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品删除' data-value='delete' bindtap="delete">创建</view>
+        </view>
+      </view>  
+    </view>
+    <view class='bottom' style='{{isSelect}}'>
       <view class='bottom-box'>
         <view class='bottomSelect'>
           <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="my-check"/>

@@ -88,14 +88,15 @@
   <view class='label-text'>店内活动： 不参加</view>
 </view>
 
-<view class='temp-box outer'>
+<view class='temp-box'>
   <view class='label-text' style='border-bottom: 1rpx solid #E1E1E1;'>商品规格</view>
-  <view class='outer'>
-    <view class='specifications' style='width:320rpx;'>一级规格：500g/份</view><view class='specifications'>商城价/现价：{{itemObj.price}}</view>
-    <view class='specifications' style='width:320rpx;'>二级规格：1kg/份</view><view class='specifications'>库存：{{itemObj.stocks}}</view>
+  <view class='outer' style='overflow:hidden'>
+    <view class='specifications' style='width:320rpx;'>一级规格：500g/份</view>
+    <view class='specifications'>商城价/现价：{{itemObj.price}}</view>
+    <view class='specifications' style='width:320rpx;'>二级规格：1kg/份</view>
+    <view class='specifications'>库存：{{itemObj.stocks}}</view>
     <view class='specifications'>三级规格：1.5kg/份</view>
   </view>
-  
 </view>
 <view class='temp-box outer'>
   <view class='label-text'>商品描述</view>
