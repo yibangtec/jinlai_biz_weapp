@@ -1,14 +1,183 @@
 <!--pages/freight/index.wxml-->
 <view class='temp-box outer' style='position: relative;'>
-  <view class='tab'><view class='tab-text tab-current'>所有</view></view>
-  <view class='tab'><view class='tab-text'>回收站</view></view>
-  <view class='tab'><view class='tab-text'>创建</view></view>
+  <view class='tab'><view bindtap='freightTabClick' data-temp='freightAll' class='tab-text {{freightTab.freightAll}}'>所有</view></view>
+  <view class='tab'><view bindtap='freightTabClick' data-temp='freightRecovery' class='tab-text {{freightTab.freightRecovery}}'>回收站</view></view>
+  <view class='tab'><view bindtap='freightTabClick' data-temp='freightRecycle' class='tab-text {{freightTab.freightRecycle}}'>创建</view></view>
 </view>
 
-<view class='content'>
-  <image class='content-img' src='../../image/kong@3x.png'></image>
-  <view class='content-text'>这里空空如也,快点添加运费模板吧</view>
+<view class='freightAll' style='{{freightContent.freightAll}}'>
+  <view style='{{freightNull}}'>
+    <view class='content'>
+      <image class='content-img' src='../../image/kong@3x.png'></image>
+      <view class='content-text'>这里空空如也,快点添加运费模板吧</view>
+    </view>
+    <view class='freight-bottom' bindtap='freightTabClick' data-temp='freightRecycle'>创建</view> 
+  </view>
+  
+  <view style='{{freight}}'>
+    <view class='temp-box'>
+      <view class='outer'>
+        <view class='tab all-text'>名称</view>
+        <view class='tab all-text'>类型</view>
+        <view class='tab all-text'>操作</view>
+      </view>
+      <view class='content-box'>
+        <view class='all-content outer' wx:for='{{freightList}}' wx:key="{{index}}">
+          <view class='tab all-text' style='position: relative; text-align: left;'>
+            <view class='selected' style='{{allDelected}}'>
+              <icon bindtap="bindCheckbox" wx:if="{{item.selected}}" data-index="{{index}}" color='#FF3649' type="success_circle" size="20" class="my-check" style='padding-bottom:80rpx;'/>
+              <icon bindtap="bindCheckbox" wx:else type="circle" data-index="{{index}}" size="20" class="my-check"style='padding-bottom:80rpx;'/>
+            </view>
+            <view style='margin-left:80rpx' bindtap='detailClick' data-tem='{{item.template_id}}' data-biz='{{item.biz_id}}'>{{item.name}}</view>
+          </view>
+          <view class='tab all-text' bindtap='detailClick' data-tem='{{item.template_id}}' data-biz='{{item.biz_id}}'>{{item.type}}</view>
+          <view class='tab all-text'>
+            <view class='temp-edit' bindtap='editBtn' data-tem='{{item.template_id}}' data-biz='{{item.biz_id}}'>编辑</view>
+            <view class='temp-del' bindtap='delTem' data-tem='{{item.template_id}}' data-value='delete' data-biz='{{item.biz_id}}'>删除</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class='bottom' style='{{allDelectedEdit}}'>
+      <view class='selected' bindtap='allDelectedEdit'>
+        <image style='width:36rpx; height:36rpx;' src='../../image/caozuo@3x.png'></image>
+      </view>
+      <view class='selected-all' bindtap='allDelectedEdit'>编辑</view>
+      <view class='recovery-all' bindtap='freightTabClick' data-temp='freightRecycle'>创建</view>
+    </view>
+    <view class='bottom' style='{{allDelected}}'>
+      <view class='selected'>
+        <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="my-check"/>
+        <icon bindtap="bindSelectAll" wx:else type="circle" size="20" class="my-check"/>
+      </view>
+      <view class='selected-all' bindtap="bindSelectAll">全选</view>
+      <view class='recovery-all' data-value='delete' bindtap='deleteItemAll'>删除</view>
+    </view>
+  </view>
 </view>
-<view class='freight-bottom' bindtap='createFreight'>
-  创建
-</view> 
+
+<view class='recovery' style='{{freightContent.freightRecovery}}'>
+  <view class='content' style='{{freightBackNull}}'>
+    <image class='content-img' src='../../image/kong@3x.png'></image>
+    <view class='content-text'>没有任何运费模板被删除</view>
+  </view>
+
+  <view class='temp-box' style='{{freightBack}}'>
+    <view class='outer'>
+      <view class='tab all-text'>名称</view>
+      <view class='tab all-text'>类型</view>
+      <view class='tab all-text'>操作</view>
+    </view>
+    <view class='content-box'>
+      <view class='all-content outer' wx:for='{{freightList}}' wx:key="{{index}}">
+        <view class='tab all-text' style='position: relative; text-align: left;'>
+          <view class='selected' style='{{allRecovery}}'>
+            <icon bindtap="bindCheckbox" wx:if="{{item.selected}}" data-index="{{index}}" color='#FF3649' type="success_circle" size="20" class="my-check" style='padding-bottom:80rpx;'/>
+            <icon bindtap="bindCheckbox" wx:else type="circle" data-index="{{index}}" size="20" class="my-check" style='padding-bottom:80rpx;'/>
+          </view>
+          <view style='margin-left:80rpx' bindtap='detailClick' data-tem='{{item.template_id}}' data-biz='{{item.biz_id}}'>{{item.name}}</view>
+        </view>
+        <view class='tab all-text'>{{item.type}}</view>
+        <view class='tab all-text'>
+          <view class='temp-edit'>编辑</view>
+          <view class='temp-del' data-tem='{{item.template_id}}' data-value='restore'  bindtap='backTem'>恢复</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <view class='bottom' style='{{allRecoveryEdit}}'>
+    <view class='selected' bindtap='allRecoveryEdit'>
+      <image style='width:36rpx; height:36rpx;' src='../../image/caozuo@3x.png'></image>
+    </view>
+    <view class='selected-all' bindtap='allRecoveryEdit'>编辑</view>
+    <view class='recovery-all' bindtap='freightTabClick' data-temp='freightRecycle'>创建</view>
+  </view>
+  <view class='bottom' style='{{allRecovery}}'>
+    <view class='selected'>
+      <icon bindtap="bindTipSelectAll" wx:if="{{selectedAll}}" color='#FF3649' type="success_circle" size="20" class="my-check"/>
+      <icon bindtap="bindTipSelectAll" wx:else type="circle" size="20" class="my-check"/>
+    </view>
+    <view class='selected-all' bindtap="bindTipSelectAll">全选</view>
+    <view class='recovery-all' bindtap='backTemAll' data-value='restore'>恢复</view>
+  </view>
+</view>
+
+<view class='recycle' style='{{freightContent.freightRecycle}}'>
+  <view class='error-tips' style='{{errorStyle}}'>
+    <view class='tips-text'>错误提示： {{errorTips}}</view>
+  </view>
+  <view class='temp-box' style='padding-bottom:50rpx'>
+    <view class='necessary-tips'>必填项以“*”符号标示</view>
+    <view class='lable'>名称 <text class='must'>*</text></view>
+    <input class='fre-input' type='text' placeholder-class="input-placeholder" maxlength="20" bindblur='getName' placeholder='请输入'></input>
+    <view class='lable'>类型 <text class='must'>*</text></view>
+    <view class='temp-type outer'>
+      <view data-type='freePostage' bindtap='typeClick' class='type-left {{tab.freePostage}}'>包邮</view>
+      <view data-type='logistics' bindtap='typeClick' class='type-center {{tab.logistics}}'>物流配送</view>
+      <view data-type='electron' bindtap='typeClick' class='type-right {{tab.electron}}'>电子凭证</view>
+    </view>
+    <view class='free-postage' style='{{typeContent.freePostage}}'>
+    
+    </view>
+    <view class='logistics' style='{{typeContent.logistics}}'>
+      <view class='voucher-tips'>若以下全部留空，则默认在确认接单3个自然日内发货，包邮（计费方式为“计件”）</view>
+      <view class='lable'>最晚发货时间</view>
+      <picker bindchange="bindPickerChange" value="{{index.name}}" range="{{objectArray}}" range-key="name">
+        <view class="picker">
+          <input class='fre-input' disabled="true" value="{{objectArray[index].name}}" placeholder="请选择所属系统分类" />
+        </view>
+      </picker>
+      <view class='lable'>计费方式</view>
+      <view class='temp-type outer'>
+        <view data-type='piece' bindtap='chargingClick' class='charging-left {{chargingTab.piece}}'>计件</view>
+        <view style='border-right:2rpx solid #c9caca;' data-type='suttle' bindtap='chargingClick' class='charging-center {{chargingTab.suttle}}'>净重</view>
+        <view data-type='gross' bindtap='chargingClick' class='charging-center {{chargingTab.gross}}'>毛重</view>
+        <view data-type='volume' bindtap='chargingClick' class='charging-right {{chargingTab.volume}}'>体积重</view>
+      </view>
+      <view class='voucher-tips'>计量单位为“件”（计件时）、“KG”（计净重/毛重/体积重时）</view>
+      <view class='lable'>每单最高配送计件量（件）</view>
+      <input class='fre-input' type='number' placeholder-class="input-placeholder" bindblur='getMax' placeholder='请输入'></input>
+      <view class='lable'>起始量（件）</view>
+      <input class='fre-input' type='number' placeholder-class="input-placeholder" bindblur='getStart' placeholder='请输入'></input>
+      <view class='lable'>起始量运费（元）</view>
+      <input class='fre-input' type='digit' placeholder-class="input-placeholder" bindblur='getStartMoney' placeholder='请输入'></input>
+      <view class='lable'>超出后运费（元/件）</view>
+      <input class='fre-input' type='digit' placeholder-class="input-placeholder" bindblur='getUnitMoney' placeholder='请输入'></input>
+    </view>
+    <view class='electron' style='{{typeContent.electron}}'>
+      <view class='voucher-tips'>若全部留空，则电子凭证自用户付款时起366个自然日内有效，逾期全额退款</view>
+      <view class='lable'>有效起始时间</view>
+      <input class='fre-input' disabled='true' bindtap="startTap" value='{{startDate}}' placeholder='请选择'></input>
+      <view class='lable'>有效结束时间</view>
+      <input class='fre-input' disabled='true' bindtap="endTap" value='{{endDate}}' placeholder='请选择'></input>
+      <view class='lable'>有效期(天)</view>
+      <input class='fre-input' value='{{period}}' type='text' placeholder-class="input-placeholder" ></input>
+      <view class='input-tips'>若填写了此项，则有效期将根据订单付款时间及此项数值自动计算，若超出上述“有效期结束时间”，则以“有效期结束时间”为准。</view>
+      <view class='lable'>过期退款比例</view>
+      <input class='fre-input' type='digit' bindblur='getExpire' placeholder-class="input-placeholder" placeholder='请输入'></input>
+      <view class='input-tips'>若电子凭证逾期未使用，系统将把该比例的用户付款项原路退回给用户。</view>
+    </view>
+    
+  </view>
+  <view hover-class="other-button-hover" hover-start-time='20' hover-stay-time='70' class='submit-btn' bindtap='creatBtn'>确定</view>
+</view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<include src="../../utils/picker_datetime.wxml"/>
+
+
+
+

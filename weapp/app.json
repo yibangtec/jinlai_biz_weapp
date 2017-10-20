@@ -40,7 +40,10 @@
     "pages/item/grounding",
     "pages/item/undercarriage",
     "pages/order/orderOperation",
-    "pages/freight/createFreight"
+    "pages/freight/editFreight",
+    "pages/freight/result",
+    "pages/freight/detail",
+    "pages/freight/confirm"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",

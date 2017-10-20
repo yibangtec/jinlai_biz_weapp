@@ -1,6 +1,7 @@
 // pages/mine/personalData.js
 var app = getApp()
 var user_id = ''
+var imgSrc=''
 Page({
 
   /**
@@ -40,6 +41,7 @@ Page({
         success: function (result) {
           console.log(result)
           if (result.data.status == 200) {
+            imgSrc = result.data.content.avatar
             that.setData({
               user: result.data.content
             })
@@ -77,6 +79,11 @@ Page({
         }
       })
     }
+  },
+  headerImgEdit: function (e) {
+    wx.navigateTo({
+      url: 'headerImgEdit?vue=' + imgSrc + '&mineId=' + user_id
+    })
   },
 
   /**

@@ -82,6 +82,8 @@ var newSrc=[]
 var b={}
 var time_to_publish =''
 var time_to_suspend=''
+var objectArray = []
+var objectBizArray = []
 Page({
 
   /**
@@ -90,7 +92,7 @@ Page({
   data: {
     itemObj:'',
     objectBizArray:'',
-    sum:'',
+    num: '',
     mainImageSrc: '',
     figureImageSrc: '',
     src: '',
@@ -110,7 +112,10 @@ Page({
     time_to_publish:'',
     time_to_suspend:'',
     start:'',
-    end:''
+    end:'',
+    objectArray: '',
+    objectBizArray: '',
+    category_id:''
   },
 
   /**
@@ -132,39 +137,6 @@ Page({
 
       }
     })
-
-    var u = 'item_category_biz/index'
-    var api_result = api(u, params)
-    function api(url, api_params) {
-      // 生成签名
-      app.sign_generate(api_params)
-
-      // 通过小程序的网络请求API发送请求
-      wx.request({
-        method: "POST",
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        url: app.globalData.url_api + url,
-        data: { app_type: 'item', },
-        success: function (result) {
-          console.log(result)
-          var categoryId = result.data.content
-          var objectBizArray=[]
-          for (var i = 0; i < categoryId.length; i++) {
-            objectBizArray[i] = categoryId[i]
-          }
-          that.setData({
-            objectBizArray: objectBizArray
-          })
-        },
-        fail: function (result) {
-          console.log(result)
-          wx.vibrateShort()
-        }
-      })
-    }
-
 
 
 
@@ -189,13 +161,92 @@ Page({
         data: { app_type: 'item', id: itemId },
         success: function (result) {
           if (result.data.status == 200) {
-            console.log(result)
+            //console.log(result)
             obj = result.data.content
-            
+            var l = 'item_category/index'
+            var params = {}
+            var category_result = category_request(l, params)
+
+            // 网络请求
+            function category_request(l, api_params) {
+              // 生成签名
+              app.sign_generate(api_params)
+
+              // 通过小程序的网络请求API发送请求
+              wx.request({
+                method: "POST",
+                header: {
+                  'content-type': 'application/x-www-form-urlencoded'
+                },
+                url: app.globalData.url_api + l,
+                data: { app_type: 'item', },
+                success: function (result) {
+                  console.log('category-id')
+                  console.log(result.data.content)
+                  var categoryId = result.data.content
+                  console.log(obj.category_id)
+                  for (var i = 0; i < categoryId.length; i++) {
+                    objectArray[i] = categoryId[i]
+                    if (categoryId[i].category_id == obj.category_id) {
+                      console.log(categoryId[i].name)
+                      that.setData({
+                        category_id: categoryId[i].name
+                      })
+                    }
+                  }
+
+                  that.setData({
+                    objectArray: objectArray
+                  })
+                },
+                fail: function (result) {
+                  console.log(result)
+                  wx.vibrateShort()
+                }
+              })
+            }
+            var u = 'item_category_biz/index'
+            var api_result = api(u, params)
+            function api(u, api_params) {
+              // 生成签名
+              app.sign_generate(api_params)
+
+              // 通过小程序的网络请求API发送请求
+              wx.request({
+                method: "POST",
+                header: {
+                  'content-type': 'application/x-www-form-urlencoded'
+                },
+                url: app.globalData.url_api + u,
+                data: { app_type: 'item', },
+                success: function (result) {
+                  console.log('category-id-biz')
+                  console.log(result)
+                  var categoryId = result.data.content
+                  for (var i = 0; i < categoryId.length; i++) {
+                    objectBizArray[i] = categoryId[i]
+                    if (categoryId[i].category_id == obj.category_biz_id) {
+                      console.log(obj.category_biz_id)
+                      that.setData({
+                        num: i
+                      })
+                    }
+                  }
+                  that.setData({
+                    objectBizArray: objectBizArray
+                  })
+                },
+                fail: function (result) {
+                  console.log(result)
+                  wx.vibrateShort()
+                }
+              })
+            }
+
             delete obj.freight_template_id
             biz_id = result.data.content.biz_id
             obj.user_id = user_id
-            obj.id=itemId
+            obj.id = itemId
             time_to_publish = formatDateTime(obj.time_to_publish)
             time_to_suspend = formatDateTime(obj.time_to_suspend)
             that.setData({
@@ -203,18 +254,18 @@ Page({
               time_to_suspend: time_to_suspend,
             })
             console.log(user_id)
-            if (obj.coupon_allowed == 0){
+            if (obj.coupon_allowed == 0) {
               that.setData({
                 currentYes: '',
                 currentNo: 'coupon-current'
               })
-            } else if (obj.coupon_allowed == 1){
+            } else if (obj.coupon_allowed == 1) {
               that.setData({
                 currentYes: '',
                 currentNo: 'coupon-current'
               })
             }
-            
+
             var arr = result.data.content.url_image_main
             if (arr) {
               arr = arr.split(",")
@@ -225,43 +276,45 @@ Page({
               arr = []
             }
             console.log(arr)
-            if (arr.length>=1){
+            if (arr.length >= 1) {
               that.setData({
                 dis: 'display:none'
               })
             }
-            
+
             var arrFigure = result.data.content.figure_image_urls
-            if (arrFigure){
+            if (arrFigure) {
               arrFigure = arrFigure.split(",")
               for (var i = 0; i < arrFigure.length; i++) {
                 arrFigure[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/item/' + arrFigure[i]
               }
-            }else{
+            } else {
               arrFigure = []
             }
-            
+
             if (arrFigure.length >= 4) {
               that.setData({
                 disfig: 'display:none'
               })
-              
+
             }
 
 
-            var arrVideo = result.data.content.figure_video_urls.split(",")
-            if (result.data.content.figure_video_urls == '') {
-              arrVideo = []
-            } else {
+            var arrVideo = result.data.content.figure_video_urls
+            if (arrVideo) {
+              arrVideo = arrVideo.split(",")
               for (var i = 0; i < arrVideo.length; i++) {
                 arrVideo[i] = 'https://jinlaisandbox-images.b0.upaiyun.com/item/' + arrVideo[i]
               }
+            } else {
+              arrVideo = []
             }
+
             if (arr.arrVideo >= 4) {
               that.setData({
                 disSrc: 'display:none'
               })
-              
+
             }
             that.setData({
               itemObj: result.data.content,
@@ -290,7 +343,7 @@ Page({
             })
           }
           */
-          
+
         },
         fail: function (result) {
           console.log(result)
@@ -298,6 +351,14 @@ Page({
         }
       })
     }
+
+    
+    
+
+
+
+
+    
   },
   itemDescription: function (e) {
     wx.navigateTo({
@@ -332,10 +393,12 @@ Page({
   },
   bindPickerBiz: function (e) {
     console.log('所属商家', e.detail.value)
+    var category_biz_id = objectArray[e.detail.value].category_id
     //obj.category_biz_id = e.detail.value
-    obj.category_biz_id = 1
+    console.log('所属商家', category_biz_id)
+    obj.category_biz_id = category_biz_id
     this.setData({
-      index: e.detail.value
+      num: e.detail.value
     })
   },
   getCode_biz: function (e) {
@@ -820,7 +883,7 @@ Page({
     });
     console.log(that.data.figureImageSrc.length)
     var le = that.data.figureImageSrc.length
-    if (le < 1) {
+    if (le < 4) {
       that.setData({
         disfig: 'display:block'
       })

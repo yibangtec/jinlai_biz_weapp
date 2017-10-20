@@ -14,7 +14,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    list:''
+    list:'',
+    text:''
   },
 
   /**
@@ -30,7 +31,9 @@ Page({
       //关键在这里
       //prePage.changeData(e.detail.value)
       value = prePage.data.value
-
+      that.setData({
+        text: prePage.data.title
+      })
       wx.setNavigationBarTitle({ title: prePage.data.title })
       console.log(prePage.data.value)
     }
@@ -38,7 +41,7 @@ Page({
     all = options.all
     bizId = options.biz
     id = options.id
-    console.log(options.value)
+    console.log(options.biz)
     
     
     var url = 'item/index'

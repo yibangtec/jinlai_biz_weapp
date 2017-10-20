@@ -1,0 +1,54 @@
+/* pages/freight/detail.wxss */
+.outer {zoom:1;}    /*==for IE6/7 Maxthon2==*/
+.outer::after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
+page {  
+  display: block; 
+  width: 100%; 
+  background-color: #f6f6f6;  
+  position: relative;
+}  
+.temp-box{
+  margin: 20rpx 20rpx;
+  background-color: #fff; 
+  border-radius: 12rpx;
+  padding: 40rpx 0;
+}
+.template-lable{
+  font-size: 26rpx;
+  color: #9fa0a0;
+  padding: 10rpx 20rpx;
+
+}
+.template-text{
+  color: #3e3a39;
+}
+.template-tips{
+  font-size:22rpx;
+  margin:0 20rpx;
+  color: #9fa0a0;
+  padding: 20rpx 0 0 0;
+}
+.check-text{
+  width: 150rpx;
+  text-align: center;
+  font-size: 26rpx;
+  color: #9fa0a0;
+  padding: 17rpx 0;
+  border: 1rpx solid #9fa0a0;
+  border-radius: 30rpx;
+  margin-left: 20rpx;
+}
+
+.edit-btn{
+  height: 80rpx;
+  font-size: 30rpx;
+  color: #A1A1A1;
+  text-align: center;
+  line-height: 75rpx;
+  margin: 20rpx;
+  border-radius: 12rpx;
+  border: 2rpx solid #9F9F9F;
+}
+.other-button-hover{
+  background-color: #fff;
+}

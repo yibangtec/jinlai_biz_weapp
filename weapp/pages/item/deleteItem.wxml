@@ -10,7 +10,7 @@
   </view>
   <view class='temp-box outer' style='background-color:#FCF6CB;'>
     <view class='delete-text'>
-      确认要删除？
+      确认要{{text}}？
     </view> 
   </view>
   <view class='temp-box'>

@@ -93,8 +93,6 @@ Page({
     str:'',
     currentYes: '',
     currentNo: 'coupon-current',
-    areaIndex: 0,
-    area: ['北京', '广州', '上海', '深圳'] ,
     start:'',
     end:''
   },
@@ -224,7 +222,8 @@ Page({
   },
   bindPickerChange: function (e) {
     console.log('所属系统分类', e.detail.value)
-    obj.category_id = e.detail.value
+    var category_id = objectArray[e.detail.value].category_id
+    obj.category_id = category_id
     console.log(obj.category_id)
     this.setData({
       index: e.detail.value
@@ -239,8 +238,9 @@ Page({
   },
   bindPickerBiz:function(e){
     console.log('所属商家', e.detail.value)
+    var category_biz_id = objectArray[e.detail.value].category_biz_id
     //obj.category_biz_id = e.detail.value
-    obj.category_biz_id =1
+    obj.category_biz_id = category_biz_id
     this.setData({
       num: e.detail.value
     })
@@ -631,7 +631,7 @@ Page({
     });
     console.log(that.data.figureImageSrc.length)
     var le = that.data.figureImageSrc.length
-    if (le < 1) {
+    if (le < 4) {
       that.setData({
         disfig: 'display:block'
       })

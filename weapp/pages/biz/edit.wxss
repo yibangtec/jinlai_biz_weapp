@@ -35,10 +35,10 @@ page {
   padding: 34rpx 0;
   display: flex;
 }
-.left {
+.left-t {
   width: 230rpx;
 }
-.right{
+.right-t{
   flex: 1;
 }
 .editBtn{
@@ -295,21 +295,22 @@ input {
   height: 4rpx;
   transform: translate(-50%, -50%);
 }
+.four-img{
+  position: relative; width:150rpx;height:150rpx;margin:0 0 20rpx 20rpx;
+}
 .image {
   width: 150rpx;
   height: 150rpx;
   display: block;
-  margin:0 0 20rpx 20rpx;
   border-radius: 15rpx;
-  position: relative;
 }
 .close{
   width: 32rpx;
   height: 32rpx;
   display: block;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -18rpx;
+  right:  -18rpx;
 }
 .icon-box{
   position: absolute;
@@ -342,4 +343,20 @@ input {
   display: block;
   margin-left:30rpx; 
   
+}
+.left{
+  width: 32rpx;
+  height: 32rpx;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.right{
+  width: 32rpx;
+  height: 32rpx;
+  display: block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }

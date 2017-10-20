@@ -1,0 +1,11 @@
+<!--pages/freight/result.wxml-->
+<view class='result'>
+  <image class='success-img' src='../../image/chenggong@3x.png'></image>
+  <view class='success-title'>{{title}}</view>
+</view>
+<view class="btn-area" style='margin:0 20rpx'>
+    <button hover-class="other-button-hover" hover-start-time='20' hover-stay-time='70' style='height:80rpx; font-size:30rpx; color:#9FA0A0;background-color:#fff; border:1rpx solid #9FA0A0; border-raidus:0;' disabled="{{disable}}" bindtap="backItemList">{{}}返回</button>
+</view>
+<view class="btn-area" style='margin:30rpx 20rpx'>
+    <button  hover-class="other-button-hover" hover-start-time='20' hover-stay-time='70' disabled="{{disable}}" bindtap="gonoCreate">继续创建</button>
+</view>

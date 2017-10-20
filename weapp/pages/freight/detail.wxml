@@ -1,0 +1,22 @@
+<!--pages/freight/detail.wxml-->
+<view class='temp-box'>
+  <view class='template-lable'>运费模板ID： <text class='template-text'>{{tempObj.template_id}}</text></view>
+  <view class='template-lable'>名称： <text class='template-text'>{{tempObj.name}}</text></view>
+  <view class='template-lable'>类型： 
+    <text class='template-text' wx:if="{{tempObj.type==''}}">包邮</text>
+    <text class='template-text' wx:else>{{tempObj.type}}</text>
+  </view>
+</view>
+<view class='temp-box'>
+  <view class='template-lable'>运费计算方式： <text class='template-text'>{{tempObj.type_actual}}</text></view>
+  <view class='template-lable'>最晚发货时间： <text class='template-text'>{{tempObj.time_latest_deliver}}</text></view>
+  <view class='template-tips'> <text style='color:#FF354E'>*</text> 计量单位为"件"(计件时)、"KG"(计净重/毛重/体积重时)</view>
+  <view class='template-lable' style='font-size:22rpx;color: #3e3a39;'>毛重 前435单位以内￥755，超出后每单位￥43；每单最高563单位</view>
+</view>
+<view class='temp-box'>
+  <view class='template-lable'>创建时间： <text class='template-text'>{{tempObj.time_create}}</text></view>
+  <view class='check-text'>查看创建者</view>
+  <view class='template-lable'>最后操作时间： <text class='template-text'>{{tempObj.time_edit}}</text></view>
+  <view class='check-text' style='width:200rpx'>查看最后操作者</view>
+</view>
+<view hover-class="other-button-hover" hover-start-time='20' hover-stay-time='70' class='edit-btn' bindtap='editBtn'>编辑</view>

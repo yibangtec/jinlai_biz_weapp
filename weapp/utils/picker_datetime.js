@@ -64,6 +64,9 @@ var pickerDatetime = function(obj) {
         _this.page.setData({ end: timestamp });
         console.log(timestamp+'xiajia')
         console.log(timestamp2 + 'shangjia')
+        var cur = timestamp - timestamp2 //period
+        cur=  ( 60 * 60 * 1000)/cur
+        _this.page.setData({ period: cur });
         if (timestamp < timestamp2) {
           wx.showToast({
             title: '下架不能早于上架',

@@ -1,0 +1,36 @@
+<!--pages/freight/confirm.wxml-->
+<view class='delete-box'>
+
+  <view class='temp-box outer' style='background-color:#FCF6CB;'>
+    <view class='delete-text' style='padding:15rpx 0;'  style='{{errorStyle}}'>
+      错误提示 : {{errorTips}}
+    </view> 
+  </view>
+
+  <view class='temp-box'>
+    <view class='confirm-title outer'>
+      <view class='confirm-text'>名称</view>
+      <view class='confirm-text'>类型</view>
+    </view>
+    <view wx:for="{{tempObj}}" wx:key="{{index}}">
+      <view class='confirm-list outer'>
+        <view class='confirm-text'>{{item.name}}</view>
+        <view class='confirm-text' wx:if="{{tiem.type == ''}}">包邮</view>
+        <view class='confirm-text' wx:else>{{item.type}}</view>
+      </view>
+    </view>
+       
+  </view>
+  <view class='temp-box outer' style='background-color:#FCF6CB;'>
+    <view class='delete-text'>
+      确认要{{title}}？
+    </view> 
+  </view>
+  <view class='temp-box'>
+    <view class='label-text'>密码</view>
+    <input class='temp-input' type='password' bindblur='getPassword' placeholder='请输入'></input>
+  </view>
+  <view class="btn-area" style='margin:0 20rpx'>
+    <button hover-class="other-button-hover" hover-start-time='20' hover-stay-time='70' style='' disabled="{{disable}}" bindtap="bindDelete">确定</button>
+  </view>
+</view>

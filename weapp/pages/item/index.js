@@ -28,9 +28,16 @@ Page({
     underStyle: 'display:none',
     deleteStyle: 'display:none',
     selectedAllStatus: false,
+    selectedAll:false,
     userId:'',
     isEdit:'display:block',
-    isSelect:'display:none;'
+    isSelect:'display:none;',
+    isUpEdit: 'display:block',
+    isUpSelect: 'display:none;',
+    isDownEdit: 'display:block',
+    isDownSelect: 'display:none;',
+    isDelEdit: 'display:block',
+    isDelSelect: 'display:none;',
   },
   
 
@@ -66,7 +73,7 @@ Page({
               'content-type': 'application/x-www-form-urlencoded'
             },
             url: app.globalData.url_api + url,
-            data: { app_type: 'item', time_delete: 'NULL', biz_id: 2},
+            data: { app_type: 'item', time_delete: 'NULL', biz_id: bizId},
             success: function (result) {
               if (result.data.status == 200) {
                 for (var i = 0; i < result.data.content.length; i++) {
@@ -161,6 +168,43 @@ Page({
       this.setData({
         list: list,
         selectedAllStatus: false
+      });
+    }
+  },
+  SelectAll:function(e){
+    var selectedAllStatus = this.data.selectedAll;
+    var selectedAll = !selectedAllStatus;
+    var list = this.data.list;
+
+    if (!selectedAllStatus) {
+      for (var i = 0; i < list.length; i++) {
+        list[i].selected = selectedAll;
+        //var num = parseInt(this.data.list[i].num);
+        //var price = parseInt(this.data.list[i].price);
+        //this.setData({
+        //count: this.data.count - num * price,
+        //number: this.data.number - num
+
+        //});
+      }
+      this.setData({
+        list: list,
+        selectedAll: true
+      });
+    } else {
+      for (var i = 0; i < list.length; i++) {
+        list[i].selected = selectedAll;
+        //var num = parseInt(this.data.list[i].num);
+        //var price = parseInt(this.data.list[i].price);
+        //this.setData({
+        //count: this.data.count - num * price,
+        //number: this.data.number - num
+
+        //});
+      }
+      this.setData({
+        list: list,
+        selectedAll: false
       });
     }
   },

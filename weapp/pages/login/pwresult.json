@@ -1,3 +1,4 @@
 {
-  "navigationBarTitleText": "密码操作结果"
+  "navigationBarTitleText": "密码操作结果",
+  "enablePullDownRefresh": false
 }

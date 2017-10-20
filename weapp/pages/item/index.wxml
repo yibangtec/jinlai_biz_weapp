@@ -44,7 +44,7 @@
         <view class='bot-right'>
           <view class='bottom-list' style='background-color:#fff' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
           <view class='bottom-list' style='background-color:#fff' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
-          <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品删除' data-value='delete' bindtap="delete">创建</view>
+          <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品删除' data-value='delete' bindtap="createItem">创建</view>
         </view>
       </view>  
     </view>
@@ -86,15 +86,30 @@
           </view>
         </view>
         <view class='item-btn'>
-          <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+          <view style='{{isSelect}}'>
+            <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
           <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+          </view>
           <view style='float:right'>
             <view class='select-list select-right' data-index="{{index}}"  data-name="{{item.item_id}}" data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
           </view>
         </view>
       </view>
     </view>
-    <view class='bottom'>
+    <view class='bottom' style='{{isEdit}}'>
+      <view class='bottom-box'>
+        <view class='bottomSelect' bindtap='editClick'>
+          <image style='width:36rpx; height:36rpx; margin:28rpx 20rpx 0 40rpx; float:left;' src='../../image/caozuo@3x.png'></image>
+          <view style='font-size: 26rpx; color: #3E3A39; float:left; margin-top:28rpx;'>编辑</view>
+        </view>
+        <view class='bot-right'>
+          <view class='bottom-list' style='background-color:#fff' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
+          <view class='bottom-list' style='background-color:#fff' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
+          <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品删除' data-value='delete' bindtap="createItem">创建</view>
+        </view>
+      </view>  
+    </view>
+    <view class='bottom' style='{{isSelect}}'>
       <view class='bottom-box'>
         <view class='bottomSelect'>
           <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="my-check"/>
@@ -131,15 +146,30 @@
           </view>
         </view>
         <view class='item-btn'>
-          <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+          <view style='{{isSelect}}'>
+            <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
           <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+          </view>
           <view style='float:right'>
             <view class='select-list select-right' data-index="{{index}}"  data-name="{{item.item_id}}" data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
           </view>
         </view>
       </view>
     </view>
-    <view class='bottom'>
+   <view class='bottom' style='{{isEdit}}'>
+      <view class='bottom-box'>
+        <view class='bottomSelect' bindtap='editClick'>
+          <image style='width:36rpx; height:36rpx; margin:28rpx 20rpx 0 40rpx; float:left;' src='../../image/caozuo@3x.png'></image>
+          <view style='font-size: 26rpx; color: #3E3A39; float:left; margin-top:28rpx;'>编辑</view>
+        </view>
+        <view class='bot-right'>
+          <view class='bottom-list' style='background-color:#fff' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
+          <view class='bottom-list' style='background-color:#fff' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
+          <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品删除' data-value='delete' bindtap="createItem">创建</view>
+        </view>
+      </view>  
+    </view>
+    <view class='bottom' style='{{isSelect}}'>
       <view class='bottom-box'>
         <view class='bottomSelect'>
           <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="my-check"/>
@@ -176,19 +206,34 @@
           </view>
         </view>
         <view class='item-btn'>
-          <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+         <view style='{{isSelect}}'>
+            <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
           <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+          </view>
           <view style='float:right'>
             <view class='select-list select-right' data-index="{{index}}" data-title='商品恢复' data-value='restore' data-name="{{item.item_id}}" bindtap="delete">恢复</view>
           </view>
         </view>
       </view>
     </view>
-    <view class='bottom'>
+    <view class='bottom' style='{{isEdit}}'>
+      <view class='bottom-box'>
+        <view class='bottomSelect' bindtap='editClick'>
+          <image style='width:36rpx; height:36rpx; margin:28rpx 20rpx 0 40rpx; float:left;' src='../../image/caozuo@3x.png'></image>
+          <view style='font-size: 26rpx; color: #3E3A39; float:left; margin-top:28rpx;'>编辑</view>
+        </view>
+        <view class='bot-right'>
+          <view class='bottom-list' style='background-color:#fff' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
+          <view class='bottom-list' style='background-color:#fff' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
+          <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品删除' data-value='delete' bindtap="createItem">创建</view>
+        </view>
+      </view>  
+    </view>
+    <view class='bottom' style='{{isSelect}}'>
       <view class='bottom-box'>
         <view class='bottomSelect'>
-          <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="my-check"/>
-          <icon bindtap="bindSelectAll" wx:else type="circle" size="20" class="my-check"/>
+          <icon bindtap="SelectAll" wx:if="{{selectedAll}}" color='#FF3649' type="success_circle" size="20" class="my-check"/>
+          <icon bindtap="SelectAll" wx:else type="circle" size="20" class="my-check"/>
           <text class='total'>全选</text>
         </view>
         <view class='bot-right'>

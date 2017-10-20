@@ -11,6 +11,7 @@ page {
   margin: 20rpx 30rpx;
   background-color: #fff; 
   border-radius: 20rpx;
+  position: relative;
 }
 .header-status{
   float: right;
@@ -26,11 +27,18 @@ page {
   margin-right: 10rpx;
 }
 .header-logo{
+  position: absolute;
   height: 150rpx;
-  text-align: center;
-  padding-top: 60rpx;
+  width: 150rpx;
+  left: 50%;
+  margin-left: -75rpx;
+  border-radius: 50%;
+  margin-top: 60rpx;
+  background-color: #efefef;
+  border: 2rpx solid #efefef;
 }
 .header-logo image{
+  display: block;
   height: 150rpx;
   width: 150rpx;
   border-radius: 50%;
@@ -40,7 +48,7 @@ page {
   text-align: center;
   font-size: 30rpx;
   color: #3e3a39;
-  padding: 30rpx 0;
+  padding: 230rpx 0 30rpx 0;
 }
 .header-tel{
   text-align: center;

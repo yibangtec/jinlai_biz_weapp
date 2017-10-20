@@ -35,7 +35,7 @@
   </view>
   <view class='temp-list' data-sum="1" data-img="url_logo" data-text="LOGO" data-name="url_logo" bindtap="edit_img" wx:else>
     <view class='left' style='line-height: 70rpx;'>LOGO</view>
-    <view class="right"><image src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{biz.url_logo}}"></image></view>
+    <view class="right"><image class='detailImg' src="https://jinlaisandbox-images.b0.upaiyun.com/biz/{{biz.url_logo}}"></image></view>
   </view>
 
   <view class='temp-list' data-text="宣传语" data-name="slogan" bindtap="edit_name" wx:if="{{biz.slogan == '' || biz.slogan == null}}">

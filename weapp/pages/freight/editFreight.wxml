@@ -1,0 +1,64 @@
+<!--pages/freight/createFreight.wxml-->
+<view class='error-tips' style='{{errorStyle}}'>
+  <view class='tips-text'>错误提示 ： {{errorTips}}</view>
+</view>
+<view class='temp-box'>
+  <view class='necessary-tips'>必填项以“※”符号标示；修改后不影响已有订单</view>
+  <view class='lable'>名称 <text class='must'>*</text></view>
+  <input class='fre-input' type='text' bindblur='getName' placeholder-class="input-placeholder" value='{{tempObj.name}}' placeholder='请输入'></input>
+  <view class='lable'>类型 <text class='must'>*</text></view>
+  <view class='voucher' wx:if="{{tempObj.type==''}}">包邮</view>
+  <view class='voucher' wx:else>{{tempObj.type}}</view>
+  <view class='free-postage' style='{{freePostage}}'>
+    
+  </view>
+  <view class='logistics' style='{{logistics}}'>
+    <view class='voucher-tips'>若以下全部留空，则默认在确认接单3个自然日内发货，包邮（计费方式为“计件”）</view>
+    <view class='lable'>最晚发货时间</view>
+    <picker bindchange="bindPickerChange" value="{{index.name}}" range="{{objectArray}}" range-key="name">
+        <view class="picker">
+          <input class='fre-input' disabled="true" value="{{objectArray[index].name}}" placeholder="{{tempObj.time_latest_deliver}}" />
+        </view>
+      </picker>
+    <view class='lable'>计费方式</view>
+    <view class='temp-type outer'>
+      <view data-type='piece' bindtap='chargingClick' class='charging-left {{chargingTab.piece}}'>计件</view>
+      <view style='border-right:2rpx solid #c9caca;' data-type='suttle' bindtap='chargingClick' class='charging-center {{chargingTab.suttle}}'>净重</view>
+      <view data-type='gross' bindtap='chargingClick' class='charging-center {{chargingTab.gross}}'>毛重</view>
+      <view data-type='volume' bindtap='chargingClick' class='charging-right {{chargingTab.volume}}'>体积重</view>
+    </view>
+    <view class='voucher-tips'>计量单位为“件”（计件时）、“KG”（计净重/毛重/体积重时）</view>
+    <view class='lable'>每单最高配送计件量（件）</view>
+    <input class='fre-input' type='number' placeholder-class="input-placeholder" bindblur='getMax' value='{{tempObj.max_amount}}' placeholder='请输入'></input>
+    <view class='lable'>起始量（件）</view>
+    <input class='fre-input' type='number' placeholder-class="input-placeholder" bindblur='getStart' value='{{tempObj.start_amount}}' placeholder='请输入'></input>
+    <view class='lable'>起始量运费（元）</view>
+    <input class='fre-input' type='digit' placeholder-class="input-placeholder" bindblur='getStartMoney' value='{{tempObj.fee_start}}' placeholder='请输入'></input>
+    <view class='lable'>超出后运费（元/件）</view>
+    <input class='fre-input' type='digit' placeholder-class="input-placeholder" bindblur='getUnitMoney' value='{{tempObj.fee_unit}}' placeholder='请输入'></input>
+  </view>
+  <view class='electron' style='{{electron}}'>
+    <view class='voucher-tips'>若全部留空，则电子凭证自用户付款时起366个自然日内有效，逾期全额退款</view>
+    <view class='lable'>有效起始时间</view>
+    <input class='fre-input' disabled='true' bindtap="startTap" value='{{startDate}}' placeholder='请选择'></input>
+    <view class='lable'>有效结束时间</view>
+    <input class='fre-input' disabled='true' bindtap="endTap" value='{{endDate}}' placeholder='请选择'></input>
+    <view class='lable'>有效期(天)</view>
+    <input class='fre-input' value='{{period}}' type='text' placeholder-class="input-placeholder" ></input>
+    <view class='input-tips'>若填写了此项，则有效期将根据订单付款时间及此项数值自动计算，若超出上述“有效期结束时间”，则以“有效期结束时间”为准。</view>
+    <view class='lable'>过期退款比例</view>
+    <input class='fre-input' type='digit' value='{{tempObj.expire_refund_rate}}' placeholder-class="input-placeholder" placeholder='请输入'></input>
+    <view class='input-tips'>若电子凭证逾期未使用，系统将把该比例的用户付款项原路退回给用户。</view>
+  </view>
+  
+
+</view>
+
+<view  hover-class="other-button-hover" hover-start-time='20' hover-stay-time='70'  class='submit-btn' bindtap='editSubmit'>确定</view>
+
+
+
+
+
+<include src="../../utils/picker_datetime.wxml"/>
+

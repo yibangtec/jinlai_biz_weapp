@@ -143,7 +143,7 @@ Page({
           });
           if (biz.url_logo !== '') {
             var url_logo = []
-              url_logo[0] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + url_logo[i]
+            url_logo[0] = 'https://jinlaisandbox-images.b0.upaiyun.com/biz/' + biz.url_logo
             
             that.setData({
               url_logoImageSrc: url_logo,
@@ -272,7 +272,6 @@ Page({
       })
     }
     //获取返回结果并保存到本地biz表，将各字段赋值到form_edit中相应字段作为原始字段值
-
    
   },
   getName:function(e){

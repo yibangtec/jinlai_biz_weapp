@@ -1,7 +1,7 @@
 <!--edit.wxml-->
 <view class='temp-box'>
   <view class='tips-title'>必填项以“*”符号标示</view>
-  <view class='label-text'>所属系统分类<text> {{index.name}}</text></view>
+  <view class='label-text'>所属系统分类<text> {{category_id}}</text></view>
   <view class='tips'>系统分类有客服修改</view>
 
   <view class='label-text'>店内分类</view>
@@ -19,11 +19,10 @@
   <view class='label-text'>主图<text class='must'> *</text></view>
   <view class='tips'>正方形图片视觉效果最佳</view>
   <view class="page-body-info">
-        <block wx:for="{{mainImageSrc}}" wx:key="{{index}}">
-          <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill">
-            <image index="{{index}}" bindtap="closeImgMain" class="close" src="../../image/shanchu@3x.png"></image>
-          </image>
-        </block>
+        <view wx:for="{{mainImageSrc}}" wx:key="{{index}}" style="position: relative;">
+          <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill" style='margin:0 0 20rpx 20rpx'></image>
+          <image index="{{index}}" bindtap="closeImgMain" class="close" src="../../image/shanchu@3x.png"></image>
+        </view>
         <view style="{{dis}}">
           <view class="image-plus" bindtap="chooseImageMain">
             <view class="image-plus-horizontal"></view>
@@ -35,24 +34,32 @@
   <view class='label-text'>形象图</view>
   <view class='tips'>最多可上传4张图片</view>
   <view class="page-body-info">
-        <block wx:for="{{figureImageSrc}}" wx:key="{{index}}">
+        <view class='four-img' wx:for="{{figureImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill">
-            <image data-index="{{index}}" bindtap="closeImgFigure" class="close" src="../../image/shanchu@3x.png"></image>
+            
             <view style='visibility: hidden;' wx:if='{{figureImageSrc.length == 1}}'>
               
             </view>
             <view class='icon-box' wx:else>
-              <view class='icon-left' data-index="{{index}}" bindtap="moveLeft">
-                <image class="left-img" style='visibility: hidden;' src="../../image/left.png" wx:if='{{index==0}}'></image>
-                <image class="left-img" src="../../image/left.png" wx:else></image>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeft" style='border:none;' wx:if='{{index==0}}' >
+                <image class="left-img" style='visibility: hidden;' src="../../image/left.png"></image>
               </view>
-              <view class='icon-right' data-index="{{index}}" bindtap="moveRight">
-                <image class="right-img" style='visibility: hidden;' src="../../image/right.png" wx:if='{{index == (figureImageSrc.length-1)}}'></image>
-                <image class="right-img" src="../../image/right.png" wx:else></image>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeft" style='border:none;' wx:elif='{{index == (figureImageSrc.length-1)}}' >
+                <image class="left-img" src="../../image/left.png"></image>
+              </view>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeft"  wx:else>
+                <image class="left-img" src="../../image/left.png"></image>
+              </view>
+              <view class='icon-right' data-index="{{index}}" bindtap="moveRight" wx:if='{{index == (figureImageSrc.length-1)}}'>
+                <image class="right-img" style='visibility: hidden;' src="../../image/right.png"></image>
+              </view>
+              <view class='icon-right' data-index="{{index}}" bindtap="moveRight" wx:else>
+                <image class="right-img" src="../../image/right.png"></image>
               </view>
             </view>
-          </image>   
-        </block>
+          </image>
+          <image data-index="{{index}}" bindtap="closeImgFigure" class="close" src="../../image/shanchu@3x.png"></image>   
+        </view>
         <view style="{{disfig}}">
           <view class="image-plus" bindtap="chooseImageFigure">
             <view class="image-plus-horizontal"></view>

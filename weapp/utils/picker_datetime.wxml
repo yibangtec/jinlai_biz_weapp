@@ -5,13 +5,13 @@
   </view>
   <picker-view indicator-style="height: 40px;border-top:1px solid #eee;border-bottom:1px solid #eee;" value="{{pickDatetimeValue}}" bindchange="bindChange" style="height:{{pickerViewHeight}}rpx;">
     <picker-view-column>
-      <view wx:for="{{pickerDateTextArr}}" class="pick_datetime_column">{{item}}</view>
+      <view wx:for="{{pickerDateTextArr}}" class="pick_datetime_column" wx:key="{{index}}">{{item}}</view>
     </picker-view-column>
     <picker-view-column>
-     <view wx:for="{{pickerHourTextArr}}" class="pick_datetime_column">{{item}}</view>
+      <view wx:for="{{pickerHourTextArr}}" class="pick_datetime_column" wx:key="{{index}}">{{item}}</view>
     </picker-view-column>
     <picker-view-column>
-      <view wx:for="{{pickerMinuteTextArr}}" class="pick_datetime_column">{{item}}</view>
+      <view wx:for="{{pickerMinuteTextArr}}" class="pick_datetime_column" wx:key="{{index}}">{{item}}</view>
     </picker-view-column>
   </picker-view>
 </view>

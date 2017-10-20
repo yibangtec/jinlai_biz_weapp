@@ -1,3 +1,4 @@
 {
-  "navigationBarTitleText": "密码设置"
+  "navigationBarTitleText": "密码设置",
+  "enablePullDownRefresh": false
 }

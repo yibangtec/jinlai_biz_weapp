@@ -52,10 +52,16 @@ Page({
     if (value!=='null'){
       console.log(value)
       var arr = new Array
-      arr[0] = 'https://jinlaisandbox-images.b0.upaiyun.com/' +value
+      arr[0] = 'https://jinlaisandbox-images.b0.upaiyun.com/' + value
+      
       this.setData({
         mainImageSrc: arr,
       })
+      if (this.data.mainImageSrc.length >= 1) {
+        this.setData({
+          dis: 'display:none',
+        })
+      }
     } else if (value == 'null'){
       console.log(value)
       this.setData({
@@ -95,7 +101,6 @@ Page({
     var temp = that.data.mainImageSrc
     console.log('this is  upImg')
     for (var i = 0; i < temp.length; i++) {
-
       var time = tick(i, userId)
       mainImageUrl[i] = 'avatar/' + time
       console.log(time)

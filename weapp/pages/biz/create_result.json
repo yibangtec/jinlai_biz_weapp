@@ -1,3 +1,4 @@
 {
-  "navigationBarTitleText": "商家操作结果"
+  "navigationBarTitleText": "商家操作结果",
+  "enablePullDownRefresh": false
 }

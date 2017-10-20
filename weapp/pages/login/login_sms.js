@@ -81,7 +81,7 @@ Page({
         } else {
           o.setData({
             disableVer: true,
-            getVer: wait + "秒后重新发送"
+            getVer: wait + "后重新发送"
           })
           wait--;
           setTimeout(function () {
