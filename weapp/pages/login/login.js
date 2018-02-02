@@ -37,6 +37,7 @@ Page({
       }
     })
   },
+  
   login_sms:function(e){
     wx.navigateTo({
       url: 'login_sms'
@@ -48,10 +49,11 @@ Page({
     })
   },
   //手机号输入框失去焦点获取tel
-  getTel:function(e){
+  listenerPhoneInput:function(e){
     tel = e.detail.value
+  },
+  verifyTel: function (e) {
     var that = this
-
     var re = /^1\d{10}$/
     if (re.test(tel)) {
       that.setData({
@@ -68,61 +70,20 @@ Page({
       })
     }
   },
-  
   //失去焦点的时候获取pw
-  getPw:function(e){
+  listenerPasswordInput:function(e){
+    var that=this
     pw = e.detail.value
-    var re = /^[a-zA-Z0-9]{6,20}$/
-    if (re.test(pw)) {
-
-    } else {
-      wx.showToast({
-        title: '请输入正确的密码格式',
-        icon: 'loading',
-        duration: 2000
-      })
-      that.setData({
-        pwFocus: true,
-      })
-    }
+    
   },
   //点击确定判断pw,登录
   pwLogin:function(e){
     var that=this
-    var re = /^1\d{10}$/
-    if (re.test(tel)) {
+    var re = /^[a-zA-Z0-9]{6,20}$/
+    if (re.test(pw)) {
       that.setData({
         disbtn: false
       })
-    } else {
-      wx.showToast({
-        title: '请输入正确的手机号',
-        icon: 'loading',
-        duration: 2000
-      })
-      that.setData({
-        telFocus: true,
-      })
-    }
-    var reg = /^1\d{10}$/
-    if (reg.test(tel)) {
-      that.setData({
-        disbtn: false
-      })
-    } else {
-      wx.showToast({
-        title: '请输入正确的手机号',
-        icon: 'loading',
-        duration: 2000
-      })
-      that.setData({
-        telFocus: true,
-      })
-    }
-
-
-
-
       var url = 'account/login'
       var params = {}
       var api_result = api_request(url, params)
@@ -139,12 +100,12 @@ Page({
             'content-type': 'application/x-www-form-urlencoded'
           },
           url: app.globalData.url_api + url,
-          data: { password:pw, mobile: tel },
+          data: { password: pw, mobile: tel },
           success: function (result) {
             console.log('这个是登录时候存起来的user')
             console.log(result)
             var user = result.data
-            if (result.data.status==200){
+            if (result.data.status == 200) {
               wx.setStorage({
                 key: "user",
                 data: user
@@ -152,30 +113,45 @@ Page({
               wx.reLaunch({
                 url: '../../pages/mine/index'
               })
-            }else{
+            } else {
               wx.showToast({
                 title: result.data.content.error.message,
                 icon: 'loading',
                 duration: 2000
               })
             }
-           
+
             var timestamp = Date.parse(new Date())
-            var time_expire_login = timestamp + 90*24*3600*1000
+            var time_expire_login = timestamp + 90 * 24 * 3600 * 1000
             wx.setStorage({
               key: "time_expire_login",
               data: time_expire_login
             })
 
-           
+
           },
           fail: function (result) {
             console.log(result)
             wx.vibrateShort()
-            
+
           }
         })
       }
+    } else {
+      wx.showToast({
+        title: '密码最少6位',
+        icon: 'loading',
+        duration: 2000
+      })
+      that.setData({
+        telFocus: true,
+      })
+    }
+
+
+
+
+      
     
   },
 

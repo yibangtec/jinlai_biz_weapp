@@ -2,11 +2,11 @@
 <view class='passwordCon'>
   <view class='input-item'>
     <text>新密码</text>
-    <input type="text" password="true" placeholder="请输入密码" bindblur="getPw" focus="{{pwFocus}}" />
+    <input type="text" password="true" placeholder="请输入密码" bindinput="getPw" focus="{{pwFocus}}" auto-focus />
   </view>
   <view class='input-item' style='margin-bottom:120rpx;'>
     <text>确认密码</text>
-    <input type="text" password="true" placeholder="请确认密码" bindfocus="verifyPw" bindblur="getPwTow" focus="{{pwTowFocus}}" />
+    <input type="text" password="true" placeholder="请确认密码" bindfocus="verifyPw" bindinput="getPwTow" focus="{{pwTowFocus}}" />
   </view>
   <button class="submitBtn" style="opacity: {{opacity}};color: white; background-color: #ff3649;" disabled="{{disbtn}}" bindtap="pwSet"> 确定      </button>
 </view>

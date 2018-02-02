@@ -43,7 +43,8 @@
     "pages/freight/editFreight",
     "pages/freight/result",
     "pages/freight/detail",
-    "pages/freight/confirm"
+    "pages/freight/confirm",
+    "pages/order/orderDelivery"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",

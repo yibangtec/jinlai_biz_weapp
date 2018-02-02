@@ -107,7 +107,6 @@ Page({
           })
 
         }
-
         //获取本地user.biz_id值，若为空则结束并显示button_biz_create
         bizId = res.data.content.biz_id
         if (bizId == undefined || bizId ==''){

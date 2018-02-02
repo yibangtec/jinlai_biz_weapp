@@ -9,9 +9,8 @@
   <view class='lable'>类型 <text class='must'>*</text></view>
   <view class='voucher' wx:if="{{tempObj.type==''}}">包邮</view>
   <view class='voucher' wx:else>{{tempObj.type}}</view>
-  <view class='free-postage' style='{{freePostage}}'>
-    
-  </view>
+  <view class='free-postage' style='{{freePostage}}'></view>
+  
   <view class='logistics' style='{{logistics}}'>
     <view class='voucher-tips'>若以下全部留空，则默认在确认接单3个自然日内发货，包邮（计费方式为“计件”）</view>
     <view class='lable'>最晚发货时间</view>

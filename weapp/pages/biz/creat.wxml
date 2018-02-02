@@ -6,31 +6,31 @@
   <view class='label-text'>商务联系手机号：{{tel}}</view>
   <view class='tips'>我们将通过该号码与您联系，您可在入驻申请通过后，通过专属顾问修改信息。</view>
   <text class='label-text'>商家名称<text class='must'> *</text></text>
-  <input class='temp-input' type="text" maxlength="35" bindblur="getName" name="name" placeholder="须与营业执照一致" />
+  <input class='temp-input' type="text" maxlength="35" focus='{{nameFocus}}' bindinput="getName" name="name" placeholder="须与营业执照一致" auto-focus/>
   <view class='tips'>只支持中国大陆工商局或市场监督管理局登记的企业。请填写工商营业执照上的企业全称，该名称将作为后续所有费用的发票抬头</view>
   <text class='label-text'>简称<text class='must'> *</text></text>
-  <input class='temp-input' type="text" maxlength="15" bindfocus="verName" bindblur="getBrief_name" name="brief_name" placeholder="请输入" />
+  <input class='temp-input' type="text" maxlength="15" focus='{{briefnameFocus}}' bindfocus="verName" bindinput="getBrief_name" name="brief_name" placeholder="请输入" />
   <view class='label-text'>简介</view>
   <view class='textarea-box'>
-    <textarea class='temp-textarea' placeholder='最多255个字符，请简述企业主要经营范围，主营产品等信息。' bindblur="getDescription"></textarea>
+    <textarea class='temp-textarea' maxlength="255" placeholder='最多255个字符，请简述企业主要经营范围，主营产品等信息。' bindfocus="verBrief_name" bindinput="getDescription"></textarea>
   </view>
   <view class='label-text'>消费者服务电话<text class='must'> *</text></view>
-  <input class='temp-input' type="number" value="{{biz.tel_public}}"  bindblur="getTel_public" placeholder="400、800、手机号、带区号的固定电话均可" />
+  <input class='temp-input' type="number" value="{{biz.tel_public}}" focus='{{TelpublicFocus}}' bindfocus="verBrief_name" bindinput="getTel_public" placeholder="400、800、手机号、带区号的固定电话均可" />
   <view class='tips'>即客服电话，不要加空格或者是其他符号，固定电话请填写区号</view>
 </view>
 
 <view class='temp-box'>
   <view class='temp-title' style='border-bottom:2rpx solid #f6f6f6;'>资质信息</view>
   <view class='label-text'>工商注册号<text class='must'> *</text></view>
-  <input class='temp-input' type="text" bindblur="getCode_license" name="code_license" placeholder="如为三证合一，请填写统一社会信用代码" />
+  <input class='temp-input' type="text" focus='{{licenseFocus}}' bindfocus="verTel_public" bindinput="getCode_license" name="code_license" placeholder="如为三证合一，请填写统一社会信用代码" />
   <view class='tips'>请填写营业执照上的15位工商注册号；或三证合一后的统一社会信用代码。</view>
   <view class='label-text'>法人姓名<text class='must'> *</text></view>
-  <input class='temp-input' type="text" maxlength="15" bindblur="getFullname_owner" name="fullname_owner" placeholder="需与身份证一致" />
+  <input class='temp-input' type="text" maxlength="15" focus='{{ownerFocus}}' bindfocus="verCode_license"  bindinput="getFullname_owner" name="fullname_owner" placeholder="需与身份证一致" />
   <view class='tips'>按照营业执照上填写。如果属于分公司则填写工商营业执照上明确的负责人，个体工商请填写经营者姓名，合伙企业请填写合伙人姓名，个人独资企业请填写投资人姓名，企业法人的非法人分支机构填写负责人姓名。</view>
   <view class='label-text'>法人身份证号<text class='must'> *</text></view>
-  <input class='temp-input' type="idcard" bindblur="getCode_ssn_owner" name="code_ssn_owner" placeholder="请输入18位有效身份证号" />
+  <input class='temp-input' type="idcard" focus='{{ssnownerFocus}}' bindblur='verCode_ssn_owner'  bindinput="getCode_ssn_owner" name="code_ssn_owner" placeholder="请输入18位有效身份证号" />
   <view class='label-text'>经办人姓名</view>
-  <input class='temp-input' type="text" maxlength="15" bindblur="getFullname_auth" name="fullname_auth" placeholder="需与身份证一致" />
+  <input class='temp-input' type="text" maxlength="15" bindinput="getFullname_auth" name="fullname_auth" placeholder="需与身份证一致" />
   <view class='tips'>如果负责业务对接的不是法人本人，请填写此项</view>
   <view class='label-text'>经办人身份证号</view>
   <input class='temp-input'  bindblur="getCode_ssn_auth" name="code_ssn_auth" placeholder="请输入18位有效身份证号" />
@@ -66,9 +66,9 @@
   <view class='tips'>以下资料需要彩色原件的扫描件或数码照</view>
   <view class='label-text'>营业执照</view>
   <view class="page-body-info">
-        <view wx:for="{{licenseImageSrc}}" wx:key="{{index}}" style="position: relative;">
-          <image src="{{item}}" class="image" mode="aspectFill">
-            <image index="{{index}}" bindtap="closeImgLicense" class="close" src="../../image/shanchu@3x.png"></image>
+    <view wx:for="{{licenseImageSrc}}" wx:key="{{index}}" style="position: relative;">
+          <image src="{{item}}" class="image" mode="aspectFill" style='margin:0 0 20rpx 20rpx'>
+            <image data-index="{{index}}" bindtap="closeImgLicense" class="close" src="../../image/shanchu@3x.png"></image>
           </image>
         </view>
         <view style="{{disLicense}}">
@@ -76,16 +76,16 @@
             <view class="image-plus-horizontal"></view>
             <view class="image-plus-vertical"></view>
           </view>
-        </view>
+    </view>
   </view>
   <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgLicense">开始上传图片</button>
   <view class='label-text'>法人身份证</view>
   <view class="page-body-info">
-        <block wx:for="{{ownerImageSrc}}" wx:key="{{index}}">
-          <image src="{{item}}" class="image" mode="aspectFill">
-            <image index="{{index}}" bindtap="closeImgOwner" class="close" src="../../image/shanchu@3x.png"></image>
+        <view wx:for="{{ownerImageSrc}}" wx:key="{{index}}" style="position: relative;">
+          <image src="{{item}}" class="image" mode="aspectFill" style='margin:0 0 20rpx 20rpx'>
+            <image data-index="{{index}}" bindtap="closeImgOwner" class="close" src="../../image/shanchu@3x.png"></image>
           </image>
-        </block>
+        </view>
         <view style="{{disOwner}}">
           <view class="image-plus" bindtap="chooseImageOwner">
             <view class="image-plus-horizontal"></view>
@@ -97,11 +97,11 @@
   <view class='label-text'>经办人身份证</view>
   <view class='tips'>如果负责业务的不是法人本人，请上传经办人身份证</view>
   <view class="page-body-info">
-        <block wx:for="{{authImageSrc}}" wx:key="{{index}}">
-          <image src="{{item}}" class="image" mode="aspectFill">
-            <image index="{{index}}" bindtap="closeImgAuth" class="close" src="../../image/shanchu@3x.png"></image>
+        <view wx:for="{{authImageSrc}}" wx:key="{{index}}" style="position: relative;">
+          <image src="{{item}}" class="image" mode="aspectFill" style='margin:0 0 20rpx 20rpx'>
+            <image data-index="{{index}}" bindtap="closeImgAuth" class="close" src="../../image/shanchu@3x.png"></image>
           </image>
-        </block>
+        </view>
         <view style="{{disAuth}}">
           <view class="image-plus" bindtap="chooseImageAuth">
             <view class="image-plus-horizontal"></view>
@@ -112,11 +112,11 @@
   <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgAuth">开始上传图片</button>
   <view class='label-text'>经办人授权书</view>
   <view class="page-body-info">
-        <block wx:for="{{authDocImageSrc}}" wx:key="{{index}}">
-          <image src="{{item}}" class="image" mode="aspectFill">
+        <view wx:for="{{authDocImageSrc}}" wx:key="{{index}}" style="position: relative;">
+          <image src="{{item}}" class="image" mode="aspectFill" style='margin:0 0 20rpx 20rpx'>
             <image data-index="{{index}}" bindtap="closeImgAuthDoc" class="close" src="../../image/shanchu@3x.png"></image>
-          </image> 
-        </block>
+          </image>
+        </view>
         <view style="{{disAuthDoc}}">
           <view class="image-plus" bindtap="chooseImageAuthDoc">
             <view class="image-plus-horizontal"></view>
@@ -132,25 +132,33 @@
   <view class='tips'>您可根据自身情况上传合适的照片，向消费者展现企业形象，每种照片可上传4张</view>
   <view class='label-text'>产品</view>
   <view class="page-body-info">
-        <block wx:for="{{productImageSrc}}" wx:key="{{index}}">
+        <view class='four-img' wx:for="{{productImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill">
-            <image data-index="{{index}}" bindtap="closeImgProduct" class="close" src="../../image/shanchu@3x.png"></image>
+            
             <view style='visibility: hidden;' wx:if='{{productImageSrc.length == 1}}'>
               
             </view>
             <view class='icon-box' wx:else>
-              <view class='icon-left' style='{{disLeftImg}}' data-index="{{index}}" bindtap="moveLeftPt">
-                <image class="left-img" style='visibility: hidden;' src="../../image/left.png" wx:if='{{index==0}}'></image>
-                <image class="left-img" src="../../image/left.png" wx:else></image>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeftPt" style='border:none;' wx:if='{{index==0}}' >
+                <image class="left-img" style='visibility: hidden;' src="../../image/left.png"></image>
               </view>
-              <view class='icon-right' data-index="{{index}}" bindtap="moveRightPt">
-                <image class="right-img" style='visibility: hidden;' src="../../image/right.png" wx:if='{{index == (productImageSrc.length-1)}}'></image>
-                <image class="right-img" src="../../image/right.png" wx:else></image>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeftPt" style='border:none;' wx:elif='{{index == (productImageSrc.length-1)}}' >
+                <image class="left-img" src="../../image/left.png"></image>
+              </view>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeftPt"  wx:else>
+                <image class="left-img" src="../../image/left.png"></image>
+              </view>
+              <view class='icon-right' data-index="{{index}}" bindtap="moveRight" wx:if='{{index == (productImageSrc.length-1)}}'>
+                <image class="right-img" style='visibility: hidden;' src="../../image/right.png"></image>
+              </view>
+              <view class='icon-right' data-index="{{index}}" bindtap="moveRight" wx:else>
+                <image class="right-img" src="../../image/right.png"></image>
               </view>
             </view>
           </image>
-        </block>
-         <view style="{{disProduct}}">
+          <image data-index="{{index}}" bindtap="closeImgProduct" class="close" src="../../image/shanchu@3x.png"></image>   
+        </view>
+        <view style="{{disProduct}}">
           <view class="image-plus" bindtap="chooseImageProduct">
             <view class="image-plus-horizontal"></view>
             <view class="image-plus-vertical"></view>
@@ -160,25 +168,33 @@
   <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgProduct">开始上传图片</button>
   <view class='label-text'>工厂产地</view>
   <view class="page-body-info">
-        <block wx:for="{{produceImageSrc}}" wx:key="{{index}}">
+        <view class='four-img' wx:for="{{produceImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill">
-            <image data-index="{{index}}" bindtap="closeImgProduce" class="close" src="../../image/shanchu@3x.png"></image>
+            
             <view style='visibility: hidden;' wx:if='{{produceImageSrc.length == 1}}'>
               
             </view>
             <view class='icon-box' wx:else>
-              <view class='icon-left' data-index="{{index}}" bindtap="moveLeftCe">
-                <image class="left-img" style='visibility: hidden;' src="../../image/left.png" wx:if='{{index==0}}'></image>
-                <image class="left-img" src="../../image/left.png" wx:else></image>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeftPe" style='border:none;' wx:if='{{index==0}}' >
+                <image class="left-img" style='visibility: hidden;' src="../../image/left.png"></image>
               </view>
-              <view class='icon-right' data-index="{{index}}" bindtap="moveRightCe">
-                <image class="right-img" style='visibility: hidden;' src="../../image/right.png" wx:if='{{index == (produceImageSrc.length-1)}}'></image>
-                <image class="right-img" src="../../image/right.png" wx:else></image>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeftPe" style='border:none;' wx:elif='{{index == (produceImageSrc.length-1)}}' >
+                <image class="left-img" src="../../image/left.png"></image>
+              </view>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeftPe"  wx:else>
+                <image class="left-img" src="../../image/left.png"></image>
+              </view>
+              <view class='icon-right' data-index="{{index}}" bindtap="moveRight" wx:if='{{index == (produceImageSrc.length-1)}}'>
+                <image class="right-img" style='visibility: hidden;' src="../../image/right.png"></image>
+              </view>
+              <view class='icon-right' data-index="{{index}}" bindtap="moveRight" wx:else>
+                <image class="right-img" src="../../image/right.png"></image>
               </view>
             </view>
           </image>
-        </block>
-         <view style="{{disProduce}}">
+          <image data-index="{{index}}" bindtap="closeImgProduce" class="close" src="../../image/shanchu@3x.png"></image>   
+        </view>
+        <view style="{{disProduce}}">
           <view class="image-plus" bindtap="chooseImageProduce">
             <view class="image-plus-horizontal"></view>
             <view class="image-plus-vertical"></view>
@@ -188,25 +204,33 @@
   <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgProduce">开始上传图片</button>
   <view class='label-text'>门店柜台</view>
   <view class="page-body-info">
-        <block wx:for="{{retailImageSrc}}" wx:key="{{index}}">
+        <view class='four-img' wx:for="{{retailImageSrc}}" wx:key="{{index}}">
           <image src="{{item}}" class="image" mode="aspectFill">
-            <image data-index="{{index}}" bindtap="closeImgRetail" class="close" src="../../image/shanchu@3x.png"></image>
+            
             <view style='visibility: hidden;' wx:if='{{retailImageSrc.length == 1}}'>
               
             </view>
             <view class='icon-box' wx:else>
-              <view class='icon-left' data-index="{{index}}" bindtap="moveLeftRe">
-                <image class="left-img" style='visibility: hidden;' src="../../image/left.png" wx:if='{{index==0}}'></image>
-                <image class="left-img" src="../../image/left.png" wx:else></image>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeftRe" style='border:none;' wx:if='{{index==0}}' >
+                <image class="left-img" style='visibility: hidden;' src="../../image/left.png"></image>
               </view>
-              <view class='icon-right' data-index="{{index}}" bindtap="moveRightRe">
-                <image class="right-img" style='visibility: hidden;' src="../../image/right.png" wx:if='{{index == (retailImageSrc.length-1)}}'></image>
-                <image class="right-img" src="../../image/right.png" wx:else></image>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeftRe" style='border:none;' wx:elif='{{index == (retailImageSrc.length-1)}}' >
+                <image class="left-img" src="../../image/left.png"></image>
+              </view>
+              <view class='icon-left' data-index="{{index}}" bindtap="moveLeftRe"  wx:else>
+                <image class="left-img" src="../../image/left.png"></image>
+              </view>
+              <view class='icon-right' data-index="{{index}}" bindtap="moveRight" wx:if='{{index == (retailImageSrc.length-1)}}'>
+                <image class="right-img" style='visibility: hidden;' src="../../image/right.png"></image>
+              </view>
+              <view class='icon-right' data-index="{{index}}" bindtap="moveRight" wx:else>
+                <image class="right-img" src="../../image/right.png"></image>
               </view>
             </view>
           </image>
-        </block>
-         <view style="{{disRetail}}">
+          <image data-index="{{index}}" bindtap="closeImgRetail" class="close" src="../../image/shanchu@3x.png"></image>   
+        </view>
+        <view style="{{disRetail}}">
           <view class="image-plus" bindtap="chooseImageRetail">
             <view class="image-plus-horizontal"></view>
             <view class="image-plus-vertical"></view>
@@ -220,12 +244,12 @@
   <view class='temp-title' style='border-bottom:2rpx solid #f6f6f6;'>联系地址</view>
   <view class='label-text outer'>
     <view class='linkage'>省</view><view class='linkage'>市</view><view class='linkage'>区/县</view>
-    <view class='linkage'><input class='linkage-input' type="text" bindblur="getProvince" value="{{biz.province}}" placeholder="请输入"/></view>
-    <view class='linkage'><input class='linkage-input' type="text" bindblur="getCity" value="{{biz.city}}" placeholder="请输入"/></view>
-    <view class='linkage'><input class='linkage-input' style='margin-right: 0;' type="text" bindblur="getCounty" value="{{biz.county}}" placeholder="请输入"/></view>
+    <view class='linkage'><input class='linkage-input' type="text" bindinput="getProvince" value="{{biz.province}}" placeholder="请输入"/></view>
+    <view class='linkage'><input class='linkage-input' type="text" bindinput="getCity" value="{{biz.city}}" placeholder="请输入"/></view>
+    <view class='linkage'><input class='linkage-input' style='margin-right: 0;' type="text" bindinput="getCounty" value="{{biz.county}}" placeholder="请输入"/></view>
   </view>
   <view class='label-text'>具体地址</view>
-  <input class='temp-input' type="text"  bindblur="getStreet" value="{{biz.street}}" placeholder="请输入详细地址"/>
+  <input class='temp-input' type="text"  bindinput="getStreet" value="{{biz.street}}" placeholder="请输入详细地址"/>
 </view>
 <view class="btn-area">
     <button style='height:80rpx; font-size:30rpx; color:#fff; margin:0 40rpx 20rpx 40rpx; background-color:#ff3649; border-raidus:0;' disabled="{{disable}}" bindtap="submit">确定</button>

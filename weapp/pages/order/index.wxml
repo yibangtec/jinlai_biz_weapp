@@ -1,152 +1,92 @@
 <!--pages/order/index.wxml-->
+<view class='contain' style='{{tabDisplay}}' bindtap='tabNone'>
+  <view class='tab-list'>
+    <view class='tab-list-text {{currentObj.all}}' data-status='所有' bindtap='ListContent'>所有</view>
+    <view class='tab-list-text {{currentObj.jiedan}}' data-status='待接单' bindtap='ListContent'>待接单</view>
+    <view class='tab-list-text {{currentObj.fahuo}}' data-status='待发货' bindtap='ListContent'>待发货</view>
+    <view class='tab-list-text {{currentObj.shouhuo}}' data-status='待收货' bindtap='ListContent'>待收货</view>
+    <view class='tab-list-text {{currentObj.pignjia}}' data-status='待评价' bindtap='ListContent'>待评价</view>
+    <view class='tab-list-text {{currentObj.wancheng}}' data-status='已完成' bindtap='ListContent'>已完成</view>
+    <view class='tab-list-text {{currentObj.tuikuan}}' style='border-radius:0 0 12rpx 12rpx;' data-status='已退款' bindtap='ListContent'>已退款</view>
+  </view>
+</view>
 <view class='temp-box outer' style='position: relative;'>
-  <view class='tab'><view class='tab-text tab-current'>所有 <image class='tab-img' src='../../image/order/sanjiao@3x.png'></image> </view></view>
-  <view class='tab'><view class='tab-text'>待接单</view></view>
-  <view class='tab'><view class='tab-text'>带发货</view></view>
-  <view class='tab-list' style='display:none;'>
-    <view class='tab-list-text current-list'>所有</view>
-    <view class='tab-list-text'>待接单</view>
-    <view class='tab-list-text'>待发货</view>
-    <view class='tab-list-text'>待收货</view>
-    <view class='tab-list-text'>待评价</view>
-    <view class='tab-list-text'>已完成</view>
-    <view class='tab-list-text' style='border-radius:0 0 12rpx 12rpx;'>已退款</view>
-  </view>
-</view>
-<view style='display:none;'>
-  <view class='temp-box'>
-    <view class='order-title'>
-      <view class='order-id order-text'>订单ID</view><view class='payment order-text'>待付款</view>
-    </view>
-    <view class='order-text' style='margin: 0 20rpx;'>下单时间</view>
-    <view class='order-money outer'>
-      <view class='order-money-li'> 
-        <view class='shallow'>小计</view> 
-        <view class='account' style='color: #c9caca;'>¥11168.00</view>
-      </view>
-      <view class='order-money-li'> 
-        <view class='shallow'>应支付</view>
-        <view class='account'>¥11168.00</view>
-      </view>
-      <view class='order-money-li' style='border:none'> 
-        <view class='shallow'>已支付</view>
-        <view class='account'>¥11168.00</view>
-      </view>
-    </view>
-    <view class='item-btn outer'>
-      <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
-      <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
-      <view style='float:right'>
-        <view class='select-list select-left' data-name="{{item.item_id}}" bindtap='editItem'>编辑</view>
-        <view class='select-list select-right' data-index="{{index}}"  data-name="{{item.item_id}}" bindtap="delete">删除</view>
-      </view>
-    </view>
-    <image class='border-img' src='../../image/order/daifukuan@3x.png'></image>
-  </view>
-  <view class='bottom'>
-    <view class='bottom-box'>
-      <view class='bottomSelect'>
-        <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="bot-check"/>
-        <icon bindtap="bindSelectAll" wx:else type="circle" size="20" class="bot-check"/>
-        <text class='total'>全选</text>
-      </view>
-      <view class='bot-right'>
-        <view class='bottom-list' style='background-color:#fff'>上架</view>
-        <view class='bottom-list' style='background-color:#fff'>下架</view>
-        <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649'>备注</view>
-      </view>
-    </view>  
-  </view>
+  <view class='tab' bindtap='tabList'><view class='tab-text {{currentTab.first}}'>{{currentStatus}} <image class='tab-img' src='{{triangleSrc}}'></image> </view></view>
+  <view class='tab' bindtap='waitJiedan'><view class='tab-text {{currentTab.center}}'>待接单</view></view>
+  <view class='tab' bindtap='waitfahuo'><view class='tab-text {{currentTab.last}}'>待发货</view></view>
 </view>
 
-<view style='display:none;'>
-  <view class='temp-box'>
-    <view class='order-title'>
-      <view class='order-id order-text'>订单ID</view><view class='payment order-text'>待付款</view>
-    </view>
-    <view class='order-text' style='margin: 0 20rpx;'>下单时间</view>
-    <view class='order-money outer'>
-      <view class='order-money-li'> 
-        <view class='shallow'>小计</view> 
-        <view class='account' style='color: #c9caca;'>¥11168.00</view>
-      </view>
-      <view class='order-money-li'> 
-        <view class='shallow'>应支付</view>
-        <view class='account'>¥11168.00</view>
-      </view>
-      <view class='order-money-li' style='border:none'> 
-        <view class='shallow'>已支付</view>
-        <view class='account'>¥11168.00</view>
-      </view>
-    </view>
-    <view class='item-btn outer'>
-      <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
-      <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
-      <view style='float:right'>
-        <view class='select-list select-right' data-name="{{item.item_id}}" bindtap='editItem'>备注</view>
-        <view class='select-list select-right' data-name="{{item.item_id}}" bindtap='editItem'>退单</view>
-        <view class='select-list select-left' data-index="{{index}}"  data-name="{{item.item_id}}" bindtap="delete">接单</view>
-      </view>
-    </view>
-  </view>
-  <view class='bottom'>
-    <view class='bottom-box'>
-      <view class='bottomSelect'>
-        <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="bot-check"/>
-        <icon bindtap="bindSelectAll" wx:else type="circle" size="20" class="bot-check"/>
-        <text class='total'>全选</text>
-      </view>
-      <view class='bot-right'>
-        <view class='bottom-list' style='background-color:#fd9c55'>备注</view>
-        <view class='bottom-list' style='background-color:#fa7541'>退单</view>
-        <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649'>接单</view>
-      </view>
-    </view>  
-  </view>
-</view>
-
-<view>
-  <view class='temp-box'>
-    <view bindtap='orderDetail'>
+<view style='margin-bottom:110rpx'>
+  <view class='temp-box' wx:for="{{orderList}}" wx:key="{{index}}" style='margin-bottom:30rpx'>
+    <view bindtap='orderDetail' data-order='{{item.order_id}}'>
       <view class='order-title'>
-        <view class='order-id order-text'>订单ID</view><view class='payment order-text'>待付款</view>
+        <view class='order-id order-text'>订单ID {{item.order_id}}</view><view class='payment order-text'>{{item.status}}</view>
       </view>
-      <view class='order-text' style='margin: 0 20rpx;'>下单时间</view>
+      <view class='order-text' style='margin: 0 20rpx;'>下单时间 {{item.time_create}}</view>
       <view class='order-money outer'>
         <view class='order-money-li'> 
           <view class='shallow'>小计</view> 
-          <view class='account' style='color: #c9caca;'>¥11168.00</view>
+          <view class='account' style='color: #c9caca;'>¥ {{item.subtotal}}</view>
         </view>
         <view class='order-money-li'> 
           <view class='shallow'>应支付</view>
-          <view class='account'>¥11168.00</view>
+          <view class='account'>¥ {{item.total}}</view>
         </view>
         <view class='order-money-li' style='border:none'> 
           <view class='shallow'>已支付</view>
-          <view class='account'>¥11168.00</view>
+          <view class='account'>¥ {{item.total_payed}}</view>
         </view>
       </view>
     </view>
-    <view class='item-btn outer'>
-      <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
-      <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+    <view wx:if="{{item.status == '已关闭'}}"></view>
+    <view class='item-btn outer' wx:else>
+      <view style='{{selectedBtn}}'>
+        <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+        <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+      </view>
       <view style='float:right'>
-        <view class='select-list select-left' data-name="{{item.item_id}}" bindtap='editItem'>备注</view>
-        <view class='select-list select-right' data-index="{{index}}"  data-name="{{item.item_id}}" bindtap="delete">发货</view>
+        <view class='select-list' data-name="{{}}" bindtap='editItem'>备注</view>
+        <view class='select-list fahuo' data-index="{{index}}"  data-name="{{}}" bindtap="orderSend" wx:if="{{item.status == '待发货'}}">发货</view>
+        
+        <view style='float:left' wx:elif="{{item.status == '待付款'}}">
+          <view class='select-list' data-index="{{index}}"  data-name="{{}}" bindtap="orderSend" >拒绝</view>
+          <view class='select-list gaijia' data-index="{{index}}"  data-name="{{}}" bindtap="orderSend" >改价</view>
+        </view>
+        <view style='float:left' wx:elif="{{item.status == '待接单'}}">
+          <view class='select-list' data-index="{{index}}"  data-name="{{}}" bindtap="orderSend" >退单</view>
+        <view class='select-list jiedan' data-index="{{index}}"  data-name="{{}}" bindtap="orderSend" >接单</view>
+        </view>
+        
+        <view class='select-list' data-index="{{index}}"  data-name="{{}}" bindtap="orderSend" wx:elif="{{item.status == '已完成'}}">评价详情</view>
+        <view class='select-list' data-index="{{index}}"  data-name="{{}}" bindtap="orderSend" wx:if="{{item.status == '已退款'}}">退款详情</view>
       </view>
     </view>
+    <image wx:if="{{item.status == '待发货'}}" class='bottom-img' src='../../image/order/daifahuo@3x.png'></image>
+    <image wx:elif="{{item.status == '待付款'}}" class='bottom-img' src='../../image/order/daifukuan@3x.png'></image>
+    <image wx:elif="{{item.status == '待接单'}}" class='bottom-img' src='../../image/order/daijiedan@3x.png'></image>
+    <image wx:elif="{{item.status == '已关闭'}}" class='bottom-img' src='../../image/order/yiguanbi@3x.png'></image>
   </view>
-  <view class='bottom'>
+  <view class='bottom' style='{{selectedBtn}}'>
     <view class='bottom-box'>
       <view class='bottomSelect'>
         <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="bot-check"/>
         <icon bindtap="bindSelectAll" wx:else type="circle" size="20" class="bot-check"/>
         <text class='total'>全选</text>
+        
       </view>
+      <text class='total' bindtap='escEdit'>退出</text>
       <view class='bot-right'>
         <view class='bottom-list' style='background-color:#fff'>上架</view>
         <view class='bottom-list' style='background-color:#fa7541'>备注</view>
         <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649'>发货</view>
+      </view>
+    </view>  
+  </view>
+  <view class='bottom' style='{{orderEditBtn}}'>
+    <view class='bottom-box'>
+      <view class='bottomSelect' bindtap='editClick'>
+          <image style='width:36rpx; height:36rpx; margin:28rpx 20rpx 0 40rpx; float:left;' src='../../image/caozuo@3x.png'></image>
+          <view style='font-size: 26rpx; color: #3E3A39; float:left; margin-top:28rpx;'>编辑</view>
       </view>
     </view>  
   </view>

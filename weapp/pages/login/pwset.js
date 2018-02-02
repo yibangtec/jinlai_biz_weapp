@@ -28,7 +28,7 @@ Page({
       }
     })
   },
-  getPw:function(e){
+  bindinput:function(e){
     pw = e.detail.value
   },
   verifyPw:function(e){
@@ -49,7 +49,7 @@ Page({
       })
     }
   },
-  getPwTow:function(e){
+  bindinput:function(e){
     pwtow = e.detail.value
   },
   pwSet:function(){

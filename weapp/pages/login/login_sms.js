@@ -49,15 +49,27 @@ Page({
       url: 'login'
     })
   },
-  getTel:function(e){
+  listenerPhoneInput:function(e){
     tel = e.detail.value
   },
   //验证码input输入框获取焦点的时候
-  verifyTel:function(e){
+  verifyTel:function(e){ 
     var that = this
-    that.setData({
-      disbtn: false,
-    })
+    var re = /^1\d{10}$/
+    if (re.test(tel)) {
+      that.setData({
+        disbtn: false
+      })
+    } else {
+      wx.showToast({
+        title: '请输的手机号',
+        icon: 'loading',
+        duration: 2000
+      })
+      that.setData({
+        telFocus: true,
+      })
+    }
   },
   getCode:function(e){
     code = e.detail.value
@@ -139,7 +151,7 @@ Page({
 
     } else {
       wx.showToast({
-        title: '请输入正确的手机号',
+        title: '请输入手机号',
         icon: 'loading',
         duration: 2000
       })
@@ -199,7 +211,7 @@ Page({
       }
     } else {
       wx.showToast({
-        title: '请输入正确的验证码格式',
+        title: '验证码格式有误',
         icon: 'loading',
         duration: 2000
       })

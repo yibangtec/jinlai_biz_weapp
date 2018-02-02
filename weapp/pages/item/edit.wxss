@@ -185,21 +185,22 @@ input{
 
 
 
+.four-img{
+  position: relative; width:150rpx;height:150rpx;margin:0 0 20rpx 20rpx;
+}
 .image {
   width: 150rpx;
   height: 150rpx;
   display: block;
-  margin:0 0 20rpx 20rpx;
-  border-radius: 15rpx;
-  position: relative;
+  border-radius: 15rpx; 
 }
 .close{
+  position: absolute;
+  display: block;
   width: 32rpx;
   height: 32rpx;
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
+  top: -18rpx;
+  right:  -18rpx;
 }
 .icon-box{
   position: absolute;

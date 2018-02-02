@@ -163,6 +163,7 @@ page {
   padding: 20rpx 0;
   border-radius: 15rpx 0 0 15rpx;
   border: 2rpx solid #c9caca;
+  
 }
 .type-center{
   width: 33.33333333%;
@@ -197,6 +198,17 @@ page {
   padding: 20rpx 0;
   border-radius: 15rpx 0 0 15rpx;
   border: 2rpx solid #c9caca;
+}
+.charging-suttle{
+  width: 25%;
+  float: left;
+  text-align: center;
+  color: #3E3A39;
+  box-sizing: border-box;
+  font-size: 30rpx;
+  padding: 20rpx 0;
+  border: 2rpx solid #c9caca;
+  border-left: none;
 }
 .charging-center{
   width: 25%;

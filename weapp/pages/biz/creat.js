@@ -96,7 +96,13 @@ Page({
     disProduce: 'display:block',
     disRetail: 'display:block',
     lineUp:'display:block;',
-    firstIn:'display:none;'
+    firstIn:'display:none;',
+    nameFocus:false,
+    briefnameFocus: false,
+    TelpublicFocus: false,
+    licenseFocus: false,
+    ownerFocus: false,
+    ssnownerFocus:false,
   },
 
   /**
@@ -147,28 +153,50 @@ Page({
 
     }else{
       wx.showToast({
-        title: '商家全称输入字符长度应在5到35个',
+        title: '商家全称5到35字之间',
         icon: 'loading',
         duration: 2000
+      })
+      this.setData({
+        nameFocus: true,
       })
     }
   },
   getBrief_name: function (e) {
     brief_name = e.detail.value
   },
+  verBrief_name: function (e) {
+    var patrn = /^.{0,15}$/;
+    if (patrn.test(brief_name)) {
+
+    } else {
+      wx.showToast({
+        title: '商家简称最长15个字',
+        icon: 'loading',
+        duration: 2000
+      })
+      this.setData({
+        briefnameFocus: true,
+      })
+    }
+  },
   getDescription:function(e){
     description = e.detail.value
   },
   getTel_public: function (e) {
     tel_public = e.detail.value
+  },
+  verTel_public: function (e) {
     var patrn = /(^(400|800)\d{7})|(\d{3,4}(-){0,1}\d{7,8}$)/;
     if (patrn.test(tel_public)) {
-
     } else {
       wx.showToast({
         title: '消费者联系电话输入格式不正确',
         icon: 'loading',
         duration: 2000
+      })
+      this.setData({
+        TelpublicFocus: true,
       })
     }
   },
@@ -187,35 +215,44 @@ Page({
   },
   getFullname_owner:function(e){
     fullname_owner = e.detail.value
-
   },
   getFullname_auth:function(e){
     fullname_auth = e.detail.value
   },
   getCode_license: function (e) {
     code_license = e.detail.value
-    var patrn = /^[a-zA-Z0-9]{15,18}$/; 
-    if (patrn.test(code_license)) {
-    } else {
-      wx.showToast({
-        title: '请输入15-18位营业执照号',
-        icon: 'loading',
-        duration: 2000
-      })
-    }
     code_license = code_license.toLowerCase()
     console.log(code_license)
   },
+  verCode_license: function (e) {
+    var patrn = /^[a-zA-Z0-9]{15,18}$/;
+    if (patrn.test(code_license)) {
+    } else {
+      wx.showToast({
+        title: '工商注册号15-18位',
+        icon: 'loading',
+        duration: 2000
+      })
+      this.setData({
+        licenseFocus: true,
+      })
+    }
+  },
   getCode_ssn_owner: function (e) {
     code_ssn_owner = e.detail.value
+  },
+  verCode_ssn_owner: function (e) {
     var isIDCard2 = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X|x)$/;
     if (isIDCard2.test(code_ssn_owner)) {
 
     } else {
       wx.showToast({
-        title: '请输入18正确格式法人身份证号',
+        title: '法人身份证号格式错误',
         icon: 'loading',
         duration: 2000
+      })
+      this.setData({
+        ssnownerFocus: true,
       })
     }
   },
@@ -257,6 +294,18 @@ Page({
         duration: 2000
       })
     }
+  },
+  getProvince:function(e){
+    province = e.detail.value
+  },
+  getCity: function (e) {
+    city = e.detail.value
+  },
+  getCounty: function (e) {
+    county = e.detail.value
+  },
+  getStreet: function (e) {
+    street = e.detail.value
   },
   //营业执照
   chooseImageLicense: function () {

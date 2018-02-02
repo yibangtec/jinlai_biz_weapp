@@ -48,7 +48,7 @@ function tr(s, bizId) {
   var ss = objD.getSeconds() + s;
   if (ss < 10) ss = '0' + ss;
   u = u.toString()
-  str = yy + MM + '/' + MM + dd + '/' + hh + mm + ss + u + '.mp4';
+  str = yy + '/' + MM + dd + '/' + hh + mm + ss + u + '.mp4';
   return str;
 }
 var app = getApp();

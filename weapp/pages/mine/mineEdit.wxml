@@ -3,7 +3,7 @@
 
 <view class='temp-box'>
   <view class='label-text'>昵称修改</view>
-  <input class='temp-input' placeholder='请输入' value='{{value}}' bindblur='getValue'></input>
+  <input class='temp-input' placeholder='请输入' value='{{value}}' bindinput='getValue'></input>
 </view>
 
 <view class="btn-area">

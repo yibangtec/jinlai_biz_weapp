@@ -77,9 +77,9 @@
           </view>
           <view style='margin-left:80rpx' bindtap='detailClick' data-tem='{{item.template_id}}' data-biz='{{item.biz_id}}'>{{item.name}}</view>
         </view>
-        <view class='tab all-text'>{{item.type}}</view>
+        <view class='tab all-text' bindtap='detailClick' data-tem='{{item.template_id}}' data-biz='{{item.biz_id}}'>{{item.type}}</view>
         <view class='tab all-text'>
-          <view class='temp-edit'>编辑</view>
+          <view class='temp-edit'  bindtap='editBtn' data-tem='{{item.template_id}}' data-biz='{{item.biz_id}}'>编辑</view>
           <view class='temp-del' data-tem='{{item.template_id}}' data-value='restore'  bindtap='backTem'>恢复</view>
         </view>
       </view>
@@ -113,9 +113,11 @@
     <input class='fre-input' type='text' placeholder-class="input-placeholder" maxlength="20" bindblur='getName' placeholder='请输入'></input>
     <view class='lable'>类型 <text class='must'>*</text></view>
     <view class='temp-type outer'>
-      <view data-type='freePostage' bindtap='typeClick' class='type-left {{tab.freePostage}}'>包邮</view>
+      <view data-type='freePostage' bindtap='typeClick' class='type-left {{tab.freePostage}}' style='border-right: none;' wx:if="{{tab.logistics == 'type-current'}}">包邮</view>
+      <view data-type='freePostage' bindtap='typeClick' class='type-left {{tab.freePostage}}'  wx:else>包邮</view>
       <view data-type='logistics' bindtap='typeClick' class='type-center {{tab.logistics}}'>物流配送</view>
-      <view data-type='electron' bindtap='typeClick' class='type-right {{tab.electron}}'>电子凭证</view>
+      <view data-type='electron' bindtap='typeClick' class='type-right {{tab.electron}}' style='border-left: none;' wx:if="{{tab.logistics == 'type-current'}}">电子凭证</view>
+      <view data-type='electron' bindtap='typeClick' class='type-right {{tab.electron}}' wx:else>电子凭证</view>
     </view>
     <view class='free-postage' style='{{typeContent.freePostage}}'>
     
@@ -130,10 +132,13 @@
       </picker>
       <view class='lable'>计费方式</view>
       <view class='temp-type outer'>
-        <view data-type='piece' bindtap='chargingClick' class='charging-left {{chargingTab.piece}}'>计件</view>
-        <view style='border-right:2rpx solid #c9caca;' data-type='suttle' bindtap='chargingClick' class='charging-center {{chargingTab.suttle}}'>净重</view>
+        <view data-type='piece' bindtap='chargingClick' class='charging-left {{chargingTab.piece}}' style='border-right: none;' wx:if="{{chargingTab.suttle == 'type-current'}}">计件</view>
+        <view data-type='piece' bindtap='chargingClick' class='charging-left {{chargingTab.piece}}' wx:else>计件</view>
+        <view style='border-right:none;' data-type='suttle' bindtap='chargingClick' class='charging-center {{chargingTab.suttle}}' wx:if="{{chargingTab.gross == 'type-current'}}">净重</view>
+        <view data-type='suttle' bindtap='chargingClick' class='charging-suttle {{chargingTab.suttle}}' wx:else>净重</view>
         <view data-type='gross' bindtap='chargingClick' class='charging-center {{chargingTab.gross}}'>毛重</view>
-        <view data-type='volume' bindtap='chargingClick' class='charging-right {{chargingTab.volume}}'>体积重</view>
+        <view data-type='volume' bindtap='chargingClick' class='charging-right {{chargingTab.volume}}' style='border-left:none;' wx:if="{{chargingTab.gross == 'type-current'}}">体积重</view>
+        <view data-type='volume' bindtap='chargingClick' class='charging-right {{chargingTab.volume}}' wx:else>体积重</view>
       </view>
       <view class='voucher-tips'>计量单位为“件”（计件时）、“KG”（计净重/毛重/体积重时）</view>
       <view class='lable'>每单最高配送计件量（件）</view>

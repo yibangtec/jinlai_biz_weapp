@@ -114,20 +114,69 @@ page {
   height: 4rpx;
   transform: translate(-50%, -50%);
 }
+
+.four-img{
+  position: relative; width:150rpx;height:150rpx;margin:0 0 20rpx 20rpx;
+}
 .image {
   width: 150rpx;
   height: 150rpx;
   display: block;
-  margin:0 0 20rpx 20rpx;
-  border-radius: 15rpx;
-  position: relative;
+  border-radius: 15rpx; 
 }
-
 .close{
+  position: absolute;
+  display: block;
+  width: 32rpx;
+  height: 32rpx;
+  top: -18rpx;
+  right:  -18rpx;
+}
+.icon-box{
+  position: absolute;
+  width: 150rpx;
+  height: 20rpx;
+  padding: 10rpx 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  bottom: 0;
+  border-radius: 0 0 15rpx 15rpx;
+}
+.icon-box .icon-left{
+  float: left;
+  width: 50%;
+  box-sizing: border-box;
+  border-right: 1rpx solid #fff;
+}
+.icon-box .icon-right{
+  float: left;
+  width: 50%;
+}
+.left-img{
+  width: 20rpx;
+  height: 20rpx;
+  display: block;
+  margin-left: 25rpx; 
+}
+.right-img{
+  width: 20rpx;
+  height: 20rpx;
+  display: block;
+  margin-left:30rpx; 
+  
+}
+.left{
   width: 32rpx;
   height: 32rpx;
   display: block;
   position: absolute;
-  top: 0;
+  bottom: 0;
+  left: 0;
+}
+.right{
+  width: 32rpx;
+  height: 32rpx;
+  display: block;
+  position: absolute;
+  bottom: 0;
   right: 0;
 }

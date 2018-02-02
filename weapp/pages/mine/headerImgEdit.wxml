@@ -5,10 +5,10 @@
   <view class='label-text'>头像修改</view>
   <view class='tips'>正方形图片视觉效果最佳</view>
   <view class="page-body-info">
-        <view style='{{imgStyle}}' wx:for="{{mainImageSrc}}" wx:key="{{index}}">
+        <view class='four-img' style='{{imgStyle}}' wx:for="{{mainImageSrc}}" wx:key="{{index}}">
           <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill">
-            <image index="{{index}}" bindtap="closeImgMain" class="close" src="../../image/shanchu@3x.png"></image>
           </image>
+          <image index="{{index}}" bindtap="closeImgMain" class="close" src="../../image/shanchu@3x.png"></image>
         </view>
         <view style="{{dis}}">
           <view class="image-plus" bindtap="chooseImageMain">
@@ -16,7 +16,7 @@
             <view class="image-plus-vertical"></view>
           </view>
         </view>
-    </view>
+  </view>
   <button style='height:80rpx; margin:0 20rpx; border:1rpx solid #FF3649; font-size:30rpx; color:#FF3649;background-color:#fff; border-raidus:12rpx;' bindtap="upImgMain">开始上传图片</button>
 </view>
 <view class="btn-area">
