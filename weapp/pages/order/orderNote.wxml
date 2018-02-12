@@ -1,0 +1,12 @@
+<!--pages/order/orderDelivery.wxml-->
+
+<view class='temp-box' style='padding-bottom:20rpx;'>
+    <view class='lable'>员工备注</view>
+    <form bindsubmit="bindFormSubmit">
+        <textarea class='fre-input' placeholder="form 中的 textarea" name="textarea"/>
+        <button  class='sendOrderBtn' form-type="submit"> 确定 </button>
+    </form>
+    
+</view>
+
+  

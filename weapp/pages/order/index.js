@@ -1,5 +1,6 @@
 // pages/order/index.js
 var app = getApp()
+var multiple = ''
 var bizId = ''
 function formatDateTime(timeStamp) {
   var date = new Date();
@@ -44,8 +45,16 @@ Page({
       center:'',
       last:''
     },
+    currentBottom:'',  
     triangleSrc:'../../image/order/sanjiao@3x.png',
-
+    operationData:'',
+    all: 'display:none',
+    send: 'display:none',
+    daijiedan: 'display:none',
+    daishouhuo: 'display:none',
+    daipignjia: 'display:none',
+    yiwancheng: 'display:none',
+    yituikuan: 'display:none',
   },
 
   /**
@@ -68,7 +77,7 @@ Page({
         function api_request(url, api_params) {
           // 生成签名
           //console.log(bizId)
-          console.log(app.globalData.url_api + url)
+         
           app.sign_generate(api_params)
 
           wx.request({
@@ -77,7 +86,7 @@ Page({
               'content-type': 'application/x-www-form-urlencoded'
             },
             url: app.globalData.url_api + url,
-            data: { app_type: 'item', biz_id: bizId, limit: 10 },
+            data: { app_type: 'item', biz_id: bizId, },
             success: function (result) {
               var thisList = result.data.content
               if (result.data.status == 200) {
@@ -90,14 +99,16 @@ Page({
                   orderList: thisList,
                 });
               } else {
-
+                that.setData({ 
+                  orderList: [],
+                });
               }
               console.log(result)
             },
             fail: function (result) {
               console.log(result)
               wx.vibrateShort()
-            }
+            }       
           })
         }
       },
@@ -116,11 +127,7 @@ Page({
       url: 'detail?orderId=' + order_id
     })
   },
-  orderSend: function (e) {
-    wx.navigateTo({
-      url: 'orderDelivery'
-    })
-  },
+  
   tabList:function(e){
     
     
@@ -157,6 +164,7 @@ Page({
   },
   bindSelectAll: function (e) {
     var selectedAllStatus = this.data.selectedAllStatus;
+    console.log(selectedAllStatus)
     var selectedAll = !selectedAllStatus;
     var list = this.data.orderList;
 
@@ -189,21 +197,72 @@ Page({
       orderList: list
     });
   },
-  waitSend:function(e){
-    var that = this
-    var thisList = this.data.orderList
-    var thisArr = []
-    for (var i = 0; i < thisList.length; i++){
-      console.log('thisArr')
-      if (thisList[i].status == "待发货"){
-        console.log('thisArr')
-        thisArr.push(thisList[i])
+  orderSend: function (e) {
+    var orderId = e.currentTarget.dataset.id
+    var operationType = e.currentTarget.dataset.name
+    console.log(orderId)
+    var arr = []
+    var list = this.data.orderList
+    if (this.data.selectedAllStatus === true) {
+      console.log(this.data.selectedAllStatus)
+      for (var i = 0; i < list.length; i++) {
+        arr[i] = list[i]
       }
+      wx.setStorage({
+        key: 'list',
+        data: arr,
+      })
+    } else {
+      console.log(this.data.selectedAllStatus)
+      for (var i = 0; i < list.length; i++) {
+        if (list[i].selected === true) {
+          arr.push(list[i])
+        }
+      }
+      wx.setStorage({
+        key: 'list',
+        data: arr,
+      })
     }
-    console.log(thisArr)
-    that.setData({
-      orderList: thisArr
-    });
+    console.log(arr)
+    
+    wx.navigateTo({
+      url: 'orderOperation?id=' + orderId + '&opera=' + operationType,
+    })
+
+  },
+  
+  orderNote: function (e) {
+    var orderId = e.currentTarget.dataset.id
+    var operationType = e.currentTarget.dataset.name
+    console.log(orderId)
+    var arr = []
+    var list = this.data.orderList
+    if (this.data.selectedAllStatus === true) {
+      console.log(this.data.selectedAllStatus)
+      for (var i = 0; i < list.length; i++) {
+        arr[i] = list[i]
+      }
+      wx.setStorage({
+        key: 'list',
+        data: arr,
+      })
+    } else {
+      console.log(this.data.selectedAllStatus)
+      for (var i = 0; i < list.length; i++) {
+        if (list[i].selected === true) {
+          arr.push(list[i])
+        }
+      }
+      wx.setStorage({
+        key: 'list',
+        data: arr,
+      })
+    }
+    console.log(arr)
+    wx.navigateTo({
+      url: 'orderNote?id=' + orderId + '&opera=' + 'note',
+    })
   },
   ListContent:function(e){
     var that = this
@@ -226,22 +285,19 @@ Page({
             'content-type': 'application/x-www-form-urlencoded'
           },
           url: app.globalData.url_api + url,
-          data: { app_type: 'item', biz_id: bizId, limit: 10 },
+          data: { app_type: 'item', biz_id: bizId, limit: 20, status: '待接单' },
           success: function (result) {
             var thisList = result.data.content
             if (result.data.status == 200) {
-              var thisArr = []
+              
               for (var i = 0; i < thisList.length; i++) {
                 console.log('thisArr')
                 thisList[i].selected = false
                 thisList[i].time_create = formatDateTime(thisList[i].time_create)
-                if (thisList[i].status == "待接单") {
-                  //console.log(thisList[i])
-                  thisArr.push(thisList[i])
-                }
+                
               }
               that.setData({
-                orderList: thisArr,
+                orderList: thisList,
                 currentStatus: '待接单',
                 currentObj: {
                   all: '',
@@ -252,10 +308,51 @@ Page({
                   wancheng: '',
                   tuikuan: '',
                 },
+                currentTab: {
+                  first: 'tab-current',
+                  center: '',
+                  last: ''
+                },
                 triangleSrc: '../../image/order/sanjiao@3x.png',
+                all: 'display:none',
+                send: 'display:none',
+                daijiedan: 'display:block',
+                daishouhuo: 'display:none',
+                daipignjia: 'display:none',
+                yiwancheng: 'display:none',
+                yituikuan: 'display:none',
+                orderEditBtn: 'display:block',
+                selectedBtn: 'display:none',
               });
             } else {
-
+              that.setData({
+                orderList: [],
+                currentStatus: '待接单',
+                currentObj: {
+                  all: '',
+                  jiedan: 'current-list',
+                  fahuo: '',
+                  shouhuo: '',
+                  pignjia: '',
+                  wancheng: '',
+                  tuikuan: '',
+                },
+                currentTab: {
+                  first: 'tab-current',
+                  center: '',
+                  last: ''
+                },
+                triangleSrc: '../../image/order/sanjiao@3x.png',
+                all: 'display:none',
+                send: 'display:none',
+                daijiedan: 'display:none',
+                daishouhuo: 'display:none',
+                daipignjia: 'display:none',
+                yiwancheng: 'display:none',
+                yituikuan: 'display:none',
+                orderEditBtn: 'display:block',
+                selectedBtn: 'display:none',
+              });
             }
             console.log(result)
           },
@@ -285,22 +382,18 @@ Page({
             'content-type': 'application/x-www-form-urlencoded'
           },
           url: app.globalData.url_api + url,
-          data: { app_type: 'item', biz_id: bizId, limit: 10 },
+          data: { app_type: 'item', biz_id: bizId, limit: 20, status: '待发货' },
           success: function (result) {
             var thisList = result.data.content
             if (result.data.status == 200) {
-              var thisArr = []
+              
               for (var i = 0; i < thisList.length; i++) {
                 console.log('thisArr')
                 thisList[i].selected = false
                 thisList[i].time_create = formatDateTime(thisList[i].time_create)
-                if (thisList[i].status == "待发货") {
-                  //console.log(thisList[i])
-                  thisArr.push(thisList[i])
-                }
               }
               that.setData({
-                orderList: thisArr,
+                orderList: thisList,
                 currentStatus: '待发货',
                 currentObj: {
                   all: '',
@@ -311,10 +404,51 @@ Page({
                   wancheng: '',
                   tuikuan: '',
                 },
+                currentTab: {
+                  first: 'tab-current',
+                  center: '',
+                  last: ''
+                },
                 triangleSrc: '../../image/order/sanjiao@3x.png',
+                all: 'display:none',
+                send: 'display:block',
+                daijiedan: 'display:none',
+                daishouhuo: 'display:none',
+                daipignjia: 'display:none',
+                yiwancheng: 'display:none',
+                yituikuan: 'display:none',
+                orderEditBtn: 'display:block',
+                selectedBtn: 'display:none',
               });
             } else {
-
+              that.setData({
+                orderList: [],
+                currentStatus: '待发货',
+                currentObj: {
+                  all: '',
+                  jiedan: '',
+                  fahuo: 'current-list',
+                  shouhuo: '',
+                  pignjia: '',
+                  wancheng: '',
+                  tuikuan: '',
+                },
+                currentTab: {
+                  first: 'tab-current',
+                  center: '',
+                  last: ''
+                },
+                triangleSrc: '../../image/order/sanjiao@3x.png',
+                all: 'display:none',
+                send: 'display:none',
+                daijiedan: 'display:none',
+                daishouhuo: 'display:none',
+                daipignjia: 'display:none',
+                yiwancheng: 'display:none',
+                yituikuan: 'display:none',
+                orderEditBtn: 'display:block',
+                selectedBtn: 'display:none',
+              });
             }
             console.log(result)
           },
@@ -344,22 +478,19 @@ Page({
             'content-type': 'application/x-www-form-urlencoded'
           },
           url: app.globalData.url_api + url,
-          data: { app_type: 'item', biz_id: bizId, limit: 10 },
+          data: { app_type: 'item', biz_id: bizId, limit: 20, status: '待收货' },
           success: function (result) {
             var thisList = result.data.content
             if (result.data.status == 200) {
-              var thisArr = []
+              
               for (var i = 0; i < thisList.length; i++) {
                 console.log('thisArr')
                 thisList[i].selected = false
                 thisList[i].time_create = formatDateTime(thisList[i].time_create)
-                if (thisList[i].status == "待收货") {
-                  //console.log(thisList[i])
-                  thisArr.push(thisList[i])
-                }
+              
               }
               that.setData({
-                orderList: thisArr,
+                orderList: thisList,
                 currentStatus: '待收货',
                 currentObj: {
                   all: '',
@@ -370,10 +501,51 @@ Page({
                   wancheng: '',
                   tuikuan: '',
                 },
+                currentTab: {
+                  first: 'tab-current',
+                  center: '',
+                  last: ''
+                },
                 triangleSrc: '../../image/order/sanjiao@3x.png',
+                all: 'display:none',
+                send: 'display:none',
+                daijiedan: 'display:none',
+                daishouhuo: 'display:block',
+                daipignjia: 'display:none',
+                yiwancheng: 'display:none',
+                yituikuan: 'display:none',
+                orderEditBtn: 'display:block',
+                selectedBtn: 'display:none',
               });
             } else {
-
+              that.setData({
+                orderList: [],
+                currentStatus: '待收货',
+                currentObj: {
+                  all: '',
+                  jiedan: '',
+                  fahuo: '',
+                  shouhuo: 'current-list',
+                  pignjia: '',
+                  wancheng: '',
+                  tuikuan: '',
+                },
+                currentTab: {
+                  first: 'tab-current',
+                  center: '',
+                  last: ''
+                },
+                triangleSrc: '../../image/order/sanjiao@3x.png',
+                all: 'display:none',
+                send: 'display:none',
+                daijiedan: 'display:none',
+                daishouhuo: 'display:none',
+                daipignjia: 'display:none',
+                yiwancheng: 'display:none',
+                yituikuan: 'display:none',
+                orderEditBtn: 'display:block',
+                selectedBtn: 'display:none',
+              });
             }
             console.log(result)
           },
@@ -403,22 +575,19 @@ Page({
             'content-type': 'application/x-www-form-urlencoded'
           },
           url: app.globalData.url_api + url,
-          data: { app_type: 'item', biz_id: bizId, limit: 10 },
+          data: { app_type: 'item', biz_id: bizId, limit: 20, status: '待评价' },
           success: function (result) {
             var thisList = result.data.content
             if (result.data.status == 200) {
-              var thisArr = []
+              
               for (var i = 0; i < thisList.length; i++) {
                 console.log('thisArr')
                 thisList[i].selected = false
                 thisList[i].time_create = formatDateTime(thisList[i].time_create)
-                if (thisList[i].status == "待评价") {
-                  //console.log(thisList[i])
-                  thisArr.push(thisList[i])
-                }
+               
               }
               that.setData({
-                orderList: thisArr,
+                orderList: thisList,
                 currentStatus: '待评价',
                 currentObj: {
                   all: '',
@@ -429,10 +598,51 @@ Page({
                   wancheng: '',
                   tuikuan: '',
                 },
+                currentTab: {
+                  first: 'tab-current',
+                  center: '',
+                  last: ''
+                },
                 triangleSrc: '../../image/order/sanjiao@3x.png',
+                all: 'display:none',
+                send: 'display:none',
+                daijiedan: 'display:none',
+                daishouhuo: 'display:none',
+                daipignjia: 'display:block',
+                yiwancheng: 'display:none',
+                yituikuan: 'display:none',
+                orderEditBtn: 'display:block',
+                selectedBtn: 'display:none',
               });
             } else {
-
+              that.setData({
+                orderList: [],
+                currentStatus: '待评价',
+                currentObj: {
+                  all: '',
+                  jiedan: '',
+                  fahuo: '',
+                  shouhuo: '',
+                  pignjia: 'current-list',
+                  wancheng: '',
+                  tuikuan: '',
+                },
+                currentTab: {
+                  first: 'tab-current',
+                  center: '',
+                  last: ''
+                },
+                triangleSrc: '../../image/order/sanjiao@3x.png',
+                all: 'display:none',
+                send: 'display:none',
+                daijiedan: 'display:none',
+                daishouhuo: 'display:none',
+                daipignjia: 'display:none',
+                yiwancheng: 'display:none',
+                yituikuan: 'display:none',
+                orderEditBtn: 'display:block',
+                selectedBtn: 'display:none',
+              });
             }
             console.log(result)
           },
@@ -462,22 +672,19 @@ Page({
             'content-type': 'application/x-www-form-urlencoded'
           },
           url: app.globalData.url_api + url,
-          data: { app_type: 'item', biz_id: bizId, limit: 10 },
+          data: { app_type: 'item', biz_id: bizId, limit: 20, status: '已完成' },
           success: function (result) {
             var thisList = result.data.content
             if (result.data.status == 200) {
-              var thisArr = []
+              
               for (var i = 0; i < thisList.length; i++) {
                 console.log('thisArr')
                 thisList[i].selected = false
                 thisList[i].time_create = formatDateTime(thisList[i].time_create)
-                if (thisList[i].status == "已完成") {
-                  //console.log(thisList[i])
-                  thisArr.push(thisList[i])
-                }
+              
               }
               that.setData({
-                orderList: thisArr,
+                orderList: thisList,
                 currentStatus: '已完成',
                 currentObj: {
                   all: '',
@@ -488,10 +695,51 @@ Page({
                   wancheng: 'current-list',
                   tuikuan: '',
                 },
+                currentTab: {
+                  first: 'tab-current',
+                  center: '',
+                  last: ''
+                },
                 triangleSrc: '../../image/order/sanjiao@3x.png',
+                all: 'display:none',
+                send: 'display:none',
+                daijiedan: 'display:none',
+                daishouhuo: 'display:none',
+                daipignjia: 'display:none',
+                yiwancheng: 'display:block',
+                yituikuan: 'display:none',
+                orderEditBtn: 'display:block',
+                selectedBtn: 'display:none',
               });
             } else {
-
+              that.setData({
+                orderList: [],
+                currentStatus: '已完成',
+                currentObj: {
+                  all: '',
+                  jiedan: '',
+                  fahuo: '',
+                  shouhuo: '',
+                  pignjia: '',
+                  wancheng: 'current-list',
+                  tuikuan: '',
+                },
+                currentTab: {
+                  first: 'tab-current',
+                  center: '',
+                  last: ''
+                },
+                triangleSrc: '../../image/order/sanjiao@3x.png',
+                all: 'display:none',
+                send: 'display:none',
+                daijiedan: 'display:none',
+                daishouhuo: 'display:none',
+                daipignjia: 'display:none',
+                yiwancheng: 'display:none',
+                yituikuan: 'display:none',
+                orderEditBtn: 'display:block',
+                selectedBtn: 'display:none',
+              });
             }
             console.log(result)
           },
@@ -521,22 +769,19 @@ Page({
             'content-type': 'application/x-www-form-urlencoded'
           },
           url: app.globalData.url_api + url,
-          data: { app_type: 'item', biz_id: bizId, limit: 10 },
+          data: { app_type: 'item', biz_id: bizId, limit: 20, status: '已退款' },
           success: function (result) {
             var thisList = result.data.content
             if (result.data.status == 200) {
-              var thisArr = []
+              
               for (var i = 0; i < thisList.length; i++) {
                 console.log('thisArr')
                 thisList[i].selected = false
                 thisList[i].time_create = formatDateTime(thisList[i].time_create)
-                if (thisList[i].status == "已退款") {
-                  //console.log(thisList[i])
-                  thisArr.push(thisList[i])
-                }
+                
               }
               that.setData({
-                orderList: thisArr,
+                orderList: thisList,
                 currentStatus: '已退款',
                 currentObj: {
                   all: '',
@@ -547,10 +792,51 @@ Page({
                   wancheng: '',
                   tuikuan: 'current-list',
                 },
+                currentTab: {
+                  first: 'tab-current',
+                  center: '',
+                  last: ''
+                },
                 triangleSrc: '../../image/order/sanjiao@3x.png',
+                all: 'display:none',
+                send: 'display:none',
+                daijiedan: 'display:none',
+                daishouhuo: 'display:none',
+                daipignjia: 'display:none',
+                yiwancheng: 'display:none',
+                yituikuan: 'display:block',
+                orderEditBtn: 'display:block',
+                selectedBtn: 'display:none',
               });
             } else {
-
+              that.setData({
+                orderList: [],
+                currentStatus: '已退款',
+                currentObj: {
+                  all: '',
+                  jiedan: '',
+                  fahuo: '',
+                  shouhuo: '',
+                  pignjia: '',
+                  wancheng: '',
+                  tuikuan: 'current-list',
+                },
+                currentTab: {
+                  first: 'tab-current',
+                  center: '',
+                  last: ''
+                },
+                triangleSrc: '../../image/order/sanjiao@3x.png',
+                all: 'display:none',
+                send: 'display:none',
+                daijiedan: 'display:none',
+                daishouhuo: 'display:none',
+                daipignjia: 'display:none',
+                yiwancheng: 'display:none',
+                yituikuan: 'display:none',
+                orderEditBtn: 'display:block',
+                selectedBtn: 'display:none',
+              });
             }
             console.log(result)
           },
@@ -580,7 +866,7 @@ Page({
             'content-type': 'application/x-www-form-urlencoded'
           },
           url: app.globalData.url_api + url,
-          data: { app_type: 'item', biz_id: bizId, limit: 10 },
+          data: { app_type: 'item', biz_id: bizId, limit: 20, },
           success: function (result) {
             var thisList = result.data.content
             if (result.data.status == 200) {
@@ -609,7 +895,25 @@ Page({
                 triangleSrc: '../../image/order/sanjiao@3x.png',
               });
             } else {
-
+              that.setData({
+                orderList: [],
+                currentStatus: '所有',
+                currentObj: {
+                  all: 'current-list',
+                  jiedan: '',
+                  fahuo: '',
+                  shouhuo: '',
+                  pignjia: '',
+                  wancheng: '',
+                  tuikuan: '',
+                },
+                currentTab: {
+                  first: 'tab-current',
+                  center: '',
+                  last: ''
+                },
+                triangleSrc: '../../image/order/sanjiao@3x.png',
+              });
             }
             console.log(result)
           },
@@ -641,23 +945,19 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         url: app.globalData.url_api + url,
-        data: { app_type: 'item', biz_id: bizId, limit: 10 },
+        data: { app_type: 'item', biz_id: bizId, limit: 20, status: '待接单' },
         success: function (result) {
           var thisList = result.data.content
           if (result.data.status == 200) {
-            var thisArr = []
+            
             for (var i = 0; i < thisList.length; i++) {
               console.log('thisArr')
               thisList[i].selected = false
               thisList[i].time_create = formatDateTime(thisList[i].time_create)
-              if (thisList[i].status == "待接单") {
-                //console.log(thisList[i])
-                thisArr.push(thisList[i])
-              }
             }
-            console.log(thisArr)
+            
             that.setData({
-              orderList: thisArr,
+              orderList: thisList,
               currentStatus: '待接单',
               currentObj: {
                 all: '',
@@ -673,10 +973,46 @@ Page({
                 center: 'tab-current',
                 last: ''
               },
-              triangleSrc:'../../image/order/heisanjiao@3x.png'
+              triangleSrc:'../../image/order/heisanjiao@3x.png',
+              all: 'display:none',
+              send: 'display:none',
+              daijiedan: 'display:block',
+              daishouhuo: 'display:none',
+              daipignjia: 'display:none',
+              yiwancheng: 'display:none',
+              yituikuan: 'display:none',
+              orderEditBtn: 'display:block',
+              selectedBtn: 'display:none',
             });
           } else {
-
+            that.setData({
+              orderList: [],
+              currentStatus: '待接单',
+              currentObj: {
+                all: '',
+                jiedan: 'current-list',
+                fahuo: '',
+                shouhuo: '',
+                pignjia: '',
+                wancheng: '',
+                tuikuan: '',
+              },
+              currentTab: {
+                first: '',
+                center: 'tab-current',
+                last: ''
+              },
+              triangleSrc: '../../image/order/heisanjiao@3x.png',
+              all: 'display:none',
+              send: 'display:none',
+              daijiedan: 'display:none',
+              daishouhuo: 'display:none',
+              daipignjia: 'display:none',
+              yiwancheng: 'display:none',
+              yituikuan: 'display:none',
+              orderEditBtn: 'display:block',
+              selectedBtn: 'display:none',
+            });
           }
           console.log(result)
         },
@@ -706,22 +1042,19 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         url: app.globalData.url_api + url,
-        data: { app_type: 'item', biz_id: bizId, limit: 10 },
+        data: {
+          app_type: 'item', biz_id: bizId, limit: 20, status: '待发货' },
         success: function (result) {
           var thisList = result.data.content
           if (result.data.status == 200) {
-            var thisArr = []
+            
             for (var i = 0; i < thisList.length; i++) {
               console.log('thisArr')
               thisList[i].selected = false
               thisList[i].time_create = formatDateTime(thisList[i].time_create)
-              if (thisList[i].status == "待发货") {
-                //console.log(thisList[i])
-                thisArr.push(thisList[i])
-              }
             }
             that.setData({
-              orderList: thisArr,
+              orderList: thisList,
               currentStatus: '待发货',
               currentObj: {
                 all: '',
@@ -737,10 +1070,46 @@ Page({
                 center: '',
                 last: 'tab-current'
               },
-              triangleSrc: '../../image/order/heisanjiao@3x.png'
+              triangleSrc: '../../image/order/heisanjiao@3x.png',
+              all: 'display:none',
+              send: 'display:block',
+              daijiedan: 'display:none',
+              daishouhuo: 'display:none',
+              daipignjia: 'display:none',
+              yiwancheng: 'display:none',
+              yituikuan: 'display:none',
+              orderEditBtn: 'display:block',
+              selectedBtn: 'display:none',
             });
           } else {
-
+            that.setData({
+              orderList: [],
+              currentStatus: '待发货',
+              currentObj: {
+                all: '',
+                jiedan: '',
+                fahuo: 'current-list',
+                shouhuo: '',
+                pignjia: '',
+                wancheng: '',
+                tuikuan: '',
+              },
+              currentTab: {
+                first: '',
+                center: '',
+                last: 'tab-current'
+              },
+              triangleSrc: '../../image/order/heisanjiao@3x.png',
+              all: 'display:none',
+              send: 'display:none',
+              daijiedan: 'display:none',
+              daishouhuo: 'display:none',
+              daipignjia: 'display:none',
+              yiwancheng: 'display:none',
+              yituikuan: 'display:none',
+              orderEditBtn: 'display:block',
+              selectedBtn: 'display:none',
+            });
           }
           console.log(result)
         },
@@ -751,6 +1120,7 @@ Page({
       })
     }
   },
+  
   
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -791,7 +1161,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**

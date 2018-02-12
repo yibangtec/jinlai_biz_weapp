@@ -45,20 +45,20 @@
         <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
       </view>
       <view style='float:right'>
-        <view class='select-list' data-name="{{}}" bindtap='editItem'>备注</view>
-        <view class='select-list fahuo' data-index="{{index}}"  data-name="{{}}" bindtap="orderSend" wx:if="{{item.status == '待发货'}}">发货</view>
+        <view class='select-list' data-name="note" data-id='{{item.order_id}}' bindtap='orderNote'>备注</view>
+        <view class='select-list fahuo' data-id='{{item.order_id}}' data-name="deliver" bindtap="orderSend" wx:if="{{item.status == '待发货'}}">发货</view>
         
         <view style='float:left' wx:elif="{{item.status == '待付款'}}">
-          <view class='select-list' data-index="{{index}}"  data-name="{{}}" bindtap="orderSend" >拒绝</view>
-          <view class='select-list gaijia' data-index="{{index}}"  data-name="{{}}" bindtap="orderSend" >改价</view>
+          <view class='select-list' data-index="{{index}}"  data-name="refuse" bindtap="orderSend" >拒绝</view>
+          <view class='select-list gaijia' data-index="{{index}}"  data-name="reprice" bindtap="orderSend" >改价</view>
         </view>
         <view style='float:left' wx:elif="{{item.status == '待接单'}}">
           <view class='select-list' data-index="{{index}}"  data-name="{{}}" bindtap="orderSend" >退单</view>
-        <view class='select-list jiedan' data-index="{{index}}"  data-name="{{}}" bindtap="orderSend" >接单</view>
+        <view class='select-list jiedan' data-index="{{index}}"  data-name="accept" bindtap="orderSend" >接单</view>
         </view>
         
-        <view class='select-list' data-index="{{index}}"  data-name="{{}}" bindtap="orderSend" wx:elif="{{item.status == '已完成'}}">评价详情</view>
-        <view class='select-list' data-index="{{index}}"  data-name="{{}}" bindtap="orderSend" wx:if="{{item.status == '已退款'}}">退款详情</view>
+        <view class='select-list' data-index="{{index}}"  data-name="{{}}" bindtap="" wx:elif="{{item.status == '已完成'}}">评价详情</view>
+        <view class='select-list' data-index="{{index}}"  data-name="{{}}" bindtap="" wx:if="{{item.status == '已退款'}}">退款详情</view>
       </view>
     </view>
     <image wx:if="{{item.status == '待发货'}}" class='bottom-img' src='../../image/order/daifahuo@3x.png'></image>
@@ -66,19 +66,24 @@
     <image wx:elif="{{item.status == '待接单'}}" class='bottom-img' src='../../image/order/daijiedan@3x.png'></image>
     <image wx:elif="{{item.status == '已关闭'}}" class='bottom-img' src='../../image/order/yiguanbi@3x.png'></image>
   </view>
+</view>
+
+
+
+
+<view style='{{all}}'>
   <view class='bottom' style='{{selectedBtn}}'>
     <view class='bottom-box'>
       <view class='bottomSelect'>
         <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="bot-check"/>
         <icon bindtap="bindSelectAll" wx:else type="circle" size="20" class="bot-check"/>
         <text class='total'>全选</text>
-        
       </view>
       <text class='total' bindtap='escEdit'>退出</text>
       <view class='bot-right'>
         <view class='bottom-list' style='background-color:#fff'>上架</view>
-        <view class='bottom-list' style='background-color:#fa7541'>备注</view>
-        <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649'>发货</view>
+        <view class='bottom-list' style='background-color:#fff'>备注</view>
+        <view class='bottom-list' bindtap='orderNote' data-user="{{userId}}" style='background-color:#fa7541'>备注</view>
       </view>
     </view>  
   </view>
@@ -92,4 +97,159 @@
   </view>
 </view>
 
+<view style='{{send}}'>
+  <view class='bottom' style='{{selectedBtn}}'>
+    <view class='bottom-box'>
+      <view class='bottomSelect'>
+        <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="bot-check"/>
+        <icon bindtap="bindSelectAll" wx:else type="circle" size="20" class="bot-check"/>
+        <text class='total'>全选</text>
+      </view>
+      <text class='total' bindtap='escEdit'>退出</text>
+      <view class='bot-right'>
+        <view class='bottom-list' style='background-color:#fff'>上架</view>
+        <view class='bottom-list' bindtap='orderNote' style='background-color:#fa7541'>备注</view>
+        <view class='bottom-list' data-user="{{userId}}" style='background-color:#ff3649'>发货</view>
+      </view>
+    </view>  
+  </view>
+  <view class='bottom' style='{{orderEditBtn}}'>
+    <view class='bottom-box'>
+      <view class='bottomSelect' bindtap='editClick'>
+          <image style='width:36rpx; height:36rpx; margin:28rpx 20rpx 0 40rpx; float:left;' src='../../image/caozuo@3x.png'></image>
+          <view style='font-size: 26rpx; color: #3E3A39; float:left; margin-top:28rpx;'>编辑</view>
+      </view>
+    </view>  
+  </view>
+</view>
+
+<view style='{{daijiedan}}'>
+  <view class='bottom' style='{{selectedBtn}}'>
+    <view class='bottom-box'>
+      <view class='bottomSelect'>
+        <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="bot-check"/>
+        <icon bindtap="bindSelectAll" wx:else type="circle" size="20" class="bot-check"/>
+        <text class='total'>全选</text>
+      </view>
+      <text class='total' bindtap='escEdit'>退出</text>
+      <view class='bot-right'>
+        <view class='bottom-list' style='background-color:#fff'>上架</view>
+        <view class='bottom-list' bindtap='orderNote' style='background-color:#fa7541'>备注</view>
+        <view class='bottom-list' data-user="{{userId}}" style='background-color:#ff3649'>接单</view>
+      </view>
+    </view>  
+  </view>
+  <view class='bottom' style='{{orderEditBtn}}'>
+    <view class='bottom-box'>
+      <view class='bottomSelect' bindtap='editClick'>
+          <image style='width:36rpx; height:36rpx; margin:28rpx 20rpx 0 40rpx; float:left;' src='../../image/caozuo@3x.png'></image>
+          <view style='font-size: 26rpx; color: #3E3A39; float:left; margin-top:28rpx;'>编辑</view>
+      </view>
+    </view>  
+  </view>
+</view>
+
+<view style='{{daishouhuo}}'>
+  <view class='bottom' style='{{selectedBtn}}'>
+    <view class='bottom-box'>
+      <view class='bottomSelect'>
+        <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="bot-check"/>
+        <icon bindtap="bindSelectAll" wx:else type="circle" size="20" class="bot-check"/>
+        <text class='total'>全选</text>
+      </view>
+      <text class='total' bindtap='escEdit'>退出</text>
+      <view class='bot-right'>
+        <view class='bottom-list' style='background-color:#fff'>上架</view>
+        <view class='bottom-list' style='background-color:#fff'>备注</view>
+        <view class='bottom-list' bindtap='orderNote' data-user="{{userId}}" style='background-color:#fa7541'>备注</view>
+      </view>
+    </view>  
+  </view>
+  <view class='bottom' style='{{orderEditBtn}}'>
+    <view class='bottom-box'>
+      <view class='bottomSelect' bindtap='editClick'>
+          <image style='width:36rpx; height:36rpx; margin:28rpx 20rpx 0 40rpx; float:left;' src='../../image/caozuo@3x.png'></image>
+          <view style='font-size: 26rpx; color: #3E3A39; float:left; margin-top:28rpx;'>编辑</view>
+      </view>
+    </view>  
+  </view>
+</view>
+
+<view style='{{daipignjia}}'>
+  <view class='bottom' style='{{selectedBtn}}'>
+    <view class='bottom-box'>
+      <view class='bottomSelect'>
+        <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="bot-check"/>
+        <icon bindtap="bindSelectAll" wx:else type="circle" size="20" class="bot-check"/>
+        <text class='total'>全选</text>
+      </view>
+      <text class='total' bindtap='escEdit'>退出</text>
+      <view class='bot-right'>
+        <view class='bottom-list' style='background-color:#fff'>上架</view>
+        <view class='bottom-list' bindtap='orderNote' style='background-color:#fa7541'>备注</view>
+        <view class='bottom-list' data-user="{{userId}}" style='background-color:#ff3649'>评价</view>
+      </view>
+    </view>  
+  </view>
+  <view class='bottom' style='{{orderEditBtn}}'>
+    <view class='bottom-box'>
+      <view class='bottomSelect' bindtap='editClick'>
+          <image style='width:36rpx; height:36rpx; margin:28rpx 20rpx 0 40rpx; float:left;' src='../../image/caozuo@3x.png'></image>
+          <view style='font-size: 26rpx; color: #3E3A39; float:left; margin-top:28rpx;'>编辑</view>
+      </view>
+    </view>  
+  </view>
+</view>
+
+<view style='{{yiwancheng}}'>
+  <view class='bottom' style='{{selectedBtn}}'>
+    <view class='bottom-box'>
+      <view class='bottomSelect'>
+        <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="bot-check"/>
+        <icon bindtap="bindSelectAll" wx:else type="circle" size="20" class="bot-check"/>
+        <text class='total'>全选</text>
+      </view>
+      <text class='total' bindtap='escEdit'>退出</text>
+      <view class='bot-right'>
+        <view class='bottom-list' style='background-color:#fff'>上架</view>
+        <view class='bottom-list' bindtap='orderNote' style='background-color:#fa7541'>备注</view>
+        <view class='bottom-list' data-user="{{userId}}" style='background-color:#ff3649'>评价详情</view>
+      </view>
+    </view>  
+  </view>
+  <view class='bottom' style='{{orderEditBtn}}'>
+    <view class='bottom-box'>
+      <view class='bottomSelect' bindtap='editClick'>
+          <image style='width:36rpx; height:36rpx; margin:28rpx 20rpx 0 40rpx; float:left;' src='../../image/caozuo@3x.png'></image>
+          <view style='font-size: 26rpx; color: #3E3A39; float:left; margin-top:28rpx;'>编辑</view>
+      </view>
+    </view>  
+  </view>
+</view>
+
+<view style='{{yituikuan}}'>
+  <view class='bottom' style='{{selectedBtn}}'>
+    <view class='bottom-box'>
+      <view class='bottomSelect'>
+        <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="bot-check"/>
+        <icon bindtap="bindSelectAll" wx:else type="circle" size="20" class="bot-check"/>
+        <text class='total'>全选</text>
+      </view>
+      <text class='total' bindtap='escEdit'>退出</text>
+      <view class='bot-right'>
+        <view class='bottom-list' style='background-color:#fff'>上架</view>
+        <view class='bottom-list' bindtap='orderNote' style='background-color:#fa7541'>备注</view>
+        <view class='bottom-list' data-user="{{userId}}" style='background-color:#ff3649'>评价详情</view>
+      </view>
+    </view>  
+  </view>
+  <view class='bottom' style='{{orderEditBtn}}'>
+    <view class='bottom-box'>
+      <view class='bottomSelect' bindtap='editClick'>
+          <image style='width:36rpx; height:36rpx; margin:28rpx 20rpx 0 40rpx; float:left;' src='../../image/caozuo@3x.png'></image>
+          <view style='font-size: 26rpx; color: #3E3A39; float:left; margin-top:28rpx;'>编辑</view>
+      </view>
+    </view>  
+  </view>
+</view>
 

@@ -1,2 +1,68 @@
 <!--pages/order/orderOperation.wxml-->
-<text>pages/order/orderOperation.wxml</text>
+
+<view class='temp-box' wx:for="{{orderDetail}}" wx:key="{{index}}">
+    <view class='order-title'>
+      <view class='order-id'>订单ID</view> 
+      <view class='order-text'>{{item.order_id}}</view>  
+    </view>
+    <view class='order-money outer'>
+      <view class='order-money-li'> 
+        <view class='shallow'>小计</view> 
+        <view class='account' style='color: #c9caca;'>¥{{item.subtotal}}</view>
+      </view>
+      <view class='order-money-li'> 
+        <view class='shallow'>应支付</view>
+        <view class='account'>¥{{item.total}}</view>
+      </view>
+      <view class='order-money-li' style='border:none'> 
+        <view class='shallow'>已支付</view>
+        <view class='account'>¥{{item.total_payed}}</view>
+      </view>
+    </view>
+</view>
+<view class='tips'>{{tipsText}}</view>
+<form bindsubmit="bindFormSubmit" style='{{style.styleSend}}'>
+  <view class='temp-box' style='padding-bottom:30rpx;'>
+    <view class='lable'>发货方式</view>
+    <view class='temp-type outer'>
+      <view data-type='freePostage' bindtap='typeClick' class='type-left {{tab.freePostage}}' style='border-right: none;' wx:if="{{tab.logistics == 'type-current'}}">自行配送</view>
+      <view data-type='freePostage' bindtap='typeClick' class='type-left {{tab.freePostage}}'  wx:else>自行配送</view>
+      <view data-type='logistics' bindtap='typeClick' class='type-center {{tab.logistics}}'>本地配送</view>
+      <view data-type='electron' bindtap='typeClick' class='type-right {{tab.electron}}' style='border-left: none;' wx:if="{{tab.logistics == 'type-current'}}">物流配送</view>
+      <view data-type='electron' bindtap='typeClick' class='type-right {{tab.electron}}' wx:else>物流配送</view>
+    </view>
+
+    <view class='lable'>物流服务商</view>
+    <input class='fre-input' type='text' name='service' placeholder-class="input-placeholder" placeholder='请输入'></input>
+    <view class='lable'>运单号</view>
+    <input class='fre-input' type='text' name='waybill' placeholder-class="input-placeholder" placeholder='请输入'></input>
+    <view class='lable'>密码</view>
+    <input class='fre-input' password='true' name='password' type='text' placeholder-class="input-placeholder" placeholder='请输入'></input>
+  </view>
+
+  <button class='sendOrderBtn' form-type="submit">确定</button>
+</form>
+
+
+<view class='temp-box' style='padding-bottom:30rpx;{{style.styleChangeNumber}}'>
+<form bindsubmit="repriceFormSubmit">
+    <view class='lable'>改价折扣金</view>
+    <input class='fre-input' name='price' type='digit' placeholder-class="input-placeholder" bindblur='getMax' placeholder='请输入'></input>
+    <view class='lable'>密码</view>
+    <input class='fre-input' name='password' password='true' type='text' placeholder-class="input-placeholder" bindblur='getMax' placeholder='请输入'></input>
+    <button class='sendOrderBtn' form-type="submit">确定</button>
+</form>
+  
+</view>
+
+<view class='temp-box' style='padding-bottom:30rpx;{{style.stylePassword}}'>
+  <form bindsubmit="acceptFormSubmit">
+    <view class='lable'>密码</view>
+    <input class='fre-input' name='password' password='true' type='text' placeholder-class="input-placeholder" bindblur='getMax' placeholder='请输入'></input>
+    <button class='sendOrderBtn' form-type="submit">确定</button>
+  </form>
+    
+</view>
+
+  
+

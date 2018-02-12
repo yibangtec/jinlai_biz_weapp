@@ -155,7 +155,8 @@ page {
 }
 .fre-input{
   margin: 0 20rpx;
-  height: 70rpx;
+  height: 200rpx;
+  width: 90%;
   border-radius: 12rpx;
   border: 2rpx solid #c9caca;
   padding-left: 20rpx;

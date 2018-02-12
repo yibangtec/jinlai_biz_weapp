@@ -109,33 +109,33 @@
 </view>
 
 <view class='bottom outer' wx:else>
-  <view class='bottom-list' bindtap='remarks'>
+  <view class='bottom-list' data-id='{{orderDetail.order_id}}' data-name='accept' bindtap='remarks'>
     <image class='bottom-img' src='../../image/order/beizhu@3x.png'></image>
     <view class='bottom-text'>备注</view>
   </view>
-  <view class='bottom-list' bindtap='chargeback' wx:if="{{orderDetail.status == '待接单'}}">
+  <view class='bottom-list' data-id='{{orderDetail.order_id}}' data-name='accept' bindtap='chargeback' wx:if="{{orderDetail.status == '待接单'}}">
     <image class='bottom-img' src='../../image/order/tuihuo-red@3x.png'></image>
     <view class='bottom-text' style='color:#ff3649'>退单</view>
   </view>
-  <view class='bottom-list' bindtap='chargeback' wx:else>
+  <view class='bottom-list' data-id='{{orderDetail.order_id}}' data-name='accept' bindtap='chargeback' wx:else>
     <image class='bottom-img' src='../../image/order/tuihuo@3x.png'></image>
     <view class='bottom-text'>退单</view>
   </view>
 
-  <view class='bottom-list' bindtap='ordertaking' wx:if="{{orderDetail.status == '待接单'}}">
+  <view class='bottom-list' data-id='{{orderDetail.order_id}}' data-name='accept' bindtap='ordertaking' wx:if="{{orderDetail.status == '待接单'}}">
     <image class='bottom-img' src='../../image/order/dingdan-red@3x.png'></image>
     <view class='bottom-text' style='color:#ff3649'>接单</view>
   </view>
-  <view class='bottom-list' bindtap='ordertaking' wx:else>
+  <view class='bottom-list' data-id='{{orderDetail.order_id}}' data-name='accept' bindtap='ordertaking' wx:else>
     <image class='bottom-img' src='../../image/order/dingdan@3x.png'></image>
     <view class='bottom-text'>接单</view>
   </view>
 
-  <view class='bottom-list' bindtap='delivergoods' wx:if="{{orderDetail.status == '待发货'}}">
+  <view class='bottom-list' data-id='{{orderDetail.order_id}}' data-name='deliver' bindtap='delivergoods' wx:if="{{orderDetail.status == '待发货'}}">
     <image class='bottom-img' src='../../image/order/fahuo-red@3x.png'></image>
     <view class='bottom-text' style='color:#ff3649'>发货</view>
   </view>
-  <view class='bottom-list' bindtap='delivergoods' wx:else>
+  <view class='bottom-list' data-id='{{orderDetail.order_id}}' data-name='deliver' bindtap='delivergoods' wx:else>
     <image class='bottom-img' src='../../image/order/fahuo@3x.png'></image>
     <view class='bottom-text'>发货</view>
   </view>

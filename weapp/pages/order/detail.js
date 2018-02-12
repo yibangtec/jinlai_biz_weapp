@@ -40,7 +40,6 @@ Page({
     function api_request(url, api_params) {
       // 生成签名
       //console.log(bizId)
-      console.log(app.globalData.url_api + url)
       app.sign_generate(api_params)
 
       wx.request({
@@ -91,23 +90,31 @@ Page({
 
   },
   remarks:function(e){
+    var orderId = e.currentTarget.dataset.id
+    var operationType = e.currentTarget.dataset.name
     wx.navigateTo({
-      url: 'orderOperation?title='+'订单备注'
+      url: 'orderNote?title=订单备注&id=' + orderId + '&opera=' + operationType
     })
   },
   chargeback: function (e) {
+    var orderId = e.currentTarget.dataset.id
+    var operationType = e.currentTarget.dataset.name
     wx.navigateTo({
-      url: 'orderOperation?title=' + '订单退单'
+      url: 'orderOperation?title=订单退单&id=' + orderId + '&opera=' + operationType
     })
   },
   ordertaking: function (e) {
+    var orderId = e.currentTarget.dataset.id
+    var operationType = e.currentTarget.dataset.name
     wx.navigateTo({
-      url: 'orderOperation?title=' + '订单接单'
+      url: 'orderOperation?title=订单接单&id=' + orderId + '&opera=' + operationType
     })
   },
   delivergoods: function (e) {
+    var orderId = e.currentTarget.dataset.id
+    var operationType = e.currentTarget.dataset.name
     wx.navigateTo({
-      url: 'orderOperation?title=' + '订单发货'
+      url: 'orderOperation?title=订单发货&id=' + orderId + '&opera=' + operationType
     })
   },
 

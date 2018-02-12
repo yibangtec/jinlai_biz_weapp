@@ -44,7 +44,7 @@
     "pages/freight/result",
     "pages/freight/detail",
     "pages/freight/confirm",
-    "pages/order/orderDelivery"
+    "pages/order/orderNote"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",
