@@ -158,6 +158,12 @@ Page({
             wx.redirectTo({
               url: 'result?title="商品操作成功"'
             })
+          }else {
+            wx.showToast({
+              title: result.data.content.error.message,
+              icon: 'loading',
+              duration: 2000
+            })
           }
           console.log(result)
         },

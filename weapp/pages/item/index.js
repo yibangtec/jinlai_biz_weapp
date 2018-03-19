@@ -38,6 +38,12 @@ Page({
     isDownSelect: 'display:none;',
     isDelEdit: 'display:block',
     isDelSelect: 'display:none;',
+    current:{
+      all:'tab-current',
+      up:'',
+      down:'',
+      del:''
+    },
   },
   
 
@@ -63,7 +69,6 @@ Page({
         function api_request(url, api_params) {
           // 生成签名
           console.log(bizId)
-          console.log(app.globalData.url_api + url)
           app.sign_generate(api_params)
 
           // 通过小程序的网络请求API发送请求 time_delete:'null', bizId
@@ -103,10 +108,16 @@ Page({
         }
       },
       fail: function (err) {
-
+         
       }
     })
    
+  },
+  escEdit: function (e) {
+    this.setData({
+      isEdit: 'display:block',
+      isSelect: 'display:none;',
+    });
   },
   bindCheckbox: function (e) {
     var index = parseInt(e.currentTarget.dataset.index);
@@ -257,11 +268,14 @@ Page({
 
     var that = this
     that.setData({
-      itemStyle: 'display:none',
-      itemNone: 'display:none',
-      groundingStyle: 'display:none',
-      underStyle: 'display:none',
-      deleteStyle: 'display:block',
+      current: {
+        all: '',
+        up: '',
+        down: '',
+        del: 'tab-current'
+      },
+      isEdit: 'display:block',
+      isSelect: 'display:none;',
     })
     var url = 'item/index'
     var params = {}
@@ -271,7 +285,6 @@ Page({
     function api_request(url, api_params) {
       // 生成签名
       console.log(bizId)
-      console.log(app.globalData.url_api + url)
       app.sign_generate(api_params)
 
       // 通过小程序的网络请求API发送请求 time_delete:'null', bizId
@@ -375,11 +388,14 @@ Page({
   allItem:function(e){
     var that = this
     that.setData({
-      itemStyle: 'display:block',
-      itemNone: 'display:none',
-      groundingStyle: 'display:none',
-      underStyle: 'display:none',
-      deleteStyle: 'display:none',
+      current: {
+        all: 'tab-current',
+        up: '',
+        down: '',
+        del: ''
+      },
+      isEdit: 'display:block',
+      isSelect: 'display:none;',
     })
     var url = 'item/index'
     var params = {}
@@ -389,7 +405,6 @@ Page({
     function api_request(url, api_params) {
       // 生成签名
       console.log(bizId)
-      console.log(app.globalData.url_api + url)
       app.sign_generate(api_params)
 
       // 通过小程序的网络请求API发送请求 time_delete:'null', bizId
@@ -432,11 +447,14 @@ Page({
   grounding:function(e){
     var that = this
     that.setData({
-      itemStyle: 'display:none',
-      itemNone: 'display:none',
-      groundingStyle: 'display:block',
-      underStyle: 'display:none',
-      deleteStyle: 'display:none',
+      current: {
+        all: '',
+        up: 'tab-current',
+        down: '',
+        del: ''
+      },
+      isEdit: 'display:block',
+      isSelect: 'display:none;',
     })
     var url = 'item/index'
     var params = {}
@@ -446,7 +464,6 @@ Page({
     function api_request(url, api_params) {
       // 生成签名
       console.log(bizId)
-      console.log(app.globalData.url_api + url)
       app.sign_generate(api_params)
 
       // 通过小程序的网络请求API发送请求 time_delete:'null', bizId
@@ -489,11 +506,14 @@ Page({
   undercarriage:function(e){
     var that = this
     that.setData({
-      itemStyle: 'display:none',
-      itemNone: 'display:none',
-      groundingStyle: 'display:none',
-      underStyle: 'display:block',
-      deleteStyle: 'display:none',
+      current: {
+        all: '',
+        up: '',
+        down: 'tab-current',
+        del: ''
+      },
+      isEdit: 'display:block',
+      isSelect: 'display:none;',
     })
     var url = 'item/index'
     var params = {}
@@ -503,7 +523,6 @@ Page({
     function api_request(url, api_params) {
       // 生成签名
       console.log(bizId)
-      console.log(app.globalData.url_api + url)
       app.sign_generate(api_params)
 
       // 通过小程序的网络请求API发送请求 time_delete:'null', bizId

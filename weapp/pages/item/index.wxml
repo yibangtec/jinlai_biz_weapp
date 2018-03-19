@@ -1,14 +1,14 @@
 <!--pages/item/index.wxmlwx:for="{{list}}" wx:key="{{index}}"-->
 <view style='margin-bottom:80rpx;'>
-  <view style='{{itemStyle}}'>
+  <view>
     <view class='temp-box outer'>
-      <view class='tab tab-current' bindtap='allItem'>所有</view>
-      <view class='tab' bindtap='grounding'>上架</view>
-      <view class='tab' bindtap='undercarriage'>下架</view>
-      <view class='tab' bindtap='itemDeleted'>已删除</view>
+      <view class='tab {{current.all}}' bindtap='allItem'>所有</view>
+      <view class='tab {{current.up}}' bindtap='grounding'>上架</view>
+      <view class='tab {{current.down}}' bindtap='undercarriage'>下架</view>
+      <view class='tab {{current.del}}' bindtap='itemDeleted'>已删除</view>
     </view>
     <view wx:for="{{list}}" wx:key="{{index}}">
-      <view class='temp-box' style="{{item.txtStyle}}">
+      <view class='temp-box'>
         <view class='item-list'>
           <view class='item-list-left' data-index="{{index}}" data-name="{{item.item_id}}" bindtap="listClick">
             <view class='list-text'>商品id： {{item.item_id}}</view>
@@ -27,9 +27,21 @@
           <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
           </view>
           
-          <view style='float:right'>
+          <view style='float:right' wx:if="{{current.all == 'tab-current'}}">
             <view class='select-list select-left' data-name="{{item.item_id}}" bindtap='editItem'>编辑</view>
             <view class='select-list select-right' data-index="{{index}}"  data-name="{{item.item_id}}" data-title='商品删除' data-value='delete' bindtap="delete">删除</view>
+          </view>
+          <view style='float:right' wx:elif="{{current.up == 'tab-current'}}">
+            <view class='select-list select-left' data-name="{{item.item_id}}" bindtap='editItem'>编辑</view>
+            <view class='select-list select-right' data-index="{{index}}"  data-name="{{item.item_id}}" data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
+          </view>
+          <view style='float:right' wx:elif="{{current.down == 'tab-current'}}">
+            <view class='select-list select-left' data-name="{{item.item_id}}" bindtap='editItem'>编辑</view>
+            <view class='select-list select-right' data-index="{{index}}"  data-name="{{item.item_id}}" data-title='商品删除' data-value='delete' bindtap="delete">上架</view>
+          </view>
+          <view style='float:right' wx:elif="{{current.del == 'tab-current'}}">
+            <view class='select-list select-left' data-name="{{item.item_id}}" bindtap='editItem'>编辑</view>
+            <view class='select-list select-right' data-index="{{index}}"  data-name="{{item.item_id}}" data-title='商品删除' data-value='delete' bindtap="delete">恢复</view>
           </view>
         </view>
       </view>
@@ -54,16 +66,35 @@
           <icon bindtap="bindSelectAll" wx:if="{{selectedAllStatus}}" color='#FF3649' type="success_circle" size="20" class="my-check"/>
           <icon bindtap="bindSelectAll" wx:else type="circle" size="20" class="my-check"/>
           <text class='total'>全选</text>
+          <text class='total' bindtap='escEdit'>退出</text>
         </view>
-        <view class='bot-right'>
+        <view class='bot-right' wx:if="{{current.all == 'tab-current'}}">
           <view class='bottom-list' style='background-color:#FD9C55' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
           <view class='bottom-list' style='background-color:#FA7541' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
           <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品删除' data-value='delete' bindtap="delete">删除</view>
         </view>
+        <view class='bot-right' wx:elif="{{current.up == 'tab-current'}}">
+          <view class='bottom-list' style='background-color:#fff' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
+          <view class='bottom-list' style='background-color:#fff' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
+          <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
+        </view>
+        <view class='bot-right' wx:elif="{{current.down == 'tab-current'}}">
+          <view class='bottom-list' style='background-color:#fff' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
+          <view class='bottom-list' style='background-color:#fff' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
+          <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
+        </view>
+        <view class='bot-right' wx:elif="{{current.del == 'tab-current'}}">
+          <view class='bottom-list' style='background-color:#fff' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
+          <view class='bottom-list' style='background-color:#fff' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
+          <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" data-title='商品恢复' data-value='restore'  style='background-color:#FF3649' bindtap="delete">恢复</view>
+        </view>
+
       </view>  
     </view>
   
   </view>
+</view>
+  <!-- 
   <view style='{{groundingStyle}}'>
     <view class='temp-box outer'>
       <view class='tab' bindtap='allItem'>所有</view>
@@ -276,6 +307,7 @@
     </view>
   </view>
 </view>
+-->
 
 
 
