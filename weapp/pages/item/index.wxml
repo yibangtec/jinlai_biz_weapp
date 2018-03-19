@@ -37,11 +37,11 @@
           </view>
           <view style='float:right' wx:elif="{{current.down == 'tab-current'}}">
             <view class='select-list select-left' data-name="{{item.item_id}}" bindtap='editItem'>编辑</view>
-            <view class='select-list select-right' data-index="{{index}}"  data-name="{{item.item_id}}" data-title='商品删除' data-value='delete' bindtap="delete">上架</view>
+            <view class='select-list select-right' data-index="{{index}}"  data-name="{{item.item_id}}" data-title='商品上架' data-value='delete' bindtap="delete">上架</view>
           </view>
           <view style='float:right' wx:elif="{{current.del == 'tab-current'}}">
             <view class='select-list select-left' data-name="{{item.item_id}}" bindtap='editItem'>编辑</view>
-            <view class='select-list select-right' data-index="{{index}}"  data-name="{{item.item_id}}" data-title='商品删除' data-value='delete' bindtap="delete">恢复</view>
+            <view class='select-list select-right' data-index="{{index}}"  data-name="{{item.item_id}}" data-title='商品恢复' data-value='delete' bindtap="delete">恢复</view>
           </view>
         </view>
       </view>
@@ -56,7 +56,7 @@
         <view class='bot-right'>
           <view class='bottom-list' style='background-color:#fff' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
           <view class='bottom-list' style='background-color:#fff' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
-          <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品删除' data-value='delete' bindtap="createItem">创建</view>
+          <view class='bottom-list' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品创建' data-value='delete' bindtap="createItem">创建</view>
         </view>
       </view>  
     </view>
@@ -71,22 +71,22 @@
         <view class='bot-right' wx:if="{{current.all == 'tab-current'}}">
           <view class='bottom-list' style='background-color:#FD9C55' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
           <view class='bottom-list' style='background-color:#FA7541' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
-          <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品删除' data-value='delete' bindtap="delete">删除</view>
+          <view class='bottom-list' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品删除' data-value='delete' bindtap="deleteItemAll">删除</view>
         </view>
         <view class='bot-right' wx:elif="{{current.up == 'tab-current'}}">
           <view class='bottom-list' style='background-color:#fff' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
           <view class='bottom-list' style='background-color:#fff' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
-          <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
+          <view class='bottom-list' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
         </view>
         <view class='bot-right' wx:elif="{{current.down == 'tab-current'}}">
           <view class='bottom-list' style='background-color:#fff' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
           <view class='bottom-list' style='background-color:#fff' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
-          <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
+          <view class='bottom-list' data-user="{{userId}}" style='background-color:#FF3649' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
         </view>
         <view class='bot-right' wx:elif="{{current.del == 'tab-current'}}">
           <view class='bottom-list' style='background-color:#fff' data-title='商品上架' data-value='publish' bindtap="delete">上架</view>
           <view class='bottom-list' style='background-color:#fff' data-title='商品下架' data-value='suspend' bindtap="delete">下架</view>
-          <view class='bottom-list' bindtap='deleteItemAll' data-user="{{userId}}" data-title='商品恢复' data-value='restore'  style='background-color:#FF3649' bindtap="delete">恢复</view>
+          <view class='bottom-list' data-user="{{userId}}" data-title='商品恢复' data-value='restore'  style='background-color:#FF3649' bindtap="delete">恢复</view>
         </view>
 
       </view>  

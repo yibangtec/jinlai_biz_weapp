@@ -1,0 +1,106 @@
+<!--pages/category_biz/index.wxml-->
+<view class='header outer'>
+  <view class='tab' bindtap='allCategory'><view class='tab-text {{currentTab.first}}'>所有</view></view>
+  <view class='tab' bindtap='deleteCategory'><view class='tab-text {{currentTab.center}}'>回收站</view></view>
+  <view class='tab' bindtap='crearCategory'><view class='tab-text {{currentTab.last}}'>创建</view></view>
+</view>
+<view class='category-none' style='display:none;'>
+  <image class='kong-img' src='../../image/kong@3x.png'></image>
+  <view>这里空空如也，快点添加商品分类吧</view>
+</view>
+
+<view class='currentList' style='display:block'>
+  <view class='outer'>
+    <view class='tab-name'>形象图</view>
+    <view class='tab-name'>名称</view>
+    <view class='tab-name'>操作</view>
+  </view>
+  <view class='list-content outer'>
+    <view class='mainImg'>
+      <view class='select'>
+        <view style='{{isSelect}}'>
+            <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+          <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+        </view>
+      </view>
+      <image class='main-url' src='../../image/placeholder.png'></image>
+    </view>
+    <view class='mainName' bindtap='detail'>
+      彩妆
+    </view>
+    <view class='mainOper'>
+      <view class='edit' bindtap='edit'>编辑</view>
+      <view class='recovery' bindtap='recovery'>恢复</view>
+    </view>
+  </view>
+  <view class='list-content outer'>
+    <view class='mainImg'>
+      <view class='select'>
+        <view style='{{isSelect}}'>
+            <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+          <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+        </view>
+      </view>
+      <image class='main-url' src='../../image/placeholder.png'></image>
+    </view>
+    <view class='mainName'>户外休闲</view>
+    <view class='mainOper'>
+      <view class='edit'>编辑</view>
+      <view class='recovery'>恢复</view>
+    </view>
+  </view>
+</view>
+
+<view style='display:none'>
+<view class='errorTips'>错误提示：---</view>
+<view class='create'>
+  <view class='item-title'>必填项以”*“符号标示</view>
+  <view class='label-text'>工商注册号<text class='must'> *</text></view>
+  <input class='temp-input' type="text" maxlength="15" focus='{{briefnameFocus}}' bindfocus="verName" bindinput="getBrief_name" name="brief_name" placeholder="请输入" />
+  <view class='label-text'>工商注册号</view>
+  <view class="page-body-info">
+    <view wx:for="{{licenseImageSrc}}" wx:key="{{index}}" style="position: relative;">
+          <image src="{{item}}" class="image" mode="aspectFill" style='margin:0 0 20rpx 20rpx'>
+            <image data-index="{{index}}" bindtap="closeImgLicense" class="close" src="../../image/shanchu@3x.png"></image>
+          </image>
+        </view>
+        <view style="{{disLicense}}">
+          <view class="image-plus" bindtap="chooseImageLicense">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+    </view>
+  </view>
+  <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgLicense">开始上传图片</button>
+</view>
+<button style='height:80rpx; margin:20rpx; font-size:30rpx; color:#fff;background-color:#c9caca; border-raidus:12rpx;'>确定</button>
+</view>
+
+<view class='footed'>
+  <view class='creat-category'>
+    <view class='footed-left'>
+      编辑
+    </view>
+    <view class='footed-right'>
+      创建
+    </view>
+  </view>
+  <view class='outer' style='padding: 10rpx 0 10rpx 0;'>
+    <view class='footed-tab'>
+      <image class='footed-image' src='../../image/nav/main/home.png'></image>
+      <view>首页</view>
+    </view>
+    <view class='footed-tab'>
+      <image class='footed-image' src='../../image/nav/main/explore.png'></image>
+      <view>订单</view>
+    </view>
+    <view class='footed-tab'>
+      <image class='footed-image' src='../../image/nav/main/cart.png'></image>
+      <view>商品</view>
+    </view>
+    <view class='footed-tab'>
+      <image class='footed-image' src='../../image/nav/main/mine.png'></image>
+      <view>我的</view>
+    </view>
+  </view>
+</view>

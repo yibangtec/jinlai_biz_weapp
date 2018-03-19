@@ -17,13 +17,32 @@ App({
     }else{
       //调用登录接口
       wx.login({
-        success: function () {
-          wx.getUserInfo({
+        success: function (res) {
+          console.log(res.code)
+          var code = res.code
+          
+          wx.request({
+            method: 'GET',
+            url: 'https://api.jinlaimall.xyz/wechatDecryption?code=' + code, //仅为示例，并非真实的接口地址
+
+            header: {
+              'content-type': 'application/json' // 默认值
+            },
             success: function (res) {
-              that.globalData.userInfo = res.userInfo
-              typeof cb == "function" && cb(that.globalData.userInfo)
+              console.log(res.data)
             }
           })
+          
+         
+          wx.getUserInfo({
+            success: function (res) {
+              
+              that.globalData.userInfo = res.userInfo
+              typeof cb == "function" && cb(that.globalData.userInfo)
+              
+            }
+          })
+
         }
       })
     }

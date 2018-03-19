@@ -12,6 +12,7 @@ var id = ''
 var operation = ''
 var password = ''
 var bizId = ''
+var idArr =  []
 Page({
 
   /**
@@ -44,6 +45,7 @@ Page({
       down:'',
       del:''
     },
+    idS:[]
   },
   
 
@@ -140,9 +142,11 @@ Page({
     }
 
     list[index].selected = !selected;
-
+    idArr.push(list[index]);
+    console.log(idArr)
     this.setData({
-      list: list
+      list: list,
+      idS:idArr
     });
   },
   bindSelectAll: function (e) {
@@ -153,13 +157,6 @@ Page({
     if (!selectedAllStatus) {
       for (var i = 0; i < list.length; i++) {
         list[i].selected = selectedAll;
-        //var num = parseInt(this.data.list[i].num);
-        //var price = parseInt(this.data.list[i].price);
-        //this.setData({
-          //count: this.data.count - num * price,
-          //number: this.data.number - num
-
-        //});
       }
       this.setData({
         list: list,
@@ -168,13 +165,6 @@ Page({
     }else{
       for (var i = 0; i < list.length; i++) {
         list[i].selected = selectedAll;
-        //var num = parseInt(this.data.list[i].num);
-        //var price = parseInt(this.data.list[i].price);
-        //this.setData({
-        //count: this.data.count - num * price,
-        //number: this.data.number - num
-
-        //});
       }
       this.setData({
         list: list,
@@ -190,13 +180,7 @@ Page({
     if (!selectedAllStatus) {
       for (var i = 0; i < list.length; i++) {
         list[i].selected = selectedAll;
-        //var num = parseInt(this.data.list[i].num);
-        //var price = parseInt(this.data.list[i].price);
-        //this.setData({
-        //count: this.data.count - num * price,
-        //number: this.data.number - num
-
-        //});
+        
       }
       this.setData({
         list: list,
@@ -220,48 +204,35 @@ Page({
     }
   },
   deleteItemAll:function(e){
-    var all = this.data.selectedAllStatus
-    var userId = e.currentTarget.dataset.user
     var value = e.currentTarget.dataset.value
     var title = e.currentTarget.dataset.title
-    var arr = []
-    var list = this.data.list
-    if (this.data.selectedAllStatus === true){
-      console.log(this.data.selectedAllStatus)
-      for (var i = 0; i < list.length; i++){
-        arr[i] = list[i].item_id
-      }
-    }else{
-      console.log(this.data.selectedAllStatus)
-      for (var i = 0; i < list.length; i++) {
-        if (list[i].selected === true){
-          arr.push(list[i])
-        }
-      }
-      wx.setStorage({
-        key: 'list',
-        data: arr,
-      })
-    }
+    console.log(value)
+    
     this.setData({
       title: title,
-      value: value
+      value: value,
+      ids: idArr
     });
     wx.navigateTo({
-      url: 'deleteItem?user=' + userId + '&biz=' + bizId + '&all=' + all,
+      url: 'deleteItem?biz=' + bizId + '&user=' + user_id + '&title=' + title,
     })
   },
   delete: function (e) {
+    var index = parseInt(e.currentTarget.dataset.index);
     var itemId = e.currentTarget.dataset.name
     var value = e.currentTarget.dataset.value
     var title = e.currentTarget.dataset.title
     console.log(value)
+    var list = this.data.list
+    var idArray=[]
+    idArray[0] =list[index]
     this.setData({
       title: title,
-      value: value
+      value: value,
+      ids: idArray
     });
     wx.navigateTo({
-      url: 'deleteItem?id=' + itemId + '&biz=' + bizId + '&user=' + user_id,
+      url: 'deleteItem?biz=' + bizId + '&user=' + user_id + '&title='+title,
     })
   },
   itemDeleted:function(e){
@@ -276,6 +247,7 @@ Page({
       },
       isEdit: 'display:block',
       isSelect: 'display:none;',
+      selectedAllStatus: false,
     })
     var url = 'item/index'
     var params = {}
@@ -396,6 +368,7 @@ Page({
       },
       isEdit: 'display:block',
       isSelect: 'display:none;',
+      selectedAllStatus: false,
     })
     var url = 'item/index'
     var params = {}
@@ -455,6 +428,7 @@ Page({
       },
       isEdit: 'display:block',
       isSelect: 'display:none;',
+      selectedAllStatus: false,
     })
     var url = 'item/index'
     var params = {}
@@ -514,6 +488,7 @@ Page({
       },
       isEdit: 'display:block',
       isSelect: 'display:none;',
+      selectedAllStatus: false,
     })
     var url = 'item/index'
     var params = {}

@@ -14,7 +14,7 @@
   </view>
   <view class='item outer'>
     <view class='item-list' bindtap='toItem'><image src='../../image/shangpin@3x.png'></image><view>商品(0)</view></view>
-    <view class='item-list'><image src='../../image/fenlei@3x.png'></image><view>分类(0)</view></view>
+    <view class='item-list' bindtap='toCategoryBiz'><image src='../../image/fenlei@3x.png'></image><view>分类(0)</view></view>
     <view class='item-list border-none'><image src='../../image/tuandui@3x.png'></image><view>团队(0)</view></view>
     <view class='item-list'><image src='../../image/mendian@3x.png'></image><view>门店(0)</view></view>
     <view class='item-list'><image src='../../image/huodong-platform@3x.png'></image><view>平台活动(0)</view></view>

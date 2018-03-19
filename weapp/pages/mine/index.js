@@ -1,5 +1,6 @@
 // /pages/mine/index.js
 var app = getApp()
+var WXBizDataCrypt = require('../../utils/WXBizDataCrypt.js')
 var timeLogin;
 var user_id=''
 var value=''
@@ -121,6 +122,29 @@ Page({
       })
     })
   },
+  getPhoneNumber: function (e) {
+    console.log(e.detail.errMsg)
+    var iv = e.detail.iv
+    console.log(e.detail.iv)
+    var telData = e.detail.encryptedData
+    console.log(e.detail.encryptedData)
+    console.log(iv)
+    console.log(telData)
+    wx.request({
+      method:'GET',
+      url: 'https://api.jinlaimall.xyz/wechatDecryption?IV=' + iv + '&mobile=' + telData, //仅为示例，并非真实的接口地址
+     
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        console.log(res.data)
+      }
+    })
+     
+
+    
+  } ,
   mineExit:function(e){
     wx.removeStorage({
       key: 'time_expire_login',

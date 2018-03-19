@@ -44,7 +44,12 @@
     "pages/freight/result",
     "pages/freight/detail",
     "pages/freight/confirm",
-    "pages/order/orderNote"
+    "pages/order/orderNote",
+    "pages/category_biz/index",
+    "pages/category_biz/create",
+    "pages/category_biz/edit",
+    "pages/category_biz/detail",
+    "pages/category_biz/recovery"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",

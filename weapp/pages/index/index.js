@@ -62,6 +62,11 @@ Page({
       url: '../../pages/item/index'
     })
   },
+  toCategoryBiz: function (e) {
+    wx.navigateTo({
+      url: '../../pages/category_biz/index'
+    })
+  },
   freight:function(e){
     wx.navigateTo({
       url: '../../pages/freight/index',
