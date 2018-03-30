@@ -1,4 +1,4 @@
-// pages/category_biz/detail.js
+// pages/coupon_template/edit.js
 var app = getApp()
 Page({
 
@@ -15,7 +15,7 @@ Page({
   onLoad: function (options) {
     var id = options.Id
     var that = this
-    var url = 'item_category_biz/detail'
+    var url = 'coupon/detail'
     var params = {}
     var api_result = api_request(url, params)
 

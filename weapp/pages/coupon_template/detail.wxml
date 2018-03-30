@@ -1,0 +1,29 @@
+<!--pages/coupon_template/detail.wxml-->
+<view class='detail-info'>
+  <view class='classify'>模板ID:<text>{{item.coupon_id}}</text></view>
+  <view class='classify'>名称:<text>{{item.name}}</text></view>
+  <view class='classify'>说明:<text>{{item.description}}</text></view>
+  <view class='classify'>面值:<text>{{item.amount}}</text></view>
+  <view class='classify'>起用金额:<text>{{item.min_subtotal}}</text></view>
+  <view class='classify'>有效期:
+    <view class='time'>
+      {{item.time_start}}至{{item.time_end}},自领取之时起最长6小时（不晚于有效期结束时，若有）
+    </view>
+    <view> 
+      若选择了有效期后制定了开始时间，则将在用户领取优惠券时以领取时间加上有效期作为结束时间；若选择了有效期后输入了结束时间，则以结束时间为准，有效期将被忽略。
+    </view>
+  </view>
+  <view class='classify'>总限量:<text></text></view>
+  <view class='classify'>单个用户限量:<text></text></view>
+  <view class='classify'>限用系统分类:<text></text></view>
+  <view class='classify'>限用店内分类:<text></text></view>
+  <view class='classify'>限用商品:<text></text></view>
+</view>
+<view class='detail-info' style='padding-bottom:30rpx;'>
+  <view class='classify'>创建时间：<text>{{item.time_create}}</text></view>
+  <view class='check'>查看创建者</view>
+  <view class='classify'>最后操作时间：<text>{{item.time_edit}}</text></view>
+  <view class='check'>查看最后操作者</view>
+</view>
+
+<view class='edit' bindtap='edit' data-id='{{item.coupon_id}}'>编辑</view>

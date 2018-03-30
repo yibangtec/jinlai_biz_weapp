@@ -1,0 +1,56 @@
+/* pages/coupon_template/detail.wxss */
+.outer {zoom:1;}    /*==for IE6/7 Maxthon2==*/
+.outer::after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
+page {  
+  display: block; 
+  width: 100%; 
+  height: 100%;
+  background-color: #f6f6f6;  
+  position: relative;
+}  
+.detail-info{
+  margin: 20rpx;
+  padding: 50rpx 20rpx;
+  background-color: #fff;
+  border-radius: 15rpx;
+}
+.classify{
+  font-size: 26rpx;
+  color: #9C9C9C;
+  line-height: 26rpx;
+  padding-bottom: 20rpx;
+}
+.classify text{
+  color: #3e3a39;
+  padding-left: 20rpx;
+}
+.time{
+  color: #3e3a39;
+  line-height: 40rpx
+}
+.classify-img{
+  width: 200rpx;
+  height: 200rpx;
+  display: block;
+  border-radius: 12rpx;
+}
+.check{
+  display: inline-block;
+  line-height: 60rpx;
+  text-align: center;
+  color: #9C9C9C;
+  font-size: 26rpx;
+  border: 1rpx solid #9C9C9C;
+  border-radius: 30rpx;
+  margin-bottom: 20rpx;
+  padding: 0 20rpx;
+}
+.edit{
+  margin: 20rpx;
+  line-height: 80rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #9C9C9C;
+  border: 1rpx solid #9F9F9F;
+  border-radius: 12rpx;
+}

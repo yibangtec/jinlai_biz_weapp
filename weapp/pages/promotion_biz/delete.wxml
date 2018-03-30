@@ -1,0 +1,32 @@
+<!--pages/promotion_biz/delete.wxml-->
+<view class='errorTips'>错误提示：---</view>
+<view class='content'>
+  <view class='con-header outer'>
+    <view class='con-tab'>名称</view>
+    <view class='con-tab'>类型</view>
+  </view>
+  <view class='recovery-list outer'>
+    <view class='image'>
+      全场包邮
+    </view>
+    <view class='image'>彩妆</view>
+  </view>
+  <view class='recovery-list outer'>
+    <view class='image'>
+      全场满2公斤包邮
+    </view>
+    <view class='image'>户外休闲</view>
+  </view>
+</view>
+  <view class='temp-box outer' style='background-color:#FCF6CB;'>
+    <view class='delete-text'>
+      确认要{{text}}？
+    </view> 
+  </view>
+  <view class='temp-box'>
+    <view class='label-text'>密码</view>
+    <input class='temp-input' type='password' bindblur='getPassword' placeholder='请输入'></input>
+  </view>
+  <view class="btn-area" style='margin:0 20rpx'>
+    <button style='height:80rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:0;' disabled="{{disable}}" bindtap="bindDelete">确定</button>
+  </view>

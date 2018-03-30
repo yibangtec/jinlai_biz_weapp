@@ -1,4 +1,4 @@
-<!--pages/category_biz/index.wxml-->
+<!--pages/promotion_biz/index.wxml-->
 <view class='header outer'>
   <view class='tab' bindtap='allCategory'><view class='tab-text {{currentTab.first}}'>所有</view></view>
   <view class='tab' bindtap='deleteCategory'><view class='tab-text {{currentTab.center}}'>回收站</view></view>
@@ -11,22 +11,21 @@
 
 <view class='currentList' style='{{listAll}}'>
   <view class='outer'>
-    <view class='tab-name'>形象图</view>
     <view class='tab-name'>名称</view>
+    <view class='tab-name'>类型</view>
     <view class='tab-name'>操作</view>
   </view>
-  <view class='list-content outer' wx:for="{{item}}" wx:key="{{index}}">
+  <view class='list-content outer'>
     <view class='mainImg'>
       <view class='select' bindtap='selected' data-index="{{index}}">
         <view style='{{isSelect}}'>
             <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" />
-          <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}"/>
+            <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}"/>
         </view>
       </view>
-      <image class='main-url' src='../../image/placeholder.png' wx:if="{{item.url_image==''||item.url_image==null}}"></image>
-      <image class='main-url' src='https://jinlaisandbox-images.b0.upaiyun.com/{{item.url_image}}'></image>
+      <view>打飞机啊上阿斯顿发生</view>
     </view>
-    <view data-id='{{item.category_id}}' class='mainName' bindtap='detail'>{{item.name}}</view>
+    <view data-id='{{item.category_id}}' class='mainName' bindtap='detail'>type{{item.name}}</view>
     <view class='mainOper'>
       <view class='edit' bindtap='edit' data-id='{{item.category_id}}'>编辑</view>
       <view class='recovery' bindtap='recovery' wx:if='{{currentTab.first == "tab-current"}}'>删除</view>

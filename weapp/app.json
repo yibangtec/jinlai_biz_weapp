@@ -49,7 +49,15 @@
     "pages/category_biz/create",
     "pages/category_biz/edit",
     "pages/category_biz/detail",
-    "pages/category_biz/recovery"
+    "pages/category_biz/recovery",
+    "pages/coupon_template/index",
+    "pages/coupon_template/detail",
+    "pages/coupon_template/edit",
+    "pages/coupon_template/delete",
+    "pages/promotion_biz/index",
+    "pages/promotion_biz/detail",
+    "pages/promotion_biz/edit",
+    "pages/promotion_biz/delete"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",

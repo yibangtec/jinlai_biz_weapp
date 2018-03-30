@@ -1,0 +1,62 @@
+<!--pages/promotion_biz/edit.wxml-->
+<!--pages/category_biz/edit.wxml-->
+<view class='errorTips'>错误提示：---</view>
+<view class='create'>
+  <view class='item-title'>必填项以”*“符号标示</view>
+  <view class='label-text'>活动类型<text class='must'> *</text></view>
+  <input class='temp-input' type="text" maxlength="10" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+  <view class='label-text'>名称<text class='must'> *</text></view>
+  <input class='temp-input' type="text" maxlength="10" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+  <view class='label-text'>开始时间<text class='must'> *</text></view>
+  <input class='temp-input' type="text" maxlength="10" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+  <view class='label-text'>结束时间<text class='must'> *</text></view>
+  <input class='temp-input' type="text" maxlength="10" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+  <view class='label-text'>是否允许折上折<text class='must'> *</text></view>
+  <view>
+  是否</view>
+  <view class='label-text'>说明</view>
+  <input class='temp-input' type="text" maxlength="10" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+
+
+
+  <view class='label-text' style='padding-bottom:0;'>形象图</view>
+  <view class='img-text'>
+    该图用于手机等窄屏设备；请上传大小在2M以内，边长不超过2048px的jpg/png图片
+  </view>
+  <view class="page-body-info">
+        <view wx:for="{{mainImageSrc}}" wx:key="{{index}}" style="position: relative;">
+          <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill" style='margin:0 0 20rpx 20rpx'>
+          </image>
+          <image index="{{index}}" bindtap="closeImgMain" class="close" src="../../image/shanchu@3x.png"></image>
+        </view>
+        <view style="{{dis}}">
+          <view class="image-plus" bindtap="chooseImageMain">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+        </view>
+  </view>
+  <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgMain">{{imgText}}</button>
+
+  <view class='label-text' style='padding-bottom:0;'>宽屏形象图</view>
+  <view class='img-text'>
+    该图用于桌面电脑等宽屏设备；请上传大小在2M以内，边长不超过2048px的jpg/png图片
+  </view>
+  <view class="page-body-info">
+        <view wx:for="{{mainImageSrc}}" wx:key="{{index}}" style="position: relative;">
+          <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill" style='margin:0 0 20rpx 20rpx'>
+          </image>
+          <image index="{{index}}" bindtap="closeImgMain" class="close" src="../../image/shanchu@3x.png"></image>
+        </view>
+        <view style="{{dis}}">
+          <view class="image-plus" bindtap="chooseImageMain">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+        </view>
+  </view>
+  <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgMain">{{imgText}}</button>
+</view>
+<button style='height:80rpx; margin:20rpx; font-size:30rpx; color:#fff;{{imgStyle}}; border-raidus:12rpx;' bindtap='submitEdit'>确定</button>
+
+

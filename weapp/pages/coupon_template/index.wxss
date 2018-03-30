@@ -1,4 +1,4 @@
-/* pages/category_biz/index.wxss */
+/* pages/coupon_template/index.wxss */
 .outer {zoom:1;}    /*==for IE6/7 Maxthon2==*/
 .outer::after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
 page {  
@@ -13,7 +13,7 @@ page {
   background-color: #fff;
   font-size: 26rpx;
   color: #3e3a39;
-  border-radius: 20rpx;
+  border-radius: 15rpx;
 }
 .header .tab{
    width: 33.33333333%;
@@ -102,56 +102,20 @@ page {
   float: left;
 }
 
-.currentList{
+
+.coupon-content{
   margin: 20rpx;
+  padding: 0 20rpx;
   background-color: #fff;
-  font-size: 26rpx;
-  color: #3e3a39;
-  border-radius: 20rpx;
-}
-.tab-name{
-  width: 33.33333333%;
-  float: left;
-  font-size: 26rpx;
-  text-align: center;
-  line-height: 80rpx
-}
-.list-content{
-  border-top: 1rpx solid #C9C9C9;
-  padding: 20rpx 0 20rpx 0;
-}
-.mainImg{
-  float: left;
-  width: 236rpx;
-  height: 120rpx;
-}
-.select{
-  height: 120rpx;
-  padding: 0 0 0 20rpx;
-  float: left;
-}
-.select image{
-  width: 40rpx;
-  height: 40rpx;
-}
-.main-url{
-  display: block;
-  float: left;
-  width: 120rpx;
-  height: 120rpx;
-  margin-left: 40rpx;
   border-radius: 15rpx;
+  font-size: 26rpx;
 }
-.mainName{
-  float: left;
-  width: 236rpx;
-  height: 110rpx;
-  text-indent: 60rpx;
+.coupon-info{
+  padding: 10rpx 0;
+  color: #3e3a39;
 }
-.mainOper{
-  float: left;
-  width: 236rpx;
-  text-align: center;
+.oper-coupon{
+  border-top: 1rpx solid #e1e1e1;
 }
 .edit{
   display: inline-block;
@@ -170,8 +134,21 @@ page {
   color: #C9C9C9;
   border: 1rpx solid #C9C9C9;
   border-radius: 25rpx;
-  margin-top: 20rpx;
+  margin: 20rpx 0 20rpx 20rpx;
 }
+.circle{
+  float:left;
+  padding:20rpx 20rpx 20rpx 0;
+}
+.oper-btn{
+  float: right;
+}
+.cou-text{
+  padding: 0 40rpx 0 10rpx;
+}
+
+
+
 .create{
   margin: 20rpx;
   background-color: #fff;
@@ -217,114 +194,3 @@ page {
 }
 
 
-
-
-
-.page-body-info {
-  display: flex;
-  flex-direction: flow;
-  align-items: center;
-  background-color: #fff;
-  width: 100%;
-}
-.page-section{
-  width: 100%;
-}
-.image-plus {
-  width: 150rpx;
-  height: 150rpx;
-  border: 2rpx solid #D9D9D9;
-  border-radius: 15rpx;
-  position: relative;
-  margin:0 0 20rpx 20rpx;
-}
-.image-plus-nb{
-  border: 0;
-}
-.image-plus-text{
-  color: #888888;
-  font-size: 28rpx;
-}
-.image-plus-horizontal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  background-color: #d9d9d9;
-  width: 4rpx;
-  height: 80rpx;
-  transform: translate(-50%, -50%);
-}
-.image-plus-vertical {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  background-color: #d9d9d9;
-  width: 80rpx;
-  height: 4rpx;
-  transform: translate(-50%, -50%);
-}
-.four-img{
-  position: relative; width:150rpx;height:150rpx;margin:0 0 20rpx 20rpx;
-}
-.image {
-  width: 150rpx;
-  height: 150rpx;
-  display: block;
-  border-radius: 15rpx;
-}
-.close{
-  width: 32rpx;
-  height: 32rpx;
-  display: block;
-  position: absolute;
-  top: -18rpx;
-  right:  -18rpx;
-}
-.icon-box{
-  position: absolute;
-  width: 150rpx;
-  height: 20rpx;
-  padding: 10rpx 0;
-  background-color: rgba(0, 0, 0, 0.3);
-  bottom: 0;
-  border-radius: 0 0 15rpx 15rpx;
-}
-.icon-box .icon-left{
-  float: left;
-  width: 50%;
-  box-sizing: border-box;
-  border-right: 1rpx solid #fff;
-}
-.icon-box .icon-right{
-  float: left;
-  width: 50%;
-}
-.left-img{
-  width: 20rpx;
-  height: 20rpx;
-  display: block;
-  margin-left: 25rpx; 
-}
-.right-img{
-  width: 20rpx;
-  height: 20rpx;
-  display: block;
-  margin-left:30rpx; 
-  
-}
-.left{
-  width: 32rpx;
-  height: 32rpx;
-  display: block;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-.right{
-  width: 32rpx;
-  height: 32rpx;
-  display: block;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}

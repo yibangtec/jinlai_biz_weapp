@@ -72,6 +72,16 @@ Page({
       url: '../../pages/freight/index',
     })
   },
+  coupon:function(e){
+    wx.navigateTo({
+      url: '../../pages/coupon_template/index',
+    })
+  },
+  promotionBiz:function(e){
+    wx.navigateTo({
+      url: '../../pages/promotion_biz/index',
+    })
+  },
   /**
    * 用户点击右上角分享
    */

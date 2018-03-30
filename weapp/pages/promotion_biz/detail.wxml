@@ -1,0 +1,22 @@
+<!--pages/promotion_biz/detail.wxml-->
+<view class='detail-info'>
+  <view class='classify'>ID:<text>{{item.coupon_id}}</text></view>
+  <view class='classify'>活动类型:<text>{{item.name}}</text></view>
+  <view class='classify'>名称:<text>{{item.description}}</text></view>
+  <view class='classify'>开始时间:<text>{{item.amount}}</text></view>
+  <view class='classify'>结束时间:<text>{{item.min_subtotal}}</text></view>
+  <view class='classify'>说明:<text></text></view>
+  <view class='classify'>是否允许折上折:<text></text></view>
+  <view class='classify'>赠品触发金额:<text></text></view>
+  <view class='classify'>赠品触发份数:<text></text></view>
+  <view class='classify'>赠品:<text></text></view>
+</view>
+<view class='detail-info' style='padding-bottom:30rpx;'>
+  <view class='classify'>创建时间：<text>{{item.time_create}}</text></view>
+  <view class='check'>查看创建者</view>
+  <view class='classify'>最后操作时间：<text>{{item.time_edit}}</text></view>
+  <view class='check'>查看最后操作者</view>
+</view>
+
+<view class='edit' bindtap='edit' data-id='{{item.coupon_id}}'>编辑</view>
+

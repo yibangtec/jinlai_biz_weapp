@@ -1,4 +1,4 @@
-/* pages/category_biz/index.wxss */
+/* pages/promotion_biz/index.wxss */
 .outer {zoom:1;}    /*==for IE6/7 Maxthon2==*/
 .outer::after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
 page {  
@@ -127,7 +127,7 @@ page {
 }
 .select{
   height: 120rpx;
-  padding: 0 0 0 20rpx;
+  padding: 0 20rpx 0 20rpx;
   float: left;
 }
 .select image{
@@ -146,7 +146,7 @@ page {
   float: left;
   width: 236rpx;
   height: 110rpx;
-  text-indent: 60rpx;
+  text-align: center;
 }
 .mainOper{
   float: left;
