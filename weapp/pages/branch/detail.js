@@ -1,12 +1,11 @@
-// pages/promotion_biz/edit.js
+// pages/branch/detail.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    imgText:'开始上传',
-    imgStyle:'background-color:#ff3649'
+  
   },
 
   /**

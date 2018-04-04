@@ -57,7 +57,9 @@
     "pages/promotion_biz/index",
     "pages/promotion_biz/detail",
     "pages/promotion_biz/edit",
-    "pages/promotion_biz/delete"
+    "pages/promotion_biz/delete",
+    "pages/branch/index",
+    "pages/branch/detail"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",

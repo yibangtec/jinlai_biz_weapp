@@ -1,0 +1,100 @@
+<!--pages/branch/index.wxml-->
+<view class='header outer'>
+  <view class='tab' bindtap='allCategory'><view class='tab-text {{currentTab.first}}'>所有</view></view>
+  <view class='tab' bindtap='deleteCategory'><view class='tab-text {{currentTab.center}}'>回收站</view></view>
+  <view class='tab' bindtap='crearCategory'><view class='tab-text {{currentTab.last}}'>创建</view></view>
+</view>
+<view class='category-none' style='display:none;'>
+  <image class='kong-img' src='../../image/kong@3x.png'></image>
+  <view>这里空空如也，快点添加商品分类吧</view>
+</view>
+
+<view class='coupon-content' wx:for='{{item}}' wx:key='{{index}}'>
+  <view bindtap='detail' data-id='{{item.coupon_id}}' class='coupon-info' style='padding-top:20rpx;'>咖啡店</view>
+  <view class='coupon-info'>ID<text class='cou-text'>{{item.coupon_id}}</text></view>
+  <view class='coupon-info' style='padding-bottom:20rpx;'>面值(元)<text class='cou-text'>{{item.amount}}</text>起用金额(元)<text class='cou-text'>{{item.min_subtotal}}</text></view>
+  <view class='oper-coupon outer'>
+    <view class='circle' style='{{isSelect}}'>
+      <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" />
+      <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}"/>
+    </view>
+    <view class='oper-btn'> 
+      <view class='edit' bindtap='edit' data-id='{{item.coupon_id}}' >编辑</view>
+      <view class='recovery' bindtap='recovery' data-id='{{item.coupon_id}}'>恢复</view>
+    </view>
+  </view>
+</view>
+
+<view class='create-coupon' style='padding-bottom:200rpx;display:none'>
+  <view class='errorTips'>错误提示：---</view>
+  <view class='create'>
+    <view class='item-title'>必填项以”*“符号标示</view>
+    <view class='label-text'>名称<text class='must'> *</text></view>
+    <input class='temp-input' type="text" maxlength="20" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>说明</view>
+    <input class='temp-input' type="text" maxlength="30" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>面值（元）<text class='must'> *</text></view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>起用金额（元）</view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+  </view>
+  <view class='create'>
+    <view class='item-title'><text style='color:#3e3a39;font-size:30rpx;'>高级选项（可留空）</text></view>
+    <view class='label-text'>总限量（份）</view>
+    <input class='temp-input' type="text" maxlength="20" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>单个用户限量（份）</view>
+    <input class='temp-input' type="text" maxlength="30" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>领取后有效期</view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>有效期开始时间</view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>有效期结束时间</view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>限用系统分类</view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>限用店内分类</view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>限用商品</view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+  </view>
+  <button style='height:80rpx; margin:20rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:12rpx;' bindtap='submitEdit'>确定</button>
+</view>
+
+<view class='footed'>
+  <view class='creat-category' style='{{isAll}}'>
+    <view class='footed-left' bindtap='selectAllItem'>
+      <view style='display:inline-block;float:left;{{isSelect}}' >
+          <icon wx:if="{{selectedAllStatus}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+          <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+          <text style='padding:0 10rpx'> 全选</text>
+      </view>
+      <text class='esc' bindtap='quit'>退出</text>  
+    </view>
+    <view class='footed-right'>恢复</view>
+  </view>
+  <view class='creat-category' style='{{isEdit}}'>
+    <view class='footed-left' bindtap='editBtn'>
+       <image class='caozuo' src='../../image/caozuo@3x.png'></image> <text>编辑</text>
+    </view>
+    <view class='footed-right'>创建</view>
+  </view>
+  <view class='outer' style='padding: 10rpx 0 10rpx 0;'>
+    <view class='footed-tab'>
+      <image class='footed-image' src='../../image/nav/main/home.png'></image>
+      <view>首页</view>
+    </view>
+    <view class='footed-tab'>
+      <image class='footed-image' src='../../image/nav/main/explore.png'></image>
+      <view>订单</view>
+    </view>
+    <view class='footed-tab'>
+      <image class='footed-image' src='../../image/nav/main/cart.png'></image>
+      <view>商品</view>
+    </view>
+    <view class='footed-tab'>
+      <image class='footed-image' src='../../image/nav/main/mine.png'></image>
+      <view>我的</view>
+    </view>
+  </view>
+</view>
+

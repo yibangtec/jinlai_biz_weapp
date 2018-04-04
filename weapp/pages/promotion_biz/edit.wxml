@@ -12,8 +12,10 @@
   <view class='label-text'>结束时间<text class='must'> *</text></view>
   <input class='temp-input' type="text" maxlength="10" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
   <view class='label-text'>是否允许折上折<text class='must'> *</text></view>
-  <view>
-  是否</view>
+  <view class='coupon outer'>
+    <view data-coupon='1' bindtap='yes' class='coupon-yes coupon-current'>是</view>
+    <view data-coupon='0' bindtap='no' class='coupon-none'>否</view>
+  </view>
   <view class='label-text'>说明</view>
   <input class='temp-input' type="text" maxlength="10" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
 

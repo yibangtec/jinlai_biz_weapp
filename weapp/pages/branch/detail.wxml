@@ -1,0 +1,29 @@
+<!--pages/branch/detail.wxml-->
+<view class='detail-info'>
+  <view class='classify'>主图:</view>
+  <image class='classify-img' src='../../image/placeholder.png' wx:if='{{item.url_image==null||item.url_image==""}}'></image>
+  <image class='classify-img' src='{{item.url_image}}' wx:else></image>
+  <view class='classify'>形象图:</view>
+  <image class='classify-img' src='../../image/placeholder.png' wx:if='{{item.url_image==null||item.url_image==""}}'></image>
+  <image class='classify-img' src='{{item.url_image}}' wx:else></image>
+  <view class='classify'>状态：<text>{{item.name}}</text></view>
+  <view class='classify'>名称：<text>{{item.name}}</text></view>
+  <view class='classify'>说明：<text>{{item.name}}</text></view>
+  <view class='classify'>消费者联系电话：<text>{{item.name}}</text></view>
+  <view class='classify'>商务联系手机号：<text>{{item.name}}</text></view>
+  <view class='classify'>订单通知手机号：<text>{{item.name}}</text></view>
+  <view class='classify'>休息日：<text>{{item.name}}</text></view>
+  <view class='classify'>营业/配送时间：<text>{{item.name}}</text></view>
+  <view class='classify'>配送范围：<text>{{item.name}}</text></view>
+  <view class='classify'>限用店内分类：<text>{{item.name}}</text></view>
+  <view class='classify'>地址：<text>{{item.name}}</text></view>
+  <view class='classify'>经纬度：<text>{{item.name}}</text></view>
+</view>
+<view class='detail-info' style='padding-bottom:30rpx;'>
+  <view class='classify'>创建时间：<text>{{item.time_create}}</text></view>
+  <view class='check'>查看创建者</view>
+  <view class='classify'>最后操作时间：<text>{{item.time_edit}}</text></view>
+  <view class='check'>查看最后操作者</view>
+</view>
+
+<view class='edit'>编辑</view>

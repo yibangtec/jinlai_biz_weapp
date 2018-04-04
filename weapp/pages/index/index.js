@@ -82,6 +82,11 @@ Page({
       url: '../../pages/promotion_biz/index',
     })
   },
+  branch:function(e){
+    wx.navigateTo({
+      url: '../../pages/branch/index',
+    })
+  },
   /**
    * 用户点击右上角分享
    */
