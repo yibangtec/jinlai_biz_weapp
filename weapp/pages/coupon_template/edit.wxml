@@ -5,7 +5,7 @@
     <view class='label-text'>名称<text class='must'> *</text></view>
     <input class='temp-input' type="text" maxlength="20" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
     <view class='label-text'>说明</view>
-    <input class='temp-input' type="text" maxlength="30" bindblur='getName' name="brief_name" placeholder="请输入" value='' />
+    <input class='temp-input' type="text" maxlength="30" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.description}}' />
     <view class='label-text'>面值（元）<text class='must'> *</text></view>
     <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.amount}}' />
     <view class='label-text'>起用金额（元）</view>
@@ -14,21 +14,22 @@
   <view class='create'>
     <view class='item-title'><text style='color:#3e3a39;font-size:30rpx;'>高级选项（可留空）</text></view>
     <view class='label-text'>总限量（份）</view>
-    <input class='temp-input' type="text" maxlength="20" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <input class='temp-input' type="text" maxlength="20" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.max_amount}}' />
     <view class='label-text'>单个用户限量（份）</view>
-    <input class='temp-input' type="text" maxlength="30" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <input class='temp-input' type="text" maxlength="30" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.max_amount_user}}' />
     <view class='label-text'>领取后有效期</view>
-    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.period}}' />
     <view class='label-text'>有效期开始时间</view>
-    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.time_start}}' />
     <view class='label-text'>有效期结束时间</view>
-    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.time_end}}' />
     <view class='label-text'>限用系统分类</view>
-    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.category_id}}' />
     <view class='label-text'>限用店内分类</view>
-    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.category_biz_id}}' />
     <view class='label-text'>限用商品</view>
-    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.item_id}}' />
+    
   </view>
   <button style='height:80rpx; margin:20rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:12rpx;' bindtap='submitEdit'>确定</button>
 

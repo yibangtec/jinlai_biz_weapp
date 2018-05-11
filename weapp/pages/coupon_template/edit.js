@@ -15,8 +15,8 @@ Page({
   onLoad: function (options) {
     var id = options.Id
     var that = this
-    var url = 'coupon/detail'
-    var params = {}
+    var url = 'coupon_template/detail'
+    var params = {} 
     var api_result = api_request(url, params)
 
     // 网络请求

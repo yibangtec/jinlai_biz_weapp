@@ -9,19 +9,19 @@
   <view class='order outer'>
     <view class='order-list' bindtap='toOrder'><image src='../../image/daijiedan@3x.png'></image><view>订单(0)</view></view>
     <view class='order-list'><image src='../../image/shouhou@3x.png'></image><view>退款/售后</view></view>
-    <view class='order-list'><image src='../../image/pingjia@3x.png'></image><view>商品评价</view></view>
+    <view class='order-list' bindtap='toComment'><image src='../../image/pingjia@3x.png'></image><view>商品评价</view></view>
     <view class='order-list border-none'><image src='../../image/dingdan-pingjia@3x.png'></image><view>订单评价</view></view>
   </view>
   <view class='item outer'>
     <view class='item-list' bindtap='toItem'><image src='../../image/shangpin@3x.png'></image><view>商品(0)</view></view>
     <view class='item-list' bindtap='toCategoryBiz'><image src='../../image/fenlei@3x.png'></image><view>分类(0)</view></view>
-    <view class='item-list border-none'><image src='../../image/tuandui@3x.png'></image><view>团队(0)</view></view>
+    <view class='item-list border-none' bindtap='team'><image src='../../image/tuandui@3x.png'></image><view>团队(0)</view></view>
     <view class='item-list' bindtap='branch'><image src='../../image/mendian@3x.png'></image><view>门店(0)</view></view>
     <view class='item-list'><image src='../../image/huodong-platform@3x.png'></image><view>平台活动(0)</view></view>
     <view class='item-list border-none' bindtap='promotionBiz'><image src='../../image/huodong-biz@3x.png'></image><view>店内活动(0)</view></view>
     <view class='item-list border-bot' bindtap='freight'><image src='../../image/moban@3x.png'></image><view>运费模板(0)</view></view>
     <view class='item-list border-bot' bindtap='coupon'><image src='../../image/coupon@3x.png'></image><view>优惠券</view></view>
-    <view class='item-list border-none border-bot'><image src='../../image/combo@3x.png'></image><view>优惠包</view></view>
+    <view class='item-list border-none border-bot' bindtap='combo'><image src='../../image/combo@3x.png'></image><view>优惠包</view></view>
   </view>
 </view>
 

@@ -59,7 +59,15 @@
     "pages/promotion_biz/edit",
     "pages/promotion_biz/delete",
     "pages/branch/index",
-    "pages/branch/detail"
+    "pages/branch/detail",
+    "pages/branch/edit",
+    "pages/branch/delete",
+    "pages/coupon_combo/index",
+    "pages/coupon_combo/detail",
+    "pages/coupon_combo/delete",
+    "pages/comment_item/INDEX",
+    "pages/comment_item/index",
+    "pages/team/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",

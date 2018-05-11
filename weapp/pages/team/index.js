@@ -1,4 +1,4 @@
-// pages/coupon_template/index.js
+// pages/team/index.js
 var app = getApp()
 Page({
 
@@ -109,10 +109,10 @@ Page({
         }
       })
     }
-    
+
   },
   deleteCategory: function (e) {
-    
+
     var that = this
     that.setData({
       currentTab: {
@@ -143,7 +143,7 @@ Page({
         data: { limit: 10, app_type: 'biz', time_delete: 'IS NOT NULL', },
         success: function (result) {
           console.log(result.data)
-          if (result.data.content.status==200){
+          if (result.data.content.status == 200) {
             var list = result.data.content
             for (var i = 0; i < list.length; i++) {
               list[i].selected = false
@@ -153,14 +153,14 @@ Page({
               footedStyle: 'display:block',
               footedBar: 'display:none',
             })
-          }else{
+          } else {
             that.setData({
               item: [],
               footedStyle: 'display:none',
               footedBar: 'display:block',
             })
           }
-          
+
         },
         fail: function (result) {
           console.log(result)
@@ -241,7 +241,7 @@ Page({
       url: 'detail?Id=' + id
     })
   },
-  edit:function(e){
+  edit: function (e) {
     var id = e.currentTarget.dataset.id
     wx.navigateTo({
       url: 'edit?Id=' + id
@@ -253,6 +253,7 @@ Page({
       url: 'delete?Id=' + id
     })
   },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

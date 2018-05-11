@@ -68,7 +68,7 @@ Page({
       success: function (res) {
         console.log(res)
         bizId = res.data.content.biz_id
-        
+        user_id = res.data.content.user_id
       },
       fail: function (err) {
 
@@ -160,6 +160,7 @@ Page({
       url: 'detail?Id=' + id
     })
   },
+
   recovery:function(e){
     wx.navigateTo({
       url: 'recovery'
@@ -253,11 +254,11 @@ Page({
     for (var i = 0; i < temp.length; i++) {
       console.log('this is  for' + user_id)
       var time = tick(i, user_id)
-      mainImageUrl[i] = 'image_main/' + time
+      mainImageUrl[i] = 'article/' + time
       console.log(time)
       upyun.upload({
         localPath: temp[i],
-        remotePath: '/item/image_main/' + time,
+        remotePath: '/article/' + time,
         success: function (res) {
           console.log('uploadImage success, res is:', res)
           if (res.statusCode == 200) {
@@ -317,7 +318,7 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         url: app.globalData.url_api + url,
-        data: { app_type: 'biz', biz_id: bizId, parent_id: '', name: name, url_image: url_image },
+        data: { app_type: 'biz', user_id: user_id, biz_id: bizId, parent_id: '1', name: name, url_image: url_image },
         success: function (result) {
           console.log(result)
         },

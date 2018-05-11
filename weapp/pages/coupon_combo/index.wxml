@@ -1,3 +1,4 @@
+<!--pages/coupon_combo/index.wxml-->
 <!--pages/coupon_template/index.wxml-->
 <view class='header outer'>
   <view class='tab' bindtap='allCategory'><view class='tab-text {{currentTab.first}}'>所有</view></view>
@@ -10,23 +11,22 @@
 </view>
 
 <view class='coupon-content' wx:for='{{item}}' wx:key='{{index}}'>
-  <view bindtap='detail' data-id='{{item.template_id}}' class='coupon-info' style='padding-top:20rpx;'>优惠券</view>
-  <view class='coupon-info'>ID<text class='cou-text'>{{item.template_id}}</text></view>
-  <view class='coupon-info' style='padding-bottom:20rpx;'>面值(元)<text class='cou-text'>{{item.amount}}</text>起用金额(元)<text class='cou-text'>{{item.min_subtotal}}</text></view>
+  <view bindtap='detail' data-id='{{item.coupon_id}}' class='coupon-info' style='padding-top:20rpx;'>名称</view>
+  <view class='coupon-info'>开始领取时间<text class='cou-text'>{{item.coupon_id}}</text></view>
+  <view class='coupon-info' style='padding-bottom:20rpx;'>领取结束时间<text class='cou-text'>{{item.coupon_id}}</text></view>
   <view class='oper-coupon outer'>
-    <view class='circle' style='{{isSelect}}' bindtap='selected' data-index="{{index}}">
-      <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" data-index="{{index}}" />
-      <icon wx:else type="circle" size="20" data-index="{{index}}"/>
+    <view class='circle' style='{{isSelect}}'>
+      <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" />
+      <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}"/>
     </view>
     <view class='oper-btn'> 
-      <view class='edit' bindtap='edit' data-id='{{item.template_id}}'>编辑</view>
-      <view class='recovery' bindtap='recovery' wx:if='{{currentTab.first == "tab-current"}}'>删除</view>
-      <view class='recovery' bindtap='recovery' wx:else>恢复</view>
+      <view class='edit' bindtap='edit' data-id='{{item.coupon_id}}' >编辑</view>
+      <view class='recovery' bindtap='recovery' data-id='{{item.coupon_id}}'>恢复</view>
     </view>
   </view>
 </view>
 
-<view class='create-coupon' style='padding-bottom:200rpx;{{listCreat}}'>
+<view class='create-coupon' style='padding-bottom:200rpx;display:none'>
   <view class='errorTips'>错误提示：---</view>
   <view class='create'>
     <view class='item-title'>必填项以”*“符号标示</view>
@@ -61,12 +61,12 @@
   <button style='height:80rpx; margin:20rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:12rpx;' bindtap='submitEdit'>确定</button>
 </view>
 
-<view class='footed' style='{{footedStyle}}'>
+<view class='footed'>
   <view class='creat-category' style='{{isAll}}'>
     <view class='footed-left' bindtap='selectAllItem'>
-      <view style='display:inline-block;float:left;{{isSelect}}'>
-          <icon wx:if="{{selectedAllStatus}}"  color='#FF3649' type="success_circle" size="20" data-index="{{index}}" class="my-check"/>
-          <icon wx:else type="circle" size="20" bindtap="bindCheckbox" class="my-check"/>
+      <view style='display:inline-block;float:left;{{isSelect}}' >
+          <icon wx:if="{{selectedAllStatus}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+          <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
           <text style='padding:0 10rpx'> 全选</text>
       </view>
       <text class='esc' bindtap='quit'>退出</text>  
@@ -79,7 +79,7 @@
     </view>
     <view class='footed-right'>创建</view>
   </view>
-  <view class='outer' style='padding: 10rpx 0 10rpx 0;{{footedBar}}'>
+  <view class='outer' style='padding: 10rpx 0 10rpx 0;'>
     <view class='footed-tab'>
       <image class='footed-image' src='../../image/nav/main/home.png'></image>
       <view>首页</view>
@@ -98,3 +98,4 @@
     </view>
   </view>
 </view>
+

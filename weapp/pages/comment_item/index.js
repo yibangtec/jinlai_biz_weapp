@@ -1,4 +1,4 @@
-// pages/coupon_template/detail.js
+// pages/comment_item/index.js
 var app = getApp()
 Page({
 
@@ -6,16 +6,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    item:''
+    currentTab: {
+      all: 'tab-current',
+      favourable: '',
+      intermediate: '',
+      negative:''
+    },
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var id = options.Id
     var that = this
-    var url = 'coupon_template/detail'
+    var url = 'comment_biz/index'
     var params = {}
     var api_result = api_request(url, params)
 
@@ -31,11 +35,12 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         url: app.globalData.url_api + url,
-        data: { id: id, },
+        data: { limit: 10, },
         success: function (result) {
           console.log(result.data)
+          var list = result.data.content
           that.setData({
-            item: result.data.content
+            item: list
           })
         },
         fail: function (result) {
@@ -45,10 +50,48 @@ Page({
       })
     }
   },
-  edit: function (e) {
-    var id = e.currentTarget.dataset.id
-    wx.navigateTo({
-      url: 'edit?Id=' + id
+  allComment:function(e){
+    var that = this
+    that.setData({
+      currentTab: {
+        all: 'tab-current',
+        favourable: '',
+        intermediate: '',
+        negative: ''
+      },
+    })
+  },
+  favourableComment: function (e) {
+    var that = this
+    that.setData({
+      currentTab: {
+        all: '',
+        favourable: 'tab-current',
+        intermediate: '',
+        negative: ''
+      },
+    })
+  },
+  intermediateComment: function (e) {
+    var that = this
+    that.setData({
+      currentTab: {
+        all: '',
+        favourable: '',
+        intermediate: 'tab-current',
+        negative: ''
+      },
+    })
+  },
+  negativeComment: function (e) {
+    var that = this
+    that.setData({
+      currentTab: {
+        all: '',
+        favourable: '',
+        intermediate: '',
+        negative: 'tab-current'
+      },
     })
   },
 

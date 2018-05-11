@@ -57,6 +57,11 @@ Page({
       url: '../../pages/order/index'
     })
   },
+  toComment:function(e){
+    wx.navigateTo({
+      url: '../../pages/comment_item/index'
+    })
+  },
   toItem: function (e) {
     wx.switchTab({
       url: '../../pages/item/index'
@@ -65,6 +70,11 @@ Page({
   toCategoryBiz: function (e) {
     wx.navigateTo({
       url: '../../pages/category_biz/index'
+    })
+  },
+  team:function(e){
+    wx.navigateTo({
+      url: '../../pages/team/index'
     })
   },
   freight:function(e){
@@ -85,6 +95,11 @@ Page({
   branch:function(e){
     wx.navigateTo({
       url: '../../pages/branch/index',
+    })
+  },
+  combo:function(e){
+    wx.navigateTo({
+      url: '../../pages/coupon_combo/index',
     })
   },
   /**

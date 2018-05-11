@@ -1,0 +1,78 @@
+/* pages/comment_item/index.wxss */
+.outer {zoom:1;}    /*==for IE6/7 Maxthon2==*/
+.outer::after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
+page {  
+  display: block; 
+  width: 100%; 
+  height: 100%;
+  background-color: #f6f6f6;  
+  position: relative;
+}  
+.header{
+  margin:20rpx;
+  background-color: #fff;
+  font-size: 26rpx;
+  color: #3e3a39;
+  border-radius: 15rpx;
+}
+.header .tab{
+   width: 25%;
+  float: left;
+  font-size: 26rpx;
+  font-weight: 700;
+  text-align: center;
+}
+.tab-text{
+  margin: 0 58rpx;
+  padding: 26rpx 0;
+}
+.tab-current{
+  color: #FF3649;
+  border-bottom: 4rpx solid #FF3649;
+}
+
+.comment-item{
+  margin:10rpx 20rpx;
+  background-color: #fff;
+  font-size: 26rpx;
+  color: #3e3a39;
+  border-radius: 15rpx;
+}
+.images-icon{
+  padding: 50rpx 20rpx;
+
+}
+.images-icon image{
+  width: 36rpx;
+  height: 36rpx;
+  display: inline-block;
+  margin-right: 28rpx;
+  vertical-align: middle;
+}
+.images-icon text{
+  font-size: 32rpx;
+  vertical-align: middle;
+  color: #666464;
+}
+.comment-text{
+  font-size: 22rpx;
+  color: #666464;
+  line-height: 36rpx;
+  margin: 0 20rpx;
+  padding: 0 0 50rpx 0;
+  border-bottom: 2rpx solid #efefef;
+}
+.comment-operation{
+  padding: 30rpx 0;
+  font-size: 24rpx;
+  color: #3e3a39;
+}
+.operation-btn{
+  float: left;
+  width: 120rpx;
+  line-height: 54rpx;
+  text-align: center;
+  border: 2rpx solid #9fa0a0;
+  border-radius: 27rpx;
+  margin-left: 20rpx;
+}

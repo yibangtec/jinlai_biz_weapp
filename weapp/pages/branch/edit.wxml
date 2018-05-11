@@ -1,0 +1,71 @@
+<!--pages/branch/edit.wxml-->
+<view class='errorTips'>错误提示：---</view>
+<view class='create'>
+  <view class='item-title'>必填项以”*“符号标示</view>
+  <view class='label-text'>主图</view>
+  <view class="page-body-info">
+        <view wx:for="{{mainImageSrc}}" wx:key="{{index}}" style="position: relative;">
+          <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill" style='margin:0 0 20rpx 20rpx'>
+          </image>
+          <image index="{{index}}" bindtap="closeImgMain" class="close" src="../../image/shanchu@3x.png"></image>
+        </view>
+        <view style="{{dis}}">
+          <view class="image-plus" bindtap="chooseImageMain">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+        </view>
+  </view>
+  <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgMain">上传</button>
+  <view class='label-text'>形象图</view>
+  <view class="page-body-info">
+        <view wx:for="{{mainImageSrc}}" wx:key="{{index}}" style="position: relative;">
+          <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill" style='margin:0 0 20rpx 20rpx'>
+          </image>
+          <image index="{{index}}" bindtap="closeImgMain" class="close" src="../../image/shanchu@3x.png"></image>
+        </view>
+        <view style="{{dis}}">
+          <view class="image-plus" bindtap="chooseImageMain">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+        </view>
+  </view>
+  <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgMain">上传</button>
+</view>
+<view class='create'>
+    <view class='item-title'><text style='color:#3e3a39;font-size:30rpx;'>基本信息</text></view>
+    <view class='label-text'>名称 <text class='must'>*</text></view>
+    <input class='temp-input' type="text" maxlength="20" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>说明</view>
+    <input class='temp-input' type="text" maxlength="30" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>消费者联系电话</view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>商务联系手机号</view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>订单通知手机号</view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>休息日</view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>营业/配送开始时间</view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>营业/配送结束时间</view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>配送范围（公里）</view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+  </view>
+  <view class='create'>
+    <view class='item-title'><text style='color:#3e3a39;font-size:30rpx;'>地址</text></view>
+    <view class='label-text'>省 <text class='must'>*</text></view>
+    <input class='temp-input' type="text" maxlength="20" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>市 <text class='must'>*</text></view>
+    <input class='temp-input' type="text" maxlength="30" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>区/县</view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>具体地址 <text class='must'>*</text></view>
+    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    
+  </view>
+<button style='height:80rpx; margin:20rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:12rpx;' bindtap='submitEdit'>确定</button>
+
+

@@ -1,0 +1,20 @@
+<!--pages/branch/delete.wxml-->
+<view class='errorTips'>错误提示：---</view>
+<view class='coupon-content'>
+  <view bindtap='detail' data-id='{{item.coupon_id}}' class='coupon-info' style='padding-top:20rpx;'>咖啡店</view>
+  <view class='coupon-info'>山东省 青岛市 崂山区</view>
+  <view class='coupon-info' style='padding-bottom:20rpx;'>东海东路一号意帮管家</view>
+</view>
+
+  <view class='temp-box outer' style='background-color:#FCF6CB;'>
+    <view class='delete-text'>
+      确认要{{text}}？
+    </view> 
+  </view>
+  <view class='temp-box'>
+    <view class='label-text'>密码</view>
+    <input class='temp-input' type='password' bindblur='getPassword' placeholder='请输入'></input>
+  </view>
+  <view class="btn-area" style='margin:0 20rpx'>
+    <button style='height:80rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:0;' disabled="{{disable}}" bindtap="bindDelete">确定</button>
+  </view>

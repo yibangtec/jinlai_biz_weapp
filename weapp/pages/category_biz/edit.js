@@ -86,7 +86,7 @@ Page({
         success: function (result) {
           console.log(result.data)
           var arr = []
-          if (result.data.content.url_image !== null){
+          if (result.data.content.url_image.length > 0){
             arr[0] = 'https://jinlaisandbox-images.b0.upaiyun.com/' + result.data.content.url_image
           }else{
             arr = ''

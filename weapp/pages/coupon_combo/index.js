@@ -1,4 +1,4 @@
-// pages/coupon_template/index.js
+// pages/coupon_combo/index.js
 var app = getApp()
 Page({
 
@@ -19,8 +19,6 @@ Page({
     listCreat: 'display:none',
     selectedAll: false,
     selectedAllStatus: false,
-    footedStyle: 'display:block',
-    footedBar: 'display:block',
   },
 
   /**
@@ -28,7 +26,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    var url = 'coupon_template/index'
+    var url = 'coupon_combo/index'
     var params = {}
     var api_result = api_request(url, params)
 
@@ -73,46 +71,9 @@ Page({
       listAll: 'display:block',
       listCreat: 'display:none',
       isEdit: 'display:block',
-      footedStyle: 'display:block',
-      footedBar: 'display:block',
     })
-    var url = 'coupon/index'
-    var params = {}
-    var api_result = api_request(url, params)
-
-    // 网络请求
-    function api_request(url, api_params) {
-      // 生成签名
-      app.sign_generate(api_params)
-
-      // 通过小程序的网络请求API发送请求
-      wx.request({
-        method: "POST",
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        url: app.globalData.url_api + url,
-        data: { limit: 10, },
-        success: function (result) {
-          console.log(result.data)
-          var list = result.data.content
-          for (var i = 0; i < list.length; i++) {
-            list[i].selected = false
-          }
-          that.setData({
-            item: list
-          })
-        },
-        fail: function (result) {
-          console.log(result)
-          wx.vibrateShort()
-        }
-      })
-    }
-    
   },
   deleteCategory: function (e) {
-    
     var that = this
     that.setData({
       currentTab: {
@@ -124,50 +85,6 @@ Page({
       isEdit: 'display:block',
       listCreat: 'display:none',
     })
-    var url = 'coupon/index'
-    var params = {}
-    var api_result = api_request(url, params)
-
-    // 网络请求
-    function api_request(url, api_params) {
-      // 生成签名
-      app.sign_generate(api_params)
-
-      // 通过小程序的网络请求API发送请求
-      wx.request({
-        method: "POST",
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        url: app.globalData.url_api + url,
-        data: { limit: 10, app_type: 'biz', time_delete: 'IS NOT NULL', },
-        success: function (result) {
-          console.log(result.data)
-          if (result.data.content.status==200){
-            var list = result.data.content
-            for (var i = 0; i < list.length; i++) {
-              list[i].selected = false
-            }
-            that.setData({
-              item: list,
-              footedStyle: 'display:block',
-              footedBar: 'display:none',
-            })
-          }else{
-            that.setData({
-              item: [],
-              footedStyle: 'display:none',
-              footedBar: 'display:block',
-            })
-          }
-          
-        },
-        fail: function (result) {
-          console.log(result)
-          wx.vibrateShort()
-        }
-      })
-    }
   },
   crearCategory: function (e) {
     var that = this
@@ -180,8 +97,6 @@ Page({
       listAll: 'display:none',
       listCreat: 'display:block',
       isEdit: 'display:none',
-      footedStyle: 'display:none',
-      footedBar: 'display:block',
     })
   },
   quit: function (e) {
@@ -241,7 +156,7 @@ Page({
       url: 'detail?Id=' + id
     })
   },
-  edit:function(e){
+  edit: function (e) {
     var id = e.currentTarget.dataset.id
     wx.navigateTo({
       url: 'edit?Id=' + id
@@ -253,6 +168,7 @@ Page({
       url: 'delete?Id=' + id
     })
   },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
