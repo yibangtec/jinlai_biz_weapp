@@ -29,7 +29,7 @@
     <view data-id='{{item.category_id}}' class='mainName' bindtap='detail'>{{item.name}}</view>
     <view class='mainOper'>
       <view class='edit' bindtap='edit' data-id='{{item.category_id}}'>编辑</view>
-      <view class='recovery' bindtap='recovery' wx:if='{{currentTab.first == "tab-current"}}'>删除</view>
+      <view class='recovery' bindtap='recovery' data-='delete' wx:if='{{currentTab.first == "tab-current"}}'>删除</view>
       <view class='recovery' bindtap='recovery' wx:else>恢复</view>
     </view>
   </view>

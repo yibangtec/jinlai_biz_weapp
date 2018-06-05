@@ -30,7 +30,8 @@
             </view>
             <view style='margin-left:80rpx' bindtap='detailClick' data-tem='{{item.template_id}}' data-biz='{{item.biz_id}}'>{{item.name}}</view>
           </view>
-          <view class='tab all-text' bindtap='detailClick' data-tem='{{item.template_id}}' data-biz='{{item.biz_id}}'>{{item.type}}</view>
+          <view class='tab all-text' bindtap='detailClick' data-tem='{{item.template_id}}' data-biz='{{item.biz_id}}' wx:if='{{item.type==""}}'>包邮</view>
+          <view class='tab all-text' bindtap='detailClick' data-tem='{{item.template_id}}' data-biz='{{item.biz_id}}' wx:else>{{item.type}}</view>
           <view class='tab all-text'>
             <view class='temp-edit' bindtap='editBtn' data-tem='{{item.template_id}}' data-biz='{{item.biz_id}}'>编辑</view>
             <view class='temp-del' bindtap='delTem' data-tem='{{item.template_id}}' data-value='delete' data-biz='{{item.biz_id}}'>删除</view>
@@ -110,7 +111,7 @@
   <view class='temp-box' style='padding-bottom:50rpx'>
     <view class='necessary-tips'>必填项以“*”符号标示</view>
     <view class='lable'>名称 <text class='must'>*</text></view>
-    <input class='fre-input' type='text' placeholder-class="input-placeholder" maxlength="20" bindblur='getName' placeholder='请输入'></input>
+    <input class='fre-input' type='text' placeholder-class="input-placeholder" maxlength="20" bindblur='getName' placeholder='请输入' value='{{form_info}}'></input>
     <view class='lable'>类型 <text class='must'>*</text></view>
     <view class='temp-type outer'>
       <view data-type='freePostage' bindtap='typeClick' class='type-left {{tab.freePostage}}' style='border-right: none;' wx:if="{{tab.logistics == 'type-current'}}">包邮</view>
@@ -142,13 +143,13 @@
       </view>
       <view class='voucher-tips'>计量单位为“件”（计件时）、“KG”（计净重/毛重/体积重时）</view>
       <view class='lable'>每单最高配送计件量（件）</view>
-      <input class='fre-input' type='number' placeholder-class="input-placeholder" bindblur='getMax' placeholder='请输入'></input>
+      <input class='fre-input' type='number' placeholder-class="input-placeholder" bindblur='getMax' placeholder='请输入' value='{{form_info}}'></input>
       <view class='lable'>起始量（件）</view>
-      <input class='fre-input' type='number' placeholder-class="input-placeholder" bindblur='getStart' placeholder='请输入'></input>
+      <input class='fre-input' type='number' placeholder-class="input-placeholder" bindblur='getStart' placeholder='请输入' value='{{form_info}}'></input>
       <view class='lable'>起始量运费（元）</view>
-      <input class='fre-input' type='digit' placeholder-class="input-placeholder" bindblur='getStartMoney' placeholder='请输入'></input>
+      <input class='fre-input' type='digit' placeholder-class="input-placeholder" bindblur='getStartMoney' placeholder='请输入' value='{{form_info}}'></input>
       <view class='lable'>超出后运费（元/件）</view>
-      <input class='fre-input' type='digit' placeholder-class="input-placeholder" bindblur='getUnitMoney' placeholder='请输入'></input>
+      <input class='fre-input' type='digit' placeholder-class="input-placeholder" bindblur='getUnitMoney' placeholder='请输入' value='{{form_info}}'></input>
     </view>
     <view class='electron' style='{{typeContent.electron}}'>
       <view class='voucher-tips'>若全部留空，则电子凭证自用户付款时起366个自然日内有效，逾期全额退款</view>
@@ -160,7 +161,7 @@
       <input class='fre-input' value='{{period}}' type='text' placeholder-class="input-placeholder" ></input>
       <view class='input-tips'>若填写了此项，则有效期将根据订单付款时间及此项数值自动计算，若超出上述“有效期结束时间”，则以“有效期结束时间”为准。</view>
       <view class='lable'>过期退款比例</view>
-      <input class='fre-input' type='digit' bindblur='getExpire' placeholder-class="input-placeholder" placeholder='请输入'></input>
+      <input class='fre-input' type='digit' bindblur='getExpire' placeholder-class="input-placeholder" placeholder='请输入' value='{{form_info}}'></input>
       <view class='input-tips'>若电子凭证逾期未使用，系统将把该比例的用户付款项原路退回给用户。</view>
     </view>
     

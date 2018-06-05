@@ -5,21 +5,21 @@
   <view class='tab' bindtap='intermediateComment'><view class='tab-text {{currentTab.intermediate}}'>中评</view></view>
   <view class='tab' bindtap='negativeComment'><view class='tab-text {{currentTab.negative}}'>差评</view></view>
 </view>
-<view class='comment-item' wx:for='{{item}}' wx:key='{{index}}'>
+<view style='{{commentStyle}}' class='comment-item' wx:for='{{item}}' wx:key='{{index}}'>
   <view class='images-icon'>
-    <image src='../../image/xuanzhong2.png' wx:if='{{item.score_deliver > 0}}'></image>
+    <image src='../../image/xuanzhong2.png' wx:if='{{item.score > 0}}'></image>
     <image src='../../image/weixuanzhong2.png' wx:else></image>
 
-    <image src='../../image/xuanzhong2.png' wx:if='{{item.score_deliver > 1}}'></image>
+    <image src='../../image/xuanzhong2.png' wx:if='{{item.score > 1}}'></image>
     <image src='../../image/weixuanzhong2.png' wx:else></image>
 
-    <image src='../../image/xuanzhong2.png' wx:if='{{item.score_deliver > 2}}'></image>
+    <image src='../../image/xuanzhong2.png' wx:if='{{item.score > 2}}'></image>
     <image src='../../image/weixuanzhong2.png' wx:else></image>
 
-    <image src='../../image/xuanzhong2.png' wx:if='{{item.score_deliver > 3}}'></image>
+    <image src='../../image/xuanzhong2.png' wx:if='{{item.score > 3}}'></image>
     <image src='../../image/weixuanzhong2.png' wx:else></image>
 
-    <image src='../../image/xuanzhong2.png' wx:if='{{item.score_deliver > 4}}'></image>
+    <image src='../../image/xuanzhong2.png' wx:if='{{item.score > 4}}'></image>
     <image src='../../image/weixuanzhong2.png' wx:else></image>
     <text>一般</text>
   </view>
@@ -29,6 +29,6 @@
   <view class='comment-operation outer'>
     <view class='operation-btn'>订单</view>
     <view class='operation-btn'>用户</view>
-    <view class='operation-btn'>查看</view>即将
+    <view class='operation-btn'>查看</view>
   </view>
 </view>

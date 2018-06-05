@@ -1,0 +1,131 @@
+/* pages/team/edit.wxss */
+.outer {zoom:1;}    /*==for IE6/7 Maxthon2==*/
+.outer::after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
+page {  
+  display: block; 
+  width: 100%; 
+  height: 100%;
+  background-color: #f6f6f6;  
+  position: relative;
+}  
+.create{
+  margin: 20rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding-bottom: 30rpx;
+}
+.errorTips{
+  margin: 20rpx;
+  font-size: 24rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  color: #3e3a39;
+  background-color: #FBF7CC;
+  padding: 0 20rpx;
+}
+.item-title{
+  margin: 0 20rpx;
+  font-size: 24rpx;
+  color: #ff3649;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #C9C9C9;
+}
+.label-text{
+  text-align: left;
+  font-size: 26rpx;
+  line-height: 66rpx;
+  color:  #3e3e39;
+  padding: 20rpx 0;
+  margin: 0 20rpx;
+}
+.temp-input{
+  height: 70rpx;
+  padding-left: 20rpx;
+  border-radius: 12rpx;
+  border: 2rpx solid #c9caca;
+  font-size: 26rpx;
+  color: #9fa0a0;
+  margin: 0 20rpx;
+}
+.must{
+  font-size: 26rpx;
+  color: #ff3649;
+}
+
+.temp-type{
+  margin: 0 20rpx;
+}
+.type-left{
+  width: 33.33333333%;
+  float: left;
+  text-align: center;
+  color: #3E3A39;
+  box-sizing: border-box;
+  font-size: 30rpx;
+  padding: 20rpx 0;
+  border-radius: 15rpx 0 0 15rpx;
+  border: 2rpx solid #c9caca;
+  
+}
+.type-center{
+  width: 33.33333333%;
+  float: left;
+  text-align: center;
+  color: #3E3A39;
+  box-sizing: border-box;
+  font-size: 30rpx;
+  padding: 20rpx 0;
+  border-top: 2rpx solid #c9caca;
+  border-bottom: 2rpx solid #c9caca;
+}
+.type-right{
+  width: 33.33333333%;
+  float: left;
+  text-align: center;
+  color: #3E3A39;
+  box-sizing: border-box;
+  font-size: 30rpx;
+  padding: 20rpx 0;
+  border-radius: 0 15rpx 15rpx 0;
+  border: 2rpx solid #c9caca;
+}
+.type-current{
+  background-color: #FF3649;
+  color: #fff;
+  border: 2rpx solid #ff8691;
+}
+
+.input-text{
+  font-size: 26rpx;
+  padding-left: 20rpx;
+  color: #3e3a39;
+}
+.status{
+  margin: 0 20rpx;
+  height: 70rpx;
+  font-size: 30rpx;
+  line-height: 70rpx;
+  text-align: center;
+  color: #9fa0a0;
+}
+.status-left{
+  float: left;
+  width: 50%;
+  box-sizing: border-box;
+  border: 1rpx solid #c9caca;
+  border-radius: 12rpx 0 0 12rpx;
+  border-right: none;
+}
+.status-right{
+  float: left;
+  width: 50%;
+  box-sizing: border-box;
+  border: 1rpx solid #c9caca;
+  border-radius:  0 12rpx 12rpx 0;
+  border-left: none;
+}
+.status-type{
+  background-color: #FF3649;
+  color: #fff;
+  border: 1rpx solid #ff8691;
+}

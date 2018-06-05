@@ -1,28 +1,4 @@
-// pages/coupon_combo/detail.js
-function tr(stamp) {
-  //var objD = new Date();
-  var objD = new Date(stamp * 1000);
-
-  var yy = objD.getYear();
-  if (yy < 1900) yy = yy + 1900;
-
-  var MM = objD.getMonth() + 1;
-  if (MM < 10) MM = '0' + MM;
-
-  var dd = objD.getDate();
-  if (dd < 10) dd = '0' + dd;
-
-  var hh = objD.getHours();
-  if (hh < 10) hh = '0' + hh;
-
-  var mm = objD.getMinutes();
-  if (mm < 10) mm = '0' + mm;
-
-  var ss = objD.getSeconds();
-  if (ss < 10) ss = '0' + ss;
-
-  return yy + '-' + MM + '-' + dd + ' ' + hh + ':' + mm + ':' + ss;
-}
+// pages/team/detail.js
 var app = getApp()
 Page({
 
@@ -39,7 +15,7 @@ Page({
   onLoad: function (options) {
     var id = options.Id
     var that = this
-    var url = 'coupon_combo/detail'
+    var url = 'stuff/detail'
     var params = {}
     var api_result = api_request(url, params)
 
@@ -57,35 +33,10 @@ Page({
         url: app.globalData.url_api + url,
         data: { id: id, },
         success: function (result) {
-          
-          if (result.data.status == 200){
-            var list = result.data.content
-            console.log(list)
-            
-            if (list.time_start == null) {
-              list.time_start = ''
-            } else if (list.time_start == 0) {
-
-            } else {
-              var d = tr(list.time_start)
-              //console.log(d)
-              list.time_start = d
-            }
-            if (list.time_end == null) {
-              list.time_end = ''
-            } else if (list.time_end == 0) {
-
-            } else {
-              var end = tr(list.time_end)
-              //console.log(end)
-              list.time_end = end
-            }
-
-            that.setData({
-              item: list
-            })
-          }
-         
+          console.log(result.data)
+          that.setData({
+            item: result.data.content
+          })
         },
         fail: function (result) {
           console.log(result)
@@ -93,13 +44,6 @@ Page({
         }
       })
     }
-  
-  },
-  edit: function (e) {
-    var id = e.currentTarget.dataset.id
-    wx.navigateTo({
-      url: 'edit?Id=' + id
-    })
   },
 
   /**

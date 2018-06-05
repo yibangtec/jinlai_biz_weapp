@@ -34,15 +34,15 @@ page {
   margin-left: -75rpx;
   border-radius: 50%;
   margin-top: 60rpx;
-  background-color: #efefef;
+  background-color: #fff;
   border: 2rpx solid #efefef;
+  overflow: hidden;
 }
+
 .header-logo image{
   display: block;
-  height: 150rpx;
-  width: 150rpx;
-  border-radius: 50%;
-  border: 2rpx solid #efefef;
+  height: 100%;
+  width: 100%;
 }
 .header-name{
   text-align: center;

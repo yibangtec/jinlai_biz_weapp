@@ -10,68 +10,66 @@
   <view>这里空空如也，快点添加商品分类吧</view>
 </view>
 
+<view  style='margin-bottom:200rpx;{{couponStyle}}'>
 <view class='coupon-content' wx:for='{{item}}' wx:key='{{index}}'>
-  <view bindtap='detail' data-id='{{item.coupon_id}}' class='coupon-info' style='padding-top:20rpx;'>名称</view>
-  <view class='coupon-info'>开始领取时间<text class='cou-text'>{{item.coupon_id}}</text></view>
-  <view class='coupon-info' style='padding-bottom:20rpx;'>领取结束时间<text class='cou-text'>{{item.coupon_id}}</text></view>
+  <view bindtap='detail' data-id='{{item.combo_id}}' class='coupon-info' style='padding-top:20rpx;'>名称<text class='cou-text'>{{item.name}}</text></view>
+  <view bindtap='detail' data-id='{{item.combo_id}}'class='coupon-info'>开始领取时间<text class='cou-text'>{{item.time_start}}</text></view>
+  <view bindtap='detail' data-id='{{item.combo_id}}'class='coupon-info' style='padding-bottom:20rpx;'>领取结束时间<text class='cou-text'>{{item.time_end}}</text></view>
   <view class='oper-coupon outer'>
     <view class='circle' style='{{isSelect}}'>
-      <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" />
-      <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}"/>
+      <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" bindtap="selected" data-index="{{index}}" />
+      <icon wx:else type="circle" size="20" bindtap="selected" data-index="{{index}}"/>
     </view>
     <view class='oper-btn'> 
-      <view class='edit' bindtap='edit' data-id='{{item.coupon_id}}' >编辑</view>
-      <view class='recovery' bindtap='recovery' data-id='{{item.coupon_id}}'>恢复</view>
+      <view class='edit' bindtap='edit' data-id='{{item.combo_id}}' >编辑</view>
+      <view class='recovery' bindtap='recovery' data-opera='restore' data-id='{{item.combo_id}}' wx:if='{{item.time_delete}}'>恢复</view>
+      <view class='recovery' bindtap='recovery' data-opera='delete' data-id='{{item.combo_id}}' wx:else>删除</view>
     </view>
   </view>
 </view>
 
-<view class='create-coupon' style='padding-bottom:200rpx;display:none'>
+</view>
+
+
+
+<view class='create-coupon' style='padding-bottom:200rpx;{{couponCreate}}'>
   <view class='errorTips'>错误提示：---</view>
+  <view class='errorTips' style='{{tipsError}}'>错误提示：---</view>
   <view class='create'>
     <view class='item-title'>必填项以”*“符号标示</view>
     <view class='label-text'>名称<text class='must'> *</text></view>
-    <input class='temp-input' type="text" maxlength="20" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
-    <view class='label-text'>说明</view>
-    <input class='temp-input' type="text" maxlength="30" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
-    <view class='label-text'>面值（元）<text class='must'> *</text></view>
-    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
-    <view class='label-text'>起用金额（元）</view>
-    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <input class='temp-input' type="text" maxlength="20" bindblur='getName' placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>所有优惠券<text class='must'> *</text></view>
+    <input class='temp-input' type="text" bindblur='getIds' value='{{item.template_ids}}' placeholder="请输入所有优惠券ID，多个ID间以一个”，“分割" />
+    <view class='note-text'>放入优惠券包的优惠券模板，在优惠券包被领取时将忽视总限量（若有）及单个用户限量（若有），以优惠券包的总限量（若有）为准；作为单个优惠券模板被领取时不受影响。</view>
   </view>
   <view class='create'>
     <view class='item-title'><text style='color:#3e3a39;font-size:30rpx;'>高级选项（可留空）</text></view>
     <view class='label-text'>总限量（份）</view>
-    <input class='temp-input' type="text" maxlength="20" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
-    <view class='label-text'>单个用户限量（份）</view>
-    <input class='temp-input' type="text" maxlength="30" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
-    <view class='label-text'>领取后有效期</view>
-    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
-    <view class='label-text'>有效期开始时间</view>
-    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
-    <view class='label-text'>有效期结束时间</view>
-    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
-    <view class='label-text'>限用系统分类</view>
-    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
-    <view class='label-text'>限用店内分类</view>
-    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
-    <view class='label-text'>限用商品</view>
-    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <input class='temp-input' type="text" maxlength="20" bindblur='getMax_amount' placeholder="最高999999，留空或者0为不限" value='{{item.max_amount}}' />
+    <view class='note-text'>总共可被领取的优惠券数量上限；对于每位用户来说，每个优惠券包仅可领取一次。</view>
+    <view class='label-text'>领取开始时间</view>
+    <input class='temp-input' disabled='true'  bindtap="startTap" value='{{startDate}}' placeholder="例如：2017-09-08 14:20；留空则马上开放领取" />
+    <view class='label-text'>领取期结束时间</view>
+    <input class='temp-input' disabled='true' bindtap="endTap" value='{{endDate}}' placeholder="例如：2017-09-08 14:20" />
+    
   </view>
-  <button style='height:80rpx; margin:20rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:12rpx;' bindtap='submitEdit'>确定</button>
+  <button style='height:80rpx; margin:20rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:12rpx;' bindtap='submitCreate'>确定</button>
 </view>
+
 
 <view class='footed'>
   <view class='creat-category' style='{{isAll}}'>
     <view class='footed-left' bindtap='selectAllItem'>
       <view style='display:inline-block;float:left;{{isSelect}}' >
-          <icon wx:if="{{selectedAllStatus}}"  color='#FF3649' type="success_circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
-          <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}" class="my-check"/>
+          <icon wx:if="{{selectedAllStatus}}"  color='#FF3649' type="success_circle" size="20" data-index="{{index}}" class="my-check"/>
+          <icon wx:else type="circle" size="20" bindtap="bindCheckbox" class="my-check"/>
           <text style='padding:0 10rpx'> 全选</text>
       </view>
       <text class='esc' bindtap='quit'>退出</text>  
     </view>
-    <view class='footed-right'>恢复</view>
+    <view class='footed-right' data-opera='delete' bindtap='operation' wx:if='{{currentTab.first == "tab-current"}}'>删除</view>
+    <view class='footed-right' data-opera='restore' bindtap='operation' wx:elif='{{currentTab.center == "tab-current"}}'>恢复</view>
   </view>
   <view class='creat-category' style='{{isEdit}}'>
     <view class='footed-left' bindtap='editBtn'>
@@ -98,4 +96,7 @@
     </view>
   </view>
 </view>
+
+
+<include src="../../utils/picker_datetime.wxml"/>
 

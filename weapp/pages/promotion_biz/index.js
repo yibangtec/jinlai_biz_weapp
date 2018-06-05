@@ -48,7 +48,7 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         url: app.globalData.url_api + url,
-        data: { app_type:'biz',limit: 10, },
+        data: { app_type:'biz' },
         success: function (result) {
           console.log(result.data)
           var list = result.data.content

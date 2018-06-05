@@ -4,8 +4,7 @@ var app = getApp()
 var userID = ''
 var bizID = ''
 var obj = {}
-obj.type = 'freePostage'
-obj.type_actual ='piece'
+obj.type_actual ='计件'
 var name = ''
 var time_latest_deliver=''
 var max_amount = ''
@@ -81,7 +80,8 @@ Page({
     selectedAllStatus: false,
     selectedAll: false,
     errorStyle: 'display:none',
-    errorTips: ''
+    errorTips: '',
+    form_info:''
   },
 
   /**
@@ -568,70 +568,9 @@ Page({
 
   },
   creatBtn:function(e){
-    var that =this
-
-    if (obj.type =='freePostage'){
-      
-      for (var key in obj) {
-        //只遍历对象自身的属性，而不包含继承于原型链上的属性。  
-        if (obj[key] == 'freePostage') {
-          obj.type = '包邮'
-          obj.name = name
-        } else {
-          delete obj[key]
-        }
-      }
-    } else if (obj.type == 'logistics') {
-      for (var key in obj) {
-        //只遍历对象自身的属性，而不包含继承于原型链上的属性。  
-        if (obj[key] == 'logistics') {
-          obj.type = '物流配送'
-          obj.name = name
-          if (obj.type_actual == 'piece') {
-            obj.type_actual = '计件'
-          } else if (obj.type_actual == 'suttle') {
-            obj.type_actual = '净重'
-          } else if (obj.type_actual == 'gross') {
-            obj.type_actual = '毛重'
-          } else if (obj.type_actual == 'volume') {
-            obj.type_actual = '体积重'
-          }
-          obj.max_amount = max_amount
-          obj.start_amount = start_amount
-          obj.fee_start = fee_start
-          obj.fee_unit = fee_unit
-          if(s == ''){
-            obj.time_latest_deliver = 259200
-            
-          }else{
-            obj.time_latest_deliver = s
-          }
-          
-        } else {
-          //delete obj[key]
-        }
-      }
-        
-    } else if (obj.type == 'electron') {
-      for (var key in obj) {
-        //只遍历对象自身的属性，而不包含继承于原型链上的属性。  
-        if (obj[key] == 'electron') {
-          obj.type = '电子凭证'
-          obj.name = name
-          obj.time_valid_from = that.data.start
-          obj.time_valid_end = that.data.end
-          obj.period_valid = that.data.period
-          obj.expire_refund_rate = expire
-        } else {
-          delete obj[key]
-        }
-      }
-      
-    }
-
-    obj.user_id = userID
-    obj.biz_id = bizID
-    obj.app_type = 'biz'
+  var that =this
+  if(that.data.tab.freePostage =='type-current'){ 
+    
     var url = 'freight_template_biz/create'
     var params = {}
     var api_result = api_request(url, params)
@@ -648,15 +587,19 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         url: app.globalData.url_api + url,
-        data: obj,
+        data: { app_type: 'biz', user_id: userID, biz_id: bizID, province: '山东', city: '青岛市', county: '崂山区', name: name, type: '包邮',},
         success: function (result) {
           if (result.data.status == 200) {
             console.log(result)
+
+            that.setData({
+              form_info: '',
+            })
             wx.navigateTo({
-              url: 'result?title='+'运费模板创建成功',
+              url: 'result?title=' + '运费模板创建成功',
             })
           } else {
-            console.log(result.data.content.error.message)
+            console.log(result.data)
             that.setData({
               errorStyle: 'display:block',
               errorTips: result.data.content.error.message
@@ -670,9 +613,116 @@ Page({
         }
       })
     }
-
+  } else if (that.data.tab.logistics == 'type-current') {
+    var type_actual = ''
+    var time_latest = ''
+    if (that.data.chargingTab.piece == 'type-current') {
+      type_actual = '计件'
+    } else if (that.data.chargingTab.suttle == 'type-current') {
+      type_actual = '净重'
+    } else if (that.data.chargingTab.gross == 'type-current') {
+      type_actual = '毛重'
+    } else if (that.data.chargingTab.volume == 'type-current') {
+      type_actual = '体积重'
+    }
     
+    if (s == '') {
+      time_latest = 259200
 
+    } else {
+      time_latest = s
+    }
+
+      var url = 'freight_template_biz/create'
+      var params = {}
+      var api_result = api_request(url, params)
+
+      // 网络请求
+      function api_request(url, api_params) {
+        // 生成签名
+        app.sign_generate(api_params)
+
+        // 通过小程序的网络请求API发送请求
+        wx.request({
+          method: "POST",
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          url: app.globalData.url_api + url,
+          data: { app_type: 'biz', user_id: userID, biz_id: bizID, province: '山东', city: '青岛市', county: '崂山区', name: name, type: '物流配送', type_actual: type_actual, max_amount: max_amount, start_amount: start_amount, fee_start: fee_start, fee_unit: fee_unit, time_latest_deliver: time_latest},
+          success: function (result) {
+            if (result.data.status == 200) {
+
+              console.log(result)
+              that.setData({
+                form_info: '',
+              })
+              wx.navigateTo({
+                url: 'result?title=' + '运费模板创建成功',
+              })
+              
+            } else {
+              console.log(result.data)
+              that.setData({
+                errorStyle: 'display:block',
+                errorTips: result.data.content.error.message
+              })
+            }
+
+          },
+          fail: function (result) {
+            console.log(result)
+            wx.vibrateShort()
+          }
+        })
+      }
+  
+        
+  } else if (that.data.tab.electron == 'type-current') {
+      
+      var url = 'freight_template_biz/create'
+      var params = {}
+      var api_result = api_request(url, params)
+
+      // 网络请求
+      function api_request(url, api_params) {
+        // 生成签名
+        app.sign_generate(api_params)
+
+        // 通过小程序的网络请求API发送请求
+        wx.request({
+          method: "POST",
+          header: {
+            'content-type': 'application/x-www-form-urlencoded'
+          },
+          url: app.globalData.url_api + url,
+          data: { app_type: 'biz', user_id: userID, biz_id: bizID, province: '山东', city: '青岛市', county: '崂山区', name: name, type: '电子凭证', time_valid_from: that.data.start, time_valid_end: that.data.end, period_valid: that.data.period, expire_refund_rate: expire},
+          success: function (result) {
+            if (result.data.status == 200) {
+              console.log(result)
+
+              that.setData({
+                form_info: '',
+              })
+              wx.navigateTo({
+                url: 'result?title=' + '运费模板创建成功',
+              })
+            } else {
+              console.log(result.data)
+              that.setData({
+                errorStyle: 'display:block',
+                errorTips: result.data.content.error.message
+              })
+            }
+
+          },
+          fail: function (result) {
+            console.log(result)
+            wx.vibrateShort()
+          }
+        })
+      }
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

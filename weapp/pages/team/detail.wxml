@@ -1,0 +1,17 @@
+<!--pages/team/detail.wxml-->
+<view class='detail-info'>
+  <view class='classify'>员工ID：<text>{{item.stuff_id}}</text></view>
+  <view class='classify'>姓  名: <text>{{item.fullname}}</text></view>
+  <view class='classify'>手机号: <text>{{item.mobile}}</text></view>
+  <view class='classify'>角  色: <text>{{item.role}}</text></view>
+  <view class='classify'>级  别: <text>{{item.level}}</text></view>
+  <view class='classify'>状  态: <text>{{item.status}}</text></view>
+</view>
+<view class='detail-info' style='padding-bottom:30rpx;'>
+  <view class='classify'>绑定时间：<text>{{item.time_create}}</text></view>
+  <view class='check'>查看创建者</view>
+  <view class='classify'>最后操作时间：<text>{{item.time_edit}}</text></view>
+  <view class='check'>查看最后操作者</view>
+</view>
+
+<view class='edit'>编辑</view>

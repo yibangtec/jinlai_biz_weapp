@@ -1,4 +1,4 @@
-/* pages/coupon_template/delete.wxss */
+/* pages/team/delete.wxss */
 .outer {zoom:1;}    /*==for IE6/7 Maxthon2==*/
 .outer::after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
 page {  
@@ -69,11 +69,21 @@ page {
   color: #9fa0a0;
   margin: 0 20rpx 20rpx 20rpx;
 }
-.sendOrderBtn{
-  height: 80rpx;
-  margin: 50rpx 20rpx 20rpx 20rpx;
-  background-color: #FF3649;
-  font-size: 30rpx;
-  color: #fff;
-  border: none;
+
+.coupon-content{
+  margin: 20rpx;
+  padding: 0 20rpx;
+  background-color: #fff;
+  border-radius: 15rpx;
+  font-size: 26rpx;
+}
+.coupon-info{
+  padding: 10rpx 0;
+  color: #3e3a39;
+}
+.oper-coupon{
+  border-top: 1rpx solid #e1e1e1;
+}
+.cou-text{
+  padding: 0 40rpx 0 10rpx;
 }

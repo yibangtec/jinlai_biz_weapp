@@ -5,6 +5,7 @@ var name = ''
 var user_id = ''
 var bizId = ''
 var mainImageUrl = []
+var sum = 0  
 const Upyun = require('../../utils/upyun-wxapp-sdk')
 
 const upyun = new Upyun({
@@ -321,6 +322,21 @@ Page({
         data: { app_type: 'biz', user_id: user_id, biz_id: bizId, parent_id: '1', name: name, url_image: url_image },
         success: function (result) {
           console.log(result)
+          wx.showToast({
+            title: '创建成功',
+            icon: 'success',
+            duration: 2000
+          })
+          that.setData({
+            currentTab: {
+              first: 'tab-current',
+              center: '',
+              last: ''
+            },
+            listAll: 'display:block',
+            listCreat: 'display:none',
+            isEdit: 'display:block',
+          })
         },
         fail: function (result) {
           console.log(result)
@@ -368,8 +384,64 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
-  },
+    var that = this;
+    // 显示加载图标  
+    wx.showLoading({
+      title: '玩命加载中',
+    })
+    // 页数+1
+    sum = sum +1
+    var page = sum*10;
+    console.log(sum)
+    var url = 'item_category_biz/index'
+    var params = {}
+    var api_result = api_request(url, params)
+
+    // 网络请求
+    function api_request(url, api_params) {
+      // 生成签名
+      app.sign_generate(api_params)
+
+      // 通过小程序的网络请求API发送请求
+      wx.request({
+        method: "POST",
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        url: app.globalData.url_api + url,
+        data: { limit: 10, offset: page}, //offset: page
+        success: function (result) {
+          if (result.data.status == 200){
+            console.log(result.data)
+            var list = result.data.content
+            for (var i = 0; i < list.length; i++) {
+              list[i].selected = false
+            }
+            var old = that.data.item
+
+            var newList = old.concat(list)
+            console.log(newList)
+            that.setData({
+              item: newList
+            })
+            
+          }else{
+            wx.showLoading({
+              title: '没有数据了',
+            })
+            
+          }
+          wx.hideLoading() 
+        },
+        fail: function (result) {
+          console.log(result)
+          wx.vibrateShort()
+        }
+      })
+    }
+    
+
+  },  
 
   /**
    * 用户点击右上角分享

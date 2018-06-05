@@ -1,0 +1,29 @@
+<!--pages/coupon_combo/edit.wxml-->
+<view class='create-coupon'>
+  <view class='errorTips' style='{{tipsError}}'>错误提示：---</view>
+  <view class='create'>
+    <view class='item-title'>必填项以”*“符号标示</view>
+    <view class='label-text'>名称<text class='must'> *</text></view>
+    <input class='temp-input' type="text" maxlength="20" bindblur='getName' placeholder="请输入" value='{{item.name}}' />
+    <view class='label-text'>所有优惠券<text class='must'> *</text></view>
+    <input class='temp-input' type="text" bindblur='getIds' value='{{item.template_ids}}' placeholder="请输入所有优惠券ID，多个ID间以一个”，“分割" />
+    <view class='note-text'>放入优惠券包的优惠券模板，在优惠券包被领取时将忽视总限量（若有）及单个用户限量（若有），以优惠券包的总限量（若有）为准；作为单个优惠券模板被领取时不受影响。</view>
+  </view>
+  <view class='create'>
+    <view class='item-title'><text style='color:#3e3a39;font-size:30rpx;'>高级选项（可留空）</text></view>
+    <view class='label-text'>总限量（份）</view>
+    <input class='temp-input' type="text" maxlength="20" bindblur='getMax_amount' placeholder="最高999999，留空或者0为不限" value='{{item.max_amount}}' />
+    <view class='note-text'>总共可被领取的优惠券数量上限；对于每位用户来说，每个优惠券包仅可领取一次。</view>
+    <view class='label-text'>领取开始时间</view>
+    <input class='temp-input' disabled='true'  bindtap="startTap" value='{{startDate}}' placeholder="例如：2017-09-08 14:20；留空则马上开放领取" />
+    <view class='label-text'>领取期结束时间</view>
+    <input class='temp-input' disabled='true' bindtap="endTap" value='{{endDate}}' placeholder="例如：2017-09-08 14:20" />
+    
+  </view>
+  <button style='height:80rpx; margin:20rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:12rpx;' bindtap='submitEdit'>确定</button>
+</view>
+
+
+
+
+<include src="../../utils/picker_datetime.wxml"/>

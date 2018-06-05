@@ -1,4 +1,4 @@
-/* pages/coupon_template/edit.wxss */
+/* pages/coupon_combo/edit.wxss */
 .outer {zoom:1;}    /*==for IE6/7 Maxthon2==*/
 .outer::after {clear:both;content:'.';display:block;width: 0;height: 0;visibility:hidden;} 
 page {  
@@ -7,9 +7,7 @@ page {
   height: 100%;
   background-color: #f6f6f6;  
   position: relative;
-}  
-
-
+}
 .create{
   margin: 20rpx;
   background-color: #fff;
@@ -53,20 +51,12 @@ page {
   font-size: 26rpx;
   color: #ff3649;
 }
-
-.voucher-tips{
-  margin: 50rpx 20rpx 0 20rpx;
-  color: #9fa0a0;
-  font-size: 22rpx;
-  padding: 10rpx;
-  background-color: #f6f6f6;
-  border-radius: 12rpx;
-}
 .note-text{
   font-size: 22rpx;
   color: #9fa0a0;
   margin: 20rpx 20rpx 0 20rpx;
 }
+
 
 .pick_datetime {
     position: fixed;

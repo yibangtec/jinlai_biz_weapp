@@ -15,7 +15,7 @@
     <view wx:for="{{tempObj}}" wx:key="{{index}}">
       <view class='confirm-list outer'>
         <view class='confirm-text'>{{item.name}}</view>
-        <view class='confirm-text' wx:if="{{tiem.type == ''}}">包邮</view>
+        <view class='confirm-text' wx:if="{{item.type == ''}}">包邮</view>
         <view class='confirm-text' wx:else>{{item.type}}</view>
       </view>
     </view>

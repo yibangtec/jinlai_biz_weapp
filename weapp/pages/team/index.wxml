@@ -1,40 +1,43 @@
 <!--pages/team/index.wxml-->
 <view class='header outer'>
-  <view class='tab' bindtap='allCategory'><view class='tab-text {{currentTab.first}}'>所有</view></view>
-  <view class='tab' bindtap='deleteCategory'><view class='tab-text {{currentTab.center}}'>回收站</view></view>
-  <view class='tab' bindtap='crearCategory'><view class='tab-text {{currentTab.last}}'>创建</view></view>
+  <view class='tab' bindtap='allTeam'><view class='tab-text {{currentTab.first}}'>所有</view></view>
+  <view class='tab' bindtap='deleteTeam'><view class='tab-text {{currentTab.center}}'>回收站</view></view>
+  <view class='tab' bindtap='crearTeam'><view class='tab-text {{currentTab.last}}'>创建</view></view>
 </view>
 <view class='category-none' style='display:none;'>
   <image class='kong-img' src='../../image/kong@3x.png'></image>
-  <view>这里空空如也，快点添加商品分类吧</view>
+  <view>这里空空如也，快点添加 吧</view>
 </view>
 
-<view class='coupon-content' wx:for='{{item}}' wx:key='{{index}}'>
-  <view bindtap='detail' data-id='{{item.template_id}}' class='coupon-info' style='padding-top:20rpx;'>员工Id<text class='cou-text'>{{item.template_id}}</text></view>
-  <view class='coupon-info'>姓名<text class='cou-text'>{{item.template_id}}</text></view>
-  <view class='coupon-info'>手机号<text class='cou-text'>{{item.template_id}}</text></view>
-  <view class='coupon-info' style='padding-bottom:20rpx;'>角色<text class='cou-text'>{{item.amount}}</text>级别<text class='cou-text'>{{item.min_subtotal}}</text></view>
+<view class='coupon-content' style='{{listAll}}' wx:for='{{item}}' wx:key='{{index}}'>
+  <view bindtap='detail' data-id='{{item.stuff_id}}' class='coupon-info' style='padding-top:20rpx;'>员工Id<text class='cou-text'>{{item.stuff_id}}</text></view>
+  <view class='coupon-info'>姓名<text class='cou-text'>{{item.fullname}}</text></view>
+  <view class='coupon-info'>手机号<text class='cou-text'>{{item.mobile}}</text></view>
+  <view class='coupon-info' style='padding-bottom:20rpx;'>角色<text class='cou-text'>{{item.role}}</text>级别<text class='cou-text'>{{item.level}}</text></view>
   <view class='oper-coupon outer'>
     <view class='circle' style='{{isSelect}}' bindtap='selected' data-index="{{index}}">
       <icon wx:if="{{item.selected}}"  color='#FF3649' type="success_circle" size="20" data-index="{{index}}" />
       <icon wx:else type="circle" size="20" data-index="{{index}}"/>
     </view>
     <view class='oper-btn'> 
-      <view class='edit' bindtap='edit' data-id='{{item.template_id}}'>编辑</view>
-      <view class='recovery' bindtap='recovery' wx:if='{{currentTab.first == "tab-current"}}'>删除</view>
+      <view class='edit' bindtap='edit' data-id='{{item.stuff_id}}'>编辑</view>
+      <view class='recovery' bindtap='recovery' data-id='{{item.stuff_id}}' wx:if='{{currentTab.first == "tab-current"}}'>删除</view>
       <view class='recovery' bindtap='recovery' wx:else>恢复</view>
     </view>
   </view>
 </view>
 
 <view class='create-coupon' style='padding-bottom:200rpx;{{listCreat}}'>
-  <view class='errorTips'>错误提示：---</view>
+  <view class='errorTips' style='{{tipsDisplay}}'>错误提示：{{errorTips}}</view>
   <view class='create'>
     <view class='item-title'>必填项以”*“符号标示</view>
     <view class='label-text'>姓名<text class='must'> *</text></view>
-    <input class='temp-input' type="text" maxlength="20" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <input class='temp-input' type="text" maxlength="20" bindinput='wacthName' bindblur='getName' name="fullname" placeholder="请输入" value='{{item.fullname}}' />
     <view class='label-text'>手机号<text class='must'> *</text></view>
-    <input class='temp-input' type="text" maxlength="30" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <input class='temp-input' type="text" maxlength="30" bindinput='wacthtMobile' bindblur='getMobile' name="brief_name" placeholder="请输入" value='{{item.mobile}}' />
+    <view class='note-text'>
+      该手机号必须已注册过本平台的账号（即通过短信登陆过），且未被其他商家绑定为员工。
+    </view>
     <view class='label-text'>角色<text class='must'> *</text></view>
     <view class='temp-type outer'>
       <view data-type='freePostage' bindtap='typeClick' class='type-left {{tab.freePostage}}' style='border-right: none;' wx:if="{{tab.logistics == 'type-current'}}">管理员</view>
@@ -45,10 +48,9 @@
     </view>
     
     <view class='label-text'>级别<text class='must'> *</text></view>
-    <input class='temp-input' type="text" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.name}}' />
+    <input class='temp-input' type="text" bindinput='wacthLevel' bindblur='getLevel' placeholder="0暂不授权,1普通员工,10门店级,20品牌级,30企业级" value='{{item.level}}' />
   </view>
-  <button style='height:80rpx; margin:20rpx; font-size:30rpx; color:#fff;background-color:#CACACA; border-raidus:12rpx;' bindtap='submitEdit'>确定</button>
-  <button style='height:80rpx; margin:20rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:12rpx;' bindtap='submitEdit'>确定</button>
+  <button style='height:80rpx; margin:20rpx; font-size:30rpx; color:#fff; {{btnStyle}} border-raidus:12rpx;' bindtap='submitCreate'>确定</button>
 </view>
 
 <view class='footed' style='{{footedStyle}}'>

@@ -1,2 +1,16 @@
 <!--pages/coupon_combo/detail.wxml-->
-<text>pages/coupon_combo/detail.wxml</text>
+<view class='detail-info'>
+  <view class='classify'>优惠券包ID:<text>{{item.combo_id}}</text></view>
+  <view class='classify'>名 称:<text>{{item.name}}</text></view>
+  <view class='classify'>总限量:<text>{{item.max_amount}}</text></view>
+  <view class='classify'>领取开始时间:<text>{{item.time_start}}</text></view>
+  <view class='classify'>领取结束时间:<text>{{item.time_end}}</text></view>
+</view>
+<view class='detail-info' style='padding-bottom:30rpx;'>
+  <view class='classify'>创建时间：<text>{{item.time_create}}</text></view>
+  <view class='check'>查看创建者</view>
+  <view class='classify'>最后操作时间：<text>{{item.time_edit}}</text></view>
+  <view class='check'>查看最后操作者</view>
+</view>
+
+<view class='edit' bindtap='edit' data-id='{{item.combo_id}}'>编辑</view>

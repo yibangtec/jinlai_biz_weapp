@@ -69,3 +69,11 @@ page {
   color: #9fa0a0;
   margin: 0 20rpx 20rpx 20rpx;
 }
+.sendOrderBtn{
+  height: 80rpx;
+  margin: 50rpx 20rpx 20rpx 20rpx;
+  background-color: #FF3649;
+  font-size: 30rpx;
+  color: #fff;
+  border: none;
+}

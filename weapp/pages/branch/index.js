@@ -18,6 +18,12 @@ Page({
     listAll: 'display:block',
     listCreat: 'display:none',
     selectedAll: false,
+    selectedAllStatus: false,
+    mainImageSrc: '',
+    dis: 'display:block',
+    mainImageUrl: '',
+    imgText: '开始上传',
+    imgStyle: 'background-color:#c9caca'
 
   },
 
@@ -26,7 +32,7 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    var url = 'coupon/index'
+    var url = 'branch/index'
     var params = {}
     var api_result = api_request(url, params)
 
@@ -42,7 +48,7 @@ Page({
           'content-type': 'application/x-www-form-urlencoded'
         },
         url: app.globalData.url_api + url,
-        data: { limit: 10, },
+        data: { app_type:'biz', limit: 10, },
         success: function (result) {
           console.log(result.data)
           var list = result.data.content

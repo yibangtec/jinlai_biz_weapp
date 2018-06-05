@@ -2,7 +2,7 @@
 <view style="{{infoStyle}}">
   <view class='header' bindtap="info_biz">
     <view class='header-status'><image style='display:block;float:left;margin-top:5rpx;' src='../../image/i.png'></image>{{status}}</view>
-    <view class='header-logo'><image src='{{src}}'></image></view>
+    <view class='header-logo'><image mode='aspectFit' src='{{src}}'></image></view>
     <view class='header-name'>{{brief_name}}</view>
     <view class='header-tel'>{{tel_protected_biz}}</view>
   </view>

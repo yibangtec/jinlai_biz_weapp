@@ -67,7 +67,11 @@
     "pages/coupon_combo/delete",
     "pages/comment_item/INDEX",
     "pages/comment_item/index",
-    "pages/team/index"
+    "pages/team/index",
+    "pages/team/detail",
+    "pages/team/edit",
+    "pages/team/delete",
+    "pages/coupon_combo/edit"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",

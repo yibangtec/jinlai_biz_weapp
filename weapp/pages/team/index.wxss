@@ -230,3 +230,13 @@ page {
   border-radius: 0 15rpx 15rpx 0;
   border: 2rpx solid #c9caca;
 }
+.type-current{
+  background-color: #FF3649;
+  color: #fff;
+  border: 2rpx solid #ff8691;
+}
+.note-text{
+  font-size: 22rpx;
+  color: #9fa0a0;
+  margin: 20rpx 20rpx 0 20rpx;
+}
