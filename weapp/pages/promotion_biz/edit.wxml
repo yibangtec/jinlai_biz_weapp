@@ -1,5 +1,4 @@
 <!--pages/promotion_biz/edit.wxml-->
-<!--pages/category_biz/edit.wxml-->
 <view class='errorTips'>错误提示：---</view>
 <view class='create'>
   <view class='item-title'>必填项以”*“符号标示</view>

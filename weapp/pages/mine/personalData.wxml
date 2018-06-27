@@ -1,6 +1,6 @@
 <!--pages/mine/personalData.wxml-->
 <view bindtap="bindViewTap" class="userinfo">
-    <image bindtap='headerImgEdit' class='userinfo-avatar' src="{{headerImg}}"></image>
+    <image mode='aspectFit' bindtap='headerImgEdit' class='userinfo-avatar' src="{{headerImg}}"></image>
     <label class="userinfo-nickname" bindtap='headerImgEdit'>点击修改头像</label>
 </view>
 <view class='userList'>

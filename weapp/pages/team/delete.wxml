@@ -1,6 +1,6 @@
 <!--pages/team/delete.wxml-->
-<view class='errorTips'>错误提示：---</view>
-<view class='coupon-content'>
+<view class='errorTips' style='display:none;'>错误提示：---</view>
+<view class='coupon-content' wx:for='{{item}}' wx:key='{{index}}'>
   <view bindtap='detail' data-id='{{item.stuff_id}}' class='coupon-info' style='padding-top:20rpx;'>员工ID<text class='cou-text'>{{item.stuff_id}}</text></view>
   <view class='coupon-info'>姓名<text class='cou-text'>{{item.fullname}}</text></view>
   <view class='coupon-info'>手机号<text class='cou-text'>{{item.mobile}}</text></view>
@@ -10,7 +10,7 @@
 
   <view class='temp-box outer' style='background-color:#FCF6CB;'>
     <view class='delete-text'>
-      确认要{{text}}？
+      确认要{{CurrentText}}？
     </view> 
   </view>
   <view class='temp-box'>

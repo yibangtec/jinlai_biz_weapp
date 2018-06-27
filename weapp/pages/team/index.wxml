@@ -4,7 +4,7 @@
   <view class='tab' bindtap='deleteTeam'><view class='tab-text {{currentTab.center}}'>回收站</view></view>
   <view class='tab' bindtap='crearTeam'><view class='tab-text {{currentTab.last}}'>创建</view></view>
 </view>
-<view class='category-none' style='display:none;'>
+<view class='category-none' style='{{noneStyle}}'>
   <image class='kong-img' src='../../image/kong@3x.png'></image>
   <view>这里空空如也，快点添加 吧</view>
 </view>
@@ -21,8 +21,8 @@
     </view>
     <view class='oper-btn'> 
       <view class='edit' bindtap='edit' data-id='{{item.stuff_id}}'>编辑</view>
-      <view class='recovery' bindtap='recovery' data-id='{{item.stuff_id}}' wx:if='{{currentTab.first == "tab-current"}}'>删除</view>
-      <view class='recovery' bindtap='recovery' wx:else>恢复</view>
+      <view class='recovery' bindtap='recovery' data-id='{{item.stuff_id}}' data-value='restore' wx:if='{{item.time_delete}}'>恢复</view>
+      <view class='recovery' bindtap='recovery' data-id='{{item.stuff_id}}' data-value='delete' wx:else>删除</view>
     </view>
   </view>
 </view>
@@ -63,7 +63,8 @@
       </view>
       <text class='esc' bindtap='quit'>退出</text>  
     </view>
-    <view class='footed-right'>恢复</view>
+    <view bindtap='operation' data-value='delete' class='footed-right' wx:if='{{currentTab.first == "tab-current"}}'>删除</view>
+    <view bindtap='operation' data-value='restore' class='footed-right' wx:else>恢复</view>
   </view>
   <view class='creat-category' style='{{isEdit}}'>
     <view class='footed-left' bindtap='editBtn'>

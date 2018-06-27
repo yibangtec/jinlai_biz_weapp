@@ -7,7 +7,7 @@
 
 </view>-->
 <view bindtap="bindViewTap" class="userinfo">
-    <image bindtap='headerImgEdit' class='userinfo-avatar' src="{{headerImg}}"></image>
+    <image mode='aspectFit' bindtap='headerImgEdit' class='userinfo-avatar' src="{{headerImg}}"></image>
     <label class="userinfo-nickname" bindtap='nickNameEdit' wx:if="{{if}}">kon{{nickName}}</label>
     <label class="userinfo-nickname" bindtap='nickNameEdit'>{{nickName}}</label>
 </view>

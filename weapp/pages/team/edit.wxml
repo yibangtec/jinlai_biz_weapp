@@ -1,21 +1,28 @@
 <!--pages/team/edit.wxml-->
 <view class='create-coupon' style='padding-bottom:200rpx;'>
-  <view class='errorTips'>错误提示：---</view>
+  <view class='errorTips' style='display:none'>错误提示：---</view>
   <view class='create'>
     <view class='item-title'>必填项以”*“符号标示</view>
     <view class='label-text'>姓名<text class='must'> *</text></view>
     <input class='temp-input' type="text" maxlength="20" bindblur='getName' name="brief_name" placeholder="请输入" value='{{item.fullname}}' />
+    
     <view class='label-text' style='padding-bottom:0'>手机号<text class='must'> *</text></view>
-    <view class='input-text'>17664052627</view>
+    <view class='input-text' wx:if='{{item.mobile}}'>{{item.mobile}}</view>
+    <view class='input-text' wx:else>未设置</view>
+    
     <view class='label-text' style='padding-bottom:0'>角色<text class='must'> *</text></view>
-    <view class='input-text'>经理</view>
+    <view class='input-text' wx:if='{{item.role}}'>{{item.role}}</view>
+    <view class='input-text' wx:else>未设置</view>
+
     <view class='label-text' style='padding-bottom:0' style='padding-bottom:0'>级别<text class='must'> *</text></view>
-    <view class='input-text'>17</view>
+    <view class='input-text' wx:if='{{item.role}}'>{{item.level}}</view>
+    <view class='input-text' wx:else>未设置</view>
+
     <view class='label-text' style='padding-bottom:0'>状态<text class='must'> *</text></view>
     <view class='status outer'>
-      <view class='status-left status-type'>正常</view>
-      <view class='status-right'>冻结</view>
+      <view bindtap='statusType' data-status='正常' class='status-left {{statusType.normal}}' >正常</view>
+      <view bindtap='statusType' data-status='冻结' class='status-right {{statusType.frozen}}'>冻结</view>
     </view>
   </view>
-  <button style='height:80rpx; margin:20rpx; font-size:30rpx; color:#fff;background-color:#CACACA; border-raidus:12rpx;' bindtap='submitEdit'>确定</button>
+  <button style='height:80rpx; margin:20rpx; font-size:30rpx; color:#fff;background-color:#ff3649; border-raidus:12rpx;' bindtap='submitEdit'>确定</button>
 </view>

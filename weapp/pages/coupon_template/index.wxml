@@ -20,7 +20,7 @@
     </view>
     <view class='oper-btn'> 
       <view class='edit' bindtap='edit' data-id='{{item.template_id}}'>编辑</view>
-      <view class='recovery' data-id='{{item.template_id}}' data-opera='delete' bindtap='recovery' wx:if='{{currentTab.first == "tab-current"}}'>删除</view>
+      <view class='recovery' data-id='{{item.template_id}}' data-opera='delete' bindtap='recovery' wx:if='{{item.time_delete}}'>删除</view>
       <view class='recovery' data-id='{{item.template_id}}' data-opera='recovery' bindtap='recovery' wx:else>恢复</view>
     </view>
   </view>
@@ -51,9 +51,9 @@
     <view class='note-text'>留空则默认为自领取之日起30天内</view>
 
     <view class='label-text'>有效期开始时间</view>
-    <input class='temp-input' disabled='true'  bindtap="startTap" value='{{startDate}}' placeholder="请选择" value='{{item.time_start}}'/>
+    <input class='temp-input' disabled='true'  bindtap="startTap" value='{{startDate}}' placeholder="请选择"/>
     <view class='label-text'>有效期结束时间</view>
-    <input class='temp-input' disabled='true' bindtap="endTap" value='{{endDate}}' placeholder="请选择" value='{{item.time_end}}'/>
+    <input class='temp-input' disabled='true' bindtap="endTap" value='{{endDate}}' placeholder="请选择"/>
 
     <view class='label-text'>限用系统分类</view>
     <picker bindchange="bindPickerChange" value="{{index.name}}" range="{{objectArray}}" range-key="name">

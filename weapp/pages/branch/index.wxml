@@ -4,7 +4,7 @@
   <view class='tab' bindtap='deleteCategory'><view class='tab-text {{currentTab.center}}'>回收站</view></view>
   <view class='tab' bindtap='crearCategory'><view class='tab-text {{currentTab.last}}'>创建</view></view>
 </view>
-<view class='category-none' style='display:none;'>
+<view class='category-none' style='{{noneStyle}}'>
   <image class='kong-img' src='../../image/kong@3x.png'></image>
   <view>这里空空如也，快点添加门店吧</view>
 </view>

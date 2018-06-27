@@ -34,7 +34,7 @@ Page({
     isEdit: 'display:block;',
     isAll: 'display:none;',
     item: '',
-    listAll: 'display:block',
+    listAll: 'display:none',
     listCreat: 'display:none',
     selectedAll: false,
     selectedAllStatus: false,
@@ -42,7 +42,9 @@ Page({
     footedBar: 'display:block',
     errorTips:'',
     tipsDisplay:'display:none',
-    btnStyle:'background-color:#CACACA;'
+    btnStyle:'background-color:#CACACA;',
+    noneStyle:'display:none;',
+    itemIds: ''
   },
 
   /**
@@ -69,13 +71,21 @@ Page({
         data: { limit: 10, },
         success: function (result) {
           console.log(result.data)
-          var list = result.data.content
-          for (var i = 0; i < list.length; i++) {
-            list[i].selected = false
+          if (result.data.status == 200){
+            var list = result.data.content
+            for (var i = 0; i < list.length; i++) {
+              list[i].selected = false
+            }
+            that.setData({
+              listAll: 'display:block',
+              item: list
+            })
+          }else{
+            that.setData({
+              noneStyle: 'display:block',
+            })
           }
-          that.setData({
-            item: list
-          })
+          
         },
         fail: function (result) {
           console.log(result)
@@ -126,11 +136,14 @@ Page({
         center: '',
         last: ''
       },
-      listAll: 'display:block',
+      isSelect: 'display:none;',
+      isEdit: 'display:block;',
+      isAll: 'display:none;',
+      listAll: 'display:none',
       listCreat: 'display:none',
-      isEdit: 'display:block',
       footedStyle: 'display:block',
       footedBar: 'display:block',
+      noneStyle: 'display:none',
     })
     var url = 'stuff/index'
     var params = {}
@@ -151,13 +164,20 @@ Page({
         data: { limit: 10, },
         success: function (result) {
           console.log(result.data)
-          var list = result.data.content
-          for (var i = 0; i < list.length; i++) {
-            list[i].selected = false
+          if (result.data.status == 200) {
+            var list = result.data.content
+            for (var i = 0; i < list.length; i++) {
+              list[i].selected = false
+            }
+            that.setData({
+              listAll: 'display:block',
+              item: list
+            })
+          } else {
+            that.setData({
+              noneStyle: 'display:block',
+            })
           }
-          that.setData({
-            item: list
-          })
         },
         fail: function (result) {
           console.log(result)
@@ -176,10 +196,53 @@ Page({
         center: 'tab-current',
         last: ''
       },
-      listAll: 'display:block',
-      isEdit: 'display:block',
+      isSelect: 'display:none;',
+      isEdit: 'display:block;',
+      isAll: 'display:none;',
+      listAll: 'display:none',
       listCreat: 'display:none',
+      noneStyle: 'display:none',
     })
+    var url = 'stuff/index'
+    var params = {}
+    var api_result = api_request(url, params)
+
+    // 网络请求
+    function api_request(url, api_params) {
+      // 生成签名
+      app.sign_generate(api_params)
+
+      // 通过小程序的网络请求API发送请求
+      wx.request({
+        method: "POST",
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        url: app.globalData.url_api + url,
+        data: { limit: 10, time_delete: 'IS NOT NULL',},
+        success: function (result) {
+          console.log(result.data)
+          if (result.data.status == 200) {
+            var list = result.data.content
+            for (var i = 0; i < list.length; i++) {
+              list[i].selected = false
+            }
+            that.setData({
+              listAll: 'display:block',
+              item: list
+            })
+          } else {
+            that.setData({
+              noneStyle: 'display:block',
+            })
+          }
+        },
+        fail: function (result) {
+          console.log(result)
+          wx.vibrateShort()
+        }
+      })
+    }
     
   },
   crearTeam: function (e) {
@@ -195,6 +258,7 @@ Page({
       isEdit: 'display:none',
       footedStyle: 'display:none',
       footedBar: 'display:block',
+      noneStyle: 'display:none',
     })
   },
   quit: function (e) {
@@ -221,9 +285,40 @@ Page({
     var list = this.data.item;
 
     list[index].selected = !selected;
+
+
+    var arr = []
+    var listIds = []
+    for (var i = 0; i < list.length; i++) {
+      arr.push(list[i].selected)
+      if (list[i].selected == true) {
+        listIds.push(list[i])
+      }
+    }
+    var isTrue = true
+    if (arr.length > 0) {
+      for (var i = 0; i < arr.length; i++) {
+        if (arr.indexOf(arr[i]) != 0) {
+          //数组中的元素不相同
+          isTrue = false
+          break
+        }
+      }
+    }
+    if (isTrue) {
+      this.setData({
+        selectedAllStatus: arr[0],
+      });
+    } else {
+      this.setData({
+        selectedAllStatus: false,
+      });
+    }
     this.setData({
       item: list,
+      itemIds: listIds
     });
+    console.log(listIds)
   },
   selectAllItem: function (e) {
     var selectedAllStatus = this.data.selectedAllStatus;
@@ -236,7 +331,8 @@ Page({
       }
       this.setData({
         item: list,
-        selectedAllStatus: true
+        selectedAllStatus: true,
+        itemIds: list
       });
     } else {
       for (var i = 0; i < list.length; i++) {
@@ -244,9 +340,11 @@ Page({
       }
       this.setData({
         item: list,
-        selectedAllStatus: false
+        selectedAllStatus: false,
+        itemIds: list
       });
     }
+    console.log(this.data.selectedAllStatus)
   },
   detail: function (e) {
     var id = e.currentTarget.dataset.id
@@ -261,9 +359,28 @@ Page({
     })
   },
   recovery: function (e) {
+    var that = this
     var id = e.currentTarget.dataset.id
+    var operation = e.currentTarget.dataset.value
+    console.log(operation)
+    var list = that.data.item
+    var arr = []
+    for (var i = 0; i < list.length; i++) {
+      if (list[i].stuff_id == id) {
+        arr.push(list[i])
+      }
+    }
+    this.setData({
+      itemIds: arr
+    });
     wx.navigateTo({
-      url: 'delete?Id=' + id
+      url: 'delete?Id=' + id + '&opera=' + operation
+    })
+  },
+  operation: function (e) {
+    var operation = e.currentTarget.dataset.value
+    wx.navigateTo({
+      url: 'delete?Id=ids&opera=' + operation
     })
   },
   getName:function(e){

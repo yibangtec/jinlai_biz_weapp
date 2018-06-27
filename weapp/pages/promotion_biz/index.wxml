@@ -4,9 +4,9 @@
   <view class='tab' bindtap='deleteCategory'><view class='tab-text {{currentTab.center}}'>回收站</view></view>
   <view class='tab' bindtap='crearCategory'><view class='tab-text {{currentTab.last}}'>创建</view></view>
 </view>
-<view class='category-none' style='display:none;'>
+<view class='category-none' style='{{noneStyle}}'>
   <image class='kong-img' src='../../image/kong@3x.png'></image>
-  <view>这里空空如也，快点添加商品分类吧</view>
+  <view>这里空空如也，快点添加店内活动吧</view>
 </view>
 
 <view class='currentList' style='{{listAll}}'>
@@ -15,7 +15,7 @@
     <view class='tab-name'>类型</view>
     <view class='tab-name'>操作</view>
   </view>
-  <view class='list-content outer'>
+  <view class='list-content outer' wx:for='{{item}}' wx:key='{{index}}'>
     <view class='mainImg'>
       <view class='select' bindtap='selected' data-index="{{index}}">
         <view style='{{isSelect}}'>
@@ -23,24 +23,43 @@
             <icon wx:else type="circle" size="20" bindtap="bindCheckbox" data-index="{{index}}"/>
         </view>
       </view>
-      <view>打飞机啊上阿斯顿发生</view>
+      <view>{{item.name}}</view>
     </view>
-    <view data-id='{{item.category_id}}' class='mainName' bindtap='detail'>type{{item.name}}</view>
+    <view data-id='{{item.promotion_id}}' class='mainName' bindtap='detail'>{{item.type}}</view>
     <view class='mainOper'>
-      <view class='edit' bindtap='edit' data-id='{{item.category_id}}'>编辑</view>
+      <view class='edit' bindtap='edit' data-id='{{item.promotion_id}}'>编辑</view>
       <view class='recovery' bindtap='recovery' wx:if='{{currentTab.first == "tab-current"}}'>删除</view>
       <view class='recovery' bindtap='recovery' wx:else>恢复</view>
     </view>
   </view>
 </view>
 
-<view style='{{listCreat}}'>
-<view class='errorTips'>错误提示：---</view>
+<view style='margin-bottom:150rpx;{{listCreat}}'>
+<view class='errorTips' style='display:none'>错误提示：---</view>
 <view class='create'>
   <view class='item-title'>必填项以”*“符号标示</view>
+  <view class='label-text'>活动类型<text class='must'> *</text></view>
+  <picker style='position: relative;' bindchange="bindPickerChange" value="{{index}}" range="{{arrayType}}">
+    <input class='picker temp-input' disabled='true' type="text" value='{{arrayType[index]}}' placeholder="请选择" />
+    <image class='down-img' src='../../image/down@3x.png'></image>
+  </picker>
   <view class='label-text'>名称<text class='must'> *</text></view>
-  <input class='temp-input' type="text" maxlength="10" bindblur='getName' name="brief_name" placeholder="请输入" />
-  <view class='label-text'>分类图片</view>
+  <input class='temp-input' type="text" maxlength="10" bindfocus='verType' bindblur='getName' name="name" placeholder="请输入" />
+
+  <view class='label-text'>开始时间<text class='must'> *</text></view>
+  <input class='temp-input' disabled='true' name="time_start" bindtap="startTap" value='{{startDate}}' placeholder="请选择" />
+  <view class='label-text'>结束时间<text class='must'> *</text></view>
+  <input class='temp-input' disabled='true' name="time_end" bindtap="endTap" value='{{endDate}}' placeholder="请选择" />
+
+  <view class='label-text'>是否允许折上折<text class='must'> *</text></view>
+  <view class='coupon outer'>
+    <view data-coupon='1' bindtap='yes' class='coupon-yes {{currentYes}}'>是</view>
+    <view data-coupon='0' bindtap='no' class='coupon-none {{currentNo}}'>否</view>
+  </view>
+  <view class='label-text'>说明</view>
+  <input class='temp-input' type="text" bindblur='getDescription' name="description" placeholder="说明" />
+  <view class='label-text'>形象图</view>
+  <view class='tips'>该图用于手机等窄屏设备；请上传大小在2M以内，边长不超过2048px的jpg/png图片</view>
   <view class="page-body-info">
         <view wx:for="{{mainImageSrc}}" wx:key="{{index}}" style="position: relative;">
           <image bindtap="preview" src="{{item}}" class="image" mode="aspectFill" style='margin:0 0 20rpx 20rpx'>
@@ -54,7 +73,23 @@
           </view>
         </view>
   </view>
-  <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#666464;background-color:#fff; border-raidus:12rpx;' bindtap="upImgMain">{{imgText}}</button>
+  <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#ff3649;background-color:#fff; border:1rpx solid #ff3649; border-raidus:12rpx;' bindtap="upImgMain">{{imgText}}</button>
+  <view class='label-text'>宽屏形象图</view>
+  <view class='tips'>该图用于桌面电脑等宽屏设备；请上传大小在2M以内，边长不超过2048px的jpg/png图片</view>
+  <view class="page-body-info">
+        <view wx:for="{{mainMaxImageSrc}}" wx:key="{{index}}" style="position: relative;">
+          <image bindtap="previewMax" src="{{item}}" class="image" mode="aspectFill" style='margin:0 0 20rpx 20rpx'>
+          </image>
+          <image index="{{index}}" bindtap="closeImgMainMax" class="close" src="../../image/shanchu@3x.png"></image>
+        </view>
+        <view style="{{disMax}}">
+          <view class="image-plus" bindtap="chooseImageMainMax">
+            <view class="image-plus-horizontal"></view>
+            <view class="image-plus-vertical"></view>
+          </view>
+        </view>
+  </view>
+  <button style='height:80rpx; margin:0 20rpx; font-size:30rpx; color:#ff3649; border:1rpx solid #ff3649; background-color:#fff; border-raidus:12rpx;' bindtap="upImgMainMax">{{imgMaxText}}</button>
 </view>
 <button style='height:80rpx; margin:20rpx; font-size:30rpx; color:#fff;{{imgStyle}}; border-raidus:12rpx;' bindtap='submitCreat'>确定</button>
 </view>
@@ -96,3 +131,5 @@
     </view>
   </view>
 </view>
+
+<include src="../../utils/picker_datetime.wxml"/>

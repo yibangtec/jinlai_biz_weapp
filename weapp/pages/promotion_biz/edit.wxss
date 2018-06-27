@@ -51,6 +51,12 @@ page {
   font-size: 26rpx;
   color: #ff3649;
 }
+.tips{
+  margin: 0 20rpx;
+  font-size: 22rpx;
+  color: #9fa0a0;
+  padding: 0 0 20rpx 0;
+}
 .img-text{
   font-size: 26rpx;
   color: #c9caca;

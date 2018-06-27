@@ -215,6 +215,12 @@ page {
   font-size: 26rpx;
   color: #ff3649;
 }
+.tips{
+  margin: 0 20rpx;
+  font-size: 22rpx;
+  color: #9fa0a0;
+  padding: 0 0 20rpx 0;
+}
 
 
 
@@ -327,4 +333,75 @@ page {
   position: absolute;
   bottom: 0;
   right: 0;
+}
+
+
+
+.pick_datetime {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width:100%;
+    overflow:hidden;
+    background-color: #ccc; 
+    z-index: 10 !important;
+}
+.pick_datetime_tool {
+    display:flex;
+    justify-content:space-between;
+    height:92rpx;
+    line-height:92rpx;
+    border-top:4rpx solid #eee;
+    border-bottom:4rpx solid #eee;
+    padding:0 20rpx;
+}
+.pick_datetime_ok {font-weight:bold;}
+.pick_datetime_clear {color:#666;}
+.pick_datetime picker-view {
+    font-size:34rpx;
+}
+.pick_datetime_column {
+    height:40px;
+    line-height:40px;
+    text-align:center;
+}
+
+.coupon{
+  margin: 0 20rpx;
+}
+.coupon-none{
+  float: left;
+  width: 150rpx;
+  height: 65rpx;
+  line-height: 65rpx;
+  font-size: 26rpx;
+  border: 1rpx solid #FF3649;
+  text-align: center;
+  color: #FF3649;
+  border-radius: 0 12rpx 12rpx 0;
+  border-left: none;
+}
+.coupon-yes{
+  float: left;
+  width: 150rpx;
+  height: 65rpx;
+  line-height: 65rpx;
+  font-size: 26rpx;
+  border: 1rpx solid #FF3649;
+  text-align: center;
+  color: #FF3649;
+  border-radius: 12rpx 0 0 12rpx;
+  border-right: none;
+}
+.coupon-current{
+  color: #ffffff;
+  background-color: #FF3649;
+}
+
+.down-img{
+  width: 32rpx;
+  height: 20rpx;
+  position: absolute;
+  top: 25rpx;
+  right: 35rpx;
 }

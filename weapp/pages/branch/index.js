@@ -15,7 +15,7 @@ Page({
     isEdit: 'display:block;',
     isAll: 'display:none;',
     item: '',
-    listAll: 'display:block',
+    listAll: 'display:none',
     listCreat: 'display:none',
     selectedAll: false,
     selectedAllStatus: false,
@@ -23,7 +23,8 @@ Page({
     dis: 'display:block',
     mainImageUrl: '',
     imgText: '开始上传',
-    imgStyle: 'background-color:#c9caca'
+    imgStyle: 'background-color:#c9caca',
+    noneStyle: 'display:none;'
 
   },
 
@@ -51,13 +52,22 @@ Page({
         data: { app_type:'biz', limit: 10, },
         success: function (result) {
           console.log(result.data)
-          var list = result.data.content
-          for (var i = 0; i < list.length; i++) {
-            list[i].selected = false
+          if (result.data.status == 200){
+            var list = result.data.content
+            for (var i = 0; i < list.length; i++) {
+              list[i].selected = false
+            }
+            that.setData({
+              listAll:'display:block',
+              item: list
+            })
+          }else{
+            that.setData({
+              noneStyle: 'display:block'
+            })
+            
           }
-          that.setData({
-            item: list
-          })
+          
         },
         fail: function (result) {
           console.log(result)
@@ -78,6 +88,49 @@ Page({
       listCreat: 'display:none',
       isEdit: 'display:block',
     })
+
+    var url = 'branch/index'
+    var params = {}
+    var api_result = api_request(url, params)
+
+    // 网络请求
+    function api_request(url, api_params) {
+      // 生成签名
+      app.sign_generate(api_params)
+
+      // 通过小程序的网络请求API发送请求
+      wx.request({
+        method: "POST",
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        url: app.globalData.url_api + url,
+        data: { app_type: 'biz', limit: 10, },
+        success: function (result) {
+          console.log(result.data)
+          if (result.data.status == 200) {
+            var list = result.data.content
+
+            for (var i = 0; i < list.length; i++) {
+              list[i].selected = false
+            }
+            that.setData({
+              listAll: 'display:block',
+              item: list
+            })
+          } else {
+            that.setData({
+              noneStyle: 'display:block'
+            })
+
+          }
+        },
+        fail: function (result) {
+          console.log(result)
+          wx.vibrateShort()
+        }
+      })
+    }
   },
   deleteCategory: function (e) {
     var that = this
@@ -87,10 +140,54 @@ Page({
         center: 'tab-current',
         last: ''
       },
-      listAll: 'display:block',
+      listAll: 'display:none',
       isEdit: 'display:block',
       listCreat: 'display:none',
     })
+
+    var url = 'branch/index'
+    var params = {}
+    var api_result = api_request(url, params)
+
+    // 网络请求
+    function api_request(url, api_params) {
+      // 生成签名
+      app.sign_generate(api_params)
+
+      // 通过小程序的网络请求API发送请求
+      wx.request({
+        method: "POST",
+        header: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        url: app.globalData.url_api + url,
+        data: { app_type: 'biz', limit: 10, time_delete: 'IS NOT NULL',},
+        success: function (result) {
+          console.log(result.data)
+          if (result.data.status == 200){
+            var list = result.data.content
+
+            for (var i = 0; i < list.length; i++) {
+              list[i].selected = false
+            }
+            that.setData({
+              listAll: 'display:block',
+              item: list
+            })
+          } else {
+            that.setData({
+              noneStyle: 'display:block'
+            })
+
+          }
+          
+        },
+        fail: function (result) {
+          console.log(result)
+          wx.vibrateShort()
+        }
+      })
+    }
   },
   crearCategory: function (e) {
     var that = this
@@ -103,6 +200,7 @@ Page({
       listAll: 'display:none',
       listCreat: 'display:block',
       isEdit: 'display:none',
+      noneStyle: 'display:none'
     })
   },
   quit: function (e) {
