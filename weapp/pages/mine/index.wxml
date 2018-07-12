@@ -26,4 +26,4 @@
   <button class="submitBtn" style="opacity: {{opacity}};color: white; background-color: #9fa0a0;" bindtap="mineExit">退出账号</button>
 </view>
 
-<button  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">法撒旦飞洒 </button>
+<!--<button  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">法撒旦飞洒 </button>-->

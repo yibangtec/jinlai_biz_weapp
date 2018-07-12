@@ -70,7 +70,8 @@
     "pages/team/detail",
     "pages/team/edit",
     "pages/team/delete",
-    "pages/coupon_combo/edit"
+    "pages/coupon_combo/edit",
+    "Component/nyz_area_picker/nyz_area_picker"
   ],
   "window": {
     "navigationBarBackgroundColor": "#fff",

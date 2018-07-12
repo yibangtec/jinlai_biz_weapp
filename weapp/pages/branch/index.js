@@ -1,5 +1,61 @@
 // pages/branch/index.js
+var pickerFile = require('../../utils/picker_datetime.js');
+const Upyun = require('../../utils/upyun-wxapp-sdk')
+const upyun = new Upyun({
+  bucket: 'jinlaisandbox-images',
+  operator: 'jinlaisandbox',
+})
+function tick(s, bizId) {
+  var objD = new Date();
+  var str;
+  var u = bizId
+  var yy = objD.getYear();
+  if (yy < 1900) yy = yy + 1900;
+  var MM = objD.getMonth() + 1;
+  if (MM < 10) MM = '0' + MM;
+  var dd = objD.getDate();
+  if (dd < 10) dd = '0' + dd;
+  var hh = objD.getHours();
+  if (hh < 10) hh = '0' + hh;
+  var mm = objD.getMinutes();
+  if (mm < 10) mm = '0' + mm;
+  var ss = objD.getSeconds() + s;
+  if (ss < 10) ss = '0' + ss;
+  u = u.toString()
+  str = yy + MM + '/' + MM + dd + '/' + hh + mm + ss + '' + u + '.jpg';
+  return str;
+}
+function tr(stamp) {
+  //var objD = new Date();
+  var objD = new Date(stamp * 1000);
+
+  var yy = objD.getYear();
+  if (yy < 1900) yy = yy + 1900;
+
+  var MM = objD.getMonth() + 1;
+  if (MM < 10) MM = '0' + MM;
+
+  var dd = objD.getDate();
+  if (dd < 10) dd = '0' + dd;
+
+  var hh = objD.getHours();
+  if (hh < 10) hh = '0' + hh;
+
+  var mm = objD.getMinutes();
+  if (mm < 10) mm = '0' + mm;
+
+  var ss = objD.getSeconds();
+  if (ss < 10) ss = '0' + ss;
+
+  return yy + '-' + MM + '-' + dd + ' ' + hh + ':' + mm + ':' + ss;
+}
 var app = getApp()
+var mainImageUrl = []
+var mainMaxImageUrl = []
+var mainImg = ''
+var mainMaxImg = ''
+var userId = ''
+var bizId = ''
 Page({
 
   /**
@@ -21,10 +77,18 @@ Page({
     selectedAllStatus: false,
     mainImageSrc: '',
     dis: 'display:block',
+    disMax: 'display:block',
     mainImageUrl: '',
+    mainMaxImageUrl: '',
     imgText: '开始上传',
+    imgMaxText: '开始上传',
     imgStyle: 'background-color:#c9caca',
-    noneStyle: 'display:none;'
+    imgMaxStyle: 'background-color:#c9caca',
+    noneStyle: 'display:none;',
+    province: '',
+    city: '',
+    area: '',
+    show: false
 
   },
 
@@ -270,6 +334,189 @@ Page({
     var id = e.currentTarget.dataset.id
     wx.navigateTo({
       url: 'delete?Id=' + id
+    })
+  },
+  chooseImageMain: function () {
+    const self = this
+    wx.chooseImage({
+      count: 1,
+      sizeType: ['compressed'],
+      sourceType: ['album'],
+      success: function (res) {
+        console.log('chooseImage success, temp path is', res.tempFilePaths)
+        self.setData({
+          mainImageSrc: res.tempFilePaths,
+          //imgStyle: 'display:block',
+        })
+        console.log(self.data.mainImageSrc.length)
+        var le = self.data.mainImageSrc.length
+        if (le >= 1) {
+          self.setData({
+            dis: 'display:none'
+          })
+        }
+      },
+      fail: function ({ errMsg }) {
+        console.log('chooseImage licenseImageSrc fail, err is', errMsg)
+      }
+    })
+  },
+  upImgMain: function (e) {
+    var that = this
+    var temp = that.data.mainImageSrc
+    console.log('this is  upImg')
+    for (var i = 0; i < temp.length; i++) {
+      var time = tick(i, userId)
+      mainImageUrl[i] = 'avatar/' + time
+      console.log(time)
+      upyun.upload({
+        localPath: temp[i],
+        remotePath: '/user/avatar/' + time,
+        success: function (res) {
+          console.log('uploadImage success, res is:', res)
+          if (res.statusCode == 200) {
+            wx.showToast({
+              title: '上传成功',
+              icon: 'success',
+              duration: 2000
+            })
+            tha.setData({
+              mainImageSrc: res.tempFilePaths,
+            })
+            itemValue = mainImageUrl[0]
+          }
+
+        },
+        fail: function ({ errMsg }) {
+          console.log('uploadImage fail, errMsg is', errMsg)
+        }
+      })
+    }
+  },
+  closeImgMain: function (e) {
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var list = that.data.mainImageSrc;
+    list.splice(index, 1)
+    that.setData({
+      mainImageSrc: list
+    });
+    console.log(that.data.mainImageSrc.length)
+    var le = that.data.mainImageSrc.length
+    if (le < 1) {
+      that.setData({
+        dis: 'display:block'
+      })
+    }
+  },
+  preview: function (e) {
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var list = that.data.mainImageSrc;
+    var curr = list[index]
+    wx.previewImage({
+      current: curr, // 当前显示图片的http链接
+      urls: list // 需要预览的图片http链接列表
+    })
+  },
+  chooseImageMainMax: function () {
+    const self = this
+    wx.chooseImage({
+      count: 4,
+      sizeType: ['compressed'],
+      sourceType: ['album'],
+      success: function (res) {
+        console.log('chooseImage success, temp path is', res.tempFilePaths)
+        self.setData({
+          mainMaxImageSrc: res.tempFilePaths,
+          //imgStyle: 'display:block',
+        })
+        console.log(self.data.mainMaxImageSrc.length)
+        var le = self.data.mainMaxImageSrc.length
+        if (le >= 1) {
+          self.setData({
+            disMax: 'display:none'
+          })
+        }
+      },
+      fail: function ({ errMsg }) {
+        console.log('chooseImage licenseImageSrc fail, err is', errMsg)
+      }
+    })
+  },
+  upImgMainMax: function (e) {
+    var that = this
+    var temp = that.data.mainMaxImageSrc
+    console.log('this is  upImg')
+    for (var i = 0; i < temp.length; i++) {
+      var time = tick(i, userId)
+      mainMaxImageUrl[i] = 'avatar/' + time
+      console.log(time)
+      upyun.upload({
+        localPath: temp[i],
+        remotePath: '/user/avatar/' + time,
+        success: function (res) {
+          console.log('uploadImage success, res is:', res)
+          if (res.statusCode == 200) {
+            wx.showToast({
+              title: '上传成功',
+              icon: 'success',
+              duration: 2000
+            })
+            tha.setData({
+              mainMaxImageSrc: res.tempFilePaths,
+              imgStyle: 'background-color:#ff3649',
+            })
+            itemValue = mainMaxImageUrl[0]
+          }
+
+        },
+        fail: function ({ errMsg }) {
+          console.log('uploadImage fail, errMsg is', errMsg)
+        }
+      })
+    }
+  },
+  closeImgMainMax: function (e) {
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var list = that.data.mainMaxImageSrc;
+    list.splice(index, 1)
+    that.setData({
+      mainMaxImageSrc: list
+    });
+    console.log(that.data.mainMaxImageSrc.length)
+    var le = that.data.mainMaxImageSrc.length
+    if (le < 1) {
+      that.setData({
+        disMax: 'display:block'
+      })
+    }
+  },
+  previewMax: function (e) {
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var list = that.data.mainMaxImageSrc;
+    var curr = list[index]
+    wx.previewImage({
+      current: curr, // 当前显示图片的http链接
+      urls: list // 需要预览的图片http链接列表
+    })
+  },
+  sureSelectAreaListener: function (e) {
+    var that = this;
+    that.setData({
+      show: false,
+      province: e.detail.currentTarget.dataset.province,
+      city: e.detail.currentTarget.dataset.city,
+      area: e.detail.currentTarget.dataset.area
+    })
+  },
+  chooseAddress: function () {
+    console.log("xuanzedizhi")
+    var that = this;
+    that.setData({
+      show: true
     })
   },
 
